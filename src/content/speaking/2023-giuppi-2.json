@@ -1,6 +1,9 @@
 {
-  "title": "DevOps",
+  "title": "Cos'è e cosa fa un DevOps",
   "eventName": "Giuseppe Funicello, Remote",
   "eventDate": "2023-10-3",
-  "type": "video/live"
+  "type": "video/live",
+  "resources": {
+    "content": "https://www.youtube.com/watch?v=ojpQwOQOse4"
+  }
 }

@@ -8,6 +8,7 @@ import Footer from "../components/Footer.astro";
 const speakings = (await getCollection("speaking")).sort(
   (a, b) => b.data.eventDate.valueOf() - a.data.eventDate.valueOf(),
 );
+
 ---
 
 <!doctype html>
@@ -35,7 +36,20 @@ const speakings = (await getCollection("speaking")).sort(
                     <div class="flex min-w-0 gap-x-4">
                       <div class="min-w-0 flex-auto">
                         <p class="text-sm font-semibold leading-6 text-white">
-                          {speaking.data.title}
+                          {speaking.data.title} {" "}
+                          {speaking.data.resources != undefined && speaking.data.resources.content != undefined ?
+                              (
+                                  <a href=`${speaking.data.resources.content}`>
+                                    <i class="fa fa-play text-white" />
+                                  </a>
+                              ) : null }
+                          {" "}
+                          {speaking.data.resources != undefined && speaking.data.resources.slides != undefined ?
+                              (
+                                  <a href=`${speaking.data.resources.slides}`>
+                                    <i class="fa fa-tv text-white" />
+                                  </a>
+                              ): null}
                         </p>
                         <p class="mt-1 truncate text-xs leading-5 text-gray-400">
                           {speaking.data.eventName}
