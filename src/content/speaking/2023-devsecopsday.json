@@ -1,6 +1,10 @@
 {
   "title": "Securing Secrets in the GitOps Era",
-  "eventName": "DevSecOps Day, Bologna, Italy",
+  "eventName": "DevSecOps Day",
   "eventDate": "2023-10-13",
-  "type": "talk"
+  "language": "it-IT",
+  "location": "Bologna, Italy",
+  "resources": {
+    "slides": "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era"
+  }
 }

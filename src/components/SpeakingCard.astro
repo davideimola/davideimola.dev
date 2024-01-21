@@ -1,0 +1,70 @@
+---
+import { type CollectionEntry } from "astro:content";
+import FormattedDate from "./FormattedDate.astro";
+import SlidesIcon from "./icon/SlidesIcon.astro";
+import VideoIcon from "./icon/VideoIcon.astro";
+
+interface Props {
+  data: CollectionEntry<"speaking">;
+}
+
+const { data } = Astro.props;
+---
+
+<li
+  class="overflow-hidden bg-white px-4 py-4 shadow sm:rounded-md sm:px-6 grid lg:grid-cols-7"
+>
+  <FormattedDate date={data.data.eventDate} className="pt-2" />
+  <div class="lg:col-span-4 pt-2">
+    <h3 class="font-black">{data.data.title}</h3>
+    {
+      data.data.with && data.data.with.length > 0 ? (
+        <span class="text-sm text-text-400">
+          with {data.data.with.join(", ")}
+        </span>
+      ) : (
+        ""
+      )
+    }
+    {
+      data.data.resources ? (
+        <span class="flex gap-4 text-sm">
+          {data.data.resources.slides ? (
+            <a
+              href={data.data.resources.slides}
+              target="_blank"
+              class="flex gap-1 align-middle"
+            >
+              <SlidesIcon class="h-4 w-4" />
+              <span>Slides</span>
+            </a>
+          ) : (
+            ""
+          )}
+          {data.data.resources.content ? (
+            <a
+              href={data.data.resources.content}
+              target="_blank"
+              class="flex gap-1 align-middle"
+            >
+              <VideoIcon class="h-4 w-4" />
+              <span>Video</span>
+            </a>
+          ) : (
+            ""
+          )}
+        </span>
+      ) : (
+        ""
+      )
+    }
+  </div>
+  <span class="text-sm text-text-400 pt-2">
+    {data.data.eventName}
+  </span>
+  <span class="text-sm text-text-400 pt-2">
+    <i class="fa fa-location"></i>
+    {" "}
+    {data.data.location}
+  </span>
+</li>

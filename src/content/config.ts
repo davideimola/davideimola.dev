@@ -19,7 +19,9 @@ const speaking = defineCollection({
     title: z.string(),
     eventName: z.string(),
     eventDate: z.coerce.date(),
-    type: z.enum(["talk", "podcast", "video/live", "mc"]),
+    location: z.string(),
+    language: z.string(),
+    with: z.string().array().optional(),
     resources: z
       .object({
         content: z.string().optional(),

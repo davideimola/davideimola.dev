@@ -1,8 +1,9 @@
 {
   "title": "How to GitOps your Kubernetes cluster with Flux",
-  "eventName": "DevOps Day, Remote",
+  "eventName": "DevOps Day",
   "eventDate": "2023-02-15",
-  "type": "talk",
+  "location": "Remote",
+  "language": "en-US",
   "resources": {
     "content": "https://www.youtube.com/live/wli1Vv9f_uw?si=LA0T7njnt-MCskMS&t=11030",
     "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
