@@ -5,6 +5,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FormattedDate from "../components/FormattedDate.astro";
+import SpeakingCard from "../components/SpeakingCard.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import OSDay from "../assets/osday.jpeg";
+import SHLogo from "../assets/sh.png";
+import OpenSourceBook from "../assets/OpenSource-Book.jpeg";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -95,6 +100,58 @@ const speakings = (await getCollection("speaking"))
               <h2
                 class="text-3xl font-bold tracking-tight text-white sm:text-4xl"
               >
+                My Featured Projects
+              </h2>
+              <p class="mt-2 text-lg leading-8 text-gray-300">
+                I try to do my best to contribute to the community, here are
+                some projects I am proud of
+              </p>
+            </div>
+            <div
+              class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+            >
+              <ProjectCard
+                title="Open Source Day"
+                href="https://osday.dev"
+                image={OSDay}
+                imageAlt="A picture of different people standing togheter in a conference"
+              >
+                The <strong>Open Source Day</strong> is a <strong
+                  >free conference</strong
+                > about <strong>Open Source Software</strong>
+                 organized by the Schrödinger Hat community.
+              </ProjectCard>
+              <ProjectCard
+                title="Schrödinger Hat"
+                href="https://www.schrodinger-hat.it/"
+                image={SHLogo}
+                imageAlt="The Schrödinger cat in a red background"
+              >
+                Schrödinger Hat is a <strong>community</strong> of <strong
+                  >passionate developers</strong
+                > that share their love for the <strong>Open Source</strong>.
+              </ProjectCard>
+              <ProjectCard
+                title="The Open Source Book"
+                href="https://github.com/Il-Libro-Open-Source/book"
+                image={OpenSourceBook}
+                imageAlt="A book with the title Open Source"
+              >
+                The <strong>Open Source Book</strong> is an <strong
+                  >italian open book</strong
+                > built by the basics of the Open Source world. Crafted by the
+                developer community for the developers.
+              </ProjectCard>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-12 sm:py-10">
+          <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center">
+              <h2
+                class="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              >
                 From the blog
               </h2>
               <p class="mt-2 text-lg leading-8 text-gray-300">
@@ -163,31 +220,8 @@ const speakings = (await getCollection("speaking"))
               </p>
             </div>
             <div class="mx-auto mt-16">
-              <ul role="list" class="divide-y divide-gray-800">
-                {
-                  speakings.map((speaking) => (
-                    <li class="flex justify-between gap-x-6 py-5">
-                      <div class="flex min-w-0 gap-x-4">
-                        <div class="min-w-0 flex-auto">
-                          <p class="text-sm font-semibold leading-6 text-white">
-                            {speaking.data.title}
-                          </p>
-                          <p class="mt-1 truncate text-xs leading-5 text-gray-400">
-                            {speaking.data.eventName}
-                          </p>
-                        </div>
-                      </div>
-                      <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                          {speaking.data.type}
-                        </span>
-                        <p class="mt-1 text-xs leading-5 text-gray-400">
-                          <FormattedDate date={speaking.data.eventDate} />
-                        </p>
-                      </div>
-                    </li>
-                  ))
-                }
+              <ul role="list" class="space-y-3">
+                {speakings.map((talk) => <SpeakingCard data={talk} />)}
               </ul>
             </div>
           </div>

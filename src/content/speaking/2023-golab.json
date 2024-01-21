@@ -1,6 +1,12 @@
 {
   "title": "Level UP your RDBMS Productivity with GO",
-  "eventName": "GOLab, Florence, Italy",
+  "eventName": "GOLab",
   "eventDate": "2023-11-21",
-  "type": "talk"
+  "type": "talk",
+  "language": "it-IT",
+  "location": "Florence, Italy",
+  "with": ["Ludovico Russo"],
+  "resources": {
+    "slides": "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go"
+  }
 }

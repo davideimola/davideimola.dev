@@ -1,10 +1,12 @@
 {
   "title": "How to GitOps your Kubernetes cluster with Flux",
-  "eventName": "Incontro DevOps Italia, Bologna, Italy",
+  "eventName": "Incontro DevOps Italia",
   "eventDate": "2023-03-10",
   "type": "talk",
   "resources": {
     "content": "https://www.youtube.com/watch?v=56JnkdoClPQ&list=PLWK9j6ps_unkOGNPvoDhrnoGSmtFo9Pyr&index=2",
     "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
-  }
+  },
+  "language": "it-IT",
+  "location": "Bologna, Italy"
 }

@@ -1,9 +1,10 @@
 {
   "title": "Open Source Day with Schrodinger Hat",
-  "eventName": "TomorrowDevs, Remote",
+  "eventName": "TomorrowDevs",
   "eventDate": "2023-3-8",
-  "type": "video/live",
   "resources": {
     "content": "https://www.youtube.com/watch?v=epcqaeVcp8c"
-  }
+  },
+  "language": "it-IT",
+  "location": "Remote"
 }
