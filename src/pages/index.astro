@@ -7,9 +7,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FormattedDate from "../components/FormattedDate.astro";
 import SpeakingCard from "../components/SpeakingCard.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import OSDay from "../assets/osday.jpeg";
-import SHLogo from "../assets/sh.png";
-import OpenSourceBook from "../assets/OpenSource-Book.jpeg";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -113,7 +110,7 @@ const speakings = (await getCollection("speaking"))
               <ProjectCard
                 title="Open Source Day"
                 href="https://osday.dev"
-                image={OSDay}
+                image="/OSDay.jpeg"
                 imageAlt="A picture of different people standing togheter in a conference"
               >
                 The <strong>Open Source Day</strong> is a <strong
@@ -124,7 +121,7 @@ const speakings = (await getCollection("speaking"))
               <ProjectCard
                 title="Schrödinger Hat"
                 href="https://www.schrodinger-hat.it/"
-                image={SHLogo}
+                image="/sh.png"
                 imageAlt="The Schrödinger cat in a red background"
               >
                 Schrödinger Hat is a <strong>community</strong> of <strong
@@ -134,7 +131,7 @@ const speakings = (await getCollection("speaking"))
               <ProjectCard
                 title="The Open Source Book"
                 href="https://github.com/Il-Libro-Open-Source/book"
-                image={OpenSourceBook}
+                image="/OpenSource-Book.jpeg"
                 imageAlt="A book with the title Open Source"
               >
                 The <strong>Open Source Book</strong> is an <strong
