@@ -5,7 +5,7 @@
   "location": "Remote",
   "language": "en-US",
   "resources": {
-    "content": "https://www.youtube.com/live/wli1Vv9f_uw?si=LA0T7njnt-MCskMS&t=11030",
+    "content": "https://www.wearedevelopers.com/en/videos/547/how-to-gitops-your-cluster-with-flux",
     "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
   }
 }
