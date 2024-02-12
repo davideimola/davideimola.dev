@@ -3,5 +3,9 @@
   "eventName": "DevOps Day",
   "eventDate": "2024-02-7",
   "location": "Remote",
-  "language": "en-US"
+  "language": "en-US",
+  "resources": {
+    "content": "https://www.wearedevelopers.com/en/videos/852/securing-secrets-in-the-gitops-era-1707725810",
+    "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
+  }
 }
