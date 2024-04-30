@@ -3,10 +3,11 @@
   "eventName": "GOLab",
   "eventDate": "2023-11-21",
   "type": "talk",
-  "language": "it-IT",
+  "language": "en-US",
   "location": "Florence, Italy",
   "with": ["Ludovico Russo"],
   "resources": {
-    "slides": "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go"
+    "slides": "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go",
+    "content": "https://youtu.be/kS5LpcmB3O4?si=6MQK0h5DhHGQMKDK"
   }
 }
