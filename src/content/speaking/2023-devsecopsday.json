@@ -5,6 +5,7 @@
   "language": "it-IT",
   "location": "Bologna, Italy",
   "resources": {
-    "slides": "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era"
+    "slides": "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era",
+    "content": "https://www.youtube.com/watch?v=HYVaSSqGyyE&list=PLWK9j6ps_unmhH5KbPWc7NXwJJ46fnXFq&index=2"
   }
 }
