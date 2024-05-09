@@ -25,9 +25,9 @@ const { title, href, image, imageAlt } = Astro.props;
     src={image}
     class="h-56 w-full object-cover transition"
   />
-  <div class="bg-white p-4 sm:p-6 h-full">
-    <h3 class="mt-0.5 text-xl font-bold text-text-500">{title}</h3>
-    <p class="mt-2 text-sm/relaxed text-text-400">
+  <div class="bg-secondary p-4 sm:p-6 h-full">
+    <h3 class="mt-0.5 text-xl font-bold text-text-500 text-white">{title}</h3>
+    <p class="mt-2 text-sm/relaxed text-text-400 text-alternative">
       <slot>Some description here</slot>
     </p>
   </div>
