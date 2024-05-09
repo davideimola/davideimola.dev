@@ -12,14 +12,14 @@ const { data } = Astro.props;
 ---
 
 <li
-  class="overflow-hidden bg-white px-4 py-4 shadow sm:rounded-md sm:px-6 grid lg:grid-cols-7"
+  class="overflow-hidden bg-secondary px-4 py-4 shadow sm:rounded-md sm:px-6 grid lg:grid-cols-7"
 >
-  <FormattedDate date={data.data.eventDate} className="pt-2" />
+  <FormattedDate date={data.data.eventDate} className="pt-2 text-alternative" />
   <div class="lg:col-span-4 pt-2">
-    <h3 class="font-black">{data.data.title}</h3>
+    <h3 class="font-black text-white">{data.data.title}</h3>
     {
       data.data.with && data.data.with.length > 0 ? (
-        <span class="text-sm text-text-400">
+        <span class="text-sm text-text-400 text-alternative">
           with {data.data.with.join(", ")}
         </span>
       ) : (
@@ -28,7 +28,7 @@ const { data } = Astro.props;
     }
     {
       data.data.resources ? (
-        <span class="flex gap-4 text-sm">
+        <span class="flex gap-4 text-sm text-alternative">
           {data.data.resources.slides ? (
             <a
               href={data.data.resources.slides}
@@ -59,10 +59,10 @@ const { data } = Astro.props;
       )
     }
   </div>
-  <span class="text-sm text-text-400 pt-2">
+  <span class="text-sm text-text-400 pt-2 text-alternative">
     {data.data.eventName}
   </span>
-  <span class="text-sm text-text-400 pt-2">
+  <span class="text-sm text-text-400 pt-2 text-alternative">
     <i class="fa fa-location"></i>
     {" "}
     {data.data.location}
