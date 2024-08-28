@@ -1,0 +1,123 @@
+---
+title: Securing the Software Supply Chain with SLSA and SBOMs in GitHub Actions
+description: Learn how to secure your software supply chain using SLSA and SBOMs in GitHub Actions.
+pubDate: Jun 15 2024
+heroImage: https://images.unsplash.com/photo-1618060932014-4deda4932554?auto=format&fit=crop&q=80&w=3870&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+---
+
+Nowadays, security is becoming a top priority for software development teams. With the rise of cyberattacks and data breaches, it's crucial to make your software more secure.
+
+Increasing the security of your software is not only about writing more secure code. It's also about securing your software supply chain.
+
+## What is a Software Supply Chain?
+
+Traditionally, a supply chain is anything that's needed to deliver your product, including all the components you use. Of course if we talk about software, the supply chain is all the software components you use to build your application.
+
+From the libraries you use to the tools you rely on, everything is part of your software supply chain. And securing it is crucial to prevent attacks and data breaches.
+
+Just to give you an idea, in 2021, the SolarWinds attack showed how a single compromised component can lead to a massive data breach. Or the Log4j vulnerability that affected thousands of applications worldwide. These are just a few examples of how important it is to secure your software supply chain.
+
+## SLSA and SBOMs
+
+Two key concepts to secure your software supply chain are **SLSA** and **SBOMs**.
+
+SLSA stands for **Supply Chain Levels for Software Artifacts**. It's a framework that defines a set of security requirements for software artifacts. It helps you ensure that your software is secure and trustworthy. So you can be confident that your software is not compromised and it's coming from a trusted source.
+
+In the other hand, SBOM stands for **Software Bill of Materials**. It's a list of all the components used to build your software. It helps you understand what's inside your software and what vulnerabilities it may have. Like a nutrition label for software.
+
+Together, SLSA and SBOMs help you secure your software supply chain by ensuring that your software is secure, trustworthy, and transparent.
+
+To implement SLSA and SBOM in your software supply chain I suggest you to use tools like [Sigstore](https://www.sigstore.dev/) and [Syft](https://github.com/anchore/syft) inside your CI/CD pipelines.
+
+## Implementing SLSA and SBOMs in GitHub Actions
+
+For the purpose of this article, I'll show you how I have implemented SLSA and SBOMs in GitHub Actions using Sigstore and Syft.
+
+I have decided to use GitHub Actions because it's a popular CI/CD tool that integrates seamlessly with GitHub repositories. It's also easy to use and configure, and it's free for public repositories, which makes it a great choice for open-source projects or trial projects.
+
+The steps to implement SLSA and SBOMs in GitHub Actions are as follows:
+
+- Publishing OCI Images on Registry
+- Signing the image with Sigstore and pushing the signature
+- Generating SBOMs with Syft and pushing them to the registry
+
+## Publishing OCI Images on Registry
+
+The first step is to create an Action that publishes your OCI images to a registry. This Action will be responsible for building an OCI image and pushing it to a registry.
+
+To make it easier, we are going to use Docker and the GitHub Registry. Here's an example of how you can create this Action:
+
+```yaml
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Vars
+        id: get_vars
+        run: |
+          echo "::set-output name=ts::$(date +%s)"
+          echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+          echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/app
+          tags: |
+            type=sha
+            type=raw,${{ steps.get_vars.outputs }}-${{ steps.meta.outputs.sha }}-${{ steps.meta.outputs.ts }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        id: build-and-push
+        with:
+          push: true
+          tags: ${{steps.docker_meta.outputs.tags}}
+          context: .
+          network: host
+```
+
+This Action will build an Docker image with the tag `main-<sha>-<timestamp>` and push it to the GitHub Registry in `ghcr.io/<owner>/<repo>/app`.
+
+## Signing the image with Sigstore and pushing the signature
+
+After you have published your OCI image to the registry, the next step is to sign it. To do this, you can use Sigstore, which is a project handled by the OpenSSF that provides a way to sign your software artifacts.
+
+Given the previous Action, you can add a few other steps to sign the image:
+
+```yaml
+- name: Install Cosign
+  uses: sigstore/cosign-installer@v3.5.0
+- name: Sign the images with GitHub OIDC Token
+  env:
+    DIGEST: ${{ steps.build-and-push.outputs.digest }}
+    TAGS: ${{ steps.docker_meta.outputs.tags }}
+  run: |
+    images=""
+    for tag in ${TAGS}; do
+      images+="${tag}@${DIGEST} "
+    done
+    cosign sign --yes ${images}
+```
+
+Cosign is a tool that allows you to sign your images using the Sigstore infrastructure. It uses an asymmetric key pair to sign the image and then pushes the signature to the registry.
+
+In this example, we are signing the image with the GitHub OIDC token, which is a token that GitHub provides to authenticate with the GitHub Registry.
+
+This step will sign the digest of the image and push the signature to the registry, so anyone can verify the image's integrity.
+
+## Generating SBOMs with Syft and pushing them to the registry
