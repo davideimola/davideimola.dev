@@ -1,0 +1,11 @@
+{
+  "title": "Gophers Gone Domain-Driven: a tale of Go and DDD",
+  "eventName": "GOLab",
+  "eventDate": "2024-11-13",
+  "type": "talk",
+  "language": "en-US",
+  "location": "Florence, Italy",
+  "resources": {
+    "content": "https://golab.io/talks/gophers-gone-domain-driven"
+  }
+}
