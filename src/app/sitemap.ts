@@ -42,6 +42,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/uses`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
   ];
 
   // Blog posts (add real blog posts here when you create them)

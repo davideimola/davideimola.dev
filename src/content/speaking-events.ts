@@ -1,12 +1,8 @@
 /**
  * Speaking Events Data
  *
- * Add new speaking events here. The system will automatically:
- * - Separate upcoming vs past events based on the current date
- * - Sort upcoming events by date (nearest first)
- * - Sort past events by date (most recent first)
- *
- * To add a new event, simply add a new object to the array below.
+ * Auto-generated from JSON files in /speaking directory
+ * Last updated: 2025-10-12T18:53:53.385Z
  */
 
 export type SpeakingEvent = {
@@ -22,7 +18,7 @@ export type SpeakingEvent = {
   talkTitle: string;
   location: string;
   date: string; // Format: YYYY-MM-DD
-  type: "Conference" | "Meetup" | "Podcast" | "Podcast/Stream" | "Workshop";
+  type: "Conference" | "Meetup" | "Podcast/Stream" | "Workshop";
   description?: string;
   coSpeaker?: string;
   videoUrl?: string;
@@ -32,7 +28,34 @@ export type SpeakingEvent = {
 
 export const speakingEvents: SpeakingEvent[] = [
   {
-    id: 1,
+    id: 17,
+    title: "Open Source Day 2025",
+    role: "Organizer",
+    talkTitle: "Open Source Day with Schrodinger Hat",
+    location: "Florence, Italy",
+    date: "2025-03-21",
+    type: "Conference",
+  },
+  {
+    id: 16,
+    title: "Open Source Day 2024",
+    role: "Organizer & MC",
+    talkTitle: "Open Source Day with Schrodinger Hat",
+    location: "Florence, Italy",
+    date: "2024-03-07",
+    type: "Conference",
+  },
+  {
+    id: 15,
+    title: "Open Source Day 2023",
+    role: "Organizer",
+    talkTitle: "Open Source Day with Schrodinger Hat",
+    location: "Florence, Italy",
+    date: "2023-03-28",
+    type: "Conference",
+  },
+  {
+    id: 12,
     title: "GOLab",
     role: "Speaker",
     talkTitle: "Gophers Gone Domain-Driven: a tale of Go and DDD",
@@ -40,11 +63,11 @@ export const speakingEvents: SpeakingEvent[] = [
     date: "2024-11-13",
     type: "Conference",
     description:
-      "Exploring Domain-Driven Design principles and patterns in Go applications, discussing how to build maintainable and scalable systems.",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+      "Advanced Go programming techniques, performance optimization, and modern development practices.",
+    videoUrl: "https://golab.io/talks/gophers-gone-domain-driven",
   },
   {
-    id: 2,
+    id: 14,
     title: "WeAreDevelopers World Congress",
     role: "Speaker",
     talkTitle: "GreenOps: Bridging the Gap Between DevOps and Sustainability",
@@ -52,10 +75,10 @@ export const speakingEvents: SpeakingEvent[] = [
     date: "2024-07-18",
     type: "Conference",
     description:
-      "Discussing sustainable practices in DevOps, exploring how to reduce the environmental impact of our infrastructure and development practices.",
+      "Bridging the gap between DevOps practices and environmental sustainability in technology.",
   },
   {
-    id: 3,
+    id: 13,
     title: "KCD Italy",
     role: "Speaker",
     talkTitle: "How to GitOps your cluster with Flux",
@@ -63,137 +86,154 @@ export const speakingEvents: SpeakingEvent[] = [
     date: "2024-06-20",
     type: "Conference",
     description:
-      "Practical guide to implementing GitOps workflows in Kubernetes using Flux, covering best practices and real-world scenarios.",
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
   },
   {
-    id: 4,
+    id: 11,
     title: "DevOps Time by UGIdotNET",
     role: "Speaker",
     talkTitle: "Come funziona l'incident response",
     location: "Remote",
     date: "2024-04-23",
-    type: "Meetup",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    type: "Podcast/Stream",
     description:
-      "Italian talk about incident response processes, discussing how to handle production incidents effectively.",
+      "Technical talk covering modern software development and infrastructure practices.",
+    videoUrl: "https://www.youtube.com/live/5DRDDGYCvjk?si=B9XQjmmqphoW8-yk",
   },
   {
-    id: 5,
+    id: 10,
     title: "DevOps Day",
     role: "Speaker",
     talkTitle: "Securing Secrets in the GitOps Era",
     location: "Remote",
-    date: "2024-02-07",
+    date: "2024-02-7",
     type: "Conference",
-    slidesUrl: "https://slides.com/davideimola/securing-secrets",
-    videoUrl: "https://www.youtube.com/watch?v=example",
     description:
-      "Deep dive into secrets management in GitOps workflows, covering tools and best practices for secure secret handling.",
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
+    videoUrl:
+      "https://www.wearedevelopers.com/en/videos/852/securing-secrets-in-the-gitops-era-1707725810",
+    slidesUrl:
+      "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
   },
   {
-    id: 6,
+    id: 7,
     title: "GOLab",
     role: "Speaker",
     talkTitle: "Level UP your RDBMS Productivity with GO",
     location: "Florence, Italy",
     date: "2023-11-21",
     type: "Conference",
-    coSpeaker: "with Ludovico Russo",
-    slidesUrl: "https://slides.com/davideimola/go-rdbms",
-    videoUrl: "https://www.youtube.com/watch?v=example",
     description:
-      "Exploring database productivity patterns in Go, showing how to efficiently work with relational databases.",
+      "Advanced Go programming techniques, performance optimization, and modern development practices.",
+    coSpeaker: "Ludovico Russo",
+    videoUrl: "https://youtu.be/kS5LpcmB3O4?si=6MQK0h5DhHGQMKDK",
+    slidesUrl:
+      "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go",
   },
   {
-    id: 7,
+    id: 3,
     title: "DevOps Time by UGIdotNET",
     role: "Speaker",
     talkTitle: "Securing Secrets in the GitOps Era",
     location: "Remote",
     date: "2023-11-14",
-    type: "Meetup",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    type: "Podcast/Stream",
+    description:
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
+    videoUrl: "https://www.youtube.com/live/npPrIEamz8U?si=gb7v4Hs0nDFPA_xt",
   },
   {
-    id: 8,
+    id: 4,
     title: "DevSecOps Day",
     role: "Speaker",
     talkTitle: "Securing Secrets in the GitOps Era",
     location: "Bologna, Italy",
     date: "2023-10-13",
     type: "Conference",
-    slidesUrl: "https://slides.com/davideimola/securing-secrets",
-    videoUrl: "https://www.youtube.com/watch?v=example",
     description:
-      "Security-focused talk about managing secrets in cloud-native and GitOps environments.",
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
+    videoUrl:
+      "https://www.youtube.com/watch?v=HYVaSSqGyyE&list=PLWK9j6ps_unmhH5KbPWc7NXwJJ46fnXFq&index=2",
+    slidesUrl:
+      "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era",
   },
   {
-    id: 9,
+    id: 6,
     title: "Giuseppe Funicello",
-    role: "Guest",
+    role: "Speaker",
     talkTitle: "Cos'è e cosa fa un DevOps?",
     location: "Remote",
-    date: "2023-10-03",
+    date: "2023-10-3",
     type: "Podcast/Stream",
-    videoUrl: "https://www.youtube.com/watch?v=example",
     description:
-      "Italian interview discussing the DevOps role, responsibilities, and best practices.",
+      "Technical talk covering modern software development and infrastructure practices.",
+    videoUrl: "https://www.youtube.com/watch?v=ojpQwOQOse4",
   },
   {
-    id: 10,
+    id: 5,
     title: "Giuseppe Funicello",
-    role: "Guest",
+    role: "Speaker",
     talkTitle:
       "Come funziona l'OPEN SOURCE? Con Davide Imola di @SchrodingerHat",
     location: "Remote",
-    date: "2023-03-15",
+    date: "2023-3-15",
     type: "Podcast/Stream",
-    videoUrl: "https://www.youtube.com/watch?v=example",
     description:
-      "Discussion about open source, community building, and Schrodinger Hat organization.",
+      "Technical talk covering modern software development and infrastructure practices.",
+    videoUrl: "https://www.youtube.com/watch?v=lzTho3gamn4",
   },
   {
-    id: 11,
+    id: 8,
     title: "Incontro DevOps Italia",
     role: "Speaker",
     talkTitle: "How to GitOps your Kubernetes cluster with Flux",
     location: "Bologna, Italy",
     date: "2023-03-10",
-    type: "Meetup",
-    slidesUrl: "https://slides.com/davideimola/gitops-flux",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    type: "Conference",
     description:
-      "Introduction to GitOps principles and Flux implementation for Kubernetes clusters.",
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
+    videoUrl:
+      "https://www.youtube.com/watch?v=56JnkdoClPQ&list=PLWK9j6ps_unkOGNPvoDhrnoGSmtFo9Pyr&index=2",
+    slidesUrl:
+      "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
   },
   {
-    id: 12,
+    id: 9,
     title: "TomorrowDevs",
-    role: "Guest",
+    role: "Speaker",
     talkTitle: "Open Source Day with Schrodinger Hat",
     location: "Remote",
-    date: "2023-03-08",
-    type: "Meetup",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    date: "2023-3-8",
+    type: "Podcast/Stream",
+    description:
+      "Technical talk covering modern software development and infrastructure practices.",
+    videoUrl: "https://www.youtube.com/watch?v=epcqaeVcp8c",
   },
   {
-    id: 13,
+    id: 2,
     title: "DevOps Day",
     role: "Speaker",
     talkTitle: "How to GitOps your Kubernetes cluster with Flux",
     location: "Remote",
     date: "2023-02-15",
     type: "Conference",
-    slidesUrl: "https://slides.com/davideimola/gitops-flux",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    description:
+      "Exploring GitOps methodologies and tools for modern infrastructure management and deployment automation.",
+    videoUrl:
+      "https://www.wearedevelopers.com/en/videos/547/how-to-gitops-your-cluster-with-flux",
+    slidesUrl:
+      "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
   },
   {
-    id: 14,
+    id: 1,
     title: "The Developers' Bakery",
-    role: "Guest",
+    role: "Speaker",
     talkTitle: "Open Source Day with Schrodinger Hat",
     location: "Remote",
-    date: "2023-01-17",
-    type: "Podcast",
-    videoUrl: "https://www.youtube.com/watch?v=example",
+    date: "2023-1-17",
+    type: "Podcast/Stream",
+    description:
+      "Technical talk covering modern software development and infrastructure practices.",
+    videoUrl: "https://thebakery.dev/50/",
   },
 ];

@@ -3,12 +3,13 @@
 import { Header } from "~/app/_components/header";
 import { Footer } from "~/app/_components/footer";
 import { CompanyLogo } from "~/app/_components/company-logo";
+import { Icon } from "~/app/_components/icon";
 
 const experiences = [
   {
     id: 1,
     company: "RedCarbon",
-    logo: "/logos/redcarbon.png",
+    logo: "/logos/redcarbon-logo.webp",
     position: "Software Engineer",
     location: "Italy · Remote",
     period: "Sep 2022 - Present",
@@ -37,7 +38,7 @@ const experiences = [
   {
     id: 2,
     company: "Milkman Technologies",
-    logo: "/logos/milkman-technologies.png",
+    logo: "/logos/milkman-technologies-logo.webp",
     position: "DevOps Engineer",
     location: "Verona, Veneto, Italy · Remote",
     period: "Aug 2020 - Sep 2022",
@@ -70,7 +71,7 @@ const experiences = [
   {
     id: 4,
     company: "Codemotion",
-    logo: "/logos/codemotion.png",
+    logo: "/logos/codemotion-logo.webp",
     position: "Information Technology Instructor",
     location: "Italy · Remote",
     period: "Jan 2021 - Apr 2021",
@@ -96,7 +97,7 @@ const experiences = [
   {
     id: 5,
     company: "ASEM S.r.l.",
-    logo: "/logos/asem-s-r-l-.png",
+    logo: "/logos/asem-s-r-l--logo.webp",
     position: "DevOps Engineer",
     location: "Verona, Veneto, Italy · On-site",
     period: "Dec 2017 - Aug 2020",
@@ -122,7 +123,7 @@ const experiences = [
   {
     id: 6,
     company: "EDALab Networked Embedded Systems",
-    logo: "/logos/edalab-networked-embedded-systems.png",
+    logo: "/logos/edalab-networked-embedded-systems-logo.webp",
     position: "Software Engineer",
     location: "Verona, Veneto, Italia · Hybrid",
     period: "Nov 2016 - Sep 2017",
@@ -216,27 +217,42 @@ const volunteering = [
   },
 ];
 
-const certifications = [
+const achievements = [
   {
     id: 1,
-    name: "AWS Certified Solutions Architect",
-    issuer: "Amazon Web Services",
-    date: "2023",
-    credentialId: "AWS-CSA-123456",
+    title: "Open Source Day Founder",
+    organization: "Schrödinger Hat",
+    year: "2022 - Present",
+    description:
+      "Co-founded Italy's largest free-access Open Source conference, reaching 20k+ attendees across Europe",
+    icon: "🎤",
   },
   {
     id: 2,
-    name: "Certified Kubernetes Administrator",
-    issuer: "Cloud Native Computing Foundation",
-    date: "2022",
-    credentialId: "CKA-789012",
+    title: "Community Leader",
+    organization: "Schrödinger Hat",
+    year: "2022 - Present",
+    description:
+      "Managing community engagement and growth initiatives, organizing technical meetups and SH Sessions",
+    icon: "👥",
   },
   {
     id: 3,
-    name: "React Developer Certification",
-    issuer: "Meta",
-    date: "2021",
-    credentialId: "META-RDC-345678",
+    title: "Conference Speaker",
+    organization: "Multiple Events",
+    year: "2021 - Present",
+    description:
+      "Speaking at international conferences about infrastructure, GitOps, Kubernetes, and Go",
+    icon: "🗣️",
+  },
+  {
+    id: 4,
+    title: "Open Source Contributor",
+    organization: "GitHub",
+    year: "2020 - Present",
+    description:
+      "Active contributor to various open source projects, focusing on infrastructure and DevOps tools",
+    icon: "💻",
   },
 ];
 
@@ -259,11 +275,12 @@ export default function Experience() {
   return (
     <>
       <Header />
-      <main className="bg-gray-950">
+      <main className="bg-[#0A0A0A]">
         {/* Hero Section */}
-        <section className="px-6 py-24 sm:py-32 lg:px-8">
+        <section className="relative px-6 py-24 sm:py-32 lg:px-8">
+          <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
+            <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Professional Experience
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
@@ -273,7 +290,7 @@ export default function Experience() {
             <div className="mt-8">
               <a
                 href="/davide-imola-cv.pdf"
-                className="inline-flex items-center rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500"
+                className="inline-flex items-center rounded-md bg-[#C91F37] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#D3381C]"
               >
                 <svg
                   className="mr-2 h-4 w-4"
@@ -294,7 +311,7 @@ export default function Experience() {
           </div>
         </section>
 
-        <div className="mx-auto max-w-7xl border-t border-gray-800 px-6 py-16 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl bg-gray-900/30 px-6 py-16 sm:py-24 lg:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
             {/* Main Content */}
             <div className="space-y-12 lg:col-span-2">
@@ -316,12 +333,12 @@ export default function Experience() {
                           size="md"
                         />
                         <div className="flex-grow">
-                          <div className="rounded-lg border border-gray-800 bg-gray-900 p-6 transition-colors hover:border-blue-500/50">
+                          <div className="rounded-lg border border-gray-800 bg-gray-900 p-6 transition-colors hover:border-[#C91F37]/50">
                             <div className="mb-2 flex flex-wrap items-center justify-between">
                               <h3 className="text-xl font-semibold text-gray-100">
                                 {experience.position}
                               </h3>
-                              <span className="text-sm font-medium text-blue-400">
+                              <span className="text-sm font-medium text-[#C91F37]">
                                 {experience.period}
                               </span>
                             </div>
@@ -347,12 +364,12 @@ export default function Experience() {
                                 </h4>
                                 <ul className="space-y-1">
                                   {experience.achievements.map(
-                                    (achievement, i) => (
+                                    (achievement) => (
                                       <li
-                                        key={i}
+                                        key={achievement}
                                         className="flex items-start text-sm text-gray-400"
                                       >
-                                        <span className="mr-2 text-blue-400">
+                                        <span className="mr-2 text-[#C91F37]">
                                           •
                                         </span>
                                         {achievement}
@@ -367,7 +384,7 @@ export default function Experience() {
                               {experience.technologies.map((tech) => (
                                 <span
                                   key={tech}
-                                  className="inline-block rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400 ring-1 ring-blue-500/20"
+                                  className="inline-block rounded-full bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37] ring-1 ring-[#C91F37]/20"
                                 >
                                   {tech}
                                 </span>
@@ -396,7 +413,7 @@ export default function Experience() {
                         <h3 className="text-lg font-semibold text-gray-100">
                           {edu.degree}
                         </h3>
-                        <span className="text-sm font-medium text-blue-400">
+                        <span className="text-sm font-medium text-[#C91F37]">
                           {edu.period}
                         </span>
                       </div>
@@ -437,7 +454,7 @@ export default function Experience() {
                           <h3 className="text-lg font-semibold text-gray-100">
                             {volunteer.role}
                           </h3>
-                          <span className="text-sm font-medium text-blue-400">
+                          <span className="text-sm font-medium text-[#C91F37]">
                             {volunteer.period}
                           </span>
                         </div>
@@ -463,17 +480,15 @@ export default function Experience() {
                                 Key Achievements
                               </h4>
                               <ul className="space-y-1">
-                                {volunteer.achievements.map(
-                                  (achievement, index) => (
-                                    <li
-                                      key={index}
-                                      className="flex items-start text-sm text-gray-400"
-                                    >
-                                      <span className="mt-1.5 mr-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-500"></span>
-                                      {achievement}
-                                    </li>
-                                  ),
-                                )}
+                                {volunteer.achievements.map((achievement) => (
+                                  <li
+                                    key={achievement}
+                                    className="flex items-start text-sm text-gray-400"
+                                  >
+                                    <span className="mt-1.5 mr-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-500"></span>
+                                    {achievement}
+                                  </li>
+                                ))}
                               </ul>
                             </div>
                           )}
@@ -523,30 +538,37 @@ export default function Experience() {
                 </div>
               </div>
 
-              {/* Certifications */}
+              {/* Achievements & Recognition */}
               <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
                 <h3 className="mb-6 text-lg font-semibold text-gray-100">
-                  Certifications
+                  Achievements & Recognition
                 </h3>
                 <div className="space-y-4">
-                  {certifications.map((cert) => (
+                  {achievements.map((achievement) => (
                     <div
-                      key={cert.id}
-                      className="rounded-lg border border-gray-800 bg-gray-800 p-4"
+                      key={achievement.id}
+                      className="rounded-lg border border-gray-800 bg-gray-800 p-4 transition-colors hover:border-gray-700"
                     >
-                      <h4 className="mb-1 font-medium text-gray-100">
-                        {cert.name}
-                      </h4>
-                      <p className="mb-1 text-sm text-gray-400">
-                        {cert.issuer}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500">
-                          {cert.date}
-                        </span>
-                        <span className="text-xs text-blue-400">
-                          ID: {cert.credentialId}
-                        </span>
+                      <div className="flex items-start gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-700">
+                          <Icon
+                            name={achievement.icon}
+                            type="lucide"
+                            size="sm"
+                            variant="accent"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="mb-1 font-medium text-gray-100">
+                            {achievement.title}
+                          </h4>
+                          <p className="mb-2 text-sm text-gray-400">
+                            {achievement.organization} · {achievement.year}
+                          </p>
+                          <p className="text-sm leading-relaxed text-gray-300">
+                            {achievement.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}

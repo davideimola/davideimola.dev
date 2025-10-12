@@ -1,4 +1,4 @@
-import { useState } from "react";
+import Image from "next/image";
 
 interface CompanyLogoProps {
   company: string;
@@ -7,8 +7,6 @@ interface CompanyLogoProps {
 }
 
 export function CompanyLogo({ company, logo, size = "md" }: CompanyLogoProps) {
-  const [imageError, setImageError] = useState(false);
-
   const sizeClasses = {
     sm: "h-10 w-10 text-sm",
     md: "h-12 w-12 text-base",
@@ -50,9 +48,9 @@ export function CompanyLogo({ company, logo, size = "md" }: CompanyLogoProps) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     const colors = [
-      "from-blue-500 to-blue-600",
+      "from-[#C91F37] to-[#D3381C]", // Akane to Beni
       "from-purple-500 to-purple-600",
-      "from-green-500 to-green-600",
+      "from-[#165E83] to-[#1E6B93]", // Ai indigo
       "from-orange-500 to-orange-600",
       "from-pink-500 to-pink-600",
       "from-cyan-500 to-cyan-600",
@@ -62,16 +60,17 @@ export function CompanyLogo({ company, logo, size = "md" }: CompanyLogoProps) {
     return colors[Math.abs(hash) % colors.length];
   };
 
-  if (logo && !imageError) {
+  if (logo) {
     return (
       <div
-        className={`${sizeClasses[size]} flex-shrink-0 overflow-hidden rounded-lg bg-white ring-1 ring-gray-800`}
+        className={`${sizeClasses[size]} relative flex-shrink-0 overflow-hidden rounded-lg bg-white ring-1 ring-gray-800`}
       >
-        <img
+        <Image
           src={logo}
           alt={`${company} logo`}
-          className="h-full w-full object-contain p-1"
-          onError={() => setImageError(true)}
+          fill
+          className="object-contain p-1"
+          sizes="(max-width: 768px) 40px, 48px"
         />
       </div>
     );

@@ -5,6 +5,77 @@
   color: rgb(156 163 175); /* gray-400 */
   font-size: 1.125rem;
   line-height: 1.75rem;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
+}
+
+/* Enhanced code blocks */
+.blog-content pre[class*='language-'] {
+  position: relative;
+  padding-top: 3rem !important; /* Space for header */
+  border: 1px solid rgba(75, 85, 99, 0.3); /* gray-600 with opacity */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Horizontal scroll on mobile */
+  max-width: 100%; /* Prevent overflow */
+}
+
+/* Prevent code from overflowing */
+.blog-content pre[class*='language-'] code {
+  display: block;
+  max-width: 100%;
+}
+
+/* Mobile: show copy button always, desktop: show on hover */
+@media (max-width: 640px) {
+  .blog-content pre[class*='language-'] .copy-button {
+    opacity: 1 !important;
+  }
+}
+
+.code-block-header {
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.7));
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
+}
+
+.blog-content pre[class*='language-']:hover .copy-button {
+  opacity: 1 !important;
+}
+
+.copy-button:focus {
+  opacity: 1 !important;
+  outline: 2px solid #c91f37;
+  outline-offset: 2px;
+}
+
+/* Touch devices: always show copy button */
+@media (hover: none) {
+  .blog-content pre[class*='language-'] .copy-button {
+    opacity: 1 !important;
+  }
+}
+
+/* Custom scrollbar for TOC */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-track-gray-800::-webkit-scrollbar-track {
+  background-color: rgb(31 41 55); /* gray-800 */
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-gray-700::-webkit-scrollbar-thumb {
+  background-color: rgb(55 65 81); /* gray-700 */
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-gray-700:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99); /* gray-600 */
 }
 
 .blog-content h1 {
@@ -14,6 +85,7 @@
   line-height: 1.1;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+  font-family: var(--font-serif); /* Playfair Display - Italian elegance */
 }
 
 .blog-content h2 {
@@ -23,6 +95,19 @@
   line-height: 1.2;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+  font-family: var(--font-serif); /* Playfair Display - Italian elegance */
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.blog-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4rem; /* 64px equivalent to w-16 */
+  height: 2px;
+  background: linear-gradient(to right, #c91f37, transparent);
 }
 
 .blog-content h3 {
@@ -32,6 +117,7 @@
   line-height: 1.3;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  font-family: var(--font-serif); /* Playfair Display for consistency */
 }
 
 .blog-content h4 {
@@ -49,14 +135,32 @@
 }
 
 .blog-content a {
-  color: rgb(96 165 250); /* blue-400 */
+  color: #c91f37; /* Japanese red */
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
+  position: relative;
 }
 
 .blog-content a:hover {
-  color: rgb(147 197 253); /* blue-300 */
+  color: #d3381c; /* Japanese crimson */
+}
+
+.blog-content a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, #c91f37, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.blog-content a:hover::after {
+  transform: scaleX(1);
 }
 
 .blog-content strong {
@@ -70,7 +174,7 @@
 }
 
 .blog-content code {
-  color: rgb(96 165 250); /* blue-400 */
+  color: #c91f37; /* Japanese red */
   background-color: rgb(17 24 39); /* gray-900 */
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
@@ -115,7 +219,7 @@
 }
 
 .blog-content blockquote {
-  border-left: 4px solid rgb(59 130 246); /* blue-500 */
+  border-left: 4px solid #c91f37; /* Japanese red */
   padding-left: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -123,6 +227,27 @@
   color: rgb(156 163 175); /* gray-400 */
   background-color: rgb(17 24 39); /* gray-900 */
   margin: 1.5rem 0;
+  position: relative;
+}
+
+.blog-content blockquote::before {
+  content: "「";
+  position: absolute;
+  left: -0.5rem;
+  top: 0;
+  font-size: 1.5rem;
+  color: #c91f37;
+  font-family: var(--font-noto-sans-jp);
+}
+
+.blog-content blockquote::after {
+  content: "」";
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0;
+  font-size: 1.5rem;
+  color: #c91f37;
+  font-family: var(--font-noto-sans-jp);
 }
 
 .blog-content img {
@@ -170,6 +295,18 @@
 }
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+  --font-sans: var(--font-geist-sans), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-playfair), Georgia, serif;
+  
+  /* Dual-culture color palette - Japan & Italy */
+  /* Japanese colors (日本) */
+  --color-akane: #c91f37; /* 赤 - Traditional red */
+  --color-beni: #d3381c; /* 紅 - Crimson */
+  --color-ai: #165e83; /* 藍 - Indigo */
+  --color-sumi: #0a0a0a; /* 墨 - Ink black */
+  
+  /* Italian colors (Italia) */
+  --color-verde: #009246; /* 🇮🇹 Italian flag green */
+  --color-verde-scuro: #007a3d; /* Darker green for hover */
 }
