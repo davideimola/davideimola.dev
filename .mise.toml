@@ -1,0 +1,15 @@
+# Mise configuration for davideimola.dev
+# https://mise.jdx.dev/
+
+[tools]
+node = "22"  # Node.js LTS version
+pnpm = "9"   # Latest pnpm version
+
+[env]
+# Environment variables for development
+_.file = ".env"
+
+# Automatic activation
+[settings]
+experimental = true
+
