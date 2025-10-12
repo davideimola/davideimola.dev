@@ -1,43 +1,368 @@
 import { Header } from "~/app/_components/header";
 import { Footer } from "~/app/_components/footer";
+import { CompanyLogo } from "~/app/_components/company-logo";
 import { type Metadata } from "next";
+import Link from "next/link";
+import { Icon } from "~/app/_components/icon";
+import { nowInfo } from "~/content/now";
 
 export const metadata: Metadata = {
-  title: "About - Davide Imola",
+  title: "About Davide Imola | Software Engineer & Tech Speaker",
   description:
-    "Learn more about Davide Imola, Software Engineer, conference organizer, and tech speaker. Background, skills, and journey in technology.",
+    "Discover the journey of Davide Imola, a passionate Software Engineer working across infrastructure, security, and full-stack development. Community manager at Schrödinger Hat and organizer of OSDay.",
+  keywords:
+    "Davide Imola, Software Engineer, About, Biography, Tech Speaker, Community Manager, OSDay, Schrödinger Hat",
+  openGraph: {
+    title: "About Davide Imola | Software Engineer & Tech Speaker",
+    description:
+      "Learn about Davide's journey in tech, from software engineering to community building and conference organization.",
+    url: "https://davideimola.dev/about",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Davide Imola | Software Engineer & Tech Speaker",
+    description:
+      "Discover the journey of a passionate Software Engineer and community builder.",
+  },
 };
 
 export default function About() {
   return (
     <>
       <Header />
-      <main className="bg-gray-950">
+      <main className="bg-[#0A0A0A]">
         {/* Hero Section */}
-        <section className="px-6 py-24 sm:py-32 lg:px-8">
+        <section className="relative px-6 py-24 sm:py-32 lg:px-8">
+          <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
           <div className="mx-auto max-w-4xl">
             <div className="text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
+              <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
                 About Me
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
-                Passionate about technology, community building, and continuous
-                learning.
+                「Passionate about technology, community building, and
+                continuous learning.」
               </p>
             </div>
           </div>
         </section>
 
+        {/* What I'm Doing Now */}
+        <section className="py-16 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-4xl">
+              <div className="mb-8">
+                <div className="mb-4 flex items-center gap-3">
+                  <h2 className="font-playfair text-3xl font-bold text-gray-100">
+                    What I&apos;m Doing Now
+                  </h2>
+                  <span className="text-sm text-gray-500">
+                    (Updated {nowInfo.lastUpdated})
+                  </span>
+                </div>
+                <div className="h-0.5 w-24 bg-gradient-to-r from-[#C91F37] to-transparent"></div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                {/* Current Role */}
+                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Icon name="💼" type="lucide" size="sm" variant="accent" />
+                    <h3 className="text-lg font-semibold text-gray-100">
+                      Current Role
+                    </h3>
+                  </div>
+
+                  {/* Company Logo */}
+                  {nowInfo.currentRole.companyLogo && (
+                    <div className="mb-4 flex items-center gap-3">
+                      <CompanyLogo
+                        company={nowInfo.currentRole.company}
+                        logo={nowInfo.currentRole.companyLogo}
+                        size="md"
+                      />
+                      <div>
+                        <p className="text-base font-medium text-[#C91F37]">
+                          {nowInfo.currentRole.title}
+                        </p>
+                        <p className="text-sm text-gray-300">
+                          {nowInfo.currentRole.company}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Fallback if no logo */}
+                  {!nowInfo.currentRole.companyLogo && (
+                    <>
+                      <p className="mb-2 text-base font-medium text-[#C91F37]">
+                        {nowInfo.currentRole.title}
+                      </p>
+                      <p className="mb-1 text-sm text-gray-300">
+                        {nowInfo.currentRole.company}
+                      </p>
+                    </>
+                  )}
+
+                  <p className="text-sm text-gray-500">
+                    {nowInfo.currentRole.description}
+                  </p>
+                </div>
+
+                {/* Location */}
+                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Icon name="📍" type="lucide" size="sm" variant="accent" />
+                    <h3 className="text-lg font-semibold text-gray-100">
+                      Based In
+                    </h3>
+                  </div>
+                  <p className="mb-2 text-base font-medium text-gray-300">
+                    {nowInfo.location.city}, {nowInfo.location.country}{" "}
+                    {nowInfo.location.flag}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {nowInfo.location.timezone}
+                  </p>
+                  <p className="mt-2 text-sm text-gray-500">
+                    Available for{" "}
+                    {nowInfo.location.availableFor
+                      .map((item) => item.toLowerCase())
+                      .join(", ")}
+                  </p>
+                </div>
+
+                {/* Currently Learning */}
+                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Icon name="📚" type="lucide" size="sm" variant="accent" />
+                    <h3 className="text-lg font-semibold text-gray-100">
+                      Currently Learning
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {nowInfo.learning.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-gray-400"
+                      >
+                        <span className="text-[#C91F37]">▸</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Working On */}
+                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <Icon name="🚀" type="lucide" size="sm" variant="accent" />
+                    <h3 className="text-lg font-semibold text-gray-100">
+                      Working On
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {nowInfo.workingOn.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-gray-400"
+                      >
+                        <span className="text-[#C91F37]">▸</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Hobbies & Interests */}
+              <div className="mt-8">
+                <h3 className="mb-4 text-xl font-semibold text-gray-100">
+                  Beyond Code
+                </h3>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {/* Football/Soccer */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.sports.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.sports.name}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      {nowInfo.hobbies.sports.details}
+                    </p>
+                  </div>
+
+                  {/* BBQ */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.cooking.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.cooking.name}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      {nowInfo.hobbies.cooking.details}
+                    </p>
+                  </div>
+
+                  {/* Video Gaming */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.gaming.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.gaming.name}
+                      </h4>
+                    </div>
+                    {nowInfo.hobbies.gaming.currentlyPlaying.length > 0 && (
+                      <p className="text-xs text-gray-500">
+                        Playing:{" "}
+                        {nowInfo.hobbies.gaming.currentlyPlaying.join(", ")}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Board Gaming */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.boardGaming.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.boardGaming.name}
+                      </h4>
+                    </div>
+                    <p className="mb-1 text-xs text-gray-500">
+                      {nowInfo.hobbies.boardGaming.details}
+                    </p>
+                    {nowInfo.hobbies.boardGaming.currentlyPlaying.length >
+                      0 && (
+                      <p className="text-xs text-gray-400">
+                        On the table:{" "}
+                        {nowInfo.hobbies.boardGaming.currentlyPlaying.join(
+                          ", ",
+                        )}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Tabletop RPG / D&D */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.roleplay.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.roleplay.name}
+                      </h4>
+                    </div>
+                    <p className="mb-1 text-xs text-gray-500">
+                      {nowInfo.hobbies.roleplay.details}
+                    </p>
+                    {nowInfo.hobbies.roleplay.currentCampaign && (
+                      <p className="text-xs text-gray-400">
+                        Campaign: {nowInfo.hobbies.roleplay.currentCampaign}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Music */}
+                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Icon
+                        name={nowInfo.hobbies.music.emoji}
+                        type="lucide"
+                        size="sm"
+                        variant="accent"
+                      />
+                      <h4 className="text-sm font-medium text-gray-300">
+                        {nowInfo.hobbies.music.name}
+                      </h4>
+                    </div>
+                    <p className="mb-2 text-xs text-gray-500">
+                      {nowInfo.hobbies.music.details}
+                    </p>
+                    {nowInfo.hobbies.music.playlistUrl && (
+                      <a
+                        href={nowInfo.hobbies.music.playlistUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-[#C91F37] transition-colors hover:text-[#D3381C]"
+                      >
+                        <svg
+                          className="h-3 w-3"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                        </svg>
+                        {nowInfo.hobbies.music.playlistName}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-lg border border-gray-800 bg-gray-900/50 p-4">
+                <p className="text-sm text-gray-500">
+                  <Icon
+                    name="💡"
+                    type="lucide"
+                    size="sm"
+                    variant="accent"
+                    inline={true}
+                    className="inline-flex h-4 w-4"
+                  />{" "}
+                  Inspired by{" "}
+                  <a
+                    href="https://nownownow.com/about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 underline hover:text-[#C91F37]"
+                  >
+                    Derek Sivers&apos; /now page movement
+                  </a>{" "}
+                  . This section is updated regularly to reflect my current
+                  focus.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Main Content */}
-        <section className="border-t border-gray-800 py-16 sm:py-24">
+        <section className="bg-gray-900/30 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
               {/* Main Content */}
               <div className="lg:col-span-2">
                 <div className="prose prose-lg prose-invert max-w-none">
-                  <h2 className="mb-6 text-2xl font-bold text-gray-100">
+                  <h2 className="font-playfair mb-4 text-2xl font-bold text-gray-100">
                     My Story
                   </h2>
+                  <div className="mb-6 h-0.5 w-16 bg-gradient-to-r from-[#C91F37] to-transparent"></div>
                   <p className="mb-6 text-gray-400">
                     I&apos;m a Software Engineer with a passion for building
                     exceptional products and fostering vibrant tech communities.
@@ -104,7 +429,7 @@ export default function About() {
                         ].map((skill) => (
                           <span
                             key={skill}
-                            className="inline-block rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400 ring-1 ring-blue-500/20"
+                            className="inline-block rounded-full bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37] ring-1 ring-[#C91F37]/20"
                           >
                             {skill}
                           </span>
@@ -173,7 +498,7 @@ export default function About() {
                   <div className="space-y-3">
                     <a
                       href="mailto:hello@davideimola.dev"
-                      className="flex items-center text-gray-400 transition-colors hover:text-blue-400"
+                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -194,7 +519,7 @@ export default function About() {
                       href="https://linkedin.com/in/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 transition-colors hover:text-blue-400"
+                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -209,7 +534,7 @@ export default function About() {
                       href="https://github.com/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 transition-colors hover:text-blue-400"
+                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -228,6 +553,44 @@ export default function About() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mx-auto max-w-4xl pt-16 pb-24">
+            <Link
+              href="/uses"
+              className="group block overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900 to-gray-900/50 p-8 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/10"
+            >
+              <div className="flex items-start gap-4">
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#C91F37]/10 transition-transform duration-300 group-hover:scale-110">
+                  <Icon name="🛠️" type="lucide" size="lg" variant="accent" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-gray-100 transition-colors group-hover:text-[#C91F37]">
+                    Curious about my setup?
+                  </h3>
+                  <p className="mt-2 text-gray-400">
+                    Check out the hardware, software, and tools I use daily for
+                    development, infrastructure work, and content creation.
+                  </p>
+                  <div className="mt-4 inline-flex items-center text-sm font-medium text-[#C91F37] transition-transform duration-300 group-hover:translate-x-2">
+                    View my setup
+                    <svg
+                      className="ml-2 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
         </section>
       </main>

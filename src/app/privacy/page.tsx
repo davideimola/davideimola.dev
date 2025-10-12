@@ -11,10 +11,11 @@ export default function Privacy() {
   return (
     <>
       <Header />
-      <main className="bg-gray-950">
-        <section className="px-6 py-24 sm:py-32 lg:px-8">
+      <main className="bg-[#0A0A0A]">
+        <section className="relative px-6 py-24 sm:py-32 lg:px-8">
+          <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
           <div className="mx-auto max-w-4xl">
-            <h1 className="mb-8 text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
+            <h1 className="font-playfair mb-8 text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Privacy Policy
             </h1>
 
@@ -110,10 +111,10 @@ export default function Privacy() {
                 If you have any questions about this Privacy Policy, please
                 contact us at:{" "}
                 <a
-                  href="mailto:privacy@davideimola.dev"
-                  className="text-blue-400 hover:text-blue-300"
+                  href="mailto:hello@davideimola.dev"
+                  className="text-[#C91F37] hover:text-[#D3381C]"
                 >
-                  privacy@davideimola.dev
+                  hello@davideimola.dev
                 </a>
               </p>
             </div>

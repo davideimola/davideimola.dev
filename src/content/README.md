@@ -1,8 +1,74 @@
-# Content Management
+# Content Management Guide
 
 This directory contains all the data for your website. Update these files to manage your content without touching the UI code.
 
 ## 📁 Files Overview
+
+### `now.ts`
+Manage your "What I'm Doing Now" section on the About page.
+
+**How to update:**
+```typescript
+export const nowInfo = {
+  lastUpdated: "October 2025", // Update when you make changes
+  currentRole: {
+    title: "Software Engineer",
+    company: "RedCarbon",
+    companyLogo: "/logos/redcarbon.png", // Optional
+    location: "Remote / Verona, Italy",
+    description: "What you're working on",
+  },
+  location: { city: "Verona", country: "Italy", ... },
+  learning: ["Topic 1", "Topic 2"],
+  workingOn: ["Project 1", "Project 2"],
+  hobbies: {
+    sports: { name: "Football", emoji: "⚽", details: "..." },
+    // ... other hobbies
+  }
+}
+```
+
+**Update frequency:** Monthly or when something significant changes.
+
+---
+
+### `uses.ts`
+Manage your tech stack and tools on the `/uses` page.
+
+**How to add/update items:**
+```typescript
+export const usesData = {
+  lastUpdated: "October 2025",
+  hardware: {
+    items: [
+      {
+        name: "MacBook Pro 16\"",
+        description: "M3 Max, 48GB RAM",
+        category: "Laptop",
+      },
+    ],
+  },
+  software: {
+    items: [
+      {
+        name: "VS Code",
+        description: "Primary editor",
+        category: "Editor",
+        link: "https://code.visualstudio.com/",
+      },
+    ],
+  },
+  // ... devStack, services, extensions
+}
+```
+
+**Sections:** Hardware, Software, Dev Stack, Services, VS Code Extensions
+
+**Update frequency:** Quarterly or when you switch major tools.
+
+---
+
+## 📁 Content Files
 
 ### `speaking-events.ts`
 Manage all your speaking engagements, conferences, and podcast appearances.

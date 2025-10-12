@@ -32,6 +32,15 @@ const socialLinks = [
       </svg>
     ),
   },
+  {
+    name: "RSS",
+    href: "/rss.xml",
+    icon: (
+      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z" />
+      </svg>
+    ),
+  },
 ];
 
 const navigation = {
@@ -41,6 +50,12 @@ const navigation = {
     { name: "Experience", href: "/experience" },
     { name: "Blog", href: "/blog" },
     { name: "Speaking", href: "/speaking" },
+    { name: "Contact", href: "/contact" },
+  ],
+  more: [
+    { name: "Uses", href: "/uses" },
+    { name: "RSS Feed", href: "/rss.xml" },
+    { name: "Sitemap", href: "/sitemap.xml" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy" },
@@ -97,6 +112,33 @@ export function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
+                <h3 className="text-sm leading-6 font-semibold text-gray-100">
+                  More
+                </h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.more.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        target={
+                          item.href.endsWith(".xml") ? "_blank" : undefined
+                        }
+                        rel={
+                          item.href.endsWith(".xml")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="text-sm leading-6 text-gray-400 transition-colors hover:text-gray-300"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              <div>
                 <h3 className="text-sm leading-6 font-semibold text-gray-100">
                   Legal
                 </h3>

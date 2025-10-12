@@ -22,6 +22,8 @@ export type Project = {
   year: string;
   featured?: boolean;
   highlights?: string[];
+  featuredImage?: string;
+  featuredImageAlt?: string;
 };
 
 export const projects: Project[] = [
@@ -49,6 +51,8 @@ export const projects: Project[] = [
       "Focus on open source solutions",
       "Community-driven event",
     ],
+    featuredImage: "/images/projects/osday-project.webp",
+    featuredImageAlt: "OSDay conference in Florence with speakers and audience",
   },
   {
     id: 2,
@@ -75,6 +79,9 @@ export const projects: Project[] = [
       "49 hours of content produced",
       "Active open source contributions",
     ],
+    featuredImage: "/images/projects/sh-project.webp",
+    featuredImageAlt:
+      "Schrodinger Hat community event with speakers and attendees",
   },
   {
     id: 3,
@@ -90,6 +97,8 @@ export const projects: Project[] = [
     status: "Active",
     year: "2020-Present",
     featured: false,
+    featuredImageAlt:
+      "ImageGoNord tool showing before and after image conversion examples",
   },
   {
     id: 4,

@@ -1,0 +1,76 @@
+/**
+ * Japanese Patterns (和柄 - Wagara)
+ * Traditional Japanese patterns for background elements
+ */
+
+/* Seigaiha Pattern (青海波 - Ocean Waves) */
+.pattern-seigaiha {
+  background-image: radial-gradient(
+      circle at 100% 150%,
+      rgba(201, 31, 55, 0.15) 24%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 0% 150%,
+      rgba(201, 31, 55, 0.15) 24%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(201, 31, 55, 0.2) 10%,
+      transparent 11%
+    ),
+    radial-gradient(circle at 100% 50%, rgba(201, 31, 55, 0.15) 24%, transparent 25%),
+    radial-gradient(circle at 0% 50%, rgba(201, 31, 55, 0.15) 24%, transparent 25%);
+  background-size: 120px 60px;
+  background-position:
+    0 0,
+    40px 0,
+    0 0,
+    0 20px,
+    40px 20px;
+}
+
+/* Asanoha Pattern (麻の葉 - Hemp Leaf) */
+.pattern-asanoha {
+  background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(201, 31, 55, 0.03) 10px,
+      rgba(201, 31, 55, 0.03) 11px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(201, 31, 55, 0.03) 10px,
+      rgba(201, 31, 55, 0.03) 11px
+    );
+}
+
+/* Subtle gradient overlay with Japanese aesthetic */
+.japanese-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(201, 31, 55, 0.1) 0%,
+    rgba(22, 94, 131, 0.05) 50%,
+    transparent 100%
+  );
+}
+
+/* Red accent line (like traditional Japanese design) */
+.accent-line-vertical {
+  position: relative;
+}
+
+.accent-line-vertical::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, #c91f37, #d3381c);
+}
+
