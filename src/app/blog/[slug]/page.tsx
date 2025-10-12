@@ -6,6 +6,9 @@ import { Comments } from "~/app/_components/comments";
 import { Newsletter } from "~/app/_components/newsletter";
 import { TableOfContents } from "~/app/_components/table-of-contents";
 import { CodeBlockToolbar } from "~/app/_components/code-block-toolbar";
+import { ReadingProgress } from "~/app/_components/reading-progress";
+import { BackToTop } from "~/app/_components/back-to-top";
+import { BlogPostStructuredData } from "~/app/_components/blog-post-structured-data";
 import { notFound } from "next/navigation";
 import { blogPosts } from "~/content/blog-posts";
 import { useBlogPost } from "~/hooks/use-blog-post";
@@ -156,8 +159,18 @@ export default function BlogPost({ params }: Props) {
 
   return (
     <>
+      <BlogPostStructuredData
+        title={metadata.title}
+        excerpt={metadata.excerpt}
+        publishDate={metadata.publishDate}
+        heroImage={metadata.heroImage}
+        slug={slug}
+        tags={metadata.tags}
+      />
+      <ReadingProgress />
       <Header />
       <CodeBlockToolbar />
+      <BackToTop />
       <main className="bg-[#0A0A0A]">
         {/* Hero Section with Image */}
         <section className="relative overflow-hidden">

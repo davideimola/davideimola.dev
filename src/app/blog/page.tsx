@@ -3,6 +3,7 @@
 import { Header } from "~/app/_components/header";
 import { Footer } from "~/app/_components/footer";
 import { Newsletter } from "~/app/_components/newsletter";
+import { BackToTop } from "~/app/_components/back-to-top";
 import Link from "next/link";
 import { blogPosts } from "~/content/blog-posts";
 import { useState } from "react";
@@ -49,6 +50,7 @@ export default function Blog() {
   return (
     <>
       <Header />
+      <BackToTop />
       <main className="bg-[#0A0A0A]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
