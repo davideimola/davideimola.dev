@@ -8,6 +8,14 @@ import "./src/env.js";
 const config = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   
+  // Skip linting and type checking during build (will be done in CI)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['@radix-ui/react-icons'],
