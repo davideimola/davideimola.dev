@@ -5,6 +5,7 @@ import { PageHero } from "~/app/_components/page-hero";
 import { SectionHeader } from "~/app/_components/section-header";
 import { ProjectCard } from "~/app/_components/project-card";
 import { CTA as CtaButton } from "~/app/_components/cta";
+import { BackToTop } from "~/app/_components/back-to-top";
 import { projects } from "~/content/projects";
 
 export default function Projects() {
@@ -13,6 +14,7 @@ export default function Projects() {
 
   return (
     <PageLayout>
+      <BackToTop />
       <PageHero
         title="My Projects"
         subtitle="「Building communities, organizing conferences, and contributing
