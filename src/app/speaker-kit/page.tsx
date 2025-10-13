@@ -48,7 +48,7 @@ const talkTopics = [
       "Deep dive into implementing GitOps practices at scale, covering ArgoCD, Flux, and real-world challenges in production environments.",
     duration: "30-45 min",
     level: "Intermediate/Advanced",
-    tags: ["GitOps", "Kubernetes", "DevOps", "ArgoCD"],
+    tags: ["GitOps", "Kubernetes", "DevOps", "Flux"],
   },
   {
     title: "Securing Secrets in the GitOps Era",
@@ -67,12 +67,12 @@ const talkTopics = [
     tags: ["Go", "Database", "Performance", "Backend"],
   },
   {
-    title: "Building Cloud Native Infrastructure",
+    title: "Gophers Gone Domain-Driven: A Tale of Go and DDD",
     abstract:
-      "From containers to Kubernetes: a journey through modern cloud native infrastructure patterns, best practices, and lessons learned.",
-    duration: "45-60 min",
-    level: "Beginner/Intermediate",
-    tags: ["Cloud Native", "Kubernetes", "Infrastructure", "DevOps"],
+      "Exploring how Domain-Driven Design principles work beautifully with Go's simplicity. Real-world experience applying DDD patterns in Go applications, managing bounded contexts, and building maintainable systems that actually reflect your business domain.",
+    duration: "30-45 min",
+    level: "Intermediate",
+    tags: ["Go", "DDD", "Software Architecture", "Design Patterns"],
   },
 ];
 
