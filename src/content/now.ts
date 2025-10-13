@@ -14,10 +14,11 @@ export const nowInfo = {
   // Current Role
   currentRole: {
     title: "Software Engineer",
-    company: "RedCarbon", // Update with your actual company
-    companyLogo: "/logos/redcarbon.png", // Path to logo in public/logos/
+    company: "RedCarbon",
+    companyLogo: "/logos/redcarbon-logo.webp",
     location: "Remote / Verona, Italy",
-    description: "Leading the development of the AI Cyber Security platform",
+    description:
+      "Leading backend and frontend development for the AI-powered cybersecurity platform",
   },
 
   // Location

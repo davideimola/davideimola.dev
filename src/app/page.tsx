@@ -60,9 +60,9 @@ export default function Home() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
-              Full-stack engineer passionate about infrastructure, security, and
-              building communities. Sharing knowledge through conferences,
-              open-source contributions, and technical writing.
+              Software Engineer from Verona building secure infrastructure and
+              applications. I work with Kubernetes, Go, and GitOps at RedCarbon,
+              and organize Open Source Day in Florence.
             </p>
 
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -128,9 +128,10 @@ export default function Home() {
                     </Link>
                   </h3>
                   <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-400">
-                    Building and managing cloud infrastructure, backend systems,
-                    and frontend applications. Working with Kubernetes, Go,
-                    Node.js, Next.js, and implementing security best practices.
+                    Over 10 years building infrastructure and applications.
+                    Currently leading backend and frontend development at
+                    RedCarbon. Specializing in Kubernetes, Go, GitOps with Flux,
+                    and secure architecture.
                   </p>
                 </div>
               </div>
@@ -161,9 +162,10 @@ export default function Home() {
                     </Link>
                   </h3>
                   <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-400">
-                    Speaking at international conferences about infrastructure,
-                    security, GitOps, Kubernetes, and Go. Hosting events and
-                    sharing knowledge with the tech community.
+                    Speaking at conferences across Europe about infrastructure
+                    security, GitOps, Domain-Driven Design, and cloud-native
+                    development. Sharing real-world experience and practical
+                    insights.
                   </p>
                 </div>
               </div>
@@ -194,9 +196,9 @@ export default function Home() {
                     </Link>
                   </h3>
                   <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-400">
-                    Community manager at Schrodinger Hat, organizer of OSDay
-                    (Open Source Day) in Florence. Building and nurturing tech
-                    communities across Europe.
+                    Running Schrodinger Hat, a non-profit that's reached 20k+
+                    people through open source events. Organizing Open Source
+                    Day in Florence, bringing developers and companies together.
                   </p>
                 </div>
               </div>
@@ -387,9 +389,9 @@ export default function Home() {
               </h2>
               <div className="mx-auto h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
               <p className="mt-6 text-lg leading-8 text-gray-400">
-                Always interested in collaborating on infrastructure projects,
-                speaking at events, or discussing software architecture and
-                engineering practices.
+                Always up for talking about infrastructure, security, or team
+                leadership. Looking for speakers for your conference? Want to
+                collaborate on open source? Let's connect.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Link

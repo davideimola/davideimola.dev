@@ -16,15 +16,15 @@ import { ScrollProgress } from "~/app/_components/scroll-progress";
 export const metadata: Metadata = {
   title: "Davide Imola - Software Engineer & Tech Speaker",
   description:
-    "Personal website of Davide Imola, Software Engineer, conference organizer, and tech speaker. Explore my projects, experiences, and technical insights.",
+    "Software Engineer from Verona building secure infrastructure at RedCarbon. Organizing Open Source Day in Florence and speaking about GitOps, Kubernetes, and cloud-native development.",
   keywords:
-    "Davide Imola, Software Engineer, Developer, Tech Speaker, Conference Organizer, Full Stack Developer",
+    "Davide Imola, Software Engineer, Verona, RedCarbon, GitOps, Kubernetes, Go, Platform Engineering, DevOps, Tech Speaker, Open Source Day",
   authors: [{ name: "Davide Imola" }],
   creator: "Davide Imola",
   openGraph: {
     title: "Davide Imola - Software Engineer & Tech Speaker",
     description:
-      "Personal website of Davide Imola, Software Engineer, conference organizer, and tech speaker.",
+      "Software Engineer from Verona. Building secure infrastructure with Kubernetes and Go. Organizing Open Source Day in Florence.",
     url: "https://davideimola.dev",
     siteName: "Davide Imola",
     type: "website",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Davide Imola - Software Engineer & Tech Speaker",
     description:
-      "Personal website of Davide Imola, Software Engineer, conference organizer, and tech speaker.",
+      "Software Engineer from Verona. Building infrastructure with Kubernetes and Go. Speaking at conferences across Europe.",
     images: ["https://davideimola.dev/og-image.png"],
   },
   icons: [

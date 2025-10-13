@@ -7,22 +7,22 @@ import { Icon } from "~/app/_components/icon";
 import { nowInfo } from "~/content/now";
 
 export const metadata: Metadata = {
-  title: "About Davide Imola | Software Engineer & Tech Speaker",
+  title: "About Davide Imola | Software Engineer from Verona",
   description:
-    "Discover the journey of Davide Imola, a passionate Software Engineer working across infrastructure, security, and full-stack development. Community manager at Schrödinger Hat and organizer of OSDay.",
+    "I'm from Verona, Italy. Over 10 years building infrastructure with Kubernetes, Go, and GitOps. Currently at RedCarbon working on cybersecurity. Running Schrodinger Hat and organizing Open Source Day in Florence.",
   keywords:
-    "Davide Imola, Software Engineer, About, Biography, Tech Speaker, Community Manager, OSDay, Schrödinger Hat",
+    "Davide Imola, Software Engineer, Verona, About, Biography, RedCarbon, GitOps, Kubernetes, Open Source Day, Schrodinger Hat",
   openGraph: {
-    title: "About Davide Imola | Software Engineer & Tech Speaker",
+    title: "About Davide Imola | Software Engineer from Verona",
     description:
-      "Learn about Davide's journey in tech, from software engineering to community building and conference organization.",
+      "10+ years in infrastructure and security. Building at RedCarbon. Organizing Open Source Day in Florence.",
     url: "https://davideimola.dev/about",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Davide Imola | Software Engineer & Tech Speaker",
+    title: "About Davide Imola | Software Engineer from Verona",
     description:
-      "Discover the journey of a passionate Software Engineer and community builder.",
+      "Building secure infrastructure with Kubernetes and Go. Running open source events in Italy.",
   },
 };
 
@@ -364,44 +364,57 @@ export default function About() {
                   </h2>
                   <div className="mb-6 h-0.5 w-16 bg-gradient-to-r from-[#C91F37] to-transparent"></div>
                   <p className="mb-6 text-gray-400">
-                    I&apos;m a Software Engineer with a passion for building
-                    exceptional products and fostering vibrant tech communities.
-                    My journey in technology has been driven by curiosity,
-                    continuous learning, and a desire to make a positive impact
-                    through code and community engagement.
+                    I'm from Verona, Italy, where I also studied Computer
+                    Science. I've been writing code professionally for over 10
+                    years now, working both as a freelancer and at various
+                    companies. What started as curiosity about how things work
+                    turned into a career building infrastructure and
+                    applications.
                   </p>
 
                   <p className="mb-6 text-gray-400">
-                    Over the years, I&apos;ve had the privilege of working on
-                    diverse projects, from startups to enterprise applications,
-                    each teaching me something new about software craftsmanship,
-                    team collaboration, and product development. I believe that
-                    great software is built by great teams, and I&apos;m
-                    passionate about creating environments where developers can
-                    thrive and grow.
+                    For most of my career, I focused on Platform and DevOps
+                    Engineering. Setting up Kubernetes clusters, implementing
+                    GitOps with Flux, building CI/CD pipelines, managing
+                    infrastructure on AWS and GCP—that kind of thing. I've
+                    worked with many programming languages over the years, but
+                    these days I mostly write Go. There's something satisfying
+                    about its simplicity and performance.
+                  </p>
+
+                  <p className="mb-6 text-gray-400">
+                    Security has always been important to me. Not just as a
+                    checkbox, but actually understanding how to build systems
+                    that are secure from the ground up. This interest eventually
+                    led me to RedCarbon, where I currently work on their
+                    AI-powered cybersecurity platform. I'm responsible for both
+                    backend and frontend systems, which keeps things
+                    interesting.
                   </p>
 
                   <h3 className="mb-4 text-xl font-semibold text-gray-100">
-                    Community Involvement
+                    Community & Speaking
                   </h3>
                   <p className="mb-6 text-gray-400">
-                    Beyond writing code, I&apos;m deeply involved in the tech
-                    community. I organize conferences, speak at events, and
-                    contribute to open-source projects. I believe that sharing
-                    knowledge and fostering connections within the developer
-                    community is essential for our collective growth and
-                    success.
+                    Beyond my day job, I help run Schrodinger Hat, a non-profit
+                    that's brought open source events to over 20,000 people
+                    across Europe. Our biggest event is Open Source Day in
+                    Florence—a full-day conference where we bring together
+                    developers, companies, and open source enthusiasts. I also
+                    speak at conferences about topics like GitOps,
+                    infrastructure security, Domain-Driven Design, and building
+                    better systems.
                   </p>
 
                   <h3 className="mb-4 text-xl font-semibold text-gray-100">
-                    Philosophy
+                    What I'm Learning Now
                   </h3>
                   <p className="mb-6 text-gray-400">
-                    I approach every project with a focus on clean code, user
-                    experience, and sustainable architecture. I believe in the
-                    power of collaboration, continuous improvement, and the
-                    importance of building technology that serves people and
-                    solves real problems.
+                    Right now, I'm working on becoming a better team leader. I'm
+                    learning that technical skills are just part of the
+                    equation—understanding how to help a team grow and work
+                    together effectively is equally important. It's a different
+                    kind of challenge, but one I find really rewarding.
                   </p>
                 </div>
               </div>
@@ -447,7 +460,7 @@ export default function About() {
                           "GitOps",
                           "Flux",
                           "AWS",
-                          "Terraform",
+                          "Pulumi",
                         ].map((skill) => (
                           <span
                             key={skill}

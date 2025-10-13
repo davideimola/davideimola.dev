@@ -7,20 +7,20 @@ import { speakingEvents, type SpeakingEvent } from "~/content/speaking-events";
 export const metadata: Metadata = {
   title: "Speaking & Events | Davide Imola - Tech Speaker",
   description:
-    "Explore Davide Imola's speaking engagements on infrastructure, GitOps, Kubernetes, and Go. International conferences, workshops, and tech talks across Europe.",
+    "I speak at conferences across Europe about infrastructure security, GitOps with Flux, Domain-Driven Design, and Kubernetes. Past talks at GOLab, WeAreDevelopers, KCD Italy, and more.",
   keywords:
-    "Davide Imola, Speaking, Tech Talks, Conferences, GitOps, Kubernetes, Go, Infrastructure, Public Speaking",
+    "Davide Imola, Speaking, Tech Talks, Conferences, GitOps, Kubernetes, Go, Infrastructure Security, DDD, Public Speaking",
   openGraph: {
     title: "Speaking & Events | Davide Imola - Tech Speaker",
     description:
-      "International tech speaker specializing in infrastructure, GitOps, Kubernetes, and Go. Available for conferences and workshops.",
+      "Speaking at conferences about infrastructure security, GitOps, and cloud-native development. Available for events across Europe.",
     url: "https://davideimola.dev/speaking",
   },
   twitter: {
     card: "summary_large_image",
     title: "Speaking & Events | Davide Imola - Tech Speaker",
     description:
-      "International tech speaker on infrastructure, GitOps, and Kubernetes. Book for your event!",
+      "Tech speaker on infrastructure security, GitOps, and Kubernetes. Book me for your conference!",
   },
 };
 

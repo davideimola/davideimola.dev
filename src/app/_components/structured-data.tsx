@@ -9,7 +9,12 @@ export function PersonStructuredData() {
     jobTitle: "Software Engineer",
     worksFor: {
       "@type": "Organization",
-      name: "Tech Industry",
+      name: "RedCarbon",
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Verona",
+      addressCountry: "IT",
     },
     sameAs: [
       "https://github.com/davideimola",
@@ -21,17 +26,19 @@ export function PersonStructuredData() {
       "Go Programming Language",
       "Docker",
       "GitOps",
+      "Flux",
       "Cloud Computing",
-      "Infrastructure",
-      "Security",
+      "Infrastructure as Code",
+      "Cybersecurity",
       "Backend Development",
       "Frontend Development",
-      "Software Architecture",
-      "Community Building",
+      "Domain-Driven Design",
+      "DevOps",
+      "Platform Engineering",
     ],
     alumniOf: {
       "@type": "Organization",
-      name: "University of Rome La Sapienza",
+      name: "University of Verona",
     },
   };
 
@@ -51,7 +58,7 @@ export function WebsiteStructuredData() {
     name: "Davide Imola",
     url: "https://davideimola.dev",
     description:
-      "Personal website of Davide Imola, Software Engineer, conference organizer, and tech speaker.",
+      "Personal website of Davide Imola, Software Engineer at RedCarbon, community organizer, and tech speaker from Verona, Italy.",
     author: {
       "@type": "Person",
       name: "Davide Imola",

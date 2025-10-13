@@ -261,13 +261,7 @@ const skills = {
   Frontend: ["React", "Next.js", "Vue.js", "HTML5", "CSS3", "Tailwind CSS"],
   Backend: ["Node.js", "Express.js", "Fastify", "Django", "Flask"],
   Databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "DynamoDB"],
-  "Infrastructure & Cloud": [
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "Terraform",
-    "CI/CD",
-  ],
+  "Infrastructure & Cloud": ["AWS", "Docker", "Kubernetes", "Pulumi", "CI/CD"],
   "Tools & Methods": ["Git", "Agile", "Scrum", "TDD", "Code Review", "DDD"],
 };
 
