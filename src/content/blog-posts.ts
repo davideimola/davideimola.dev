@@ -4,7 +4,7 @@
  * Real blog posts from davideimola.dev
  */
 
-export type BlogPost = {
+export interface BlogPost {
   id: number;
   title: string;
   excerpt: string;
@@ -16,7 +16,7 @@ export type BlogPost = {
   featured?: boolean;
   heroImage?: string;
   heroImageAlt?: string;
-};
+}
 
 export const blogPosts: BlogPost[] = [
   {

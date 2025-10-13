@@ -5,7 +5,7 @@
  * Last updated: 2025-10-12T18:53:53.385Z
  */
 
-export type SpeakingEvent = {
+export interface SpeakingEvent {
   id: number;
   title: string;
   role:
@@ -24,7 +24,7 @@ export type SpeakingEvent = {
   videoUrl?: string;
   slidesUrl?: string;
   website?: string;
-};
+}
 
 export const speakingEvents: SpeakingEvent[] = [
   {
