@@ -25,7 +25,7 @@ export async function GET() {
   <channel>
     <title>Davide Imola - Technical Blog</title>
     <link>${blogUrl}</link>
-    <description>Insights on infrastructure, GitOps, Kubernetes, Go, and tech community building by Davide Imola - Software Engineer and Tech Speaker</description>
+    <description>Technical insights on infrastructure security, GitOps, Kubernetes, Go, and Domain-Driven Design. Written by Davide Imola, Software Engineer at RedCarbon and organizer of Open Source Day in Florence.</description>
     <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml" />
@@ -60,4 +60,3 @@ export async function GET() {
     },
   });
 }
-

@@ -27,14 +27,18 @@ export const metadata: Metadata = {
 
 const bios = {
   short:
-    "Davide Imola is a DevOps Engineer and Tech Lead specializing in Cloud Native technologies, GitOps, and Kubernetes. He's an active open-source contributor and community organizer passionate about infrastructure automation and security.",
+    "Davide Imola is a Software Engineer based in Verona, Italy. He's spent the last decade building infrastructure and applications, working with Kubernetes, Go, and GitOps. At RedCarbon, he leads backend and frontend development for their cybersecurity platform. Outside work, he runs Schrodinger Hat community and organizes Open Source Day in Florence.",
   medium:
-    "Davide Imola is a DevOps Engineer and Tech Lead with deep expertise in Cloud Native technologies, GitOps, and Kubernetes. As an active open-source contributor and community leader, he founded Schrödinger Hat, an international tech community helping developers grow through collaboration. Davide regularly speaks at international conferences about infrastructure, security, and DevOps best practices, combining technical depth with engaging storytelling.",
-  long: `Davide Imola is a DevOps Engineer and Tech Lead passionate about Cloud Native technologies, infrastructure automation, and security. With extensive experience in building and scaling cloud infrastructure, he specializes in GitOps, Kubernetes, and Go development.
+    "Davide Imola is a Software Engineer from Verona, Italy, where he also got his Computer Science degree. Over the past 10 years, he's worked as both a freelancer and in companies, focusing mainly on infrastructure and cloud platforms—particularly Kubernetes, GitOps with Flux, and building systems on AWS and GCP. These days, Davide works at RedCarbon, leading their backend and frontend engineering efforts for an AI-powered cybersecurity platform. Go is his language of choice, and he's particularly interested in secure infrastructure design and GitOps practices. When he's not coding, you'll find him organizing Open Source Day in Florence or speaking at conferences about infrastructure security, DDD, and cloud-native development.",
+  long: `I'm Davide Imola, a Software Engineer from Verona, Italy. I've been writing code professionally for over 10 years, working across different roles and companies. I got my Computer Science degree from the University of Verona and have been building things ever since.
 
-As a community builder, Davide founded Schrödinger Hat, an international tech community that brings developers together to share knowledge and grow. He's also deeply involved in the Italian tech community, organizing and speaking at events like OSDay.
+For most of my career, I focused on Platform and DevOps Engineering—setting up Kubernetes clusters, implementing GitOps workflows with Flux, building CI/CD pipelines, and managing infrastructure on AWS and GCP using tools like Pulumi and AWS CDK. I've worked with many languages along the way: Go (my current favorite), Python, JavaScript/TypeScript, and Java.
 
-Davide is a strong advocate for open source and actively contributes to various projects in the Cloud Native ecosystem. He brings both Italian warmth and Japanese-inspired minimalism to his approach, creating solutions that are elegant, efficient, and human-centered. When he's not working on infrastructure, you'll find him exploring Japanese culture, from anime and manga to cuisine and design philosophy.`,
+Security has always been something I care about. Not just checking boxes, but actually understanding how to build secure systems from the ground up. This interest led me to RedCarbon, where I currently work on their AI-powered cybersecurity platform. I'm responsible for both backend and frontend systems, which keeps things interesting.
+
+Beyond my day job, I'm heavily involved in the open source community. I help run Schrodinger Hat, a non-profit that's brought open source events to over 20,000 people across Europe. Our flagship event is Open Source Day in Florence—a full-day conference where we bring together developers, companies, and open source enthusiasts. I also speak at conferences about topics like GitOps, infrastructure security, Domain-Driven Design, and building better systems.
+
+Right now, I'm working on becoming a better team leader. I'm learning that technical skills are just part of the equation—understanding how to help a team grow and work together effectively is equally important.`,
 };
 
 const talkTopics = [

@@ -27,7 +27,7 @@ export function BlogPostStructuredData({
       "@type": "Person",
       name: "Davide Imola",
       url: "https://davideimola.dev",
-      jobTitle: "Software Engineer",
+      jobTitle: "Software Engineer at RedCarbon",
       sameAs: [
         "https://github.com/davideimola",
         "https://twitter.com/davideimola",

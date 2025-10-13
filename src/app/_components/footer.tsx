@@ -72,9 +72,9 @@ export function Footer() {
             <div>
               <h3 className="text-lg font-bold text-gray-100">Davide Imola</h3>
               <p className="mt-2 max-w-md text-sm text-gray-400">
-                Software Engineer passionate about building scalable systems
-                across infrastructure, security, and development. Organizer,
-                speaker, and community builder.
+                Software Engineer from Verona. Building secure infrastructure 
+                at RedCarbon. Running Schrodinger Hat and organizing Open Source 
+                Day in Florence.
               </p>
             </div>
             <div className="flex space-x-6">
