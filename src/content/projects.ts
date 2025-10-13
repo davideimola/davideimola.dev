@@ -5,7 +5,7 @@
  * Add new projects by adding objects to the array below.
  */
 
-export type Project = {
+export interface Project {
   id: number;
   title: string;
   category: "Conference" | "Community" | "Open Source" | "SaaS";
@@ -24,7 +24,7 @@ export type Project = {
   highlights?: string[];
   featuredImage?: string;
   featuredImageAlt?: string;
-};
+}
 
 export const projects: Project[] = [
   {

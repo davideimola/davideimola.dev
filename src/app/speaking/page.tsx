@@ -115,6 +115,39 @@ export default function Speaking() {
                 </span>
               ))}
             </div>
+
+            {/* Speaker Kit CTA */}
+            <div className="mt-12 rounded-xl border border-[#C91F37]/30 bg-gradient-to-r from-gray-900 to-gray-800 p-6 shadow-lg">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                <div className="text-center sm:text-left">
+                  <h3 className="mb-1 text-lg font-semibold text-gray-100">
+                    Conference Organizer?
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    Download my speaker kit with bio, photos, and talk abstracts
+                  </p>
+                </div>
+                <Link
+                  href="/speaker-kit"
+                  className="inline-flex items-center gap-2 rounded-md bg-[#C91F37] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#D3381C]"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                    />
+                  </svg>
+                  Get Speaker Kit
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 

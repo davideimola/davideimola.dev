@@ -9,16 +9,19 @@ import { CodeBlockToolbar } from "~/app/_components/code-block-toolbar";
 import { ReadingProgress } from "~/app/_components/reading-progress";
 import { BackToTop } from "~/app/_components/back-to-top";
 import { BlogPostStructuredData } from "~/app/_components/blog-post-structured-data";
-import { notFound } from "next/navigation";
-import { blogPosts } from "~/content/blog-posts";
+import { blogPosts, type BlogPost } from "~/content/blog-posts";
 import { useBlogPost } from "~/hooks/use-blog-post";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-type Props = {
+interface Props {
   params: Promise<{ slug: string }>;
-};
+}
+
+interface RelatedPost extends BlogPost {
+  similarityScore: number;
+}
 
 function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString("en-US", {
@@ -32,7 +35,7 @@ function getRelatedPosts(
   currentSlug: string,
   currentTags: string[],
   limit: number = 3,
-) {
+): RelatedPost[] {
   return blogPosts
     .filter((post) => post.slug !== currentSlug) // Exclude current post
     .map((post) => {
@@ -56,7 +59,7 @@ function getRelatedPosts(
 
 export default function BlogPost({ params }: Props) {
   const [slug, setSlug] = useState<string>("");
-  const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
+  const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([]);
 
   const { data, loading, error } = useBlogPost(slug);
 

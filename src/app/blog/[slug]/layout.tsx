@@ -1,10 +1,10 @@
 import { type Metadata } from "next";
 import { getAllBlogSlugs, getBlogPostMetadata } from "~/lib/mdx";
 
-type Props = {
+interface Props {
   params: Promise<{ slug: string }>;
   children: React.ReactNode;
-};
+}
 
 export async function generateStaticParams() {
   const slugs = getAllBlogSlugs();
