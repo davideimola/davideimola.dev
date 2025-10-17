@@ -47,7 +47,6 @@ export const metadata: Metadata = {
   icons: [
     { rel: "icon", url: "/favicon.svg", type: "image/svg+xml" },
     { rel: "icon", url: "/favicon.png", type: "image/png" },
-    { rel: "icon", url: "/favicon.ico" },
   ],
   alternates: {
     types: {
@@ -94,9 +93,8 @@ export default function RootLayout({
       className={`${geist.variable} ${notoSansJP.variable} ${playfair.variable} scroll-smooth font-sans`}
     >
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
-        <link rel="icon" type="image/png" href="/favicon.png?v=2" />
-        <link rel="icon" href="/favicon.ico?v=2" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <PersonStructuredData />
         <WebsiteStructuredData />
       </head>
