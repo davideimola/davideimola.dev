@@ -30,7 +30,7 @@ export function BlogPostStructuredData({
       jobTitle: "Software Engineer at RedCarbon",
       sameAs: [
         "https://github.com/davideimola",
-        "https://twitter.com/davideimola",
+        "https://bsky.app/profile/davideimola.dev",
         "https://www.linkedin.com/in/davideimola",
       ],
     },

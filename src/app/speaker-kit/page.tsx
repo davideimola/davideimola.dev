@@ -492,14 +492,14 @@ export default function SpeakerKit() {
 
                   <div>
                     <p className="mb-2 text-sm font-medium text-gray-400">
-                      Twitter/X
+                      BlueSky
                     </p>
                     <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2">
                       <code className="text-sm text-gray-300">
-                        @davide_imola
+                        @davideimola.dev
                       </code>
                       <CopyButton
-                        text="https://twitter.com/davide_imola"
+                        text="https://bsky.app/profile/davideimola.dev"
                         label=""
                       />
                     </div>

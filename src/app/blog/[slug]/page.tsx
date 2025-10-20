@@ -157,7 +157,7 @@ export default function BlogPost({ params }: Props) {
 
   // Prepare URLs for sharing
   const postUrl = `https://davideimola.dev/blog/${slug}`;
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(metadata.title)}&url=${encodeURIComponent(postUrl)}`;
+  const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(metadata.title)}%20${encodeURIComponent(postUrl)}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`;
 
   return (
@@ -279,12 +279,12 @@ export default function BlogPost({ params }: Props) {
               </Link>
               <div className="flex gap-4">
                 <a
-                  href={twitterUrl}
+                  href={blueskyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-semibold text-gray-300 transition-colors hover:text-[#C91F37]"
                 >
-                  Share on Twitter
+                  Share on BlueSky
                 </a>
                 <a
                   href={linkedinUrl}
