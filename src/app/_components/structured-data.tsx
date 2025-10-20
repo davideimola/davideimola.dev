@@ -19,7 +19,7 @@ export function PersonStructuredData() {
     sameAs: [
       "https://github.com/davideimola",
       "https://linkedin.com/in/davideimola",
-      "https://twitter.com/davideimola",
+      "https://bsky.app/profile/davideimola.dev",
     ],
     knowsAbout: [
       "Kubernetes",
