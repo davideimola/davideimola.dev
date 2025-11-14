@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://davideimola.dev/og-image.png",
+        url: "/og?title=Davide%20Imola&subtitle=Software%20Engineer%20%26%20Tech%20Speaker",
         width: 1200,
         height: 630,
         alt: "Davide Imola - Software Engineer & Tech Speaker",
@@ -42,7 +42,9 @@ export const metadata: Metadata = {
     title: "Davide Imola - Software Engineer & Tech Speaker",
     description:
       "Software Engineer from Verona. Building infrastructure with Kubernetes and Go. Speaking at conferences across Europe.",
-    images: ["https://davideimola.dev/og-image.png"],
+    images: [
+      "/og?title=Davide%20Imola&subtitle=Software%20Engineer%20%26%20Tech%20Speaker",
+    ],
   },
   icons: [
     { rel: "icon", url: "/favicon.svg", type: "image/svg+xml" },
