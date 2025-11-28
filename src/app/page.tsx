@@ -43,7 +43,7 @@ export default function Home() {
 
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-8">
-              <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-2xl ring-4 ring-[#C91F37]/20">
+              <div className="float relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-2xl ring-4 ring-[#C91F37]/20">
                 <Image
                   src="/images/davide-speaking-profile.webp"
                   alt="Davide Imola presenting at a conference"
@@ -58,6 +58,9 @@ export default function Home() {
               <span className="italic">Ciao</span>, I&apos;m{" "}
               <span className="gradient-text">Davide Imola</span>
             </h1>
+
+            {/* Decorative accent line */}
+            <div className="mx-auto mt-6 h-0.5 w-32 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               Software Engineer from Verona building secure infrastructure and

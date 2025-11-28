@@ -47,11 +47,13 @@ export default function Blog() {
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
-              Technical Blog
+              Blog
             </h1>
+            {/* Decorative accent line */}
+            <div className="mx-auto mt-6 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
-              「Sharing insights, best practices, and lessons learned from
-              building software and fostering tech communities.」
+              「Thoughts on infrastructure, security, development, and building
+              communities.」
             </p>
 
             {/* RSS Feed Link */}

@@ -39,6 +39,8 @@ export default function About() {
               <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
                 About Me
               </h1>
+              {/* Decorative accent line */}
+              <div className="mx-auto mt-6 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
                 「Passionate about technology, community building, and
                 continuous learning.」
@@ -481,7 +483,9 @@ export default function About() {
                   </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-[#a39e98]">Years of Experience</span>
+                      <span className="text-[#a39e98]">
+                        Years of Experience
+                      </span>
                       <span className="font-semibold text-gray-100">10+</span>
                     </div>
                     <div className="flex justify-between">
