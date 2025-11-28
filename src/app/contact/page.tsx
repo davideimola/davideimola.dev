@@ -127,6 +127,8 @@ export default function Contact() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Let&apos;s Connect
             </h1>
+            {/* Decorative accent line */}
+            <div className="mx-auto mt-6 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Whether you&apos;re looking for a speaker, want to collaborate
               on infrastructure projects, or just want to chat about tech,

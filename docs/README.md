@@ -4,55 +4,62 @@ Complete documentation for davideimola.dev
 
 ---
 
-## 📚 Table of Contents
-
-### 🛠 **Setup Guides**
-
-Step-by-step instructions for configuring external services:
-
-- **[Contact Form Setup](./setup/contact-form.md)**  
-  Configure Resend API for the contact form functionality
-
-- **[Newsletter Setup](./setup/newsletter.md)**  
-  Set up Kit (formerly ConvertKit) for newsletter subscriptions
-
----
-
-### 💻 **Development**
-
-Documentation about features and changes:
-
-- **[Features Changelog](./development/features-changelog.md)**  
-  Complete log of all features implemented (uses, contact, menu, etc.)
-
-- **[Menu Optimization](./development/menu-optimization.md)**  
-  Documentation of navigation menu improvements and dropdown implementation
-
----
+## 📚 Documentation Structure
 
 ### 🎨 **Design**
+- **[Brand Identity](./design/brand-identity.md)** - Complete design system, color palette, typography, and Japanese aesthetic principles
 
-Brand identity and design system documentation:
-
-- **[Brand Identity](./design/brand-identity.md)**  
-  Complete design system, Japanese aesthetic principles, color palette
-
-- **[Brand Audit](./design/brand-audit.md)**  
-  Initial site audit and recommendations that led to current features
+### 💻 **Development**
+- **[Development Guide](./DEVELOPMENT.md)** - Tech stack, project structure, features, and development workflow
 
 ---
 
-## 🚀 Quick Links
+## 🚀 Quick Start
 
-- **[Content Management Guide](../src/content/README.md)** – How to update content
-- **[Main README](../README.md)** – Project overview
-- **Environment Variables** – See setup guides above
+```bash
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+
+# Build for production
+pnpm build
+```
+
+See [DEVELOPMENT.md](./DEVELOPMENT.md) for detailed instructions.
 
 ---
 
-## 📝 Notes
+## 🎨 Design System
 
-All documentation is written in Markdown and kept up-to-date with the latest changes.
+The site follows a dual-culture aesthetic combining:
+- **Italian elegance** (Sprezzatura, Bella Figura)
+- **Japanese discipline** (Wabi-sabi, Kanso, Ma)
 
-**Last Updated:** October 2025
+**Key Colors:**
+- Sumi Black: `#0D0D0D`
+- Akane Red: `#C91F37`
+- Warm Gray Scale: `#1A1816` → `#E6E4E0`
 
+See [design/brand-identity.md](./design/brand-identity.md) for complete guidelines.
+
+---
+
+## 📝 Content Management
+
+Content is managed via TypeScript files:
+- **Blog Posts:** `src/content/blog-posts.ts`
+- **Speaking Events:** `src/content/speaking-events.ts`
+- **Projects:** `src/content/projects.ts`
+
+---
+
+## 🔗 Links
+
+- **[Main README](../README.md)** - Project overview
+- **[Live Site](https://davideimola.dev)** - Production deployment
+
+---
+
+**Last Updated:** November 2024
