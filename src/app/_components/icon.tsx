@@ -310,10 +310,10 @@ export function Icon({
   const variantClasses = {
     default: "text-gray-100",
     accent: "text-[#C91F37]",
-    muted: "text-gray-400",
+    muted: "text-[#a39e98]",
   };
 
-  const containerClass = `${sizeClasses[size]} flex items-center justify-center rounded-lg bg-gray-800/50 ${variantClasses[variant]} ${className}`;
+  const containerClass = `${sizeClasses[size]} flex items-center justify-center rounded-lg bg-[#2A2725]/50 ${variantClasses[variant]} ${className}`;
   const Container = inline ? "span" : "div";
 
   // Handle Lucide icons

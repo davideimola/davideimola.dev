@@ -30,7 +30,7 @@ export default function About() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -39,7 +39,7 @@ export default function About() {
               <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
                 About Me
               </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
                 「Passionate about technology, community building, and
                 continuous learning.」
               </p>
@@ -56,7 +56,7 @@ export default function About() {
                   <h2 className="font-playfair text-3xl font-bold text-gray-100">
                     What I&apos;m Doing Now
                   </h2>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-[#726d68]">
                     (Updated {nowInfo.lastUpdated})
                   </span>
                 </div>
@@ -65,7 +65,7 @@ export default function About() {
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Current Role */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <div className="mb-3 flex items-center gap-2">
                     <Icon name="💼" type="lucide" size="sm" variant="accent" />
                     <h3 className="text-lg font-semibold text-gray-100">
@@ -85,7 +85,7 @@ export default function About() {
                         <p className="text-base font-medium text-[#C91F37]">
                           {nowInfo.currentRole.title}
                         </p>
-                        <p className="text-sm text-gray-300">
+                        <p className="text-sm text-[#d4cfc9]">
                           {nowInfo.currentRole.company}
                         </p>
                       </div>
@@ -98,33 +98,33 @@ export default function About() {
                       <p className="mb-2 text-base font-medium text-[#C91F37]">
                         {nowInfo.currentRole.title}
                       </p>
-                      <p className="mb-1 text-sm text-gray-300">
+                      <p className="mb-1 text-sm text-[#d4cfc9]">
                         {nowInfo.currentRole.company}
                       </p>
                     </>
                   )}
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[#726d68]">
                     {nowInfo.currentRole.description}
                   </p>
                 </div>
 
                 {/* Location */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <div className="mb-3 flex items-center gap-2">
                     <Icon name="📍" type="lucide" size="sm" variant="accent" />
                     <h3 className="text-lg font-semibold text-gray-100">
                       Based In
                     </h3>
                   </div>
-                  <p className="mb-2 text-base font-medium text-gray-300">
+                  <p className="mb-2 text-base font-medium text-[#d4cfc9]">
                     {nowInfo.location.city}, {nowInfo.location.country}{" "}
                     {nowInfo.location.flag}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[#726d68]">
                     {nowInfo.location.timezone}
                   </p>
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-[#726d68]">
                     Available for{" "}
                     {nowInfo.location.availableFor
                       .map((item) => item.toLowerCase())
@@ -133,7 +133,7 @@ export default function About() {
                 </div>
 
                 {/* Currently Learning */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <div className="mb-3 flex items-center gap-2">
                     <Icon name="📚" type="lucide" size="sm" variant="accent" />
                     <h3 className="text-lg font-semibold text-gray-100">
@@ -144,7 +144,7 @@ export default function About() {
                     {nowInfo.learning.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-sm text-gray-400"
+                        className="flex items-start gap-2 text-sm text-[#a39e98]"
                       >
                         <span className="text-[#C91F37]">▸</span>
                         {item}
@@ -154,7 +154,7 @@ export default function About() {
                 </div>
 
                 {/* Working On */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <div className="mb-3 flex items-center gap-2">
                     <Icon name="🚀" type="lucide" size="sm" variant="accent" />
                     <h3 className="text-lg font-semibold text-gray-100">
@@ -165,7 +165,7 @@ export default function About() {
                     {nowInfo.workingOn.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-sm text-gray-400"
+                        className="flex items-start gap-2 text-sm text-[#a39e98]"
                       >
                         <span className="text-[#C91F37]">▸</span>
                         {item}
@@ -182,7 +182,7 @@ export default function About() {
                 </h3>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {/* Football/Soccer */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.sports.emoji}
@@ -190,17 +190,17 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.sports.name}
                       </h4>
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-[#726d68]">
                       {nowInfo.hobbies.sports.details}
                     </p>
                   </div>
 
                   {/* BBQ */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.cooking.emoji}
@@ -208,17 +208,17 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.cooking.name}
                       </h4>
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-[#726d68]">
                       {nowInfo.hobbies.cooking.details}
                     </p>
                   </div>
 
                   {/* Video Gaming */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.gaming.emoji}
@@ -226,12 +226,12 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.gaming.name}
                       </h4>
                     </div>
                     {nowInfo.hobbies.gaming.currentlyPlaying.length > 0 && (
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-[#726d68]">
                         Playing:{" "}
                         {nowInfo.hobbies.gaming.currentlyPlaying.join(", ")}
                       </p>
@@ -239,7 +239,7 @@ export default function About() {
                   </div>
 
                   {/* Board Gaming */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.boardGaming.emoji}
@@ -247,16 +247,16 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.boardGaming.name}
                       </h4>
                     </div>
-                    <p className="mb-1 text-xs text-gray-500">
+                    <p className="mb-1 text-xs text-[#726d68]">
                       {nowInfo.hobbies.boardGaming.details}
                     </p>
                     {nowInfo.hobbies.boardGaming.currentlyPlaying.length >
                       0 && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-[#a39e98]">
                         On the table:{" "}
                         {nowInfo.hobbies.boardGaming.currentlyPlaying.join(
                           ", ",
@@ -266,7 +266,7 @@ export default function About() {
                   </div>
 
                   {/* Tabletop RPG / D&D */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.roleplay.emoji}
@@ -274,22 +274,22 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.roleplay.name}
                       </h4>
                     </div>
-                    <p className="mb-1 text-xs text-gray-500">
+                    <p className="mb-1 text-xs text-[#726d68]">
                       {nowInfo.hobbies.roleplay.details}
                     </p>
                     {nowInfo.hobbies.roleplay.currentCampaign && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-[#a39e98]">
                         Campaign: {nowInfo.hobbies.roleplay.currentCampaign}
                       </p>
                     )}
                   </div>
 
                   {/* Music */}
-                  <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 transition-colors hover:border-gray-700">
+                  <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
                         name={nowInfo.hobbies.music.emoji}
@@ -297,11 +297,11 @@ export default function About() {
                         size="sm"
                         variant="accent"
                       />
-                      <h4 className="text-sm font-medium text-gray-300">
+                      <h4 className="text-sm font-medium text-[#d4cfc9]">
                         {nowInfo.hobbies.music.name}
                       </h4>
                     </div>
-                    <p className="mb-2 text-xs text-gray-500">
+                    <p className="mb-2 text-xs text-[#726d68]">
                       {nowInfo.hobbies.music.details}
                     </p>
                     {nowInfo.hobbies.music.playlistUrl && (
@@ -325,8 +325,8 @@ export default function About() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-lg border border-gray-800 bg-gray-900/50 p-4">
-                <p className="text-sm text-gray-500">
+              <div className="mt-6 rounded-lg border border-[#2A2725] bg-[#1A1816]/50 p-4">
+                <p className="text-sm text-[#726d68]">
                   <Icon
                     name="💡"
                     type="lucide"
@@ -340,7 +340,7 @@ export default function About() {
                     href="https://nownownow.com/about"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 underline hover:text-[#C91F37]"
+                    className="text-[#a39e98] underline hover:text-[#C91F37]"
                   >
                     Derek Sivers&apos; /now page movement
                   </a>{" "}
@@ -353,7 +353,7 @@ export default function About() {
         </section>
 
         {/* Main Content */}
-        <section className="bg-gray-900/30 py-16 sm:py-24">
+        <section className="bg-[#1A1816]/30 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
               {/* Main Content */}
@@ -363,7 +363,7 @@ export default function About() {
                     My Story
                   </h2>
                   <div className="mb-6 h-0.5 w-16 bg-gradient-to-r from-[#C91F37] to-transparent"></div>
-                  <p className="mb-6 text-gray-400">
+                  <p className="mb-6 text-[#a39e98]">
                     I'm from Verona, Italy, where I also studied Computer
                     Science. I've been writing code professionally for over 10
                     years now, working both as a freelancer and at various
@@ -372,7 +372,7 @@ export default function About() {
                     applications.
                   </p>
 
-                  <p className="mb-6 text-gray-400">
+                  <p className="mb-6 text-[#a39e98]">
                     For most of my career, I focused on Platform and DevOps
                     Engineering. Setting up Kubernetes clusters, implementing
                     GitOps with Flux, building CI/CD pipelines, managing
@@ -382,7 +382,7 @@ export default function About() {
                     about its simplicity and performance.
                   </p>
 
-                  <p className="mb-6 text-gray-400">
+                  <p className="mb-6 text-[#a39e98]">
                     Security has always been important to me. Not just as a
                     checkbox, but actually understanding how to build systems
                     that are secure from the ground up. This interest eventually
@@ -395,7 +395,7 @@ export default function About() {
                   <h3 className="mb-4 text-xl font-semibold text-gray-100">
                     Community & Speaking
                   </h3>
-                  <p className="mb-6 text-gray-400">
+                  <p className="mb-6 text-[#a39e98]">
                     Beyond my day job, I help run Schrodinger Hat, a non-profit
                     that's brought open source events to over 20,000 people
                     across Europe. Our biggest event is Open Source Day in
@@ -409,7 +409,7 @@ export default function About() {
                   <h3 className="mb-4 text-xl font-semibold text-gray-100">
                     What I'm Learning Now
                   </h3>
-                  <p className="mb-6 text-gray-400">
+                  <p className="mb-6 text-[#a39e98]">
                     Right now, I'm working on becoming a better team leader. I'm
                     learning that technical skills are just part of the
                     equation—understanding how to help a team grow and work
@@ -422,13 +422,13 @@ export default function About() {
               {/* Sidebar */}
               <div className="space-y-8 lg:col-span-1">
                 {/* Skills */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <h3 className="mb-4 text-lg font-semibold text-gray-100">
                     Technical Skills
                   </h3>
                   <div className="space-y-3">
                     <div>
-                      <h4 className="mb-2 text-sm font-medium text-gray-300">
+                      <h4 className="mb-2 text-sm font-medium text-[#d4cfc9]">
                         Languages & Frameworks
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -450,7 +450,7 @@ export default function About() {
                       </div>
                     </div>
                     <div>
-                      <h4 className="mb-2 text-sm font-medium text-gray-300">
+                      <h4 className="mb-2 text-sm font-medium text-[#d4cfc9]">
                         Infrastructure & Security
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -475,43 +475,43 @@ export default function About() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="mb-8 rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="mb-8 rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <h3 className="mb-4 text-lg font-semibold text-gray-100">
                     Quick Stats
                   </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Years of Experience</span>
+                      <span className="text-[#a39e98]">Years of Experience</span>
                       <span className="font-semibold text-gray-100">10+</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">
+                      <span className="text-[#a39e98]">
                         Conferences Organized
                       </span>
                       <span className="font-semibold text-gray-100">2+</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">
+                      <span className="text-[#a39e98]">
                         Speaking Engagements
                       </span>
                       <span className="font-semibold text-gray-100">14+</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Community Reach</span>
+                      <span className="text-[#a39e98]">Community Reach</span>
                       <span className="font-semibold text-gray-100">20k+</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Contact Info */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+                <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                   <h3 className="mb-4 text-lg font-semibold text-gray-100">
                     Get in Touch
                   </h3>
                   <div className="space-y-3">
                     <a
                       href="mailto:hello@davideimola.dev"
-                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
+                      className="flex items-center text-[#a39e98] transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -532,7 +532,7 @@ export default function About() {
                       href="https://linkedin.com/in/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
+                      className="flex items-center text-[#a39e98] transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -547,7 +547,7 @@ export default function About() {
                       href="https://github.com/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 transition-colors hover:text-[#C91F37]"
+                      className="flex items-center text-[#a39e98] transition-colors hover:text-[#C91F37]"
                     >
                       <svg
                         className="mr-2 h-4 w-4"
@@ -571,7 +571,7 @@ export default function About() {
           <div className="mx-auto max-w-4xl pt-16 pb-24">
             <Link
               href="/uses"
-              className="group block overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900 to-gray-900/50 p-8 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/10"
+              className="group block overflow-hidden rounded-2xl border border-[#2A2725] bg-gradient-to-br from-[#1A1816] to-[#1A1816]/50 p-8 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/10"
             >
               <div className="flex items-start gap-4">
                 <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#C91F37]/10 transition-transform duration-300 group-hover:scale-110">
@@ -581,7 +581,7 @@ export default function About() {
                   <h3 className="text-xl font-semibold text-gray-100 transition-colors group-hover:text-[#C91F37]">
                     Curious about my setup?
                   </h3>
-                  <p className="mt-2 text-gray-400">
+                  <p className="mt-2 text-[#a39e98]">
                     Check out the hardware, software, and tools I use daily for
                     development, infrastructure work, and content creation.
                   </p>

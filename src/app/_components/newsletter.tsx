@@ -59,13 +59,13 @@ export function Newsletter({
   };
 
   return (
-    <section className="bg-gray-900 py-16 sm:py-24">
+    <section className="bg-[#1A1816] py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-100">
             {title}
           </h2>
-          <p className="mt-4 text-lg leading-8 text-gray-400">{description}</p>
+          <p className="mt-4 text-lg leading-8 text-[#a39e98]">{description}</p>
 
           {status === "success" ? (
             <div className="mt-8 rounded-lg bg-green-900/20 p-6 ring-1 ring-green-800">
@@ -87,7 +87,7 @@ export function Newsletter({
                   Successfully subscribed!
                 </p>
               </div>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-[#a39e98]">
                 Check your email to confirm your subscription.
               </p>
             </div>
@@ -106,7 +106,7 @@ export function Newsletter({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={status === "loading"}
-                  className="min-w-0 flex-auto rounded-md border-0 bg-gray-800 px-3.5 py-2 text-gray-100 shadow-sm ring-1 ring-gray-700 transition-colors ring-inset placeholder:text-gray-500 focus:ring-2 focus:ring-[#C91F37] focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6"
+                  className="min-w-0 flex-auto rounded-md border-0 bg-[#2A2725] px-3.5 py-2 text-gray-100 shadow-sm ring-1 ring-[#3E3B38] transition-colors ring-inset placeholder:text-[#726d68] focus:ring-2 focus:ring-[#C91F37] focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6"
                   placeholder="Enter your email"
                 />
                 <button
@@ -149,12 +149,12 @@ export function Newsletter({
                 </div>
               )}
 
-              <p className="mt-4 text-sm leading-6 text-gray-500">
+              <p className="mt-4 text-sm leading-6 text-[#726d68]">
                 No spam, unsubscribe at any time. By subscribing, you agree to
                 our{" "}
                 <a
                   href="/privacy"
-                  className="font-semibold text-gray-400 hover:text-[#C91F37]"
+                  className="font-semibold text-[#a39e98] hover:text-[#C91F37]"
                 >
                   Privacy Policy
                 </a>

@@ -62,7 +62,7 @@ export default function Speaking() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -70,7 +70,7 @@ export default function Speaking() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Speaking & Events
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Sharing knowledge about infrastructure, security, GitOps,
               Kubernetes, and Go at international conferences and community
               events.」
@@ -82,25 +82,25 @@ export default function Speaking() {
                 <div className="text-3xl font-bold text-[#C91F37]">
                   {stats.totalTalks}
                 </div>
-                <div className="text-sm text-gray-500">Total Talks</div>
+                <div className="text-sm text-[#726d68]">Total Talks</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-[#C91F37]">
                   {stats.conferences}
                 </div>
-                <div className="text-sm text-gray-500">Conferences</div>
+                <div className="text-sm text-[#726d68]">Conferences</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-[#C91F37]">
                   {stats.countries}
                 </div>
-                <div className="text-sm text-gray-500">Countries</div>
+                <div className="text-sm text-[#726d68]">Countries</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-[#C91F37]">
                   {stats.topics.length}
                 </div>
-                <div className="text-sm text-gray-500">Core Topics</div>
+                <div className="text-sm text-[#726d68]">Core Topics</div>
               </div>
             </div>
 
@@ -117,13 +117,13 @@ export default function Speaking() {
             </div>
 
             {/* Speaker Kit CTA */}
-            <div className="mt-12 rounded-xl border border-[#C91F37]/30 bg-gradient-to-r from-gray-900 to-gray-800 p-6 shadow-lg">
+            <div className="mt-12 rounded-xl border border-[#C91F37]/30 bg-gradient-to-r from-[#1A1816] to-[#2A2725] p-6 shadow-lg">
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                 <div className="text-center sm:text-left">
                   <h3 className="mb-1 text-lg font-semibold text-gray-100">
                     Conference Organizer?
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-[#a39e98]">
                     Download my speaker kit with bio, photos, and talk abstracts
                   </p>
                 </div>
@@ -153,14 +153,14 @@ export default function Speaking() {
 
         {/* Upcoming Events */}
         {upcomingEvents.length > 0 ? (
-          <section className="bg-gray-900/30 py-16">
+          <section className="bg-[#1A1816]/30 py-16">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto mb-12 max-w-2xl text-center">
                 <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100">
                   Upcoming Events
                 </h2>
                 <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-                <p className="text-lg leading-8 text-gray-400">
+                <p className="text-lg leading-8 text-[#a39e98]">
                   Join me at these upcoming conferences and meetups
                 </p>
               </div>
@@ -169,7 +169,7 @@ export default function Speaking() {
                 {upcomingEvents.map((event) => (
                   <div
                     key={event.id}
-                    className="rounded-xl border border-[#C91F37]/50 bg-gray-900 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-[#C91F37]/10"
+                    className="rounded-xl border border-[#C91F37]/50 bg-[#1A1816] p-6 transition-all duration-300 hover:shadow-lg hover:shadow-[#C91F37]/10"
                   >
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                       <div className="flex-grow">
@@ -180,7 +180,7 @@ export default function Speaking() {
                           <span className="inline-flex items-center rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400 ring-1 ring-green-500/20">
                             Upcoming
                           </span>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-[#726d68]">
                             {event.type}
                           </span>
                         </div>
@@ -193,18 +193,18 @@ export default function Speaking() {
                         </p>
 
                         {event.coSpeaker && (
-                          <p className="mb-2 text-xs text-gray-500">
+                          <p className="mb-2 text-xs text-[#726d68]">
                             {event.coSpeaker}
                           </p>
                         )}
 
                         {event.description && (
-                          <p className="mb-3 text-gray-400">
+                          <p className="mb-3 text-[#a39e98]">
                             {event.description}
                           </p>
                         )}
 
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-[#726d68]">
                           <div className="flex items-center">
                             <svg
                               className="mr-1 h-4 w-4"
@@ -277,18 +277,18 @@ export default function Speaking() {
             </div>
           </section>
         ) : (
-          <section className="bg-gray-900/30 py-16">
+          <section className="bg-[#1A1816]/30 py-16">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-3xl text-center">
                 <div className="mb-8">
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800">
-                    <span className="text-3xl text-gray-400">📅</span>
+                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#3E3B38] to-[#2A2725]">
+                    <span className="text-3xl text-[#a39e98]">📅</span>
                   </div>
                 </div>
                 <h2 className="font-playfair mb-4 text-2xl font-bold text-gray-100">
                   Planning the Next Adventure
                 </h2>
-                <p className="mb-6 leading-relaxed text-gray-400">
+                <p className="mb-6 leading-relaxed text-[#a39e98]">
                   Currently preparing new talks and workshops on infrastructure,
                   GitOps, and Kubernetes. Interested in having me speak at your
                   event? Let&apos;s connect!
@@ -302,7 +302,7 @@ export default function Speaking() {
                   </Link>
                   <Link
                     href="/experience"
-                    className="inline-flex items-center justify-center rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-200"
+                    className="inline-flex items-center justify-center rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-colors hover:border-[#726d68] hover:text-[#e6e4e0]"
                   >
                     View my experience
                   </Link>
@@ -320,7 +320,7 @@ export default function Speaking() {
                 Past Speaking Engagements
               </h2>
               <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-              <p className="text-lg leading-8 text-gray-400">
+              <p className="text-lg leading-8 text-[#a39e98]">
                 Conferences, meetups, and podcasts where I&apos;ve shared
                 knowledge
               </p>
@@ -330,13 +330,13 @@ export default function Speaking() {
               {pastEvents.map((event) => (
                 <div
                   key={event.id}
-                  className="rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
+                  className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
                 >
                   <div className="mb-3 flex items-center gap-3">
                     <span className="inline-flex items-center rounded-full bg-[#C91F37]/10 px-3 py-1 text-xs font-medium text-[#C91F37]">
                       {event.role}
                     </span>
-                    <span className="text-sm text-gray-500">{event.type}</span>
+                    <span className="text-sm text-[#726d68]">{event.type}</span>
                   </div>
 
                   <h3 className="mb-2 text-lg font-semibold text-gray-100">
@@ -347,18 +347,18 @@ export default function Speaking() {
                   </p>
 
                   {event.coSpeaker && (
-                    <p className="mb-2 text-xs text-gray-500">
+                    <p className="mb-2 text-xs text-[#726d68]">
                       {event.coSpeaker}
                     </p>
                   )}
 
                   {event.description && (
-                    <p className="mb-3 text-sm text-gray-400">
+                    <p className="mb-3 text-sm text-[#a39e98]">
                       {event.description}
                     </p>
                   )}
 
-                  <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-[#726d68]">
                     <div className="flex items-center">
                       <svg
                         className="mr-1 h-4 w-4"
@@ -458,13 +458,13 @@ export default function Speaking() {
         </section>
 
         {/* Call to Action */}
-        <section className="bg-gray-900 py-16 sm:py-24">
+        <section className="bg-[#1A1816] py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
                 Invite me to speak
               </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-400">
+              <p className="mt-6 text-lg leading-8 text-[#a39e98]">
                 Looking for a speaker for your event? I&apos;d love to share my
                 experience in infrastructure, security, GitOps, Kubernetes, Go,
                 or community building.
@@ -480,7 +480,7 @@ export default function Speaking() {
                   href="https://github.com/davideimola"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm leading-6 font-semibold text-gray-300 transition-colors hover:text-[#C91F37]"
+                  className="text-sm leading-6 font-semibold text-[#d4cfc9] transition-colors hover:text-[#C91F37]"
                 >
                   View GitHub <span aria-hidden="true">→</span>
                 </Link>

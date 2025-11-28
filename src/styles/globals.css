@@ -10,35 +10,41 @@
 }
 
 /* Enhanced code blocks */
-.blog-content pre[class*='language-'] {
+.blog-content pre[class*="language-"] {
   position: relative;
   padding-top: 3rem !important; /* Space for header */
   border: 1px solid rgba(75, 85, 99, 0.3); /* gray-600 with opacity */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.1);
   overflow-x: auto; /* Horizontal scroll on mobile */
   max-width: 100%; /* Prevent overflow */
 }
 
 /* Prevent code from overflowing */
-.blog-content pre[class*='language-'] code {
+.blog-content pre[class*="language-"] code {
   display: block;
   max-width: 100%;
 }
 
 /* Mobile: show copy button always, desktop: show on hover */
 @media (max-width: 640px) {
-  .blog-content pre[class*='language-'] .copy-button {
+  .blog-content pre[class*="language-"] .copy-button {
     opacity: 1 !important;
   }
 }
 
 .code-block-header {
-  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.7));
+  background: linear-gradient(
+    to bottom,
+    rgba(17, 24, 39, 0.95),
+    rgba(17, 24, 39, 0.7)
+  );
   backdrop-filter: blur(4px);
   border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
 }
 
-.blog-content pre[class*='language-']:hover .copy-button {
+.blog-content pre[class*="language-"]:hover .copy-button {
   opacity: 1 !important;
 }
 
@@ -50,7 +56,7 @@
 
 /* Touch devices: always show copy button */
 @media (hover: none) {
-  .blog-content pre[class*='language-'] .copy-button {
+  .blog-content pre[class*="language-"] .copy-button {
     opacity: 1 !important;
   }
 }
@@ -80,22 +86,24 @@
 
 .blog-content h1 {
   color: rgb(243 244 246); /* gray-100 */
-  font-size: 2.25rem;
+  font-size: 3rem; /* 48px - increased from 36px */
   font-weight: 700;
   line-height: 1.1;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   font-family: var(--font-serif); /* Playfair Display - Italian elegance */
+  letter-spacing: -0.02em; /* Subtle tracking for elegance */
 }
 
 .blog-content h2 {
   color: rgb(243 244 246); /* gray-100 */
-  font-size: 1.875rem;
+  font-size: 2.5rem; /* 40px - increased from 30px */
   font-weight: 700;
   line-height: 1.2;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   font-family: var(--font-serif); /* Playfair Display - Italian elegance */
+  letter-spacing: -0.01em; /* Subtle tracking for elegance */
   position: relative;
   padding-bottom: 1rem;
 }
@@ -112,17 +120,18 @@
 
 .blog-content h3 {
   color: rgb(243 244 246); /* gray-100 */
-  font-size: 1.5rem;
+  font-size: 1.875rem; /* 30px - increased from 24px */
   font-weight: 600;
   line-height: 1.3;
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-family: var(--font-serif); /* Playfair Display for consistency */
+  letter-spacing: -0.01em;
 }
 
 .blog-content h4 {
   color: rgb(229 231 235); /* gray-200 */
-  font-size: 1.25rem;
+  font-size: 1.5rem; /* 24px - increased from 20px */
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
@@ -130,7 +139,7 @@
 
 .blog-content p {
   color: rgb(156 163 175); /* gray-400 */
-  line-height: 1.75;
+  line-height: 1.8; /* Increased from 1.75 for better readability */
   margin-bottom: 1.5rem;
 }
 
@@ -295,18 +304,29 @@
 }
 
 @theme {
-  --font-sans: var(--font-geist-sans), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    var(--font-geist-sans), var(--font-noto-sans-jp), ui-sans-serif, system-ui,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
   --font-serif: var(--font-playfair), Georgia, serif;
-  
+
   /* Dual-culture color palette - Japan & Italy */
   /* Japanese colors (日本) */
   --color-akane: #c91f37; /* 赤 - Traditional red */
   --color-beni: #d3381c; /* 紅 - Crimson */
   --color-ai: #165e83; /* 藍 - Indigo */
-  --color-sumi: #0a0a0a; /* 墨 - Ink black */
-  
+  --color-sumi: #0d0d0d; /* 墨 - Ink black (refined, warmer) */
+
   /* Italian colors (Italia) */
   --color-verde: #009246; /* 🇮🇹 Italian flag green */
   --color-verde-scuro: #007a3d; /* Darker green for hover */
+
+  /* Warm gray scale - Japanese sumi aesthetic */
+  --color-warm-charcoal: #1a1816; /* Replaces gray-900 */
+  --color-warm-slate: #2a2725; /* Replaces gray-800 */
+  --color-warm-stone: #3e3b38; /* Replaces gray-700 */
+  --color-warm-ash: #54504c; /* Replaces gray-600 */
+  --color-warm-pewter: #726d68; /* Replaces gray-500 */
+  --color-warm-silver: #a39e98; /* Replaces gray-400 */
+  --color-warm-mist: #d4cfc9; /* Replaces gray-300 */
 }

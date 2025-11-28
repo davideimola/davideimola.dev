@@ -12,6 +12,7 @@ import {
 } from "~/app/_components/structured-data";
 import { Analytics } from "~/app/_components/analytics";
 import { ScrollProgress } from "~/app/_components/scroll-progress";
+import { CommandMenu } from "~/app/_components/command-menu";
 
 export const metadata: Metadata = {
   title: "Davide Imola - Software Engineer & Tech Speaker",
@@ -46,10 +47,7 @@ export const metadata: Metadata = {
       "/og?title=Davide%20Imola&subtitle=Software%20Engineer%20%26%20Tech%20Speaker",
     ],
   },
-  icons: [
-    { rel: "icon", url: "/favicon.svg", type: "image/svg+xml" },
-    { rel: "icon", url: "/favicon.png", type: "image/png" },
-  ],
+  icons: [{ rel: "icon", url: "/favicon.svg?v=2", type: "image/svg+xml" }],
   alternates: {
     types: {
       "application/rss+xml": [
@@ -95,13 +93,13 @@ export default function RootLayout({
       className={`${geist.variable} ${notoSansJP.variable} ${playfair.variable} scroll-smooth font-sans`}
     >
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
         <PersonStructuredData />
         <WebsiteStructuredData />
       </head>
-      <body className="bg-[#0A0A0A] text-gray-100 antialiased">
+      <body className="bg-[#0D0D0D] text-gray-100 antialiased">
         <ScrollProgress />
+        <CommandMenu />
         {children}
         <Analytics />
       </body>

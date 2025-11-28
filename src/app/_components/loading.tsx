@@ -4,9 +4,9 @@ import { Skeleton } from "./skeleton";
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="min-h-screen bg-[#0D0D0D]">
       {/* Header skeleton */}
-      <div className="sticky top-0 z-50 border-b border-gray-800 bg-[#0A0A0A]/95 backdrop-blur-sm">
+      <div className="sticky top-0 z-50 border-b border-[#2A2725] bg-[#0D0D0D]/95 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Skeleton className="h-8 w-32" />
@@ -40,7 +40,7 @@ export default function Loading() {
       </section>
 
       {/* Content sections skeleton */}
-      <section className="bg-gray-900/30 py-24 sm:py-32">
+      <section className="bg-[#1A1816]/30 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <Skeleton className="mx-auto mb-4 h-8 w-48" />

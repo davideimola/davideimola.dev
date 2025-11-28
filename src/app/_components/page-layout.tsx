@@ -13,7 +13,7 @@ export function PageLayout({ children, className = "" }: PageLayoutProps) {
   return (
     <>
       <Header />
-      <main className={`bg-[#0A0A0A] ${className}`}>{children}</main>
+      <main className={`bg-[#0D0D0D] ${className}`}>{children}</main>
       <Footer />
     </>
   );

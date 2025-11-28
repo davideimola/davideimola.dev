@@ -22,7 +22,7 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
       {/* Home */}
       <Link
         href="/"
-        className="flex items-center text-gray-500 transition-colors hover:text-[#C91F37]"
+        className="flex items-center text-[#726d68] transition-colors hover:text-[#C91F37]"
         aria-label="Home"
       >
         <Home className="h-4 w-4" />
@@ -38,7 +38,7 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="text-gray-500 transition-colors hover:text-[#C91F37]"
+                className="text-[#726d68] transition-colors hover:text-[#C91F37]"
               >
                 {item.label}
               </Link>
@@ -46,8 +46,8 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
               <span
                 className={`${
                   isLast
-                    ? "font-medium text-gray-300"
-                    : "text-gray-500"
+                    ? "font-medium text-[#d4cfc9]"
+                    : "text-[#726d68]"
                 }`}
                 aria-current={isLast ? "page" : undefined}
               >

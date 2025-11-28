@@ -26,7 +26,7 @@ export function SectionHeader({
         <div className="mx-auto h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
       )}
       {subtitle && (
-        <p className="mt-4 text-lg leading-8 text-gray-400">{subtitle}</p>
+        <p className="mt-4 text-lg leading-8 text-[#a39e98]">{subtitle}</p>
       )}
     </div>
   );

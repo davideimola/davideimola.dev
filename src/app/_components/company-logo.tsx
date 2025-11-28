@@ -63,7 +63,7 @@ export function CompanyLogo({ company, logo, size = "md" }: CompanyLogoProps) {
   if (logo) {
     return (
       <div
-        className={`${sizeClasses[size]} relative flex-shrink-0 overflow-hidden rounded-lg bg-white ring-1 ring-gray-800`}
+        className={`${sizeClasses[size]} relative flex-shrink-0 overflow-hidden rounded-lg bg-white ring-1 ring-[#2A2725]`}
       >
         <Image
           src={logo}
@@ -79,7 +79,7 @@ export function CompanyLogo({ company, logo, size = "md" }: CompanyLogoProps) {
   // Fallback to initials
   return (
     <div
-      className={`${sizeClasses[size]} flex flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${getColorFromString(company)} font-bold text-white ring-1 ring-gray-800`}
+      className={`${sizeClasses[size]} flex flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${getColorFromString(company)} font-bold text-white ring-1 ring-[#2A2725]`}
     >
       {initials}
     </div>

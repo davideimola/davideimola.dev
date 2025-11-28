@@ -30,7 +30,7 @@ export default function Uses() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -38,11 +38,11 @@ export default function Uses() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               My Setup & Tools
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Hardware, software, and services I use daily for development,
               infrastructure work, and content creation.」
             </p>
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-4 text-sm text-[#726d68]">
               Inspired by{" "}
               <a
                 href="https://uses.tech"
@@ -58,7 +58,7 @@ export default function Uses() {
         </section>
 
         {/* Hardware Section */}
-        <section className="bg-gray-900/30 py-20">
+        <section className="bg-[#1A1816]/30 py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto mb-16 max-w-2xl text-center">
               <h2 className="font-playfair mb-4 flex items-center justify-center gap-4 text-3xl font-bold tracking-tight text-gray-100">
@@ -95,7 +95,7 @@ export default function Uses() {
                       {category.items.map((item) => (
                         <div
                           key={item.name}
-                          className="rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50"
+                          className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50"
                         >
                           <div className="flex items-start gap-4">
                             {/* Hardware Icon */}
@@ -111,7 +111,7 @@ export default function Uses() {
                               }
                               if ("emoji" in item && item.emoji) {
                                 return (
-                                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gray-800/50 text-xl">
+                                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[#2A2725]/50 text-xl">
                                     {item.emoji}
                                   </div>
                                 );
@@ -123,11 +123,11 @@ export default function Uses() {
                               <h4 className="text-lg font-semibold text-gray-100">
                                 {item.name}
                               </h4>
-                              <p className="mt-2 text-sm text-gray-400">
+                              <p className="mt-2 text-sm text-[#a39e98]">
                                 {item.description}
                               </p>
                               {"specs" in item && item.specs && (
-                                <p className="mt-2 font-mono text-xs text-gray-500">
+                                <p className="mt-2 font-mono text-xs text-[#726d68]">
                                   {item.specs}
                                 </p>
                               )}
@@ -158,7 +158,7 @@ export default function Uses() {
                 {usesData.software.items.map((item) => (
                   <div
                     key={item.name}
-                    className="group rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
+                    className="group rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
                   >
                     <div className="flex items-start gap-4">
                       <ToolIcon
@@ -181,11 +181,11 @@ export default function Uses() {
                           <h3 className="text-base font-semibold text-gray-100">
                             {item.name}
                           </h3>
-                          <span className="inline-flex items-center rounded-full bg-gray-800 px-2 py-0.5 text-xs font-medium text-gray-500">
+                          <span className="inline-flex items-center rounded-full bg-[#2A2725] px-2 py-0.5 text-xs font-medium text-[#726d68]">
                             {item.category}
                           </span>
                         </div>
-                        <p className="mt-1.5 text-sm text-gray-400">
+                        <p className="mt-1.5 text-sm text-[#a39e98]">
                           {item.description}
                         </p>
                         {"link" in item && item.link && (
@@ -221,7 +221,7 @@ export default function Uses() {
         </section>
 
         {/* Development Stack Section */}
-        <section className="bg-gray-900/30 py-20">
+        <section className="bg-[#1A1816]/30 py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto mb-16 max-w-2xl text-center">
               <h2 className="font-playfair mb-4 flex items-center justify-center gap-4 text-3xl font-bold tracking-tight text-gray-100">
@@ -235,7 +235,7 @@ export default function Uses() {
                 {usesData.devStack.items.map((item) => (
                   <div
                     key={item.name}
-                    className="group rounded-lg border border-gray-800 bg-gray-900 p-5 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
+                    className="group rounded-lg border border-[#2A2725] bg-[#1A1816] p-5 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
                   >
                     <div className="flex items-start gap-3">
                       <ToolIcon
@@ -258,11 +258,11 @@ export default function Uses() {
                           <h3 className="text-sm font-semibold text-gray-100">
                             {item.name}
                           </h3>
-                          <span className="inline-flex items-center rounded-full bg-gray-800 px-1.5 py-0.5 text-xs font-medium text-gray-500">
+                          <span className="inline-flex items-center rounded-full bg-[#2A2725] px-1.5 py-0.5 text-xs font-medium text-[#726d68]">
                             {item.category}
                           </span>
                         </div>
-                        <p className="mt-1 text-xs text-gray-400">
+                        <p className="mt-1 text-xs text-[#a39e98]">
                           {item.description}
                         </p>
                         {"link" in item && item.link && (
@@ -299,7 +299,7 @@ export default function Uses() {
                 {usesData.services.items.map((item) => (
                   <div
                     key={item.name}
-                    className="group rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
+                    className="group rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
                   >
                     <div className="flex items-start gap-4">
                       <ToolIcon
@@ -322,11 +322,11 @@ export default function Uses() {
                           <h3 className="text-base font-semibold text-gray-100">
                             {item.name}
                           </h3>
-                          <span className="inline-flex items-center rounded-full bg-gray-800 px-2 py-0.5 text-xs font-medium text-gray-500">
+                          <span className="inline-flex items-center rounded-full bg-[#2A2725] px-2 py-0.5 text-xs font-medium text-[#726d68]">
                             {item.category}
                           </span>
                         </div>
-                        <p className="mt-1.5 text-sm text-gray-400">
+                        <p className="mt-1.5 text-sm text-[#a39e98]">
                           {item.description}
                         </p>
                         {"link" in item && item.link && (
@@ -362,7 +362,7 @@ export default function Uses() {
         </section>
 
         {/* VS Code Extensions Section */}
-        <section className="bg-gray-900/30 py-20">
+        <section className="bg-[#1A1816]/30 py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto mb-16 max-w-2xl text-center">
               <h2 className="font-playfair mb-4 flex items-center justify-center gap-4 text-3xl font-bold tracking-tight text-gray-100">
@@ -376,12 +376,12 @@ export default function Uses() {
                 {usesData.extensions.items.map((item) => (
                   <div
                     key={item.name}
-                    className="rounded-lg border border-gray-800 bg-gray-900 p-5 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
+                    className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-5 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg hover:shadow-[#C91F37]/5"
                   >
                     <h3 className="text-sm font-semibold text-gray-100">
                       {item.name}
                     </h3>
-                    <p className="mt-1 text-xs text-gray-400">
+                    <p className="mt-1 text-xs text-[#a39e98]">
                       {item.description}
                     </p>
                   </div>
@@ -392,14 +392,14 @@ export default function Uses() {
         </section>
 
         {/* Call to Action */}
-        <section className="relative bg-gray-900 py-16 sm:py-24">
+        <section className="relative bg-[#1A1816] py-16 sm:py-24">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-10" />
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-playfair text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
                 Questions about my setup?
               </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-400">
+              <p className="mt-6 text-lg leading-8 text-[#a39e98]">
                 「Have questions about any of these tools or want
                 recommendations? Feel free to reach out!」
               </p>
@@ -412,7 +412,7 @@ export default function Uses() {
                 </Link>
                 <Link
                   href="/about"
-                  className="font-playfair text-sm leading-6 font-semibold text-gray-300 underline underline-offset-4 transition-colors hover:text-[#C91F37]"
+                  className="font-playfair text-sm leading-6 font-semibold text-[#d4cfc9] underline underline-offset-4 transition-colors hover:text-[#C91F37]"
                 >
                   About me <span aria-hidden="true">→</span>
                 </Link>

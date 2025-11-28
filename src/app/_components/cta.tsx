@@ -23,7 +23,7 @@ export function CTA({
   const variantClasses = {
     primary:
       "rounded-md bg-[#C91F37] px-6 py-3 text-white shadow-sm hover:bg-[#D3381C]",
-    secondary: "text-gray-300 hover:text-[#C91F37]",
+    secondary: "text-[#d4cfc9] hover:text-[#C91F37]",
   };
 
   const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${className}`;

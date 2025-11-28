@@ -26,11 +26,11 @@ html {
 
 /* Hover effects for cards */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
@@ -104,7 +104,7 @@ html {
 .gradient-text {
   background: linear-gradient(-45deg, #C91F37, #D3381C, #009246, #00A651);
   background-size: 400% 400%;
-  animation: gradientShift 3s ease infinite;
+  animation: gradientShift 5s ease infinite; /* Slower, more elegant */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -82,14 +82,14 @@ export default function BlogPost({ params }: Props) {
     return (
       <>
         <Header />
-        <main className="bg-[#0A0A0A]">
+        <main className="bg-[#0D0D0D]">
           <section className="relative px-6 py-24 sm:py-32 lg:px-8">
             <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
             <div className="mx-auto max-w-4xl text-center">
               <div className="animate-pulse">
-                <div className="mx-auto mb-4 h-8 w-1/2 rounded bg-gray-700"></div>
-                <div className="mx-auto mb-2 h-4 w-3/4 rounded bg-gray-700"></div>
-                <div className="mx-auto h-4 w-1/2 rounded bg-gray-700"></div>
+                <div className="mx-auto mb-4 h-8 w-1/2 rounded bg-[#3e3b38]"></div>
+                <div className="mx-auto mb-2 h-4 w-3/4 rounded bg-[#3e3b38]"></div>
+                <div className="mx-auto h-4 w-1/2 rounded bg-[#3e3b38]"></div>
               </div>
             </div>
           </section>
@@ -103,14 +103,14 @@ export default function BlogPost({ params }: Props) {
     return (
       <>
         <Header />
-        <main className="bg-[#0A0A0A]">
+        <main className="bg-[#0D0D0D]">
           <section className="relative px-6 py-24 sm:py-32 lg:px-8">
             <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
             <div className="mx-auto max-w-4xl text-center">
               <h1 className="mb-4 text-4xl font-bold text-gray-100">
                 Post Not Found
               </h1>
-              <p className="mb-8 text-gray-400">{error}</p>
+              <p className="mb-8 text-[#a39e98]">{error}</p>
               <Link
                 href="/blog"
                 className="inline-flex items-center rounded-md border border-transparent bg-[#C91F37] px-6 py-3 text-base font-medium text-white transition-colors hover:bg-[#D3381C]"
@@ -129,14 +129,14 @@ export default function BlogPost({ params }: Props) {
     return (
       <>
         <Header />
-        <main className="bg-[#0A0A0A]">
+        <main className="bg-[#0D0D0D]">
           <section className="relative px-6 py-24 sm:py-32 lg:px-8">
             <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
             <div className="mx-auto max-w-4xl text-center">
               <h1 className="mb-4 text-4xl font-bold text-gray-100">
                 Post Not Found
               </h1>
-              <p className="mb-8 text-gray-400">
+              <p className="mb-8 text-[#a39e98]">
                 The requested blog post could not be found.
               </p>
               <Link
@@ -174,7 +174,7 @@ export default function BlogPost({ params }: Props) {
       <Header />
       <CodeBlockToolbar />
       <BackToTop />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section with Image */}
         <section className="relative overflow-hidden">
           {metadata.heroImage && (
@@ -191,7 +191,7 @@ export default function BlogPost({ params }: Props) {
             <div className="mb-4 flex items-center gap-3">
               <Link
                 href="/blog"
-                className="text-sm text-gray-400 transition-colors hover:text-[#C91F37]"
+                className="text-sm text-[#a39e98] transition-colors hover:text-[#C91F37]"
               >
                 ← Back to Blog
               </Link>
@@ -201,18 +201,18 @@ export default function BlogPost({ params }: Props) {
               <span className="inline-flex items-center rounded-full bg-[#C91F37]/10 px-3 py-1 text-sm font-medium text-[#C91F37] ring-1 ring-[#C91F37]/20">
                 {metadata.category}
               </span>
-              <time className="text-sm text-gray-500">
+              <time className="text-sm text-[#726d68]">
                 {formatDate(metadata.publishDate)}
               </time>
-              <span className="text-sm text-gray-500">•</span>
-              <span className="text-sm text-gray-500">{metadata.readTime}</span>
+              <span className="text-sm text-[#726d68]">•</span>
+              <span className="text-sm text-[#726d68]">{metadata.readTime}</span>
             </div>
 
             <h1 className="font-playfair mb-6 text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               {metadata.title}
             </h1>
 
-            <p className="mb-6 text-xl leading-8 text-gray-400">
+            <p className="mb-6 text-xl leading-8 text-[#a39e98]">
               {metadata.excerpt}
             </p>
 
@@ -220,7 +220,7 @@ export default function BlogPost({ params }: Props) {
               {metadata.tags.map((tag: string) => (
                 <span
                   key={tag}
-                  className="inline-block rounded bg-gray-800 px-2 py-1 text-xs text-gray-400"
+                  className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
                 >
                   {tag}
                 </span>
@@ -231,7 +231,7 @@ export default function BlogPost({ params }: Props) {
 
         {/* Featured Image */}
         {metadata.heroImage && (
-          <section className="bg-gray-900/30 py-8">
+          <section className="bg-[#1A1816]/30 py-8">
             <div className="mx-auto max-w-4xl px-6 lg:px-8">
               <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
                 <Image
@@ -248,7 +248,7 @@ export default function BlogPost({ params }: Props) {
         )}
 
         {/* Article Content with TOC */}
-        <article className="bg-gray-900/30 py-16 sm:py-24">
+        <article className="bg-[#1A1816]/30 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_250px]">
               {/* Main Content */}
@@ -268,12 +268,12 @@ export default function BlogPost({ params }: Props) {
         </article>
 
         {/* Share & Back to Blog */}
-        <section className="bg-gray-900 py-16">
+        <section className="bg-[#1A1816] py-16">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
               <Link
                 href="/blog"
-                className="text-sm font-semibold text-gray-300 transition-colors hover:text-[#C91F37]"
+                className="text-sm font-semibold text-[#d4cfc9] transition-colors hover:text-[#C91F37]"
               >
                 ← Back to all articles
               </Link>
@@ -282,7 +282,7 @@ export default function BlogPost({ params }: Props) {
                   href={blueskyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-gray-300 transition-colors hover:text-[#C91F37]"
+                  className="text-sm font-semibold text-[#d4cfc9] transition-colors hover:text-[#C91F37]"
                 >
                   Share on BlueSky
                 </a>
@@ -290,7 +290,7 @@ export default function BlogPost({ params }: Props) {
                   href={linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-gray-300 transition-colors hover:text-[#C91F37]"
+                  className="text-sm font-semibold text-[#d4cfc9] transition-colors hover:text-[#C91F37]"
                 >
                   Share on LinkedIn
                 </a>
@@ -311,7 +311,7 @@ export default function BlogPost({ params }: Props) {
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
-          <section className="bg-gray-900/30 py-16 sm:py-24">
+          <section className="bg-[#1A1816]/30 py-16 sm:py-24">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mb-12 text-center">
                 <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
@@ -324,7 +324,7 @@ export default function BlogPost({ params }: Props) {
                 {relatedPosts.map((relatedPost) => (
                   <article
                     key={relatedPost.id}
-                    className="group overflow-hidden rounded-xl border border-gray-800 bg-gray-900 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
+                    className="group overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816] transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
                   >
                     {/* Hero Image */}
                     <div className="relative aspect-[16/9] overflow-hidden">
@@ -336,8 +336,8 @@ export default function BlogPost({ params }: Props) {
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-700 to-gray-800">
-                          <span className="text-4xl text-gray-500">📝</span>
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#3E3B38] to-[#2A2725]">
+                          <span className="text-4xl text-[#726d68]">📝</span>
                         </div>
                       )}
                     </div>
@@ -356,7 +356,7 @@ export default function BlogPost({ params }: Props) {
                         </Link>
                       </h3>
 
-                      <p className="mb-4 line-clamp-3 text-sm text-gray-400">
+                      <p className="mb-4 line-clamp-3 text-sm text-[#a39e98]">
                         {relatedPost.excerpt}
                       </p>
 
@@ -365,18 +365,18 @@ export default function BlogPost({ params }: Props) {
                           {relatedPost.tags?.slice(0, 2).map((tag: string) => (
                             <span
                               key={tag}
-                              className="inline-block rounded bg-gray-800 px-2 py-1 text-xs text-gray-400"
+                              className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
                             >
                               {tag}
                             </span>
                           ))}
                           {relatedPost.tags && relatedPost.tags.length > 2 && (
-                            <span className="inline-block rounded bg-gray-800 px-2 py-1 text-xs text-gray-400">
+                            <span className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]">
                               +{relatedPost.tags.length - 2}
                             </span>
                           )}
                         </div>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-[#726d68]">
                           {relatedPost.readTime}
                         </span>
                       </div>
