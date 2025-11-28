@@ -102,6 +102,8 @@ export default function SpeakerKit() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Speaker Kit
             </h1>
+            {/* Decorative accent line */}
+            <div className="mx-auto mt-6 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Everything you need to know about booking me as a speaker.
               Download bio, photos, and talk abstracts.」
@@ -266,7 +268,9 @@ export default function SpeakerKit() {
                   </div>
                   <CopyButton text={bios.long} label="Copy" />
                 </div>
-                <p className="whitespace-pre-line text-[#d4cfc9]">{bios.long}</p>
+                <p className="whitespace-pre-line text-[#d4cfc9]">
+                  {bios.long}
+                </p>
               </div>
             </div>
           </div>

@@ -277,6 +277,8 @@ export default function Experience() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Professional Experience
             </h1>
+            {/* Decorative accent line */}
+            <div className="mx-auto mt-6 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               A comprehensive overview of my career journey, education, and
               technical expertise in software engineering.
@@ -421,7 +423,9 @@ export default function Experience() {
                           {edu.grade}
                         </div>
                       )}
-                      <p className="text-sm text-[#a39e98]">{edu.description}</p>
+                      <p className="text-sm text-[#a39e98]">
+                        {edu.description}
+                      </p>
                     </div>
                   ))}
                 </div>
