@@ -119,7 +119,7 @@ export default function Contact() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -127,7 +127,7 @@ export default function Contact() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Let&apos;s Connect
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Whether you&apos;re looking for a speaker, want to collaborate
               on infrastructure projects, or just want to chat about tech,
               I&apos;d love to hear from you.」
@@ -136,13 +136,13 @@ export default function Contact() {
         </section>
 
         {/* Contact Reasons */}
-        <section className="bg-gray-900/30 py-16">
+        <section className="bg-[#1A1816]/30 py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
               {contactReasons.map((reason) => (
                 <div
                   key={reason.title}
-                  className="rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50"
+                  className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50"
                 >
                   <div className="mb-4">
                     <Icon
@@ -155,7 +155,7 @@ export default function Contact() {
                   <h3 className="mb-2 text-lg font-semibold text-gray-100">
                     {reason.title}
                   </h3>
-                  <p className="text-sm text-gray-400">{reason.description}</p>
+                  <p className="text-sm text-[#a39e98]">{reason.description}</p>
                 </div>
               ))}
             </div>
@@ -172,7 +172,7 @@ export default function Contact() {
                   <h2 className="text-2xl font-bold tracking-tight text-gray-100">
                     Send me a message
                   </h2>
-                  <p className="mt-2 text-gray-400">
+                  <p className="mt-2 text-[#a39e98]">
                     Fill out the form below and I&apos;ll get back to you within
                     24-48 hours.
                   </p>
@@ -187,7 +187,7 @@ export default function Contact() {
                   <h2 className="text-2xl font-bold tracking-tight text-gray-100">
                     Other ways to reach me
                   </h2>
-                  <p className="mt-2 text-gray-400">
+                  <p className="mt-2 text-[#a39e98]">
                     Prefer a different channel? You can find me here:
                   </p>
                 </div>
@@ -205,7 +205,7 @@ export default function Contact() {
                           ? "noopener noreferrer"
                           : undefined
                       }
-                      className="group flex items-start gap-4 rounded-xl border border-gray-800 bg-gray-900 p-5 transition-all duration-300 hover:border-[#C91F37]/50"
+                      className="group flex items-start gap-4 rounded-xl border border-[#2A2725] bg-[#1A1816] p-5 transition-all duration-300 hover:border-[#C91F37]/50"
                     >
                       <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[#C91F37]/10 text-[#C91F37] transition-colors group-hover:bg-[#C91F37]/20">
                         {method.icon}
@@ -217,12 +217,12 @@ export default function Contact() {
                         <p className="mt-1 text-sm text-[#C91F37]">
                           {method.value}
                         </p>
-                        <p className="mt-1 text-xs text-gray-500">
+                        <p className="mt-1 text-xs text-[#726d68]">
                           {method.description}
                         </p>
                       </div>
                       <svg
-                        className="h-5 w-5 flex-shrink-0 text-gray-500 transition-all group-hover:translate-x-1 group-hover:text-[#C91F37]"
+                        className="h-5 w-5 flex-shrink-0 text-[#726d68] transition-all group-hover:translate-x-1 group-hover:text-[#C91F37]"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
@@ -239,7 +239,7 @@ export default function Contact() {
                 </div>
 
                 {/* Response Time */}
-                <div className="mt-8 rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+                <div className="mt-8 rounded-xl border border-[#2A2725] bg-[#1A1816]/50 p-6">
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-green-500/10 text-green-400">
                       <svg
@@ -260,7 +260,7 @@ export default function Contact() {
                       <h3 className="font-semibold text-gray-100">
                         Response Time
                       </h3>
-                      <p className="mt-1 text-sm text-gray-400">
+                      <p className="mt-1 text-sm text-[#a39e98]">
                         I typically respond within 24-48 hours during weekdays.
                         Weekend messages will be answered on Monday.
                       </p>
@@ -273,38 +273,38 @@ export default function Contact() {
         </section>
 
         {/* Call to Action */}
-        <section className="bg-gray-900 py-16 sm:py-24">
+        <section className="bg-[#1A1816] py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
                 Want to learn more first?
               </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-400">
+              <p className="mt-6 text-lg leading-8 text-[#a39e98]">
                 Check out my experience, speaking history, or read my blog
                 before getting in touch.
               </p>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/about"
-                  className="rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-200"
+                  className="rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-colors hover:border-[#726d68] hover:text-[#e6e4e0]"
                 >
                   About me
                 </Link>
                 <Link
                   href="/experience"
-                  className="rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-200"
+                  className="rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-colors hover:border-[#726d68] hover:text-[#e6e4e0]"
                 >
                   Experience
                 </Link>
                 <Link
                   href="/speaking"
-                  className="rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-200"
+                  className="rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-colors hover:border-[#726d68] hover:text-[#e6e4e0]"
                 >
                   Speaking
                 </Link>
                 <Link
                   href="/blog"
-                  className="rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-200"
+                  className="rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-colors hover:border-[#726d68] hover:text-[#e6e4e0]"
                 >
                   Blog
                 </Link>

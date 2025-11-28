@@ -94,7 +94,7 @@ export default function SpeakerKit() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -102,7 +102,7 @@ export default function SpeakerKit() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Speaker Kit
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Everything you need to know about booking me as a speaker.
               Download bio, photos, and talk abstracts.」
             </p>
@@ -131,7 +131,7 @@ export default function SpeakerKit() {
               </a>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-all hover:border-gray-500 hover:text-gray-200"
+                className="inline-flex items-center gap-2 rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-all hover:border-[#726d68] hover:text-[#e6e4e0]"
               >
                 <svg
                   className="h-5 w-5"
@@ -160,13 +160,13 @@ export default function SpeakerKit() {
                 Professional Photo
               </h2>
               <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-              <p className="text-lg leading-8 text-gray-400">
+              <p className="text-lg leading-8 text-[#a39e98]">
                 High-resolution speaking photo for conference materials
               </p>
             </div>
 
             <div className="mx-auto max-w-2xl">
-              <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-900">
+              <div className="overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816]">
                 <Image
                   src="/images/davide-speaking-profile.webp"
                   alt="Davide Imola speaking at a conference"
@@ -176,7 +176,7 @@ export default function SpeakerKit() {
                   priority
                 />
                 <div className="p-6">
-                  <p className="mb-4 text-sm text-gray-400">
+                  <p className="mb-4 text-sm text-[#a39e98]">
                     Right-click to save, or use the download button below. Photo
                     credit: Conference organizers welcome to use this image
                     freely.
@@ -208,65 +208,65 @@ export default function SpeakerKit() {
         </section>
 
         {/* Bio Section */}
-        <section className="bg-gray-900/30 py-16">
+        <section className="bg-[#1A1816]/30 py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100">
                 Biography
               </h2>
               <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-              <p className="text-lg leading-8 text-gray-400">
+              <p className="text-lg leading-8 text-[#a39e98]">
                 Choose the bio length that fits your needs
               </p>
             </div>
 
             <div className="space-y-6">
               {/* Short Bio */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-100">
                       Short Bio
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#726d68]">
                       ~50 words - Quick introductions
                     </p>
                   </div>
                   <CopyButton text={bios.short} label="Copy" />
                 </div>
-                <p className="text-gray-300">{bios.short}</p>
+                <p className="text-[#d4cfc9]">{bios.short}</p>
               </div>
 
               {/* Medium Bio */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-100">
                       Medium Bio
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#726d68]">
                       ~100 words - Standard speaker introductions
                     </p>
                   </div>
                   <CopyButton text={bios.medium} label="Copy" />
                 </div>
-                <p className="text-gray-300">{bios.medium}</p>
+                <p className="text-[#d4cfc9]">{bios.medium}</p>
               </div>
 
               {/* Long Bio */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-100">
                       Long Bio
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#726d68]">
                       ~200 words - Detailed conference programs
                     </p>
                   </div>
                   <CopyButton text={bios.long} label="Copy" />
                 </div>
-                <p className="whitespace-pre-line text-gray-300">{bios.long}</p>
+                <p className="whitespace-pre-line text-[#d4cfc9]">{bios.long}</p>
               </div>
             </div>
           </div>
@@ -280,7 +280,7 @@ export default function SpeakerKit() {
                 Talk Topics
               </h2>
               <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-              <p className="text-lg leading-8 text-gray-400">
+              <p className="text-lg leading-8 text-[#a39e98]">
                 Popular talks I can deliver at your event
               </p>
             </div>
@@ -289,12 +289,12 @@ export default function SpeakerKit() {
               {talkTopics.map((talk) => (
                 <div
                   key={talk.title}
-                  className="rounded-xl border border-gray-800 bg-gray-900 p-6 transition-all duration-300 hover:border-[#C91F37]/50"
+                  className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50"
                 >
                   <h3 className="mb-3 text-xl font-semibold text-gray-100">
                     {talk.title}
                   </h3>
-                  <p className="mb-4 text-gray-400">{talk.abstract}</p>
+                  <p className="mb-4 text-[#a39e98]">{talk.abstract}</p>
 
                   <div className="mb-4 flex flex-wrap gap-2">
                     {talk.tags.map((tag) => (
@@ -307,7 +307,7 @@ export default function SpeakerKit() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                  <div className="flex flex-wrap gap-4 text-sm text-[#726d68]">
                     <div>
                       <span className="font-medium">Duration:</span>{" "}
                       {talk.duration}
@@ -330,7 +330,7 @@ export default function SpeakerKit() {
         </section>
 
         {/* Speaker Info */}
-        <section className="bg-gray-900/30 py-16">
+        <section className="bg-[#1A1816]/30 py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100">
@@ -341,13 +341,13 @@ export default function SpeakerKit() {
 
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               {/* Languages */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-4 text-lg font-semibold text-gray-100">
                   Languages
                 </h3>
                 <ul className="space-y-2">
                   {speakerInfo.languages.map((lang) => (
-                    <li key={lang} className="flex items-center text-gray-300">
+                    <li key={lang} className="flex items-center text-[#d4cfc9]">
                       <svg
                         className="mr-2 h-5 w-5 text-[#C91F37]"
                         fill="none"
@@ -368,13 +368,13 @@ export default function SpeakerKit() {
               </div>
 
               {/* Expertise */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-4 text-lg font-semibold text-gray-100">
                   Areas of Expertise
                 </h3>
                 <ul className="space-y-2">
                   {speakerInfo.expertise.map((area) => (
-                    <li key={area} className="flex items-center text-gray-300">
+                    <li key={area} className="flex items-center text-[#d4cfc9]">
                       <svg
                         className="mr-2 h-5 w-5 text-[#C91F37]"
                         fill="none"
@@ -395,7 +395,7 @@ export default function SpeakerKit() {
               </div>
 
               {/* Talk Formats */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-4 text-lg font-semibold text-gray-100">
                   Talk Formats
                 </h3>
@@ -403,7 +403,7 @@ export default function SpeakerKit() {
                   {speakerInfo.formats.map((format) => (
                     <li
                       key={format}
-                      className="flex items-center text-gray-300"
+                      className="flex items-center text-[#d4cfc9]"
                     >
                       <svg
                         className="mr-2 h-5 w-5 text-[#C91F37]"
@@ -425,11 +425,11 @@ export default function SpeakerKit() {
               </div>
 
               {/* Travel */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-4 text-lg font-semibold text-gray-100">
                   Travel & Availability
                 </h3>
-                <p className="text-gray-300">{speakerInfo.travel}</p>
+                <p className="text-[#d4cfc9]">{speakerInfo.travel}</p>
               </div>
             </div>
           </div>
@@ -446,14 +446,14 @@ export default function SpeakerKit() {
             </div>
 
             <div className="mx-auto max-w-2xl">
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-8">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-8">
                 <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <p className="mb-2 text-sm font-medium text-gray-400">
+                    <p className="mb-2 text-sm font-medium text-[#a39e98]">
                       Website
                     </p>
-                    <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2">
-                      <code className="text-sm text-gray-300">
+                    <div className="flex items-center justify-between rounded-lg bg-[#2A2725] px-4 py-2">
+                      <code className="text-sm text-[#d4cfc9]">
                         davideimola.dev
                       </code>
                       <CopyButton text="https://davideimola.dev" label="" />
@@ -461,11 +461,11 @@ export default function SpeakerKit() {
                   </div>
 
                   <div>
-                    <p className="mb-2 text-sm font-medium text-gray-400">
+                    <p className="mb-2 text-sm font-medium text-[#a39e98]">
                       GitHub
                     </p>
-                    <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2">
-                      <code className="text-sm text-gray-300">
+                    <div className="flex items-center justify-between rounded-lg bg-[#2A2725] px-4 py-2">
+                      <code className="text-sm text-[#d4cfc9]">
                         @davideimola
                       </code>
                       <CopyButton
@@ -476,11 +476,11 @@ export default function SpeakerKit() {
                   </div>
 
                   <div>
-                    <p className="mb-2 text-sm font-medium text-gray-400">
+                    <p className="mb-2 text-sm font-medium text-[#a39e98]">
                       LinkedIn
                     </p>
-                    <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2">
-                      <code className="text-sm text-gray-300">
+                    <div className="flex items-center justify-between rounded-lg bg-[#2A2725] px-4 py-2">
+                      <code className="text-sm text-[#d4cfc9]">
                         @davideimola
                       </code>
                       <CopyButton
@@ -491,11 +491,11 @@ export default function SpeakerKit() {
                   </div>
 
                   <div>
-                    <p className="mb-2 text-sm font-medium text-gray-400">
+                    <p className="mb-2 text-sm font-medium text-[#a39e98]">
                       BlueSky
                     </p>
-                    <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2">
-                      <code className="text-sm text-gray-300">
+                    <div className="flex items-center justify-between rounded-lg bg-[#2A2725] px-4 py-2">
+                      <code className="text-sm text-[#d4cfc9]">
                         @davideimola.dev
                       </code>
                       <CopyButton
@@ -507,7 +507,7 @@ export default function SpeakerKit() {
                 </div>
 
                 <div className="mt-8 text-center">
-                  <p className="mb-4 text-gray-400">
+                  <p className="mb-4 text-[#a39e98]">
                     Ready to book me for your event?
                   </p>
                   <Link
@@ -536,19 +536,19 @@ export default function SpeakerKit() {
         </section>
 
         {/* Past Speaking */}
-        <section className="bg-gray-900 py-16">
+        <section className="bg-[#1A1816] py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="mb-4 text-2xl font-bold text-gray-100">
                 Want to see me in action?
               </h2>
-              <p className="mb-8 text-gray-400">
+              <p className="mb-8 text-[#a39e98]">
                 Check out my past speaking engagements, recorded talks, and
                 slides from previous conferences.
               </p>
               <Link
                 href="/speaking"
-                className="inline-flex items-center gap-2 rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-all hover:border-gray-500 hover:text-gray-200"
+                className="inline-flex items-center gap-2 rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-all hover:border-[#726d68] hover:text-[#e6e4e0]"
               >
                 View Speaking History
                 <svg

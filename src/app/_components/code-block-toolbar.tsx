@@ -30,13 +30,13 @@ export function CodeBlockToolbar() {
         // Create language badge
         const languageBadge = document.createElement("span");
         languageBadge.className =
-          "text-[10px] sm:text-xs font-mono font-semibold text-gray-500 uppercase tracking-wider";
+          "text-[10px] sm:text-xs font-mono font-semibold text-[#726d68] uppercase tracking-wider";
         languageBadge.textContent = language;
 
         // Create copy button
         const copyButton = document.createElement("button");
         copyButton.className =
-          "copy-button flex items-center justify-center h-7 w-7 sm:h-6 sm:w-6 rounded bg-gray-800/60 text-gray-400 opacity-0 transition-all hover:bg-gray-700 hover:text-gray-100 group-hover:opacity-100 backdrop-blur-sm touch-manipulation";
+          "copy-button flex items-center justify-center h-7 w-7 sm:h-6 sm:w-6 rounded bg-[#2A2725]/60 text-[#a39e98] opacity-0 transition-all hover:bg-[#3e3b38] hover:text-gray-100 group-hover:opacity-100 backdrop-blur-sm touch-manipulation";
         copyButton.setAttribute("aria-label", "Copy code");
         copyButton.setAttribute("type", "button");
         copyButton.innerHTML = `

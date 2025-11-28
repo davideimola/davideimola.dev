@@ -67,13 +67,13 @@ const navigation = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-800 bg-gray-900">
+    <footer className="border-t border-[#2A2725] bg-[#1A1816]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
             <div>
               <h3 className="text-lg font-bold text-gray-100">Davide Imola</h3>
-              <p className="mt-2 max-w-md text-sm text-gray-400">
+              <p className="mt-2 max-w-md text-sm text-[#a39e98]">
                 Software Engineer from Verona. Building secure infrastructure at
                 RedCarbon. Running Schrodinger Hat and organizing Open Source
                 Day in Florence.
@@ -86,7 +86,7 @@ export function Footer() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group text-gray-400 transition-colors hover:text-gray-300"
+                  className="group text-[#a39e98] transition-colors hover:text-[#d4cfc9]"
                 >
                   <span className="sr-only">{item.name}</span>
                   {item.icon}
@@ -105,7 +105,7 @@ export function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-gray-400 transition-colors hover:text-gray-300"
+                        className="text-sm leading-6 text-[#a39e98] transition-colors hover:text-[#d4cfc9]"
                       >
                         {item.name}
                       </Link>
@@ -130,7 +130,7 @@ export function Footer() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="text-sm leading-6 text-gray-400 transition-colors hover:text-gray-300"
+                        className="text-sm leading-6 text-[#a39e98] transition-colors hover:text-[#d4cfc9]"
                       >
                         {item.name}
                       </Link>
@@ -149,7 +149,7 @@ export function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-gray-400 transition-colors hover:text-gray-300"
+                        className="text-sm leading-6 text-[#a39e98] transition-colors hover:text-[#d4cfc9]"
                       >
                         {item.name}
                       </Link>
@@ -160,8 +160,8 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-gray-800 pt-8">
-          <p className="text-xs leading-5 text-gray-500">
+        <div className="mt-12 border-t border-[#2A2725] pt-8">
+          <p className="text-xs leading-5 text-[#726d68]">
             &copy; {new Date().getFullYear()} Davide Imola. All rights reserved.
             Built with Next.js and hosted on Vercel.
           </p>

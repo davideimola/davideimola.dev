@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* 404 Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-6" />
@@ -15,8 +15,8 @@ export default function NotFound() {
 
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-8">
-              <div className="float relative mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800">
-                <span className="text-6xl text-gray-400">?</span>
+              <div className="float relative mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#3E3B38] to-[#2A2725]">
+                <span className="text-6xl text-[#a39e98]">?</span>
               </div>
             </div>
 
@@ -28,7 +28,7 @@ export default function NotFound() {
               Page Not Found
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               Oops! The page you&apos;re looking for seems to have wandered off
               like a lost traveler. Let&apos;s get you back on the right path.
             </p>
@@ -42,7 +42,7 @@ export default function NotFound() {
               </Link>
               <Link
                 href="/about"
-                className="button-press rounded-md border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-300 transition-all duration-300 hover:border-gray-500 hover:text-gray-200"
+                className="button-press rounded-md border border-[#54504c] px-6 py-3 text-sm font-semibold text-[#d4cfc9] transition-all duration-300 hover:border-[#726d68] hover:text-[#e6e4e0]"
               >
                 About Me
               </Link>
@@ -56,7 +56,7 @@ export default function NotFound() {
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <Link
                   href="/blog"
-                  className="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-gray-900"
+                  className="group rounded-lg border border-[#2A2725] bg-[#1A1816]/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-[#1A1816]"
                 >
                   <div className="mb-2 text-2xl">📝</div>
                   <div className="text-sm font-medium text-gray-100 group-hover:text-[#C91F37]">
@@ -65,7 +65,7 @@ export default function NotFound() {
                 </Link>
                 <Link
                   href="/projects"
-                  className="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-gray-900"
+                  className="group rounded-lg border border-[#2A2725] bg-[#1A1816]/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-[#1A1816]"
                 >
                   <div className="mb-2">
                     <Icon name="🚀" type="lucide" size="sm" variant="accent" />
@@ -76,7 +76,7 @@ export default function NotFound() {
                 </Link>
                 <Link
                   href="/speaking"
-                  className="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-gray-900"
+                  className="group rounded-lg border border-[#2A2725] bg-[#1A1816]/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-[#1A1816]"
                 >
                   <div className="mb-2 text-2xl">🎤</div>
                   <div className="text-sm font-medium text-gray-100 group-hover:text-[#C91F37]">
@@ -85,7 +85,7 @@ export default function NotFound() {
                 </Link>
                 <Link
                   href="/experience"
-                  className="group rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-gray-900"
+                  className="group rounded-lg border border-[#2A2725] bg-[#1A1816]/50 p-4 text-center transition-all duration-300 hover:border-[#C91F37]/50 hover:bg-[#1A1816]"
                 >
                   <div className="mb-2 text-2xl">💼</div>
                   <div className="text-sm font-medium text-gray-100 group-hover:text-[#C91F37]">

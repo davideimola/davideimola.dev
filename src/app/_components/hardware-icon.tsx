@@ -59,7 +59,7 @@ export function HardwareIcon({
     // Fallback to a generic icon if type not found
     return (
       <div
-        className={`${sizeClasses[size]} flex items-center justify-center rounded-lg bg-gray-800/50 text-[#C91F37] ${className}`}
+        className={`${sizeClasses[size]} flex items-center justify-center rounded-lg bg-[#2A2725]/50 text-[#C91F37] ${className}`}
         {...props}
       >
         <Settings size={iconSize[size]} />
@@ -69,7 +69,7 @@ export function HardwareIcon({
 
   return (
     <div
-      className={`${sizeClasses[size]} flex items-center justify-center rounded-lg bg-gray-800/50 text-[#C91F37] ${className}`}
+      className={`${sizeClasses[size]} flex items-center justify-center rounded-lg bg-[#2A2725]/50 text-[#C91F37] ${className}`}
       {...props}
     >
       <IconComponent size={iconSize[size]} />

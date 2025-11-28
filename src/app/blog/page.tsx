@@ -25,7 +25,6 @@ function formatDate(dateString: string) {
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
 
   const featuredPosts = blogPosts.filter((post) => post.featured);
 
@@ -35,23 +34,14 @@ export default function Blog() {
     const categoryMatch =
       selectedCategory === "All" || post.category === selectedCategory;
 
-    // Search filter
-    const searchMatch =
-      searchQuery === "" ||
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags?.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-
-    return categoryMatch && searchMatch;
+    return categoryMatch;
   });
 
   return (
     <>
       <Header />
       <BackToTop />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -59,7 +49,7 @@ export default function Blog() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Technical Blog
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               「Sharing insights, best practices, and lessons learned from
               building software and fostering tech communities.」
             </p>
@@ -70,7 +60,7 @@ export default function Blog() {
                 href="/rss.xml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-[#C91F37]"
+                className="inline-flex items-center gap-2 text-sm text-[#a39e98] transition-colors hover:text-[#C91F37]"
               >
                 <svg
                   className="h-5 w-5"
@@ -88,14 +78,14 @@ export default function Blog() {
 
         {/* Featured Posts */}
         {featuredPosts.length > 0 && (
-          <section className="bg-gray-900/30 py-16">
+          <section className="bg-[#1A1816]/30 py-16">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto mb-12 max-w-2xl text-center">
                 <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100">
                   Featured Articles
                 </h2>
                 <div className="mx-auto mb-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-                <p className="text-lg leading-8 text-gray-400">
+                <p className="text-lg leading-8 text-[#a39e98]">
                   In-depth articles on software engineering and community
                   building
                 </p>
@@ -105,7 +95,7 @@ export default function Blog() {
                 {featuredPosts.map((post) => (
                   <article
                     key={post.id}
-                    className="group relative overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 transition-all duration-300 hover:border-[#C91F37]/50"
+                    className="group relative overflow-hidden rounded-2xl border border-[#2A2725] bg-[#1A1816] transition-all duration-300 hover:border-[#C91F37]/50"
                   >
                     {/* Featured badge */}
                     <div className="absolute top-4 left-4 z-10">
@@ -145,15 +135,15 @@ export default function Blog() {
                           </div>
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] to-transparent opacity-60" />
                     </div>
 
                     <div className="p-6">
                       <div className="mb-3 flex items-center justify-between">
-                        <span className="inline-flex items-center rounded-full bg-gray-800 px-3 py-1 text-xs font-medium text-gray-400">
+                        <span className="inline-flex items-center rounded-full bg-[#2A2725] px-3 py-1 text-xs font-medium text-[#a39e98]">
                           {post.category}
                         </span>
-                        <time className="text-xs text-gray-500">
+                        <time className="text-xs text-[#726d68]">
                           {formatDate(post.publishDate)}
                         </time>
                       </div>
@@ -162,7 +152,7 @@ export default function Blog() {
                         <h3 className="mb-3 line-clamp-2 text-xl font-semibold text-gray-100 transition-colors group-hover:text-[#C91F37]">
                           {post.title}
                         </h3>
-                        <p className="mb-4 line-clamp-3 text-gray-400">
+                        <p className="mb-4 line-clamp-3 text-[#a39e98]">
                           {post.excerpt}
                         </p>
                       </Link>
@@ -178,12 +168,12 @@ export default function Blog() {
                             </span>
                           ))}
                           {post.tags.length > 2 && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-[#726d68]">
                               +{post.tags.length - 2}
                             </span>
                           )}
                         </div>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-[#726d68]">
                           {post.readTime}
                         </span>
                       </div>
@@ -200,54 +190,6 @@ export default function Blog() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Search and Category Filter */}
             <div className="mb-12">
-              {/* Search Bar */}
-              <div className="mb-8">
-                <div className="relative max-w-md">
-                  <input
-                    type="text"
-                    placeholder="Search articles..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-lg border border-gray-700 bg-gray-800/50 px-4 py-3 pl-10 text-gray-100 placeholder-gray-400 focus:border-transparent focus:ring-2 focus:ring-[#C91F37]/50 focus:outline-none"
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                  {searchQuery && (
-                    <button
-                      onClick={() => setSearchQuery("")}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-300"
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-              </div>
-
               {/* Category Filter */}
               <div className="flex space-x-8 overflow-x-auto">
                 {categories.map((category) => (
@@ -256,8 +198,8 @@ export default function Blog() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-1 py-4 text-sm font-medium whitespace-nowrap transition-colors ${
                       selectedCategory === category
-                        ? "rounded-md bg-gray-800/50 text-[#C91F37]"
-                        : "rounded-md text-gray-400 hover:bg-gray-800/30 hover:text-gray-300"
+                        ? "rounded-md bg-[#2A2725]/50 text-[#C91F37]"
+                        : "rounded-md text-[#a39e98] hover:bg-[#2A2725]/30 hover:text-[#d4cfc9]"
                     }`}
                   >
                     {category}
@@ -272,7 +214,7 @@ export default function Blog() {
                 {filteredPosts.map((post) => (
                   <article
                     key={post.id}
-                    className="group overflow-hidden rounded-xl border border-gray-800 bg-gray-900 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
+                    className="group overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816] transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
                   >
                     {/* Hero Image */}
                     <div className="relative aspect-[16/9] overflow-hidden">
@@ -285,11 +227,11 @@ export default function Blog() {
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1A1816] to-[#2A2725]">
                           <div className="p-6 text-center">
-                            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-800">
+                            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-[#2A2725]">
                               <svg
-                                className="h-6 w-6 text-gray-400"
+                                className="h-6 w-6 text-[#a39e98]"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth="1.5"
@@ -305,15 +247,15 @@ export default function Blog() {
                           </div>
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] to-transparent opacity-60" />
                     </div>
 
                     <div className="p-6">
                       <div className="mb-2 flex items-center justify-between">
-                        <span className="inline-flex items-center rounded-full bg-gray-800 px-2 py-1 text-xs font-medium text-gray-400">
+                        <span className="inline-flex items-center rounded-full bg-[#2A2725] px-2 py-1 text-xs font-medium text-[#a39e98]">
                           {post.category}
                         </span>
-                        <time className="text-xs text-gray-500">
+                        <time className="text-xs text-[#726d68]">
                           {formatDate(post.publishDate)}
                         </time>
                       </div>
@@ -322,7 +264,7 @@ export default function Blog() {
                         <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-100 transition-colors group-hover:text-[#C91F37]">
                           {post.title}
                         </h3>
-                        <p className="mb-4 line-clamp-3 text-sm text-gray-400">
+                        <p className="mb-4 line-clamp-3 text-sm text-[#a39e98]">
                           {post.excerpt}
                         </p>
                       </Link>
@@ -338,7 +280,7 @@ export default function Blog() {
                             </span>
                           ))}
                         </div>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-[#726d68]">
                           {post.readTime}
                         </span>
                       </div>
@@ -350,7 +292,7 @@ export default function Blog() {
               <div className="py-12 text-center">
                 <div className="mx-auto max-w-md">
                   <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
+                    className="mx-auto h-12 w-12 text-[#a39e98]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -365,15 +307,12 @@ export default function Blog() {
                   <h3 className="mt-4 text-lg font-medium text-gray-100">
                     No articles found
                   </h3>
-                  <p className="mt-2 text-sm text-gray-400">
-                    {searchQuery
-                      ? `No articles match "${searchQuery}". Try a different search term.`
-                      : `No articles in the "${selectedCategory}" category.`}
+                  <p className="mt-2 text-sm text-[#a39e98]">
+                    {`No articles in the "${selectedCategory}" category.`}
                   </p>
-                  {(searchQuery || selectedCategory !== "All") && (
+                  {selectedCategory !== "All" && (
                     <button
                       onClick={() => {
-                        setSearchQuery("");
                         setSelectedCategory("All");
                       }}
                       className="mt-4 text-sm text-[#C91F37] transition-colors hover:text-[#D3381C]"

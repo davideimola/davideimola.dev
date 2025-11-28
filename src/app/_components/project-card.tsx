@@ -19,7 +19,7 @@ export function ProjectCard({
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 transition-all duration-300 hover:border-[#C91F37]/50 ${
+      className={`group relative overflow-hidden rounded-2xl border border-[#2A2725] bg-[#1A1816] transition-all duration-300 hover:border-[#C91F37]/50 ${
         isFeatured ? "hover:shadow-lg hover:shadow-[#C91F37]/10" : ""
       }`}
     >
@@ -53,7 +53,7 @@ export function ProjectCard({
               }}
             />
             {/* Fallback content - hidden by default */}
-            <div className="fallback-content absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-[#C91F37]/5 to-gray-900">
+            <div className="fallback-content absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-[#C91F37]/5 to-[#1A1816]">
               <div className="p-8 text-center">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-[#C91F37]/10 ring-1 ring-[#C91F37]/20">
                   <svg
@@ -78,7 +78,7 @@ export function ProjectCard({
           </>
         ) : (
           // Default fallback when no featured image
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#C91F37]/5 to-gray-900">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#C91F37]/5 to-[#1A1816]">
             <div className="p-8 text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-[#C91F37]/10 ring-1 ring-[#C91F37]/20">
                 <svg
@@ -110,13 +110,13 @@ export function ProjectCard({
             className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
               isFeatured
                 ? "bg-[#C91F37]/10 text-[#C91F37]"
-                : "bg-gray-800 text-gray-400"
+                : "bg-[#2A2725] text-[#a39e98]"
             }`}
           >
             {project.category}
           </span>
           <span
-            className={`text-xs ${isFeatured ? "text-gray-500" : "text-gray-600"}`}
+            className={`text-xs ${isFeatured ? "text-[#726d68]" : "text-gray-600"}`}
           >
             {project.year}
           </span>
@@ -132,7 +132,7 @@ export function ProjectCard({
         </h3>
 
         {/* Description */}
-        <p className="mb-4 line-clamp-3 text-sm text-gray-400">
+        <p className="mb-4 line-clamp-3 text-sm text-[#a39e98]">
           {project.description}
         </p>
 
@@ -142,7 +142,7 @@ export function ProjectCard({
             {project.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="flex items-start text-xs text-gray-500"
+                className="flex items-start text-xs text-[#726d68]"
               >
                 <span className="mr-2 text-[#C91F37]">•</span>
                 {highlight}
@@ -156,13 +156,13 @@ export function ProjectCard({
           {project.technologies.slice(0, isFeatured ? 3 : 2).map((tech) => (
             <span
               key={tech}
-              className="inline-block rounded bg-gray-800 px-2 py-1 text-xs text-gray-400"
+              className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
             >
               {tech}
             </span>
           ))}
           {project.technologies.length > (isFeatured ? 3 : 2) && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-[#726d68]">
               +{project.technologies.length - (isFeatured ? 3 : 2)} more
             </span>
           )}
@@ -186,7 +186,7 @@ export function ProjectCard({
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 transition-colors hover:text-gray-300"
+                className="text-[#a39e98] transition-colors hover:text-[#d4cfc9]"
               >
                 <span className="sr-only">GitHub</span>
                 <svg
@@ -210,7 +210,7 @@ export function ProjectCard({
               className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                 project.status === "Active"
                   ? "bg-green-500/10 text-green-400 ring-1 ring-green-500/20"
-                  : "bg-gray-800 text-gray-400"
+                  : "bg-[#2A2725] text-[#a39e98]"
               }`}
             >
               {project.status}

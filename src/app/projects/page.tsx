@@ -23,7 +23,7 @@ export default function Projects() {
       />
 
       {/* Featured Projects */}
-      <section className="bg-gray-900/30 py-16">
+      <section className="bg-[#1A1816]/30 py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
             title="Featured Projects"
@@ -61,13 +61,13 @@ export default function Projects() {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-gray-900 py-16 sm:py-24">
+      <section className="bg-[#1A1816] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
               Let&apos;s Collaborate
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-400">
+            <p className="mt-6 text-lg leading-8 text-[#a39e98]">
               Interested in collaborating on open-source projects, organizing
               community events, or building something together?
             </p>

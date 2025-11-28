@@ -24,11 +24,11 @@ export function Badge({
   };
 
   const variantClasses = {
-    default: "bg-gray-800 text-gray-400 ring-gray-700",
+    default: "bg-[#2A2725] text-[#a39e98] ring-[#3E3B38]",
     accent: "bg-[#C91F37]/10 text-[#C91F37] ring-[#C91F37]/20",
     success: "bg-green-500/10 text-green-400 ring-green-500/20",
     warning: "bg-yellow-500/10 text-yellow-400 ring-yellow-500/20",
-    muted: "bg-gray-700/50 text-gray-300 ring-gray-600",
+    muted: "bg-[#3e3b38]/50 text-[#d4cfc9] ring-gray-600",
   };
 
   const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;

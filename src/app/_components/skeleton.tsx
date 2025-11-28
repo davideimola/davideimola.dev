@@ -6,13 +6,13 @@ interface SkeletonProps {
 
 export function Skeleton({ className }: SkeletonProps) {
   return (
-    <div className={`animate-pulse rounded-md bg-gray-800 ${className}`} />
+    <div className={`animate-pulse rounded-md bg-[#2A2725] ${className}`} />
   );
 }
 
 export function CardSkeleton() {
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+    <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
       <div className="space-y-4">
         <Skeleton className="h-4 w-3/4" />
         <Skeleton className="h-4 w-1/2" />
@@ -29,7 +29,7 @@ export function CardSkeleton() {
 
 export function BlogCardSkeleton() {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816]">
       <Skeleton className="aspect-[16/9] w-full" />
       <div className="space-y-4 p-6">
         <div className="flex items-center space-x-2">

@@ -97,10 +97,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
   return (
     <nav className="sticky top-24 hidden max-h-[calc(100vh-8rem)] lg:block">
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm">
+      <div className="rounded-xl border border-[#2A2725] bg-[#1A1816]/50 p-6 backdrop-blur-sm">
         <div className="mb-4 flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-[#C91F37]" />
-          <h2 className="text-sm font-semibold tracking-wide text-gray-300 uppercase">
+          <h2 className="text-sm font-semibold tracking-wide text-[#d4cfc9] uppercase">
             Table of Contents
           </h2>
         </div>
@@ -117,7 +117,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 className={`block text-sm transition-colors ${
                   activeId === heading.id
                     ? "font-semibold text-[#C91F37]"
-                    : "text-gray-400 hover:text-gray-300"
+                    : "text-[#a39e98] hover:text-[#d4cfc9]"
                 }`}
               >
                 {heading.text}

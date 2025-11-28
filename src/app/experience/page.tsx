@@ -269,7 +269,7 @@ export default function Experience() {
   return (
     <>
       <Header />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
           <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
@@ -277,7 +277,7 @@ export default function Experience() {
             <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
               Professional Experience
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#a39e98]">
               A comprehensive overview of my career journey, education, and
               technical expertise in software engineering.
             </p>
@@ -305,7 +305,7 @@ export default function Experience() {
           </div>
         </section>
 
-        <div className="mx-auto max-w-7xl bg-gray-900/30 px-6 py-16 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl bg-[#1A1816]/30 px-6 py-16 sm:py-24 lg:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
             {/* Main Content */}
             <div className="space-y-12 lg:col-span-2">
@@ -318,7 +318,7 @@ export default function Experience() {
                   {experiences.map((experience, index) => (
                     <div key={experience.id} className="relative">
                       {index !== experiences.length - 1 && (
-                        <div className="absolute top-12 left-6 h-full w-px bg-gray-800" />
+                        <div className="absolute top-12 left-6 h-full w-px bg-[#2A2725]" />
                       )}
                       <div className="flex items-start gap-4">
                         <CompanyLogo
@@ -327,7 +327,7 @@ export default function Experience() {
                           size="md"
                         />
                         <div className="flex-grow">
-                          <div className="rounded-lg border border-gray-800 bg-gray-900 p-6 transition-colors hover:border-[#C91F37]/50">
+                          <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-6 transition-colors hover:border-[#C91F37]/50">
                             <div className="mb-2 flex flex-wrap items-center justify-between">
                               <h3 className="text-xl font-semibold text-gray-100">
                                 {experience.position}
@@ -336,18 +336,18 @@ export default function Experience() {
                                 {experience.period}
                               </span>
                             </div>
-                            <div className="mb-3 flex items-center text-gray-400">
+                            <div className="mb-3 flex items-center text-[#a39e98]">
                               <span className="font-medium">
                                 {experience.company}
                               </span>
                               <span className="mx-2">•</span>
                               <span>{experience.location}</span>
                               <span className="mx-2">•</span>
-                              <span className="rounded bg-gray-800 px-2 py-1 text-sm">
+                              <span className="rounded bg-[#2A2725] px-2 py-1 text-sm">
                                 {experience.type}
                               </span>
                             </div>
-                            <p className="mb-4 text-gray-400">
+                            <p className="mb-4 text-[#a39e98]">
                               {experience.description}
                             </p>
 
@@ -361,7 +361,7 @@ export default function Experience() {
                                     (achievement) => (
                                       <li
                                         key={achievement}
-                                        className="flex items-start text-sm text-gray-400"
+                                        className="flex items-start text-sm text-[#a39e98]"
                                       >
                                         <span className="mr-2 text-[#C91F37]">
                                           •
@@ -401,7 +401,7 @@ export default function Experience() {
                   {education.map((edu) => (
                     <div
                       key={edu.id}
-                      className="rounded-lg border border-gray-800 bg-gray-900 p-6"
+                      className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-6"
                     >
                       <div className="mb-2 flex flex-wrap items-center justify-between">
                         <h3 className="text-lg font-semibold text-gray-100">
@@ -411,17 +411,17 @@ export default function Experience() {
                           {edu.period}
                         </span>
                       </div>
-                      <div className="mb-2 text-gray-400">
+                      <div className="mb-2 text-[#a39e98]">
                         <span className="font-medium">{edu.institution}</span> •{" "}
                         <span>{edu.field}</span>
                       </div>
                       {edu.grade && (
-                        <div className="mb-2 text-sm text-gray-400">
+                        <div className="mb-2 text-sm text-[#a39e98]">
                           <span className="font-medium">Grade:</span>{" "}
                           {edu.grade}
                         </div>
                       )}
-                      <p className="text-sm text-gray-400">{edu.description}</p>
+                      <p className="text-sm text-[#a39e98]">{edu.description}</p>
                     </div>
                   ))}
                 </div>
@@ -436,7 +436,7 @@ export default function Experience() {
                   {volunteering.map((volunteer) => (
                     <div
                       key={volunteer.id}
-                      className="flex gap-4 rounded-lg border border-gray-800 bg-gray-900 p-6"
+                      className="flex gap-4 rounded-lg border border-[#2A2725] bg-[#1A1816] p-6"
                     >
                       <CompanyLogo
                         company={volunteer.organization}
@@ -452,7 +452,7 @@ export default function Experience() {
                             {volunteer.period}
                           </span>
                         </div>
-                        <div className="mb-3 flex items-center text-gray-400">
+                        <div className="mb-3 flex items-center text-[#a39e98]">
                           <span className="font-medium">
                             {volunteer.organization}
                           </span>
@@ -463,21 +463,21 @@ export default function Experience() {
                             {volunteer.type}
                           </span>
                         </div>
-                        <p className="mb-4 text-gray-400">
+                        <p className="mb-4 text-[#a39e98]">
                           {volunteer.description}
                         </p>
 
                         {volunteer.achievements &&
                           volunteer.achievements.length > 0 && (
                             <div className="mb-4">
-                              <h4 className="mb-2 text-sm font-semibold text-gray-300">
+                              <h4 className="mb-2 text-sm font-semibold text-[#d4cfc9]">
                                 Key Achievements
                               </h4>
                               <ul className="space-y-1">
                                 {volunteer.achievements.map((achievement) => (
                                   <li
                                     key={achievement}
-                                    className="flex items-start text-sm text-gray-400"
+                                    className="flex items-start text-sm text-[#a39e98]"
                                   >
                                     <span className="mt-1.5 mr-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-500"></span>
                                     {achievement}
@@ -507,21 +507,21 @@ export default function Experience() {
             {/* Sidebar */}
             <div className="space-y-8 lg:col-span-1">
               {/* Skills */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-6 text-lg font-semibold text-gray-100">
                   Technical Skills
                 </h3>
                 <div className="space-y-4">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
-                      <h4 className="mb-2 text-sm font-medium text-gray-300">
+                      <h4 className="mb-2 text-sm font-medium text-[#d4cfc9]">
                         {category}
                       </h4>
                       <div className="flex flex-wrap gap-1">
                         {skillList.map((skill) => (
                           <span
                             key={skill}
-                            className="inline-block rounded border border-gray-800 bg-gray-800 px-2 py-1 text-xs text-gray-400"
+                            className="inline-block rounded border border-[#2A2725] bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
                           >
                             {skill}
                           </span>
@@ -533,7 +533,7 @@ export default function Experience() {
               </div>
 
               {/* Achievements & Recognition */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-6 text-lg font-semibold text-gray-100">
                   Achievements & Recognition
                 </h3>
@@ -541,10 +541,10 @@ export default function Experience() {
                   {achievements.map((achievement) => (
                     <div
                       key={achievement.id}
-                      className="rounded-lg border border-gray-800 bg-gray-800 p-4 transition-colors hover:border-gray-700"
+                      className="rounded-lg border border-[#2A2725] bg-[#2A2725] p-4 transition-colors hover:border-[#3E3B38]"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-700">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#3e3b38]">
                           <Icon
                             name={achievement.icon}
                             type="lucide"
@@ -556,10 +556,10 @@ export default function Experience() {
                           <h4 className="mb-1 font-medium text-gray-100">
                             {achievement.title}
                           </h4>
-                          <p className="mb-2 text-sm text-gray-400">
+                          <p className="mb-2 text-sm text-[#a39e98]">
                             {achievement.organization} · {achievement.year}
                           </p>
-                          <p className="text-sm leading-relaxed text-gray-300">
+                          <p className="text-sm leading-relaxed text-[#d4cfc9]">
                             {achievement.description}
                           </p>
                         </div>
@@ -570,33 +570,33 @@ export default function Experience() {
               </div>
 
               {/* Languages */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-6 text-lg font-semibold text-gray-100">
                   Languages
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Italian</span>
-                    <span className="text-sm text-gray-400">Native</span>
+                    <span className="text-[#d4cfc9]">Italian</span>
+                    <span className="text-sm text-[#a39e98]">Native</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">English</span>
-                    <span className="text-sm text-gray-400">Fluent</span>
+                    <span className="text-[#d4cfc9]">English</span>
+                    <span className="text-sm text-[#a39e98]">Fluent</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Spanish</span>
-                    <span className="text-sm text-gray-400">Intermediate</span>
+                    <span className="text-[#d4cfc9]">Spanish</span>
+                    <span className="text-sm text-[#a39e98]">Intermediate</span>
                   </div>
                 </div>
               </div>
 
               {/* Contact */}
-              <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+              <div className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6">
                 <h3 className="mb-4 text-lg font-semibold text-gray-100">
                   Contact
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <div className="flex items-center text-gray-400">
+                  <div className="flex items-center text-[#a39e98]">
                     <svg
                       className="mr-2 h-4 w-4"
                       fill="none"

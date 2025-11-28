@@ -72,18 +72,18 @@ export function Comments({ slug }: CommentsProps) {
   }, [slug]);
 
   return (
-    <section className="bg-gray-900 py-16">
+    <section className="bg-[#1A1816] py-16">
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         <div className="mb-8 text-center">
           <h2 className="font-playfair mb-4 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
             Discussion
           </h2>
           <div className="mx-auto h-0.5 w-24 bg-gradient-to-r from-transparent via-[#C91F37] to-transparent"></div>
-          <p className="mt-4 text-gray-400">
+          <p className="mt-4 text-[#a39e98]">
             Join the conversation! Share your thoughts, ask questions, or
             suggest improvements.
           </p>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-[#726d68]">
             Comments are powered by GitHub Discussions. You'll need a GitHub
             account to participate.
           </p>
@@ -93,18 +93,18 @@ export function Comments({ slug }: CommentsProps) {
         {isLoading && (
           <div className="animate-pulse space-y-4">
             <div className="flex items-start space-x-4">
-              <div className="h-10 w-10 rounded-full bg-gray-800"></div>
+              <div className="h-10 w-10 rounded-full bg-[#2A2725]"></div>
               <div className="flex-1 space-y-2">
-                <div className="h-4 w-1/4 rounded bg-gray-800"></div>
-                <div className="h-4 w-3/4 rounded bg-gray-800"></div>
-                <div className="h-4 w-1/2 rounded bg-gray-800"></div>
+                <div className="h-4 w-1/4 rounded bg-[#2A2725]"></div>
+                <div className="h-4 w-3/4 rounded bg-[#2A2725]"></div>
+                <div className="h-4 w-1/2 rounded bg-[#2A2725]"></div>
               </div>
             </div>
             <div className="flex items-start space-x-4">
-              <div className="h-10 w-10 rounded-full bg-gray-800"></div>
+              <div className="h-10 w-10 rounded-full bg-[#2A2725]"></div>
               <div className="flex-1 space-y-2">
-                <div className="h-4 w-1/4 rounded bg-gray-800"></div>
-                <div className="h-4 w-2/3 rounded bg-gray-800"></div>
+                <div className="h-4 w-1/4 rounded bg-[#2A2725]"></div>
+                <div className="h-4 w-2/3 rounded bg-[#2A2725]"></div>
               </div>
             </div>
           </div>

@@ -83,7 +83,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-[#d4cfc9]"
         >
           Name <span className="text-[#C91F37]">*</span>
         </label>
@@ -94,7 +94,7 @@ export function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="mt-2 block w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
+          className="mt-2 block w-full rounded-lg border border-[#3E3B38] bg-[#1A1816] px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
           placeholder="Your name"
           disabled={status === "loading"}
         />
@@ -104,7 +104,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-[#d4cfc9]"
         >
           Email <span className="text-[#C91F37]">*</span>
         </label>
@@ -115,7 +115,7 @@ export function ContactForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="mt-2 block w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
+          className="mt-2 block w-full rounded-lg border border-[#3E3B38] bg-[#1A1816] px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
           placeholder="your.email@example.com"
           disabled={status === "loading"}
         />
@@ -125,7 +125,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="subject"
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-[#d4cfc9]"
         >
           Subject <span className="text-[#C91F37]">*</span>
         </label>
@@ -135,7 +135,7 @@ export function ContactForm() {
           required
           value={formData.subject}
           onChange={handleChange}
-          className="mt-2 block w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-gray-100 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
+          className="mt-2 block w-full rounded-lg border border-[#3E3B38] bg-[#1A1816] px-4 py-3 text-gray-100 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
           disabled={status === "loading"}
         >
           <option value="general">General Inquiry</option>
@@ -151,10 +151,10 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="company"
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-[#d4cfc9]"
         >
           Company / Organization{" "}
-          <span className="text-gray-500">(optional)</span>
+          <span className="text-[#726d68]">(optional)</span>
         </label>
         <input
           type="text"
@@ -162,7 +162,7 @@ export function ContactForm() {
           name="company"
           value={formData.company}
           onChange={handleChange}
-          className="mt-2 block w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
+          className="mt-2 block w-full rounded-lg border border-[#3E3B38] bg-[#1A1816] px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
           placeholder="Your company or organization"
           disabled={status === "loading"}
         />
@@ -172,7 +172,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="message"
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-[#d4cfc9]"
         >
           Message <span className="text-[#C91F37]">*</span>
         </label>
@@ -183,7 +183,7 @@ export function ContactForm() {
           rows={6}
           value={formData.message}
           onChange={handleChange}
-          className="mt-2 block w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
+          className="mt-2 block w-full rounded-lg border border-[#3E3B38] bg-[#1A1816] px-4 py-3 text-gray-100 placeholder-gray-500 focus:border-[#C91F37] focus:outline-none focus:ring-1 focus:ring-[#C91F37]"
           placeholder="Tell me about your inquiry..."
           disabled={status === "loading"}
         />
