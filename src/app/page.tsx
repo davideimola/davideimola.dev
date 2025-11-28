@@ -38,8 +38,9 @@ export default function Home() {
       <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative isolate overflow-hidden px-6 py-32 sm:py-40 lg:px-8">
-          <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-5" />
-          <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top,#C91F37,transparent)] opacity-2" />
+          <div className="absolute top-0 right-0 -z-20 h-[500px] w-[500px] rounded-full bg-[#C91F37]/20 opacity-50 mix-blend-screen blur-[120px]" />
+          <div className="absolute bottom-0 left-0 -z-20 h-[500px] w-[500px] rounded-full bg-[#a39e98]/10 opacity-50 mix-blend-screen blur-[120px]" />
+          <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top,#C91F37,transparent)] opacity-10" />
 
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-8">

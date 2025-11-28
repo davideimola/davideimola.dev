@@ -33,7 +33,8 @@ export default function About() {
       <main className="bg-[#0D0D0D]">
         {/* Hero Section */}
         <section className="relative px-6 py-24 sm:py-32 lg:px-8">
-          <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
+          <div className="absolute top-0 right-0 -z-20 h-[500px] w-[500px] rounded-full bg-[#C91F37]/20 opacity-50 mix-blend-screen blur-[120px]" />
+          <div className="absolute bottom-0 left-0 -z-20 h-[500px] w-[500px] rounded-full bg-[#a39e98]/10 opacity-50 mix-blend-screen blur-[120px]" />
           <div className="mx-auto max-w-4xl">
             <div className="text-center">
               <h1 className="font-playfair text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
