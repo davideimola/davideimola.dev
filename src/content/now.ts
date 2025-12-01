@@ -9,7 +9,7 @@
 
 export const nowInfo = {
   // Update this date when you update the content
-  lastUpdated: "October 2025",
+  lastUpdated: "December 2025",
 
   // Current Role
   currentRole: {
@@ -45,29 +45,12 @@ export const nowInfo = {
   // Working On
   workingOn: ["RedCarbon", "SH Branches: bringing events all over the world"],
 
-  // Optional: What you're reading
-  reading: [
-    {
-      title: "Platform Engineering on Kubernetes",
-      author: "Maurício Salatino",
-      status: "reading", // or "finished"
-    },
-    // Add more books
-  ],
-
-  // Optional: Currently excited about
-  excitedAbout: [
-    "WASM in the cloud",
-    "AI/ML ops workflows",
-    "Developer experience tools",
-  ],
-
   // Hobbies & Interests
   hobbies: {
     sports: {
       name: "Football/Soccer",
       emoji: "⚽",
-      details: "Playing and watching calcio", // or your favorite team
+      details: "Playing and watching calcio",
     },
     cooking: {
       name: "BBQ & Grilling",
@@ -77,7 +60,7 @@ export const nowInfo = {
     gaming: {
       name: "Video Gaming",
       emoji: "🎮",
-      currentlyPlaying: ["Clair Obscur: Expedition 33"],
+      currentlyPlaying: ["Ghost of Tsushima"],
     },
     boardGaming: {
       name: "Board Gaming",
@@ -89,15 +72,15 @@ export const nowInfo = {
       name: "Tabletop RPG",
       emoji: "🐉",
       details: "D&D 5e player & occasional DM",
-      currentCampaign: "2 D&D 5e campaigns", // Update with your campaign!
+      currentCampaign: "An ongoing D&D 5e campaign",
     },
     music: {
       name: "Music",
       emoji: "🎵",
       details: "Rock, Metal, Soundtracks, and more",
       playlistUrl:
-        "https://open.spotify.com/playlist/1qLEh5nRfgkelDOQqBScxE?si=de08590bfe4f4eee", // Update with your actual playlist!
-      playlistName: "Various", // Name of your playlist
+        "https://open.spotify.com/playlist/1qLEh5nRfgkelDOQqBScxE?si=de08590bfe4f4eee",
+      playlistName: "Various",
     },
   },
 };
