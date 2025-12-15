@@ -198,14 +198,16 @@ export default function BlogPost({ params }: Props) {
             </div>
 
             <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center rounded-full bg-[#C91F37]/10 px-3 py-1 text-sm font-medium text-[#C91F37] ring-1 ring-[#C91F37]/20">
+              <span className="inline-flex items-center rounded-full bg-[#C91F37]/15 px-3 py-1 text-sm font-medium text-[#E6E4E0] ring-1 ring-[#C91F37]/40">
                 {metadata.category}
               </span>
               <time className="text-sm text-[#726d68]">
                 {formatDate(metadata.publishDate)}
               </time>
               <span className="text-sm text-[#726d68]">•</span>
-              <span className="text-sm text-[#726d68]">{metadata.readTime}</span>
+              <span className="text-sm text-[#726d68]">
+                {metadata.readTime}
+              </span>
             </div>
 
             <h1 className="font-playfair mb-6 text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
@@ -345,7 +347,7 @@ export default function BlogPost({ params }: Props) {
                     {/* Content */}
                     <div className="p-6">
                       <div className="mb-3">
-                        <span className="inline-block rounded bg-[#C91F37]/10 px-2 py-1 text-xs font-medium text-[#C91F37]">
+                        <span className="inline-block rounded bg-[#C91F37]/15 px-2 py-1 text-xs font-medium text-[#E6E4E0] ring-1 ring-[#C91F37]/40">
                           {relatedPost.category}
                         </span>
                       </div>

@@ -241,54 +241,46 @@ export default function About() {
                     )}
                   </div>
 
-                  {/* Board Gaming */}
+                  {/* Tabletop & RPG */}
                   <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
-                        name={nowInfo.hobbies.boardGaming.emoji}
+                        name={nowInfo.hobbies.tabletop.emoji}
                         type="lucide"
                         size="sm"
                         variant="accent"
                       />
                       <h4 className="text-sm font-medium text-[#d4cfc9]">
-                        {nowInfo.hobbies.boardGaming.name}
+                        {nowInfo.hobbies.tabletop.name}
                       </h4>
                     </div>
                     <p className="mb-1 text-xs text-[#726d68]">
-                      {nowInfo.hobbies.boardGaming.details}
+                      {nowInfo.hobbies.tabletop.details}
                     </p>
-                    {nowInfo.hobbies.boardGaming.currentlyPlaying.length >
-                      0 && (
+                    {nowInfo.hobbies.tabletop.currentlyPlaying.length > 0 && (
                       <p className="text-xs text-[#a39e98]">
-                        On the table:{" "}
-                        {nowInfo.hobbies.boardGaming.currentlyPlaying.join(
-                          ", ",
-                        )}
+                        Playing:{" "}
+                        {nowInfo.hobbies.tabletop.currentlyPlaying.join(", ")}
                       </p>
                     )}
                   </div>
 
-                  {/* Tabletop RPG / D&D */}
+                  {/* JuJutsu */}
                   <div className="rounded-lg border border-[#2A2725] bg-[#1A1816] p-4 transition-colors hover:border-[#3E3B38]">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon
-                        name={nowInfo.hobbies.roleplay.emoji}
+                        name={nowInfo.hobbies.martialArts.emoji}
                         type="lucide"
                         size="sm"
                         variant="accent"
                       />
                       <h4 className="text-sm font-medium text-[#d4cfc9]">
-                        {nowInfo.hobbies.roleplay.name}
+                        {nowInfo.hobbies.martialArts.name}
                       </h4>
                     </div>
-                    <p className="mb-1 text-xs text-[#726d68]">
-                      {nowInfo.hobbies.roleplay.details}
+                    <p className="text-xs text-[#726d68]">
+                      {nowInfo.hobbies.martialArts.details}
                     </p>
-                    {nowInfo.hobbies.roleplay.currentCampaign && (
-                      <p className="text-xs text-[#a39e98]">
-                        Campaign: {nowInfo.hobbies.roleplay.currentCampaign}
-                      </p>
-                    )}
                   </div>
 
                   {/* Music */}
@@ -445,7 +437,7 @@ export default function About() {
                         ].map((skill) => (
                           <span
                             key={skill}
-                            className="inline-block rounded-full bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37] ring-1 ring-[#C91F37]/20"
+                            className="inline-block rounded-full bg-[#C91F37]/15 px-2 py-1 text-xs text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                           >
                             {skill}
                           </span>
@@ -467,7 +459,7 @@ export default function About() {
                         ].map((skill) => (
                           <span
                             key={skill}
-                            className="inline-block rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400 ring-1 ring-green-500/20"
+                            className="inline-block rounded-full bg-green-500/15 px-2 py-1 text-xs text-[#E6E4E0] ring-1 ring-green-500/40"
                           >
                             {skill}
                           </span>
