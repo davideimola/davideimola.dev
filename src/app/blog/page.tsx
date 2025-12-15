@@ -165,7 +165,7 @@ export default function Blog() {
                           {post.tags.slice(0, 2).map((tag) => (
                             <span
                               key={tag}
-                              className="inline-block rounded bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37]"
+                              className="inline-block rounded bg-[#C91F37]/15 px-2 py-1 text-xs text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                             >
                               {tag}
                             </span>
@@ -277,7 +277,7 @@ export default function Blog() {
                           {post.tags.slice(0, 2).map((tag) => (
                             <span
                               key={tag}
-                              className="inline-block rounded bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37]"
+                              className="inline-block rounded bg-[#C91F37]/15 px-2 py-1 text-xs text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                             >
                               {tag}
                             </span>

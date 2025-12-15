@@ -112,7 +112,7 @@ export default function Speaking() {
               {stats.topics.map((topic) => (
                 <span
                   key={topic}
-                  className="inline-flex items-center rounded-full bg-[#C91F37]/10 px-3 py-1 text-sm font-medium text-[#C91F37] ring-1 ring-[#C91F37]/20"
+                  className="inline-flex items-center rounded-full bg-[#C91F37]/15 px-3 py-1 text-sm font-medium text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                 >
                   {topic}
                 </span>
@@ -180,7 +180,7 @@ export default function Speaking() {
                           <span className="inline-flex items-center rounded-full bg-[#C91F37] px-3 py-1 text-xs font-medium text-white">
                             {event.role}
                           </span>
-                          <span className="inline-flex items-center rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400 ring-1 ring-green-500/20">
+                          <span className="inline-flex items-center rounded-full bg-green-500/15 px-3 py-1 text-xs font-medium text-[#E6E4E0] ring-1 ring-green-500/40">
                             Upcoming
                           </span>
                           <span className="text-sm text-[#726d68]">
@@ -336,7 +336,7 @@ export default function Speaking() {
                   className="rounded-xl border border-[#2A2725] bg-[#1A1816] p-6 transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
                 >
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="inline-flex items-center rounded-full bg-[#C91F37]/10 px-3 py-1 text-xs font-medium text-[#C91F37]">
+                    <span className="inline-flex items-center rounded-full bg-[#C91F37]/15 px-3 py-1 text-xs font-medium text-[#E6E4E0] ring-1 ring-[#C91F37]/40">
                       {event.role}
                     </span>
                     <span className="text-sm text-[#726d68]">{event.type}</span>

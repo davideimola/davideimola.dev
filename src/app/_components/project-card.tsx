@@ -109,7 +109,7 @@ export function ProjectCard({
           <span
             className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
               isFeatured
-                ? "bg-[#C91F37]/10 text-[#C91F37]"
+                ? "bg-[#C91F37]/15 text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                 : "bg-[#2A2725] text-[#a39e98]"
             }`}
           >
@@ -209,7 +209,7 @@ export function ProjectCard({
             <span
               className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                 project.status === "Active"
-                  ? "bg-green-500/10 text-green-400 ring-1 ring-green-500/20"
+                  ? "bg-green-500/15 text-[#E6E4E0] ring-1 ring-green-500/40"
                   : "bg-[#2A2725] text-[#a39e98]"
               }`}
             >

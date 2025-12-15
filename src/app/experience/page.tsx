@@ -381,7 +381,7 @@ export default function Experience() {
                               {experience.technologies.map((tech) => (
                                 <span
                                   key={tech}
-                                  className="inline-block rounded-full bg-[#C91F37]/10 px-2 py-1 text-xs text-[#C91F37] ring-1 ring-[#C91F37]/20"
+                                  className="inline-block rounded-full bg-[#C91F37]/15 px-2 py-1 text-xs text-[#E6E4E0] ring-1 ring-[#C91F37]/40"
                                 >
                                   {tech}
                                 </span>

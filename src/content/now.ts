@@ -62,17 +62,19 @@ export const nowInfo = {
       emoji: "🎮",
       currentlyPlaying: ["Ghost of Tsushima"],
     },
-    boardGaming: {
-      name: "Board Gaming",
+    tabletop: {
+      name: "Tabletop & RPG",
       emoji: "🎲",
-      details: "Modern board games enthusiast",
-      currentlyPlaying: ["The Witcher: Path of Destiny"],
+      details: "Modern board games & D&D 5e",
+      currentlyPlaying: [
+        "The Witcher: Path of Destiny",
+        "D&D 5e (Player & DM)",
+      ],
     },
-    roleplay: {
-      name: "Tabletop RPG",
-      emoji: "🐉",
-      details: "D&D 5e player & occasional DM",
-      currentCampaign: "An ongoing D&D 5e campaign",
+    martialArts: {
+      name: "JuJutsu",
+      emoji: "🥋",
+      details: "Hontai Yōshin-ryū - White Belt",
     },
     music: {
       name: "Music",

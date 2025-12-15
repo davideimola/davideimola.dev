@@ -25,8 +25,8 @@ export function Badge({
 
   const variantClasses = {
     default: "bg-[#2A2725] text-[#a39e98] ring-[#3E3B38]",
-    accent: "bg-[#C91F37]/10 text-[#C91F37] ring-[#C91F37]/20",
-    success: "bg-green-500/10 text-green-400 ring-green-500/20",
+    accent: "bg-[#C91F37]/15 text-[#E6E4E0] ring-[#C91F37]/40",
+    success: "bg-green-500/15 text-[#E6E4E0] ring-green-500/40",
     warning: "bg-yellow-500/10 text-yellow-400 ring-yellow-500/20",
     muted: "bg-[#3e3b38]/50 text-[#d4cfc9] ring-gray-600",
   };

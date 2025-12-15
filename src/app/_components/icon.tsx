@@ -62,6 +62,7 @@ import {
   Gamepad2,
   Dice6,
   Beef,
+  Shirt,
   type LucideIcon,
 } from "lucide-react";
 
@@ -257,6 +258,9 @@ const iconMap: Record<string, LucideIcon> = {
   dragon: Star,
   rpg: Star,
   dnd: Star,
+  "🥋": Shirt,
+  martialarts: Shirt,
+  jujutsu: Shirt,
 
   // Status
   "✅": Check,
