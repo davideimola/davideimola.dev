@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
     publishDate: "2023-12-05",
     slug: "level-up-your-rdbms-productivity-in-go",
     tags: ["Go", "PostgreSQL", "Database", "sqlc", "dbmate"],
-    featured: true,
+    featured: false,
     heroImage:
       "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?q=80&w=3870&auto=format&fit=crop",
     heroImageAlt: "Hard disk representing database storage",
@@ -108,5 +108,20 @@ export const blogPosts: BlogPost[] = [
     heroImage:
       "https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=2971&q=80",
     heroImageAlt: "Container ship representing Docker containers",
+  },
+  {
+    id: 7,
+    title: "Beyond Resolutions: 2025 Retrospective & The 2026 Systems",
+    excerpt:
+      "A different kind of retrospective. Instead of a chronological list, I explore the themes, systems, and impact matrices that defined 2025 and architect the outlook for 2026.",
+    category: "Personal",
+    readTime: "8 min read",
+    publishDate: "2025-12-31",
+    slug: "2025-retrospective-2026-outlook",
+    tags: ["Retrospective", "Year Review", "Systems", "Productivity"],
+    featured: true,
+    heroImage:
+      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072",
+    heroImageAlt: "Planner and laptop on a desk",
   },
 ];

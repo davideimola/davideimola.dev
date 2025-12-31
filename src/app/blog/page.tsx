@@ -26,10 +26,16 @@ function formatDate(dateString: string) {
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const featuredPosts = blogPosts.filter((post) => post.featured);
+  const sortedPosts = [...blogPosts].sort((a, b) => {
+    return (
+      new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+    );
+  });
+
+  const featuredPosts = sortedPosts.filter((post) => post.featured);
 
   // Filter posts based on selected category and search query
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = sortedPosts.filter((post) => {
     // Category filter
     const categoryMatch =
       selectedCategory === "All" || post.category === selectedCategory;
