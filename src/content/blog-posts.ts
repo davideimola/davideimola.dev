@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     publishDate: "2023-10-27",
     slug: "securing-secrets-in-the-gitops-era",
     tags: ["GitOps", "Kubernetes", "Security", "Sealed Secrets", "DevOps"],
-    featured: true,
+    featured: false,
     heroImage:
       "https://images.unsplash.com/photo-1618060932014-4deda4932554?auto=format&fit=crop&q=80&w=3870",
     heroImageAlt: "Lock in the middle of key caps representing security",
@@ -123,5 +123,20 @@ export const blogPosts: BlogPost[] = [
     heroImage:
       "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072",
     heroImageAlt: "Planner and laptop on a desk",
+  },
+  {
+    id: 8,
+    title:
+      "AI Will Not Secure Your Codebase. But It Can Reveal Dangerous Git Habits.",
+    excerpt:
+      "AI won’t secure your codebase, but it can expose the risky Git habits that quietly turn your repository into part of the attack surface.",
+    category: "Git",
+    readTime: "2 min read",
+    publishDate: "2025-12-13",
+    slug: "ai-will-not-secure-your-codebase",
+    tags: ["Git", "Security", "AI"],
+    featured: true,
+    heroImage: "/images/blog/ai-will-not-secure-your-codebase/hero.webp",
+    heroImageAlt: "Lock in the middle of key caps representing security",
   },
 ];
