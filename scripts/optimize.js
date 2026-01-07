@@ -214,10 +214,29 @@ async function optimizeAllImages() {
   
   console.log(`📸 Trovate ${allImages.length} immagini da ottimizzare\n`);
   
+  // Parse command line arguments
+  const args = process.argv.slice(2);
+  const typeArg = args.find(arg => arg.startsWith('--type='));
+  const filterType = typeArg ? typeArg.split('=')[1] : null;
+
+  if (filterType) {
+    console.log(`🔍 Filtro attivo: elaborazione solo immagini di tipo '${filterType}'\n`);
+  }
+
   const results = [];
   
   // Ottimizza tutte le immagini
   for (const imagePath of allImages) {
+    // Se c'è un filtro attivo, controlla il tipo
+    if (filterType) {
+      const fileName = path.basename(imagePath);
+      const imageType = getImageType(imagePath, fileName);
+      
+      if (imageType !== filterType) {
+        continue;
+      }
+    }
+
     const result = await optimizeImage(imagePath);
     results.push(result);
   }
