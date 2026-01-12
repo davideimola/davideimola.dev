@@ -13,6 +13,7 @@ import {
 import { Analytics } from "~/app/_components/analytics";
 import { ScrollProgress } from "~/app/_components/scroll-progress";
 import { CommandMenu } from "~/app/_components/command-menu";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Davide Imola - Software Engineer & Tech Speaker",
@@ -102,6 +103,7 @@ export default function RootLayout({
         <CommandMenu />
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
