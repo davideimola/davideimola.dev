@@ -122,7 +122,7 @@ export const usesData = {
         description: "Primary code editor with custom extensions",
         category: "Editor",
         link: "https://cursor.com/",
-        emoji: "cursor",
+        icon: "cursor",
       },
       {
         name: "iTerm2",
