@@ -13,6 +13,7 @@
     "lint:fix": "next lint --fix",
     "optimize": "node scripts/optimize.js",
     "optimize:blog": "node scripts/optimize.js --type=blog",
+    "logos": "node scripts/download-logos.js",
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit"
