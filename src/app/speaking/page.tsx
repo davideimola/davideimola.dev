@@ -435,7 +435,7 @@ export default function Speaking() {
                         href={event.slidesUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-purple-400 transition-colors hover:text-purple-300"
+                        className="inline-flex items-center text-sm font-medium text-[#C91F37] transition-colors hover:text-[#D3381C]"
                       >
                         <svg
                           className="mr-1 h-4 w-4"
