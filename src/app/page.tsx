@@ -3,26 +3,16 @@ import { Header } from "~/app/_components/header";
 import { Footer } from "~/app/_components/footer";
 import { SectionHeader } from "~/app/_components/section-header";
 import { ProjectCard } from "~/app/_components/project-card";
-import { blogPosts } from "~/content/blog-posts";
+import { BlogPostCard, formatDate } from "~/app/blog/_components/blog-post-card";
+import { getAllBlogPosts } from "~/lib/mdx";
 import { projects } from "~/content/projects";
 import { speakingEvents } from "~/content/speaking-events";
 import Image from "next/image";
 
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-export default function Home() {
+export default async function Home() {
   // Get latest 3 blog posts
-  const sortedPosts = [...blogPosts].sort(
-    (a, b) =>
-      new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime(),
-  );
-  const latestPosts = sortedPosts.slice(0, 3);
+  const allPosts = await getAllBlogPosts();
+  const latestPosts = allPosts.slice(0, 3);
 
   // Get featured projects
   const featuredProjects = projects.filter((p) => p.featured);
@@ -311,131 +301,14 @@ export default function Home() {
               />
             </div>
 
-            {/* Asymmetric Grid: First post larger, others standard */}
             <div className="mx-auto mt-16 lg:mx-0 lg:max-w-none">
               {latestPosts.length > 0 && latestPosts[0] && (
-                <article
-                  key={latestPosts[0].id}
-                  className="group card-hover mb-10 flex flex-col overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816] transition-all duration-200 hover:border-[#C91F37]/50 lg:flex-row"
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden lg:w-1/2">
-                    {latestPosts[0].heroImage ? (
-                      <Image
-                        src={latestPosts[0].heroImage}
-                        alt={
-                          latestPosts[0].heroImageAlt ?? latestPosts[0].title
-                        }
-                        fill
-                        className="object-cover transition-transform duration-200 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1A1816] to-[#2A2725]">
-                        <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-[#2A2725]">
-                          <svg
-                            className="h-8 w-8 text-[#a39e98]"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] to-transparent opacity-50" />
-                  </div>
-                  <div className="flex flex-1 flex-col p-8">
-                    <div className="flex items-center gap-x-3 text-xs text-[#726d68]">
-                      <span>{latestPosts[0].category}</span>
-                      <span>•</span>
-                      <time>{formatDate(latestPosts[0].publishDate)}</time>
-                    </div>
-                    <h3 className="mt-3 text-2xl leading-7 font-semibold text-gray-100">
-                      <Link
-                        href={`/blog/${latestPosts[0].slug}`}
-                        className="transition-all duration-200 hover:text-[#C91F37]"
-                      >
-                        {latestPosts[0].title}
-                      </Link>
-                    </h3>
-                    <p className="mt-3 text-base leading-7 text-[#a39e98]">
-                      {latestPosts[0].excerpt}
-                    </p>
-                    <div className="mt-6 flex items-center gap-2">
-                      <span className="text-sm text-[#726d68]">
-                        {latestPosts[0].readTime}
-                      </span>
-                    </div>
-                  </div>
-                </article>
+                <BlogPostCard post={latestPosts[0]} variant="hero" />
               )}
               {latestPosts.length > 1 && (
-                <div className="grid max-w-2xl grid-cols-1 gap-10 lg:max-w-none lg:grid-cols-2">
+                <div className="grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2">
                   {latestPosts.slice(1).map((post) => (
-                    <article
-                      key={post.id}
-                      className="group card-hover flex flex-col overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816] transition-all duration-200 hover:border-[#C91F37]/50"
-                    >
-                      <div className="relative aspect-[16/9] overflow-hidden">
-                        {post.heroImage ? (
-                          <Image
-                            src={post.heroImage}
-                            alt={post.heroImageAlt ?? post.title}
-                            fill
-                            className="object-cover transition-transform duration-200 group-hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1A1816] to-[#2A2725]">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#2A2725]">
-                              <svg
-                                className="h-6 w-6 text-[#a39e98]"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                                />
-                              </svg>
-                            </div>
-                          </div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] to-transparent opacity-50" />
-                      </div>
-                      <div className="flex flex-1 flex-col p-6">
-                        <div className="flex items-center gap-x-3 text-xs text-[#726d68]">
-                          <span>{post.category}</span>
-                          <span>•</span>
-                          <time>{formatDate(post.publishDate)}</time>
-                        </div>
-                        <h3 className="mt-3 text-lg leading-6 font-semibold text-gray-100">
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            className="transition-all duration-200 hover:text-[#C91F37]"
-                          >
-                            {post.title}
-                          </Link>
-                        </h3>
-                        <p className="mt-2 line-clamp-3 text-sm leading-6 text-[#a39e98]">
-                          {post.excerpt}
-                        </p>
-                        <div className="mt-4 flex items-center gap-2">
-                          <span className="text-xs text-[#726d68]">
-                            {post.readTime}
-                          </span>
-                        </div>
-                      </div>
-                    </article>
+                    <BlogPostCard key={post.slug} post={post} />
                   ))}
                 </div>
               )}

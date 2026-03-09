@@ -16,11 +16,11 @@ import {
   Newspaper,
   Search,
 } from "lucide-react";
-import { blogPosts } from "~/content/blog-posts";
+import { type BlogPost } from "~/lib/mdx";
 import { projects } from "~/content/projects";
 import { speakingEvents } from "~/content/speaking-events";
 
-export function CommandMenu() {
+export function CommandMenu({ posts }: { posts: BlogPost[] }) {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -135,7 +135,7 @@ export function CommandMenu() {
               heading="Blog"
               className="mb-2 px-2 text-xs font-medium text-[#726d68]"
             >
-              {blogPosts.map((post) => (
+              {posts.map((post) => (
                 <Command.Item
                   key={post.slug}
                   onSelect={() =>

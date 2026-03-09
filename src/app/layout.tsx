@@ -14,6 +14,7 @@ import { Analytics } from "~/app/_components/analytics";
 import { ScrollProgress } from "~/app/_components/scroll-progress";
 import { CommandMenu } from "~/app/_components/command-menu";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { getAllBlogPosts } from "~/lib/mdx";
 
 export const metadata: Metadata = {
   title: "Davide Imola - Software Engineer & Tech Speaker",
@@ -85,9 +86,10 @@ const playfair = Playfair_Display({
   preload: true,
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const posts = await getAllBlogPosts();
   return (
     <html
       lang="en"
@@ -100,7 +102,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#0D0D0D] text-gray-100 antialiased">
         <ScrollProgress />
-        <CommandMenu />
+        <CommandMenu posts={posts} />
         {children}
         <Analytics />
         <SpeedInsights />
