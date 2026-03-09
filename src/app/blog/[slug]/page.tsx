@@ -1,5 +1,4 @@
-"use client";
-
+import { notFound } from "next/navigation";
 import { Header } from "~/app/_components/header";
 import { Footer } from "~/app/_components/footer";
 import { Comments } from "~/app/_components/comments";
@@ -9,153 +8,36 @@ import { CodeBlockToolbar } from "~/app/_components/code-block-toolbar";
 import { ReadingProgress } from "~/app/_components/reading-progress";
 import { BackToTop } from "~/app/_components/back-to-top";
 import { BlogPostStructuredData } from "~/app/_components/blog-post-structured-data";
-import { blogPosts, type BlogPost } from "~/content/blog-posts";
-import { useBlogPost } from "~/hooks/use-blog-post";
+import { getBlogPost, getAllBlogPosts, getRelatedPosts } from "~/lib/mdx";
+import { BlogPostCard, formatDate } from "~/app/blog/_components/blog-post-card";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-interface RelatedPost extends BlogPost {
-  similarityScore: number;
-}
+export default async function BlogPost({ params }: Props) {
+  const { slug } = await params;
 
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+  const [post, allPosts] = await Promise.all([
+    getBlogPost(slug),
+    getAllBlogPosts(),
+  ]);
 
-function getRelatedPosts(
-  currentSlug: string,
-  currentTags: string[],
-  limit: number = 3,
-): RelatedPost[] {
-  return blogPosts
-    .filter((post) => post.slug !== currentSlug) // Exclude current post
-    .map((post) => {
-      // Calculate similarity score based on shared tags
-      const sharedTags =
-        post.tags?.filter((tag) =>
-          currentTags.some(
-            (currentTag) => currentTag.toLowerCase() === tag.toLowerCase(),
-          ),
-        ).length || 0;
-
-      return {
-        ...post,
-        similarityScore: sharedTags,
-      };
-    })
-    .filter((post) => post.similarityScore > 0) // Only posts with shared tags
-    .sort((a, b) => b.similarityScore - a.similarityScore) // Sort by similarity
-    .slice(0, limit); // Take top N posts
-}
-
-export default function BlogPost({ params }: Props) {
-  const [slug, setSlug] = useState<string>("");
-  const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([]);
-
-  const { data, loading, error } = useBlogPost(slug);
-
-  useEffect(() => {
-    const loadSlug = async () => {
-      const resolvedParams = await params;
-      setSlug(resolvedParams.slug);
-    };
-
-    loadSlug();
-  }, [params]);
-
-  useEffect(() => {
-    if (data?.metadata?.tags) {
-      setRelatedPosts(getRelatedPosts(slug, data.metadata.tags));
-    }
-  }, [data, slug]);
-
-  if (loading) {
-    return (
-      <>
-        <Header />
-        <main className="bg-[#0D0D0D]">
-          <section className="relative px-6 py-24 sm:py-32 lg:px-8">
-            <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="animate-pulse">
-                <div className="mx-auto mb-4 h-8 w-1/2 rounded bg-[#3e3b38]"></div>
-                <div className="mx-auto mb-2 h-4 w-3/4 rounded bg-[#3e3b38]"></div>
-                <div className="mx-auto h-4 w-1/2 rounded bg-[#3e3b38]"></div>
-              </div>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </>
-    );
+  if (!post) {
+    notFound();
   }
 
-  if (error) {
-    return (
-      <>
-        <Header />
-        <main className="bg-[#0D0D0D]">
-          <section className="relative px-6 py-24 sm:py-32 lg:px-8">
-            <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
-            <div className="mx-auto max-w-4xl text-center">
-              <h1 className="mb-4 text-4xl font-bold text-gray-100">
-                Post Not Found
-              </h1>
-              <p className="mb-8 text-[#a39e98]">{error}</p>
-              <Link
-                href="/blog"
-                className="inline-flex items-center rounded-md border border-transparent bg-[#C91F37] px-6 py-3 text-base font-medium text-white transition-colors hover:bg-[#D3381C]"
-              >
-                Back to Blog
-              </Link>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </>
-    );
-  }
+  const { metadata } = post;
 
-  if (!data) {
-    return (
-      <>
-        <Header />
-        <main className="bg-[#0D0D0D]">
-          <section className="relative px-6 py-24 sm:py-32 lg:px-8">
-            <div className="pattern-seigaiha absolute inset-0 -z-10 opacity-30" />
-            <div className="mx-auto max-w-4xl text-center">
-              <h1 className="mb-4 text-4xl font-bold text-gray-100">
-                Post Not Found
-              </h1>
-              <p className="mb-8 text-[#a39e98]">
-                The requested blog post could not be found.
-              </p>
-              <Link
-                href="/blog"
-                className="inline-flex items-center rounded-md border border-transparent bg-[#C91F37] px-6 py-3 text-base font-medium text-white transition-colors hover:bg-[#D3381C]"
-              >
-                Back to Blog
-              </Link>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </>
-    );
-  }
+  const relatedPosts = getRelatedPosts(
+    allPosts,
+    slug,
+    metadata.tags,
+    metadata.category,
+  );
 
-  const { post, metadata } = data;
-
-  // Prepare URLs for sharing
   const postUrl = `https://davideimola.dev/blog/${slug}`;
   const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(metadata.title)}%20${encodeURIComponent(postUrl)}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`;
@@ -205,9 +87,7 @@ export default function BlogPost({ params }: Props) {
                 {formatDate(metadata.publishDate)}
               </time>
               <span className="text-sm text-[#726d68]">•</span>
-              <span className="text-sm text-[#726d68]">
-                {metadata.readTime}
-              </span>
+              <span className="text-sm text-[#726d68]">{metadata.readTime}</span>
             </div>
 
             <h1 className="font-playfair mb-6 text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl">
@@ -219,7 +99,7 @@ export default function BlogPost({ params }: Props) {
             </p>
 
             <div className="flex flex-wrap gap-2">
-              {metadata.tags.map((tag: string) => (
+              {metadata.tags.map((tag) => (
                 <span
                   key={tag}
                   className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
@@ -253,15 +133,12 @@ export default function BlogPost({ params }: Props) {
         <article className="bg-[#1A1816]/30 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_250px]">
-              {/* Main Content */}
               <div className="max-w-4xl">
                 <div
                   className="blog-content"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
-
-              {/* Table of Contents - Sidebar */}
               <aside className="lg:order-last">
                 <TableOfContents content={post.content} />
               </aside>
@@ -301,14 +178,12 @@ export default function BlogPost({ params }: Props) {
           </div>
         </section>
 
-        {/* Newsletter CTA */}
         <Newsletter
           title="Enjoyed this article?"
           description="Subscribe to my newsletter for more insights on infrastructure, Kubernetes, Go, security, and tech community updates. No spam, just quality content."
           formId="blog-post"
         />
 
-        {/* Comments Section */}
         <Comments slug={slug} />
 
         {/* Related Posts */}
@@ -324,66 +199,7 @@ export default function BlogPost({ params }: Props) {
 
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {relatedPosts.map((relatedPost) => (
-                  <article
-                    key={relatedPost.id}
-                    className="group overflow-hidden rounded-xl border border-[#2A2725] bg-[#1A1816] transition-all duration-300 hover:border-[#C91F37]/50 hover:shadow-lg"
-                  >
-                    {/* Hero Image */}
-                    <div className="relative aspect-[16/9] overflow-hidden">
-                      {relatedPost.heroImage ? (
-                        <Image
-                          src={relatedPost.heroImage}
-                          alt={relatedPost.heroImageAlt ?? relatedPost.title}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#3E3B38] to-[#2A2725]">
-                          <span className="text-4xl text-[#726d68]">📝</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <div className="mb-3">
-                        <span className="inline-block rounded bg-[#C91F37]/15 px-2 py-1 text-xs font-medium text-[#E6E4E0] ring-1 ring-[#C91F37]/40">
-                          {relatedPost.category}
-                        </span>
-                      </div>
-
-                      <h3 className="mb-3 line-clamp-2 text-lg font-semibold text-gray-100 transition-colors group-hover:text-[#C91F37]">
-                        <Link href={`/blog/${relatedPost.slug}`}>
-                          {relatedPost.title}
-                        </Link>
-                      </h3>
-
-                      <p className="mb-4 line-clamp-3 text-sm text-[#a39e98]">
-                        {relatedPost.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-1">
-                          {relatedPost.tags?.slice(0, 2).map((tag: string) => (
-                            <span
-                              key={tag}
-                              className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                          {relatedPost.tags && relatedPost.tags.length > 2 && (
-                            <span className="inline-block rounded bg-[#2A2725] px-2 py-1 text-xs text-[#a39e98]">
-                              +{relatedPost.tags.length - 2}
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-xs text-[#726d68]">
-                          {relatedPost.readTime}
-                        </span>
-                      </div>
-                    </div>
-                  </article>
+                  <BlogPostCard key={relatedPost.slug} post={relatedPost} />
                 ))}
               </div>
             </div>

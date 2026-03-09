@@ -1,4 +1,4 @@
-import { blogPosts } from "~/content/blog-posts";
+import { getAllBlogPosts } from "~/lib/mdx";
 
 // Helper function to escape XML special characters
 function escapeXml(unsafe: string): string {
@@ -14,11 +14,7 @@ export async function GET() {
   const siteUrl = "https://davideimola.dev";
   const blogUrl = `${siteUrl}/blog`;
 
-  // Sort posts by date (newest first)
-  const sortedPosts = [...blogPosts].sort(
-    (a, b) =>
-      new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime(),
-  );
+  const sortedPosts = await getAllBlogPosts();
 
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">

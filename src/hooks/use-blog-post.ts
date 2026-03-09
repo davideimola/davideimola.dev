@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 interface BlogPostData {
   post: any;
   metadata: any;
+  relatedPosts: any[];
 }
 
 interface UseBlogPostResult {

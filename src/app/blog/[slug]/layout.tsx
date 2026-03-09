@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const metadata = getBlogPostMetadata(slug);
+  const metadata = await getBlogPostMetadata(slug);
 
   if (!metadata) {
     return {
