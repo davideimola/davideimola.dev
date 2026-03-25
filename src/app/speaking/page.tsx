@@ -195,7 +195,7 @@ export default function SpeakingPage() {
         {years.map((year) => (
           <section key={year}>
             <ScrollReveal>
-              <SectionHeader title={year} />
+              <SectionHeader title={year} variant="subsection" />
             </ScrollReveal>
             <ul className="flex flex-col divide-y divide-border">
               {byYear[year].map((talk, i) => {

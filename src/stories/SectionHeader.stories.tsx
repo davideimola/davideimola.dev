@@ -46,3 +46,19 @@ export const RecentTalks: Story = {
     seeAllLabel: "All talks →",
   },
 };
+
+export const Subsection: Story = {
+  args: {
+    title: "2025",
+    variant: "subsection",
+  },
+};
+
+export const SubsectionWithLink: Story = {
+  args: {
+    title: "2024",
+    variant: "subsection",
+    seeAllHref: "#",
+    seeAllLabel: "See all →",
+  },
+};
