@@ -1,12 +1,20 @@
-// Content data layer — placeholder data until MDX pipeline is implemented in issue #12/#14
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import readingTime from "reading-time";
+
+// ── Types ──────────────────────────────────────────────────────────────────
 
 export interface BlogPost {
   slug: string;
   title: string;
-  date: string;
-  tags: string[];
   excerpt: string;
-  readingTime: number;
+  category: string;
+  tags: string[];
+  date: string; // mapped from publishDate
+  readingTime: string;
+  featured: boolean;
+  content: string;
 }
 
 export interface Talk {
@@ -32,35 +40,77 @@ export interface Project {
   description: string;
 }
 
-const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: "gitops-at-scale",
-    title: "GitOps at scale: lessons from production",
-    date: "2026-02-10",
-    tags: ["GitOps", "Kubernetes", "DevOps"],
-    excerpt:
-      "After two years running GitOps in production across multiple clusters, here's what I'd tell my past self.",
-    readingTime: 7,
-  },
-  {
-    slug: "go-error-handling",
-    title: "Error handling in Go: patterns that actually work",
-    date: "2025-12-05",
-    tags: ["Go", "Backend"],
-    excerpt:
-      "A pragmatic guide to Go error handling that doesn't end up with error strings everywhere.",
-    readingTime: 5,
-  },
-  {
-    slug: "platform-engineering-intro",
-    title: "Platform engineering is not just DevOps with a new name",
-    date: "2025-10-18",
-    tags: ["Platform Engineering", "DevOps"],
-    excerpt:
-      "What actually changes when you shift from DevOps to platform engineering, and when it makes sense.",
-    readingTime: 6,
-  },
-];
+export interface TocItem {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
+
+// ── Blog ──────────────────────────────────────────────────────────────────
+
+const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+export function extractToc(content: string): TocItem[] {
+  const toc: TocItem[] = [];
+  for (const line of content.split("\n")) {
+    const h2 = line.match(/^## (.+)$/);
+    const h3 = line.match(/^### (.+)$/);
+    if (h2) {
+      const text = h2[1].replace(/[*_`[\]]/g, "").trim();
+      toc.push({ id: slugify(text), text, level: 2 });
+    } else if (h3) {
+      const text = h3[1].replace(/[*_`[\]]/g, "").trim();
+      toc.push({ id: slugify(text), text, level: 3 });
+    }
+  }
+  return toc;
+}
+
+function parsePost(slug: string): BlogPost {
+  const raw = fs.readFileSync(path.join(BLOG_DIR, `${slug}.mdx`), "utf-8");
+  const { data, content } = matter(raw);
+  const rt = readingTime(content);
+  return {
+    slug,
+    title: data.title,
+    excerpt: data.excerpt ?? "",
+    category: data.category ?? "General",
+    tags: data.tags ?? [],
+    date: data.publishDate,
+    readingTime: rt.text,
+    featured: data.featured ?? false,
+    content,
+  };
+}
+
+export function getAllPosts(): BlogPost[] {
+  return fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => parsePost(f.replace(".mdx", "")))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getPostBySlug(slug: string): BlogPost | null {
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) return null;
+  return parsePost(slug);
+}
+
+export function getRecentPosts(count = 3): BlogPost[] {
+  return getAllPosts().slice(0, count);
+}
+
+// ── Talks (placeholder — replaced in issue #14) ───────────────────────────
 
 const TALKS: Talk[] = [
   {
@@ -89,6 +139,14 @@ const TALKS: Talk[] = [
   },
 ];
 
+export function getRecentTalks(count = 3): Talk[] {
+  return [...TALKS]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count);
+}
+
+// ── Projects ──────────────────────────────────────────────────────────────
+
 const PROJECTS: Project[] = [
   {
     slug: "schrodinger-hat",
@@ -114,18 +172,6 @@ const PROJECTS: Project[] = [
       "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience.",
   },
 ];
-
-export function getRecentPosts(count = 3): BlogPost[] {
-  return [...BLOG_POSTS]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, count);
-}
-
-export function getRecentTalks(count = 3): Talk[] {
-  return [...TALKS]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, count);
-}
 
 export function getFeaturedProjects(): Project[] {
   return PROJECTS.filter((p) => p.featured);

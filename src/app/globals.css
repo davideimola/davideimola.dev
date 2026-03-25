@@ -186,6 +186,76 @@ body::before {
   content: none;
 }
 
+/* ── Prism syntax highlighting ── */
+code[class*="language-"],
+pre[class*="language-"] {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  line-height: 1.7;
+  color: var(--text-1);
+  background: none;
+  tab-size: 2;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--text-2);
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f7768e;
+}
+
+.token.boolean,
+.token.number {
+  color: #ff9e64;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #9ece6a;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--text-2);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--accent);
+}
+
+.token.function,
+.token.class-name {
+  color: #7aa2f7;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #bb9af7;
+}
+
 /* ── Animations ── */
 @keyframes blink {
   0%,
