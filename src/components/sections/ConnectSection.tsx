@@ -16,8 +16,8 @@ export function ConnectSection() {
               <span className="text-accent mr-2">{"// "}</span>connect
             </h2>
             <p className="font-sans text-[15px] text-text-2 max-w-[480px] leading-relaxed">
-              Open to talks, collaborations, and interesting conversations. Find me online or send a
-              message directly.
+              Open to talks, workshops, and interesting conversations. Find me online or reach out
+              directly.
             </p>
             <div className="flex flex-wrap justify-center gap-6">
               {LINKS.map((link) => (
@@ -33,12 +33,22 @@ export function ConnectSection() {
                 </a>
               ))}
             </div>
-            <a
-              href="/contact"
-              className="font-mono text-[12px] text-text-3 border border-border rounded-[3px] px-4 py-2 no-underline transition-[border-color,color] duration-150 hover:border-border-hover hover:text-text-1"
-            >
-              Send a message →
-            </a>
+            <div className="flex flex-wrap justify-center gap-3">
+              <a
+                href="https://cal.com/davideimola"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[12px] text-text-1 bg-accent/10 border border-accent/30 rounded-[3px] px-4 py-2 no-underline transition-[border-color,color,background-color] duration-150 hover:bg-accent/20 hover:border-accent/50"
+              >
+                <span className="text-accent mr-1.5">❯</span>book a call
+              </a>
+              <a
+                href="/contact"
+                className="font-mono text-[12px] text-text-3 border border-border rounded-[3px] px-4 py-2 no-underline transition-[border-color,color] duration-150 hover:border-border-hover hover:text-text-1"
+              >
+                send a message →
+              </a>
+            </div>
           </div>
         </ScrollReveal>
       </div>

@@ -38,9 +38,9 @@ export default function HomePage() {
       <JsonLd data={WEBSITE_SCHEMA} />
       <HeroSection />
       <WhatIDoSection />
-      <ProjectsSection />
-      <TalksSection />
       <WritingSection />
+      <TalksSection />
+      <ProjectsSection />
       <ConnectSection />
     </>
   );

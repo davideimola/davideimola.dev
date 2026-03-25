@@ -53,13 +53,31 @@ export function HeroSection() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-3 animate-[fadeUp_0.5s_ease_0.4s_both]">
+          <div className="flex flex-wrap gap-3 mb-10 animate-[fadeUp_0.5s_ease_0.4s_both]">
             <ButtonLink variant="primary" href="/about">
               About me →
             </ButtonLink>
             <ButtonLink variant="ghost" href="/blog">
               Read the blog →
             </ButtonLink>
+          </div>
+
+          {/* Stats */}
+          <div className="flex flex-wrap gap-x-8 gap-y-3 animate-[fadeUp_0.5s_ease_0.5s_both]">
+            {[
+              { value: "17+", label: "talks & events" },
+              { value: "20k+", label: "community members" },
+              { value: "9", label: "articles" },
+            ].map((stat) => (
+              <div key={stat.label} className="flex flex-col gap-0.5">
+                <span className="font-mono text-[20px] font-bold text-text-1 leading-none">
+                  {stat.value}
+                </span>
+                <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
