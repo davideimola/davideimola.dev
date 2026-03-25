@@ -44,7 +44,7 @@ export default function SpeakingPage() {
             Speaking
           </h1>
           <p className="font-sans text-[15px] text-text-2">
-            {talks.length} talks at conferences and meetups on engineering, platform thinking, and open source.
+            {talks.length} talks at conferences, meetups, and podcasts on engineering, platform thinking, and open source.
           </p>
         </header>
       </ScrollReveal>
@@ -74,6 +74,19 @@ export default function SpeakingPage() {
                       <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug">
                         {talk.title}
                       </h2>
+
+                      {/* Role · type · co-speaker */}
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Badge variant={talk.role === "Speaker" ? "category" : "active"}>
+                          {talk.role}
+                        </Badge>
+                        <Badge variant="category">{talk.type}</Badge>
+                        {talk.coSpeaker && (
+                          <span className="font-mono text-[11px] text-text-3">
+                            w/ {talk.coSpeaker}
+                          </span>
+                        )}
+                      </div>
 
                       {/* Tags + links */}
                       <div className="flex flex-wrap items-center justify-between gap-3">

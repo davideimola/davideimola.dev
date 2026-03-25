@@ -23,8 +23,11 @@ export interface Talk {
   slug: string;
   title: string;
   event: string;
+  role: "Speaker" | "Organizer" | "Organizer & MC" | "Organizer & Speaker" | "MC" | "Guest";
+  type: "Conference" | "Meetup" | "Podcast/Stream" | "Workshop";
   date: string;
   location: string;
+  coSpeaker?: string;
   slides?: string;
   video?: string;
   tags: string[];

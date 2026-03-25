@@ -1,26 +1,190 @@
 [
   {
-    "slug": "gitops-kcd-italy-2025",
-    "title": "From chaos to control: GitOps for platform teams",
-    "event": "KCD Italy 2025",
-    "date": "2025-06-20",
-    "location": "Milan, Italy",
-    "tags": ["GitOps", "Kubernetes"]
+    "slug": "open-source-day-2025",
+    "title": "Open Source Day with Schrodinger Hat",
+    "event": "Open Source Day 2025",
+    "role": "Organizer",
+    "type": "Conference",
+    "date": "2025-03-21",
+    "location": "Florence, Italy",
+    "tags": ["Open Source", "Community"]
   },
   {
-    "slug": "go-security-codemotion-2025",
-    "title": "Secure by design: building safer Go services",
-    "event": "Codemotion Milan 2025",
-    "date": "2025-04-10",
-    "location": "Milan, Italy",
-    "tags": ["Go", "Security"]
+    "slug": "open-source-day-2024",
+    "title": "Open Source Day with Schrodinger Hat",
+    "event": "Open Source Day 2024",
+    "role": "Organizer & MC",
+    "type": "Conference",
+    "date": "2024-03-07",
+    "location": "Florence, Italy",
+    "tags": ["Open Source", "Community"]
   },
   {
-    "slug": "platform-eng-devops-days-2024",
-    "title": "The platform engineering shift",
-    "event": "DevOpsDays Zurich 2024",
-    "date": "2024-09-15",
-    "location": "Zurich, Switzerland",
-    "tags": ["Platform Engineering", "DevOps"]
+    "slug": "golab-2024",
+    "title": "Gophers Gone Domain-Driven: a tale of Go and DDD",
+    "event": "GOLab 2024",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2024-11-13",
+    "location": "Florence, Italy",
+    "video": "https://golab.io/talks/gophers-gone-domain-driven",
+    "tags": ["Go", "DDD", "Architecture"]
+  },
+  {
+    "slug": "wearedevelopers-2024",
+    "title": "GreenOps: Bridging the Gap Between DevOps and Sustainability",
+    "event": "WeAreDevelopers World Congress 2024",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2024-07-18",
+    "location": "Remote",
+    "tags": ["DevOps", "Sustainability", "GreenOps"]
+  },
+  {
+    "slug": "kcd-italy-2024",
+    "title": "How to GitOps your cluster with Flux",
+    "event": "KCD Italy 2024",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2024-06-20",
+    "location": "Bologna, Italy",
+    "tags": ["GitOps", "Kubernetes", "Flux"]
+  },
+  {
+    "slug": "devops-time-ugidotnet-2024",
+    "title": "Come funziona l'incident response",
+    "event": "DevOps Time by UGIdotNET",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2024-04-23",
+    "location": "Remote",
+    "video": "https://www.youtube.com/live/5DRDDGYCvjk?si=B9XQjmmqphoW8-yk",
+    "tags": ["DevOps", "Incident Response"]
+  },
+  {
+    "slug": "devops-day-2024",
+    "title": "Securing Secrets in the GitOps Era",
+    "event": "DevOps Day 2024",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2024-02-07",
+    "location": "Remote",
+    "video": "https://www.wearedevelopers.com/en/videos/852/securing-secrets-in-the-gitops-era-1707725810",
+    "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
+    "tags": ["GitOps", "Security", "Secrets"]
+  },
+  {
+    "slug": "open-source-day-2023",
+    "title": "Open Source Day with Schrodinger Hat",
+    "event": "Open Source Day 2023",
+    "role": "Organizer",
+    "type": "Conference",
+    "date": "2023-03-28",
+    "location": "Florence, Italy",
+    "tags": ["Open Source", "Community"]
+  },
+  {
+    "slug": "golab-2023",
+    "title": "Level UP your RDBMS Productivity with GO",
+    "event": "GOLab 2023",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2023-11-21",
+    "location": "Florence, Italy",
+    "coSpeaker": "Ludovico Russo",
+    "video": "https://youtu.be/kS5LpcmB3O4?si=6MQK0h5DhHGQMKDK",
+    "slides": "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go",
+    "tags": ["Go", "Database", "RDBMS"]
+  },
+  {
+    "slug": "devops-time-ugidotnet-2023",
+    "title": "Securing Secrets in the GitOps Era",
+    "event": "DevOps Time by UGIdotNET",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2023-11-14",
+    "location": "Remote",
+    "video": "https://www.youtube.com/live/npPrIEamz8U?si=gb7v4Hs0nDFPA_xt",
+    "tags": ["GitOps", "Security", "Secrets"]
+  },
+  {
+    "slug": "devsecops-day-2023",
+    "title": "Securing Secrets in the GitOps Era",
+    "event": "DevSecOps Day 2023",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2023-10-13",
+    "location": "Bologna, Italy",
+    "video": "https://www.youtube.com/watch?v=HYVaSSqGyyE&list=PLWK9j6ps_unmhH5KbPWc7NXwJJ46fnXFq&index=2",
+    "slides": "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era",
+    "tags": ["GitOps", "Security", "Secrets"]
+  },
+  {
+    "slug": "giuseppe-funicello-devops-2023",
+    "title": "Cos'è e cosa fa un DevOps?",
+    "event": "Giuseppe Funicello",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2023-10-03",
+    "location": "Remote",
+    "video": "https://www.youtube.com/watch?v=ojpQwOQOse4",
+    "tags": ["DevOps"]
+  },
+  {
+    "slug": "giuseppe-funicello-opensource-2023",
+    "title": "Come funziona l'OPEN SOURCE? Con Davide Imola di @SchrodingerHat",
+    "event": "Giuseppe Funicello",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2023-03-15",
+    "location": "Remote",
+    "video": "https://www.youtube.com/watch?v=lzTho3gamn4",
+    "tags": ["Open Source", "Community"]
+  },
+  {
+    "slug": "incontro-devops-italia-2023",
+    "title": "How to GitOps your Kubernetes cluster with Flux",
+    "event": "Incontro DevOps Italia 2023",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2023-03-10",
+    "location": "Bologna, Italy",
+    "video": "https://www.youtube.com/watch?v=56JnkdoClPQ&list=PLWK9j6ps_unkOGNPvoDhrnoGSmtFo9Pyr&index=2",
+    "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
+    "tags": ["GitOps", "Kubernetes", "Flux"]
+  },
+  {
+    "slug": "tomorrowdevs-2023",
+    "title": "Open Source Day with Schrodinger Hat",
+    "event": "TomorrowDevs",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2023-03-08",
+    "location": "Remote",
+    "video": "https://www.youtube.com/watch?v=epcqaeVcp8c",
+    "tags": ["Open Source", "Community"]
+  },
+  {
+    "slug": "devops-day-2023",
+    "title": "How to GitOps your Kubernetes cluster with Flux",
+    "event": "DevOps Day 2023",
+    "role": "Speaker",
+    "type": "Conference",
+    "date": "2023-02-15",
+    "location": "Remote",
+    "video": "https://www.wearedevelopers.com/en/videos/547/how-to-gitops-your-cluster-with-flux",
+    "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux",
+    "tags": ["GitOps", "Kubernetes", "Flux"]
+  },
+  {
+    "slug": "developers-bakery-2023",
+    "title": "Open Source Day with Schrodinger Hat",
+    "event": "The Developers' Bakery",
+    "role": "Speaker",
+    "type": "Podcast/Stream",
+    "date": "2023-01-17",
+    "location": "Remote",
+    "video": "https://thebakery.dev/50/",
+    "tags": ["Open Source", "Community"]
   }
 ]
