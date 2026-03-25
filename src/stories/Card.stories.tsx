@@ -26,10 +26,8 @@ export const Default: Story = {
     hoverable: true,
     children: (
       <div>
-        <p style={{ color: "#EAE5DF", fontFamily: "JetBrains Mono, monospace" }}>Card content</p>
-        <p style={{ color: "#9A948E", fontSize: "13px", marginTop: "8px" }}>
-          Some description text goes here.
-        </p>
+        <p className="font-mono text-text-1">Card content</p>
+        <p className="font-sans text-text-2 text-[13px] mt-2">Some description text goes here.</p>
       </div>
     ),
   },
@@ -37,22 +35,11 @@ export const Default: Story = {
 
 export const WithBadge: Story = {
   render: () => (
-    <div style={{ width: "340px" }}>
+    <div className="w-[340px]">
       <Card href="#">
         <Badge variant="active">Community · Active</Badge>
-        <p
-          style={{
-            color: "#EAE5DF",
-            fontFamily: "JetBrains Mono, monospace",
-            fontSize: "16px",
-            fontWeight: 600,
-            marginTop: "16px",
-            marginBottom: "8px",
-          }}
-        >
-          Schrodinger Hat
-        </p>
-        <p style={{ color: "#9A948E", fontSize: "13px", lineHeight: 1.55 }}>
+        <p className="font-mono text-text-1 text-base font-semibold mt-4 mb-2">Schrodinger Hat</p>
+        <p className="font-sans text-text-2 text-[13px] leading-relaxed">
           International open source community. 20k+ people reached, 100+ speakers.
         </p>
       </Card>
@@ -62,22 +49,11 @@ export const WithBadge: Story = {
 
 export const ComingSoon: Story = {
   render: () => (
-    <div style={{ width: "340px" }}>
+    <div className="w-[340px]">
       <Card>
         <Badge variant="coming-soon">Coming soon</Badge>
-        <p
-          style={{
-            color: "#EAE5DF",
-            fontFamily: "JetBrains Mono, monospace",
-            fontSize: "16px",
-            fontWeight: 600,
-            marginTop: "16px",
-            marginBottom: "8px",
-          }}
-        >
-          Worky
-        </p>
-        <p style={{ color: "#9A948E", fontSize: "13px", lineHeight: 1.55 }}>
+        <p className="font-mono text-text-1 text-base font-semibold mt-4 mb-2">Worky</p>
+        <p className="font-sans text-text-2 text-[13px] leading-relaxed">
           A tool for running workshops. Still in the works.
         </p>
       </Card>
@@ -88,6 +64,6 @@ export const ComingSoon: Story = {
 export const NonHoverable: Story = {
   args: {
     hoverable: false,
-    children: <p style={{ color: "#9A948E", fontSize: "13px" }}>This card has no hover effect.</p>,
+    children: <p className="font-sans text-text-2 text-[13px]">This card has no hover effect.</p>,
   },
 };

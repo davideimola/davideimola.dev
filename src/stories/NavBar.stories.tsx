@@ -25,9 +25,9 @@ export const Default: Story = {
 
 export const WithPageContent: Story = {
   render: () => (
-    <div style={{ background: "#080807", minHeight: "200px" }}>
+    <div className="bg-bg min-h-[200px]">
       <NavBar onSearchOpen={() => {}} />
-      <div style={{ paddingTop: "80px", paddingLeft: "32px", color: "#9A948E", fontSize: "13px" }}>
+      <div className="pt-20 px-8 font-sans text-text-2 text-[13px]">
         Page content below the fixed navbar…
       </div>
     </div>

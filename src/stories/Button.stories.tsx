@@ -61,8 +61,8 @@ export const Large: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px", padding: "24px" }}>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+    <div className="flex flex-col gap-6 p-6">
+      <div className="flex gap-3 items-center">
         <Button variant="primary" size="sm">
           Primary SM
         </Button>
@@ -73,7 +73,7 @@ export const AllVariants: Story = {
           Primary LG
         </Button>
       </div>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+      <div className="flex gap-3 items-center">
         <Button variant="ghost" size="sm">
           Ghost SM
         </Button>
@@ -84,7 +84,7 @@ export const AllVariants: Story = {
           Ghost LG
         </Button>
       </div>
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+      <div className="flex gap-3 items-center">
         <ButtonLink variant="primary" href="#">
           Link Primary
         </ButtonLink>

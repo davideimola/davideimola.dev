@@ -55,6 +55,24 @@ All tokens are CSS custom properties in `src/app/globals.css`. Use them via Tail
 
 Apply with Tailwind: `font-mono`, `font-sans`
 
+## Responsive Design
+
+**Responsiveness is a cardinal requirement.** This is a portfolio/showcase site visited on any device. Every component and section must work correctly at all breakpoints.
+
+### Breakpoints (Tailwind defaults)
+- Mobile-first: base styles target mobile (`< 640px`)
+- `sm:` — 640px+ (large phones, small tablets)
+- `md:` — 768px+ (tablets, used for desktop nav)
+- `lg:` — 1024px+ (desktops)
+
+### Rules
+- Always design mobile-first: write base styles for mobile, then add `sm:`/`md:`/`lg:` overrides
+- A component is NOT done until its responsive behavior has been considered and implemented
+- Use `px-4 sm:px-8` for horizontal padding (not a fixed `px-8`)
+- Navigation: hamburger menu on mobile (`md:hidden` / `hidden md:flex` pattern)
+- Multi-column layouts: stack to single column on mobile (`flex-col sm:flex-row`, `grid-cols-1 md:grid-cols-2`)
+- Do NOT use fixed pixel widths that could overflow on small screens
+
 ## Component Patterns
 
 ### File location

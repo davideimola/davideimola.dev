@@ -53,7 +53,7 @@ export const Category: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", padding: "24px" }}>
+    <div className="flex gap-2 flex-wrap p-6">
       <Badge variant="default">Community · Active</Badge>
       <Badge variant="active">Active</Badge>
       <Badge variant="coming-soon">Coming soon</Badge>
