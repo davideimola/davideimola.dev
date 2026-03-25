@@ -12,6 +12,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "projects", href: "/projects" },
   { label: "speaking", href: "/speaking" },
   { label: "about", href: "/about" },
+  { label: "contact", href: "/contact" },
 ];
 
 interface NavBarProps {
