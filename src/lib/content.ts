@@ -205,6 +205,13 @@ const PROJECTS: Project[] = [
   },
 ];
 
+export function getAllProjects(): Project[] {
+  return [...PROJECTS].sort((a, b) => {
+    const order = { active: 0, "coming-soon": 1, archived: 2 };
+    return order[a.status] - order[b.status];
+  });
+}
+
 export function getFeaturedProjects(): Project[] {
   return PROJECTS.filter((p) => p.featured);
 }
