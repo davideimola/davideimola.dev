@@ -122,6 +122,27 @@ Requires `"use client"` for the search handler.
 
 Minimal: copyright + links (privacy, now, rss, source).
 
+## Responsive design
+
+Responsiveness is a cardinal requirement. Every component must be designed mobile-first.
+
+### Breakpoints
+
+| Prefix | Width | Target |
+|--------|-------|--------|
+| (base) | < 640px | Mobile |
+| `sm:` | 640px+ | Large phones, small tablets |
+| `md:` | 768px+ | Tablets — used for desktop nav switch |
+| `lg:` | 1024px+ | Desktops |
+
+### Rules
+
+- Write base styles for mobile, then add `sm:`/`md:`/`lg:` overrides
+- Container padding: `px-4 sm:px-8` (not a fixed `px-8`)
+- NavBar: hamburger on mobile (`md:hidden` / `hidden md:flex` pattern)
+- Multi-column layouts: `flex-col sm:flex-row` or `grid-cols-1 md:grid-cols-2`
+- A component is not done until its responsive behavior has been verified
+
 ## Animation guidelines
 
 - Transitions: `150ms` for color/border, `200ms` for background + opacity
