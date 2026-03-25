@@ -36,6 +36,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: "@davideimola",
   },
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: "https://davideimola.dev/rss.xml", title: "Davide Imola — Blog" },
+      ],
+    },
+  },
 };
 
 export default function RootLayout({

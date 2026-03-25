@@ -1,8 +1,25 @@
 import type { Metadata } from "next";
 import type { ExperienceEntry } from "../../components/ui/ExperienceTimeline";
 import { ExperienceTimeline } from "../../components/ui/ExperienceTimeline";
+import { JsonLd } from "../../components/ui/JsonLd";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
+
+const PERSON_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Davide Imola",
+  url: "https://davideimola.dev",
+  jobTitle: "Tech Lead",
+  worksFor: { "@type": "Organization", name: "RedCarbon" },
+  description:
+    "Tech Lead, platform engineer, open source builder. Conference speaker on DevOps, GitOps, and Go.",
+  sameAs: [
+    "https://github.com/davideimola",
+    "https://www.linkedin.com/in/davideimola/",
+    "https://bsky.app/profile/davideimola.dev",
+  ],
+};
 
 export const metadata: Metadata = {
   title: "About",
@@ -250,6 +267,7 @@ const HOBBIES = [
 export default function AboutPage() {
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+      <JsonLd data={PERSON_SCHEMA} />
       {/* Page header */}
       <ScrollReveal>
         <header className="mb-16">

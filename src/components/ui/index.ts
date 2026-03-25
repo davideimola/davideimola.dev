@@ -1,4 +1,5 @@
 export { AuthorBio } from "./AuthorBio";
+export { JsonLd } from "./JsonLd";
 export { ExperienceTimeline } from "./ExperienceTimeline";
 export type { ExperienceEntry, ExperienceRole } from "./ExperienceTimeline";
 export { BackToTop } from "./BackToTop";

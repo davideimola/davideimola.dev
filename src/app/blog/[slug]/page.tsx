@@ -7,6 +7,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { AuthorBio } from "../../../components/ui/AuthorBio";
+import { JsonLd } from "../../../components/ui/JsonLd";
 import { BackToTop } from "../../../components/ui/BackToTop";
 import { Badge } from "../../../components/ui/Badge";
 import { CodeBlock } from "../../../components/ui/CodeBlock";
@@ -77,8 +78,25 @@ export default async function BlogPostPage({ params }: Props) {
   const { prev, next } = getPrevNextPosts(slug);
   const related = getRelatedPosts(slug);
 
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    url: `https://davideimola.dev/blog/${slug}`,
+    author: {
+      "@type": "Person",
+      name: "Davide Imola",
+      url: "https://davideimola.dev",
+    },
+    keywords: post.tags.join(", "),
+    ...(post.heroImage && { image: post.heroImage }),
+  };
+
   return (
     <>
+      <JsonLd data={blogPostingSchema} />
       <ReadingProgress />
       <BackToTop />
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
