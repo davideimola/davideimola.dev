@@ -16,8 +16,8 @@ export async function GET(request: Request) {
   const category = searchParams.get("category");
 
   const [fontBold, fontRegular] = await Promise.all([
-    loadFont("JetBrainsMono-Bold.woff2"),
-    loadFont("JetBrainsMono-Regular.woff2"),
+    loadFont("JetBrainsMono-Bold.ttf"),
+    loadFont("JetBrainsMono-Regular.ttf"),
   ]);
 
   return new ImageResponse(
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
           zIndex: 1,
         }}
       >
-        {/* Category / breadcrumb */}
+        {/* Terminal path */}
         <div
           style={{
             display: "flex",
@@ -76,9 +76,14 @@ export async function GET(request: Request) {
             marginBottom: "32px",
           }}
         >
-          <span style={{ color: "#C91F37", fontSize: "14px" }}>❯</span>
-          <span style={{ color: "#7E7874", fontSize: "14px", letterSpacing: "0.1em" }}>
-            {category ? `davideimola.dev / ${category.toLowerCase()}` : "davideimola.dev"}
+          <span style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+            <span style={{ color: "#C91F37" }}>~</span>
+            <span style={{ color: "#7E7874" }}>/davideimola</span>
+            {category && (
+              <span style={{ color: "#7E7874" }}>
+                /<span style={{ color: "#9A948E" }}>{category.toLowerCase()}</span>
+              </span>
+            )}
           </span>
         </div>
 
