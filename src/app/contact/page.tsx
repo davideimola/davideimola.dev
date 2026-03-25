@@ -16,6 +16,7 @@ const LINKS = [
   { label: "GitHub", handle: "@davideimola", href: "https://github.com/davideimola" },
   { label: "LinkedIn", handle: "in/davideimola", href: "https://www.linkedin.com/in/davideimola/" },
   { label: "BlueSky", handle: "@davideimola.dev", href: "https://bsky.app/profile/davideimola.dev" },
+  { label: "Cal.com", handle: "book a call", href: "https://cal.com/davideimola" },
 ];
 
 export default function ContactPage() {

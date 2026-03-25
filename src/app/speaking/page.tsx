@@ -58,6 +58,17 @@ export default function SpeakingPage() {
             <Badge key={topic} variant="category">{topic}</Badge>
           ))}
         </div>
+        <div className="mt-6">
+          <a
+            href="https://cal.com/davideimola"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-mono text-[12px] text-text-2 border border-border rounded-sm px-3 py-2 hover:border-border-hover hover:text-accent transition-[border-color,color] duration-150"
+          >
+            <span className="text-accent">❯</span>
+            book a call
+          </a>
+        </div>
       </PageHero>
 
       {/* Speaker Kit */}
