@@ -272,7 +272,7 @@ export default function AboutPage() {
       <ScrollReveal>
         <header className="mb-16">
           <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>cat ./about.md
+            <span className="text-accent mr-2">❯</span>whoami
           </p>
           <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 items-start">
             {/* Bio text */}

@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
       <PageHero
-        command="cat ./contact.md"
+        command="ping davideimola.dev"
         title="Contact"
         description="Open to talks, workshops, collaborations, and interesting conversations. Fill in the form or reach out directly."
       />
