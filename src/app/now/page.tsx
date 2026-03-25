@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageHero } from "../../components/ui/PageHero";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
 
@@ -17,32 +18,24 @@ const LAST_UPDATED = "March 2026";
 export default function NowPage() {
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
-      {/* Header */}
-      <ScrollReveal>
-        <header className="mb-12">
-          <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>cat ./now.md
-          </p>
-          <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-4">
-            Now
-          </h1>
-          <p className="font-sans text-[15px] text-text-2 leading-relaxed mb-4">
-            A snapshot of what I'm focused on right now — updated when something changes.
-          </p>
-          <p className="font-mono text-[12px] text-text-3">
-            Last updated: <span className="text-text-2">{LAST_UPDATED}</span>
-            {" · "}
-            <a
-              href="https://nownownow.com/about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors duration-150"
-            >
-              what is this?
-            </a>
-          </p>
-        </header>
-      </ScrollReveal>
+      <PageHero
+        command="cat ./now.md"
+        title="Now"
+        description="A snapshot of what I'm focused on right now — updated when something changes."
+      >
+        <p className="font-mono text-[12px] text-text-3 mt-4">
+          Last updated: <span className="text-text-2">{LAST_UPDATED}</span>
+          {" · "}
+          <a
+            href="https://nownownow.com/about"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent transition-colors duration-150"
+          >
+            what is this?
+          </a>
+        </p>
+      </PageHero>
 
       {/* Status card */}
       <ScrollReveal>

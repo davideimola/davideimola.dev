@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageHero } from "../../components/ui/PageHero";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
 
@@ -201,16 +202,12 @@ const DEV_STACK = [
 export default function UsesPage() {
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
-      {/* Header */}
-      <ScrollReveal>
-        <header className="mb-16">
-          <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>ls ./uses
-          </p>
-          <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-4">
-            Uses
-          </h1>
-          <p className="font-sans text-[15px] text-text-2 leading-relaxed max-w-2xl">
+      <PageHero
+        command="ls ./uses"
+        title="Uses"
+        className="mb-16"
+        description={
+          <>
             Hardware, software, and tools I use daily to build and think. Inspired by{" "}
             <a
               href="https://uses.tech"
@@ -221,9 +218,9 @@ export default function UsesPage() {
               uses.tech
             </a>
             .
-          </p>
-        </header>
-      </ScrollReveal>
+          </>
+        }
+      />
 
       {/* Hardware */}
       <section className="mb-16 border-t border-border pt-10">

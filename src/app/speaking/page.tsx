@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Badge } from "../../components/ui/Badge";
 import { CopyButton } from "../../components/ui/CopyButton";
+import { PageHero } from "../../components/ui/PageHero";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
 import { getAllTalks } from "../../lib/content";
@@ -47,29 +48,17 @@ export default function SpeakingPage() {
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
-      {/* Page header */}
-      <ScrollReveal>
-        <header className="mb-12">
-          <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>ls ./speaking
-          </p>
-          <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-4">
-            Speaking
-          </h1>
-          <p className="font-sans text-[15px] text-text-2 leading-relaxed mb-6 max-w-2xl">
-            I speak about the engineering problems I face day to day — Go, platform engineering,
-            GitOps, security, and building open source communities. I like talks that are concrete,
-            honest about tradeoffs, and leave the audience with something they can apply the next
-            day.
-          </p>
-          {/* Topic clusters */}
-          <div className="flex flex-wrap gap-2">
-            {TOPICS.map((topic) => (
-              <Badge key={topic} variant="category">{topic}</Badge>
-            ))}
-          </div>
-        </header>
-      </ScrollReveal>
+      <PageHero
+        command="ls ./speaking"
+        title="Speaking"
+        description="I speak about the engineering problems I face day to day — Go, platform engineering, GitOps, security, and building open source communities. I like talks that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
+      >
+        <div className="flex flex-wrap gap-2 mt-6">
+          {TOPICS.map((topic) => (
+            <Badge key={topic} variant="category">{topic}</Badge>
+          ))}
+        </div>
+      </PageHero>
 
       {/* Speaker Kit */}
       <section className="mb-16 border-t border-border pt-10" id="speaker-kit">
