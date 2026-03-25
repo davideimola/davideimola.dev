@@ -28,25 +28,25 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
       { threshold: 0.1 }
     );
 
-    // Double rAF gives the browser time to restore scroll position on
-    // back/forward navigation before we check element visibility.
-    let raf2: number;
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        // Element is already in or above the viewport — reveal immediately
-        // without animation (it's been "seen" before).
-        if (rect.top < window.innerHeight) {
-          el.classList.add("revealed");
-        } else {
-          observer.observe(el);
-        }
-      });
-    });
+    const tryReveal = () => {
+      if (el.classList.contains("revealed")) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add("revealed");
+      } else {
+        observer.observe(el);
+      }
+    };
+
+    // Immediate check for first render
+    tryReveal();
+
+    // Delayed check to handle Next.js scroll restoration on back/forward nav,
+    // which happens asynchronously after the component mounts.
+    const timer = setTimeout(tryReveal, 100);
 
     return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
+      clearTimeout(timer);
       observer.disconnect();
     };
   }, [delay]);
