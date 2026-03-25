@@ -7,6 +7,7 @@ AI context for Claude Code and other AI assistants working on this codebase.
 - **Framework:** Next.js 16 (App Router), TypeScript strict
 - **Styling:** Tailwind CSS v4 (CSS-first config in `src/app/globals.css`)
 - **Components:** Custom design system + shadcn/ui where appropriate
+- **Typography:** `@tailwindcss/typography` — use `prose` class for all long-form/MDX content
 - **Linting/Formatting:** Biome (`biome.json`) — no ESLint, no Prettier
 - **Testing:** Vitest + Testing Library + jsdom
 - **Storybook:** `@storybook/nextjs-vite` (Vite builder)

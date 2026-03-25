@@ -43,7 +43,7 @@ Dark, terminal-inspired aesthetic. Not a literal terminal, but the feeling of pr
 | Hero name | `clamp(42px, 7vw, 72px)` | 700 | `text-[clamp(42px,7vw,72px)] font-bold font-mono` |
 | Section title | 11px | 500 | `text-[11px] font-medium font-mono tracking-[0.12em] uppercase` |
 | Card title | 16px | 600 | `text-[16px] font-semibold font-mono` |
-| Nav links | 11px | 400 | `text-[11px] font-mono tracking-[0.04em] lowercase` |
+| Nav links | 12px | 400 | `text-[12px] font-mono tracking-[0.04em] lowercase text-text-2` |
 | Body | 15px | 400 | `text-[15px] font-sans` |
 | Small/meta | 11px | 400 | `text-[11px] font-mono` |
 | Badge | 10px | 500 | `text-[10px] font-mono tracking-[0.08em] uppercase` |
@@ -142,6 +142,26 @@ Responsiveness is a cardinal requirement. Every component must be designed mobil
 - NavBar: hamburger on mobile (`md:hidden` / `hidden md:flex` pattern)
 - Multi-column layouts: `flex-col sm:flex-row` or `grid-cols-1 md:grid-cols-2`
 - A component is not done until its responsive behavior has been verified
+
+## Prose (Tailwind Typography)
+
+`@tailwindcss/typography` is installed and configured with the design system tokens. Use the `prose` class for any long-form content (blog posts, talk descriptions, MDX pages).
+
+```tsx
+<article className="prose prose-lg max-w-none">
+  {/* MDX content */}
+</article>
+```
+
+All prose tokens are overridden in `globals.css`:
+- Body text → `--text-2`
+- Headings → `--text-1` + `font-mono` + tight tracking
+- Links → `--text-1` default, `--accent` on hover
+- Blockquote border → `--accent`
+- Inline code → pill with `--bg-card` + `--border-mid`, no backtick wrappers
+- Pre/code blocks → `--bg-card` background with `--border` border
+
+Do **not** use `prose-invert` — the site is dark-only and tokens are already mapped.
 
 ## Animation guidelines
 
