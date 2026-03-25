@@ -71,6 +71,122 @@ export default function SpeakingPage() {
         </header>
       </ScrollReveal>
 
+      {/* Speaker Kit */}
+      <section className="mb-16 border-t border-border pt-10" id="speaker-kit">
+        <ScrollReveal>
+          <SectionHeader title="Speaker Kit" />
+          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-10">
+            Everything you need for a CfP or event program. Copy and paste freely.
+          </p>
+        </ScrollReveal>
+
+        <div className="flex flex-col gap-6">
+          {/* Short bio */}
+          <ScrollReveal>
+            <div className="border border-border rounded-sm overflow-hidden">
+              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
+                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">SHORT BIO</span>
+                <CopyButton
+                  code={SHORT_BIO}
+                  label="copy"
+                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
+                />
+              </div>
+              <p className="font-sans text-[14px] text-text-2 leading-relaxed px-4 py-4">
+                {SHORT_BIO}
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Long bio */}
+          <ScrollReveal>
+            <div className="border border-border rounded-sm overflow-hidden">
+              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
+                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LONG BIO</span>
+                <CopyButton
+                  code={LONG_BIO}
+                  label="copy"
+                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
+                />
+              </div>
+              <div className="px-4 py-4 flex flex-col gap-3">
+                {LONG_BIO.split("\n\n").map((paragraph, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: static content, order never changes
+                  <p key={i} className="font-sans text-[14px] text-text-2 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Topics + links */}
+          <ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="border border-border rounded-sm overflow-hidden">
+                <div className="bg-bg-card border-b border-border px-4 py-2">
+                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">TOPIC AREAS</span>
+                </div>
+                <ul className="px-4 py-4 flex flex-col gap-2">
+                  {TOPICS.map((topic) => (
+                    <li key={topic} className="font-sans text-[14px] text-text-2 flex items-center gap-2">
+                      <span className="text-accent font-mono text-[10px]">//</span>
+                      {topic}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border border-border rounded-sm overflow-hidden">
+                <div className="bg-bg-card border-b border-border px-4 py-2">
+                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LINKS</span>
+                </div>
+                <ul className="px-4 py-4 flex flex-col gap-3">
+                  <li>
+                    <a
+                      href="/images/davide-speaking-profile.webp"
+                      download
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      ↓ Headshot (webp)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://bsky.app/profile/davideimola.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      BlueSky →
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/davideimola/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      LinkedIn →
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/davideimola"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      GitHub →
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Talks by year */}
       <div className="flex flex-col gap-12">
         {years.map((year) => (
@@ -162,125 +278,6 @@ export default function SpeakingPage() {
           </section>
         ))}
       </div>
-
-      {/* Speaker Kit */}
-      <section className="mt-16 border-t border-border pt-10" id="speaker-kit">
-        <ScrollReveal>
-          <SectionHeader title="Speaker Kit" />
-          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-10">
-            Everything you need for a CfP or event program. Copy and paste freely.
-          </p>
-        </ScrollReveal>
-
-        <div className="flex flex-col gap-6">
-          {/* Short bio */}
-          <ScrollReveal>
-            <div className="border border-border rounded-sm overflow-hidden">
-              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">SHORT BIO</span>
-                <CopyButton
-                  code={SHORT_BIO}
-                  label="copy"
-                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
-                />
-              </div>
-              <p className="font-sans text-[14px] text-text-2 leading-relaxed px-4 py-4">
-                {SHORT_BIO}
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Long bio */}
-          <ScrollReveal>
-            <div className="border border-border rounded-sm overflow-hidden">
-              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LONG BIO</span>
-                <CopyButton
-                  code={LONG_BIO}
-                  label="copy"
-                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
-                />
-              </div>
-              <div className="px-4 py-4 flex flex-col gap-3">
-                {LONG_BIO.split("\n\n").map((paragraph, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: static content, order never changes
-                  <p key={i} className="font-sans text-[14px] text-text-2 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Topics + headshot */}
-          <ScrollReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Topic areas */}
-              <div className="border border-border rounded-sm overflow-hidden">
-                <div className="bg-bg-card border-b border-border px-4 py-2">
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">TOPIC AREAS</span>
-                </div>
-                <ul className="px-4 py-4 flex flex-col gap-2">
-                  {TOPICS.map((topic) => (
-                    <li key={topic} className="font-sans text-[14px] text-text-2 flex items-center gap-2">
-                      <span className="text-accent font-mono text-[10px]">//</span>
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Headshot + social */}
-              <div className="border border-border rounded-sm overflow-hidden">
-                <div className="bg-bg-card border-b border-border px-4 py-2">
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LINKS</span>
-                </div>
-                <ul className="px-4 py-4 flex flex-col gap-3">
-                  <li>
-                    <a
-                      href="/images/davide-speaking-profile.webp"
-                      download
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
-                    >
-                      ↓ Headshot (webp)
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://bsky.app/profile/davideimola.dev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
-                    >
-                      BlueSky →
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/in/davideimola/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
-                    >
-                      LinkedIn →
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/davideimola"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
-                    >
-                      GitHub →
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* CTA */}
       <ScrollReveal>
