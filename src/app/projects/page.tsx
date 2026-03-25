@@ -49,19 +49,21 @@ export default function ProjectsPage() {
       />
 
       {/* Projects grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {projects.map((project, i) => (
           <ScrollReveal key={project.slug} delay={i * 80}>
-            <Card className="h-full flex flex-col gap-4">
+            <Card className="h-full flex flex-col gap-8 p-8!">
               {/* Status + period */}
-              <div className="flex items-start justify-between gap-3">
-                <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
+              <div className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}>
+                {project.status !== "active" && (
+                  <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
+                )}
                 <span className="font-mono text-[11px] text-text-3 shrink-0">{project.period}</span>
               </div>
 
               {/* Title & role & description */}
               <div className="flex-1">
-                <div className="flex items-baseline gap-2 mb-2">
+                <div className="flex items-baseline gap-2 mb-3">
                   <h2 className="font-mono text-[17px] font-semibold text-text-1 group-hover:text-accent transition-colors duration-200">
                     {project.title}
                   </h2>
@@ -72,7 +74,7 @@ export default function ProjectsPage() {
                     </span>
                   )}
                 </div>
-                <p className="font-sans text-[13px] text-text-2 leading-relaxed">
+                <p className="font-sans text-[14px] text-text-2 leading-relaxed">
                   {project.description}
                 </p>
               </div>
@@ -88,7 +90,7 @@ export default function ProjectsPage() {
 
               {/* Links */}
               {(project.url || project.github) && (
-                <div className="flex items-center gap-4 pt-2 border-t border-border">
+                <div className="flex items-center gap-4">
                   {project.url && (
                     <a
                       href={project.url}
