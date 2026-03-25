@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bg  { fill: #080807; }
+    .di  { fill: #EAE5DF; }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #F0EDE9; }
+      .di { fill: #1A1816; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32"/>
+  <rect fill="#C91F37" x="0" y="0" width="32" height="2"/>
+  <text
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-weight="700"
+    font-size="11"
+    text-anchor="middle"
+    x="16"
+    y="21"
+  >
+    <tspan fill="#C91F37">~/</tspan><tspan class="di">DI</tspan>
+  </text>
+</svg>
