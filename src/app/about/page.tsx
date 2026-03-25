@@ -17,43 +17,57 @@ export const metadata: Metadata = {
 };
 
 const TECHNOLOGIES = [
-  { name: "Go", context: "Primary language. Production microservices, two GOLab talks." },
+  {
+    name: "Go",
+    context: "Primary language. Production microservices, two GOLab talks.",
+  },
   {
     name: "Kubernetes",
-    context: "Platform engineering backbone. Multiple conference talks, KCD Italy speaker.",
+    context:
+      "Platform engineering backbone. Multiple conference talks, KCD Italy speaker.",
   },
   {
     name: "Flux",
-    context: "GitOps operator of choice. Dedicated talks at KCD, DevOps Day, Incontro DevOps.",
+    context:
+      "GitOps operator of choice. Dedicated talks at KCD, DevOps Day, Incontro DevOps.",
   },
   { name: "gRPC", context: "Microservices communication at RedCarbon." },
-  { name: "TypeScript / Next.js", context: "Product frontend. What this site is built with." },
+  {
+    name: "TypeScript / Next.js",
+    context: "Product frontend. What this site is built with.",
+  },
   {
     name: "Pulumi",
-    context: "Infrastructure as code. Code-first approach over config-heavy alternatives.",
+    context:
+      "Infrastructure as code. Code-first approach over config-heavy alternatives.",
   },
 ];
 
 const METHODOLOGIES = [
   {
     name: "DDD",
-    context: "Domain-Driven Design. Modeling complex domains — GOLab 2024 talk on Go + DDD.",
+    context:
+      "Domain-Driven Design. Modeling complex domains — GOLab 2024 talk on Go + DDD.",
   },
   {
     name: "TDD",
-    context: "Discipline built through Clean Code and Clean Architecture. Non-negotiable.",
+    context:
+      "Discipline built through Clean Code and Clean Architecture. Non-negotiable.",
   },
   {
     name: "GitOps",
-    context: "Declarative infrastructure. State lives in Git, not in someone's head.",
+    context:
+      "Declarative infrastructure. State lives in Git, not in someone's head.",
   },
   {
     name: "DevOps culture",
-    context: "CI/CD, IaC, developer experience as engineering leverage. ~10 years background.",
+    context:
+      "CI/CD, IaC, developer experience as engineering leverage. ~10 years background.",
   },
   {
     name: "Agile / team leadership",
-    context: "Growing a team, not just shipping features. If we don't all grow, the company doesn't.",
+    context:
+      "Growing a team, not just shipping features. If we don't all grow, the company doesn't.",
   },
 ];
 
@@ -172,7 +186,7 @@ const HOBBIES = [
   {
     label: "Football",
     icon: "⚽",
-    context: "I play calcetto and follow Hellas Verona — home games included.",
+    context: "I play futsal and follow Hellas Verona — home games included.",
     href: null,
   },
   {
@@ -206,7 +220,8 @@ const HOBBIES = [
   {
     label: "JuJutsu",
     icon: "🥋",
-    context: "Hontai Yōshin-ryū. White belt — still figuring out how to fall correctly.",
+    context:
+      "Hontai Yōshin-ryū. White belt — still figuring out how to fall correctly.",
     href: null,
   },
   {
@@ -249,23 +264,27 @@ export default function AboutPage() {
               </h1>
               <div className="flex flex-col gap-4">
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  I started with curiosity. A CS degree from Verona, a lot of self-taught tools, and
-                  the drive to understand how things actually work — not just how to make them run.
-                  My first real team job taught me that readable code isn't just a nicety: it's the
-                  difference between a codebase that scales and one that breaks you. Clean Code and
-                  Clean Architecture landed at the right moment.
+                  I started with curiosity. A CS degree from Verona, a lot of
+                  self-taught tools, and the drive to understand how things
+                  actually work — not just how to make them run. My first real
+                  team job taught me that readable code isn't just a nicety:
+                  it's the difference between a codebase that scales and one
+                  that breaks you. Clean Code and Clean Architecture landed at
+                  the right moment.
                 </p>
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  I spent about ten years in the DevOps world — building pipelines, containerizing
-                  systems, moving infrastructure into code. Then I moved deeper into backend
-                  engineering, found DDD, and started treating software as a language for domains,
-                  not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead a
-                  team of developers building an AI-powered cybersecurity platform — and still write
-                  code every day.
+                  I spent about ten years in the DevOps world — building
+                  pipelines, containerizing systems, moving infrastructure into
+                  code. Then I moved deeper into backend engineering, found DDD,
+                  and started treating software as a language for domains, not
+                  just a set of instructions. Now I'm a Tech Lead at RedCarbon,
+                  where I lead a team of developers building an AI-powered
+                  cybersecurity platform — and still write code every day.
                 </p>
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  The shift to leadership changed something: I care less about my own code and more
-                  about the team's trajectory. If we don't all grow, the company doesn't.
+                  The shift to leadership changed something: I care less about
+                  my own code and more about the team's trajectory. If we don't
+                  all grow, the company doesn't.
                 </p>
               </div>
             </div>
@@ -292,13 +311,15 @@ export default function AboutPage() {
               What you learn, you must share.
               <br />
               <span className="text-text-2 text-[13px] sm:text-[15px]">
-                Knowledge shared is not knowledge lost — it's knowledge multiplied.
+                Knowledge shared is not knowledge lost — it's knowledge
+                multiplied.
               </span>
             </p>
           </blockquote>
           <p className="font-sans text-[14px] text-text-3 mt-4 pl-6">
-            This is why I speak at conferences, organize OS Day, write, teach, and try to make open
-            source communities actually work. You learn from others; you owe it back.
+            This is why I speak at conferences, organize OS Day, write, teach,
+            and try to make open source communities actually work. You learn
+            from others; you owe it back.
           </p>
         </section>
       </ScrollReveal>
@@ -322,7 +343,9 @@ export default function AboutPage() {
                       <span className="text-accent text-[10px]">//</span>
                       {tech.name}
                     </span>
-                    <span className="font-sans text-[13px] text-text-3 pl-5">{tech.context}</span>
+                    <span className="font-sans text-[13px] text-text-3 pl-5">
+                      {tech.context}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -342,7 +365,9 @@ export default function AboutPage() {
                       <span className="text-accent text-[10px]">//</span>
                       {m.name}
                     </span>
-                    <span className="font-sans text-[13px] text-text-3 pl-5">{m.context}</span>
+                    <span className="font-sans text-[13px] text-text-3 pl-5">
+                      {m.context}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -354,7 +379,10 @@ export default function AboutPage() {
         <ScrollReveal>
           <p className="font-mono text-[12px] text-text-3 mt-8">
             Full hardware + software setup →{" "}
-            <a href="/uses" className="text-text-2 hover:text-accent transition-colors duration-150">
+            <a
+              href="/uses"
+              className="text-text-2 hover:text-accent transition-colors duration-150"
+            >
               /uses
             </a>
           </p>
@@ -375,13 +403,17 @@ export default function AboutPage() {
               Education
             </p>
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[13px] text-text-1">Università degli Studi di Verona</span>
+              <span className="font-mono text-[13px] text-text-1">
+                Università degli Studi di Verona
+              </span>
               <span className="font-sans text-[13px] text-text-2">
                 B.Sc. Computer Science — 94/110, 2014–2017
               </span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[13px] text-text-1">ITI G. Marconi, Verona</span>
+              <span className="font-mono text-[13px] text-text-1">
+                ITI G. Marconi, Verona
+              </span>
               <span className="font-sans text-[13px] text-text-2">
                 Technical high school — 2009–2014
               </span>
@@ -413,11 +445,13 @@ export default function AboutPage() {
               </div>
             </div>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed">
-              Yearly open source conference in Florence, Italy. 500+ attendees, international
-              speakers — and completely free. Students, early-career developers, anyone without a
-              budget: everyone can come. Knowledge should be open and accessible to all. That's not
-              a tagline, it's the reason this conference exists. There's an enormous amount of
-              invisible work behind every edition — and that's exactly why it matters.
+              Yearly open source conference in Florence, Italy. 500+ attendees,
+              international speakers — and completely free. Students,
+              early-career developers, anyone without a budget: everyone can
+              come. Knowledge should be open and accessible to all. That's not a
+              tagline, it's the reason this conference exists. There's an
+              enormous amount of invisible work behind every edition — and
+              that's exactly why it matters.
             </p>
             <a
               href="https://osday.dev"
@@ -432,31 +466,41 @@ export default function AboutPage() {
 
         {/* Other community items */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {COMMUNITY.filter((item) => item.name !== "Open Source Day").map((item, i) => (
-            <ScrollReveal key={item.name} delay={i * 60}>
-              <div className="border border-border rounded-sm p-5 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
-                <div className="flex items-center justify-between flex-wrap gap-1">
-                  <span className="font-mono text-[13px] font-medium text-text-1">{item.name}</span>
-                  <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
-                    {item.role}
-                  </span>
+          {COMMUNITY.filter((item) => item.name !== "Open Source Day").map(
+            (item, i) => (
+              <ScrollReveal key={item.name} delay={i * 60}>
+                <div className="border border-border rounded-sm p-5 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
+                  <div className="flex items-center justify-between flex-wrap gap-1">
+                    <span className="font-mono text-[13px] font-medium text-text-1">
+                      {item.name}
+                    </span>
+                    <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
+                      {item.role}
+                    </span>
+                  </div>
+                  <p className="font-sans text-[13px] text-text-2 leading-relaxed flex-1">
+                    {item.description}
+                  </p>
+                  {item.href && (
+                    <a
+                      href={item.href}
+                      target={
+                        item.href.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start mt-1"
+                    >
+                      {item.href.startsWith("http") ? "Visit →" : "See talks →"}
+                    </a>
+                  )}
                 </div>
-                <p className="font-sans text-[13px] text-text-2 leading-relaxed flex-1">
-                  {item.description}
-                </p>
-                {item.href && (
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start mt-1"
-                  >
-                    {item.href.startsWith("http") ? "Visit →" : "See talks →"}
-                  </a>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            ),
+          )}
         </div>
       </section>
 
@@ -469,31 +513,36 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="border-l-2 border-accent pl-5 flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[13px] font-medium text-text-1">Security</span>
+                <span className="font-mono text-[13px] font-medium text-text-1">
+                  Security
+                </span>
                 <span className="flex items-center gap-1 font-mono text-[10px] text-accent">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
                   in progress
                 </span>
               </div>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Working inside a cybersecurity company changes how you think about every line of
-                code. The field is moving fast and there's no standing still — I'm deep in it daily
-                at RedCarbon.
+                Working inside a cybersecurity company changes how you think
+                about every line of code. The field is moving fast and there's
+                no standing still — I'm deep in it daily at RedCarbon.
               </p>
             </div>
           </ScrollReveal>
           <ScrollReveal delay={60}>
             <div className="border-l-2 border-accent pl-5 flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[13px] font-medium text-text-1">AI / LLM infrastructure</span>
+                <span className="font-mono text-[13px] font-medium text-text-1">
+                  AI / LLM infrastructure
+                </span>
                 <span className="flex items-center gap-1 font-mono text-[10px] text-accent">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
                   in progress
                 </span>
               </div>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Model hosting, MLOps, vLLM on Kubernetes. AI is changing how software is built and
-                I want to understand the infrastructure layer — not just use the APIs.
+                Model hosting, MLOps, vLLM on Kubernetes. AI is changing how
+                software is built and I want to understand the infrastructure
+                layer — not just use the APIs.
               </p>
             </div>
           </ScrollReveal>
@@ -501,7 +550,10 @@ export default function AboutPage() {
         <ScrollReveal>
           <p className="font-mono text-[12px] text-text-3 mt-8">
             What I'm doing right now →{" "}
-            <a href="/now" className="text-text-2 hover:text-accent transition-colors duration-150">
+            <a
+              href="/now"
+              className="text-text-2 hover:text-accent transition-colors duration-150"
+            >
               /now
             </a>
           </p>
@@ -519,7 +571,9 @@ export default function AboutPage() {
               <div className="border border-border rounded-sm p-4 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
                 <div className="flex items-center gap-2">
                   <span className="text-[16px]">{hobby.icon}</span>
-                  <span className="font-mono text-[12px] font-medium text-text-1">{hobby.label}</span>
+                  <span className="font-mono text-[12px] font-medium text-text-1">
+                    {hobby.label}
+                  </span>
                 </div>
                 <p className="font-sans text-[12px] text-text-2 leading-relaxed flex-1">
                   {hobby.context}
@@ -555,7 +609,8 @@ export default function AboutPage() {
                 /now
               </span>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                What I'm working on, reading, and thinking about right now. Updated when something changes.
+                What I'm working on, reading, and thinking about right now.
+                Updated when something changes.
               </p>
               <span className="font-mono text-[11px] text-text-3 group-hover:text-accent transition-colors duration-150 mt-1">
                 View →
@@ -569,7 +624,8 @@ export default function AboutPage() {
                 /uses
               </span>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Hardware, software, tools, and setup. Everything I use daily to build and think.
+                Hardware, software, tools, and setup. Everything I use daily to
+                build and think.
               </p>
               <span className="font-mono text-[11px] text-text-3 group-hover:text-accent transition-colors duration-150 mt-1">
                 View →
