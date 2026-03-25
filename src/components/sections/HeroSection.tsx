@@ -12,6 +12,14 @@ export function HeroSection() {
   const [typingDone, setTypingDone] = useState(false);
 
   useEffect(() => {
+    // Skip animation on back/forward navigation — show full name immediately
+    if (sessionStorage.getItem("hero-animated")) {
+      setDisplayedName(FULL_NAME);
+      setTypingDone(true);
+      return;
+    }
+
+    sessionStorage.setItem("hero-animated", "1");
     let i = 0;
     const timer = setInterval(() => {
       i++;
