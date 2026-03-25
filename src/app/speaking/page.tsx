@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Badge } from "../../components/ui/Badge";
 import { CopyButton } from "../../components/ui/CopyButton";
+import { JsonLd } from "../../components/ui/JsonLd";
 import { PageHero } from "../../components/ui/PageHero";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
@@ -42,6 +43,37 @@ function formatDate(dateStr: string): string {
 export default function SpeakingPage() {
   const talks = getAllTalks();
 
+  const talksSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Speaking Engagements — Davide Imola",
+    itemListElement: talks.map((talk, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Event",
+        name: talk.title,
+        startDate: talk.date,
+        eventStatus: "https://schema.org/EventScheduled",
+        location: {
+          "@type": "Place",
+          name: talk.event,
+          address: talk.location,
+        },
+        organizer: {
+          "@type": "Organization",
+          name: talk.event,
+        },
+        performer: {
+          "@type": "Person",
+          name: "Davide Imola",
+          url: "https://davideimola.dev",
+        },
+        ...(talk.video ? { url: talk.video } : { url: `https://davideimola.dev/speaking#${talk.slug}` }),
+      },
+    })),
+  };
+
   const byYear = talks.reduce<Record<string, typeof talks>>((acc, talk) => {
     const year = new Date(talk.date).getFullYear().toString();
     (acc[year] ??= []).push(talk);
@@ -51,6 +83,7 @@ export default function SpeakingPage() {
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+      <JsonLd data={talksSchema} />
       <PageHero
         command="ls ./speaking"
         title="Speaking"
