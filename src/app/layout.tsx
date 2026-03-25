@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Davide Imola — Software Engineer & Speaker",
+    template: "%s | Davide Imola",
+  },
+  description:
+    "Tech Lead at RedCarbon. Software engineer focused on backend, infrastructure, and security. Conference speaker on DevOps, GitOps, and Go.",
+  metadataBase: new URL("https://davideimola.dev"),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://davideimola.dev",
+    siteName: "Davide Imola",
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@davideimola",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full`}>
+      <body className="min-h-full flex flex-col antialiased">{children}</body>
+    </html>
+  );
+}
