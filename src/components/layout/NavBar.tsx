@@ -8,10 +8,10 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: "blog", href: "/blog" },
-  { label: "projects", href: "/projects" },
-  { label: "speaking", href: "/speaking" },
   { label: "about", href: "/about" },
+  { label: "speaking", href: "/speaking" },
+  { label: "projects", href: "/projects" },
+  { label: "blog", href: "/blog" },
   { label: "contact", href: "/contact" },
 ];
 
