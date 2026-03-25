@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
-import { Footer, NavBar } from "../components/layout";
+import { Footer } from "../components/layout";
+import { SiteShell } from "../components/layout/SiteShell";
+import { buildSearchIndex } from "../lib/search";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -59,12 +61,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const searchItems = buildSearchIndex();
+
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <NavBar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteShell items={searchItems}>
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </SiteShell>
       </body>
     </html>
   );
