@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",
   openGraph: {
     title: "About — Davide Imola",
+    images: [{ url: "https://davideimola.dev/og?title=About&category=whoami", width: 1200, height: 630 }],
     description:
       "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",
     url: "https://davideimola.dev/about",

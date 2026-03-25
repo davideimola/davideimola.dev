@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: "Now — Davide Imola",
     description: "What I'm working on, learning, and thinking about right now.",
     url: "https://davideimola.dev/now",
+    images: [{ url: "https://davideimola.dev/og?title=Now&category=status", width: 1200, height: 630 }],
   },
 };
 

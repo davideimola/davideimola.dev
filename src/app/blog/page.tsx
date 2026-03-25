@@ -7,6 +7,12 @@ import { getAllPosts } from "../../lib/content";
 export const metadata: Metadata = {
   title: "Blog",
   description: "Articles on backend engineering, platform thinking, Go, security, and open source.",
+  openGraph: {
+    title: "Blog — Davide Imola",
+    description: "Articles on backend engineering, platform thinking, Go, security, and open source.",
+    url: "https://davideimola.dev/blog",
+    images: [{ url: "https://davideimola.dev/og?title=Blog&category=writing", width: 1200, height: 630 }],
+  },
 };
 
 function formatDate(dateStr: string): string {

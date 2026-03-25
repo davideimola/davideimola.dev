@@ -4,10 +4,24 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
 
+// Module-level cache — fonts are loaded once per server instance
+let fontBoldCache: ArrayBuffer | null = null;
+let fontRegularCache: ArrayBuffer | null = null;
+
 async function loadFont(filename: string): Promise<ArrayBuffer> {
   const fontPath = path.join(process.cwd(), "public", "fonts", filename);
   const data = await readFile(fontPath);
   return data.buffer as ArrayBuffer;
+}
+
+async function getFonts(): Promise<[ArrayBuffer, ArrayBuffer]> {
+  if (!fontBoldCache || !fontRegularCache) {
+    [fontBoldCache, fontRegularCache] = await Promise.all([
+      loadFont("JetBrainsMono-Bold.ttf"),
+      loadFont("JetBrainsMono-Regular.ttf"),
+    ]);
+  }
+  return [fontBoldCache, fontRegularCache];
 }
 
 export async function GET(request: Request) {
@@ -15,10 +29,7 @@ export async function GET(request: Request) {
   const title = searchParams.get("title") ?? "Davide Imola";
   const category = searchParams.get("category");
 
-  const [fontBold, fontRegular] = await Promise.all([
-    loadFont("JetBrainsMono-Bold.ttf"),
-    loadFont("JetBrainsMono-Regular.ttf"),
-  ]);
+  const [fontBold, fontRegular] = await getFonts();
 
   return new ImageResponse(
     <div

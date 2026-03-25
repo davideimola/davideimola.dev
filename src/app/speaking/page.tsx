@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     title: "Speaking — Davide Imola",
     description: "Talks and presentations on Go, platform engineering, GitOps, and open source.",
     url: "https://davideimola.dev/speaking",
+    images: [{ url: "https://davideimola.dev/og?title=Speaking&category=talks", width: 1200, height: 630 }],
   },
 };
 

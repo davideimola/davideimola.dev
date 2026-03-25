@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: "Uses — Davide Imola",
     description: "Hardware, software, and tools I use daily to build and think.",
     url: "https://davideimola.dev/uses",
+    images: [{ url: "https://davideimola.dev/og?title=Uses&category=tools", width: 1200, height: 630 }],
   },
 };
 

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: "Projects — Davide Imola",
     description: "Open source tools, communities, and side projects I've built or contribute to.",
     url: "https://davideimola.dev/projects",
+    images: [{ url: "https://davideimola.dev/og?title=Projects&category=open+source", width: 1200, height: 630 }],
   },
 };
 

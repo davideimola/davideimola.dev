@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     title: "Contact — Davide Imola",
     description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
     url: "https://davideimola.dev/contact",
+    images: [{ url: "https://davideimola.dev/og?title=Contact&category=ping", width: 1200, height: 630 }],
   },
 };
 
