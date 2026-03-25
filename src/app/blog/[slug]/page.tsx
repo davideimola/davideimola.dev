@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrism from "rehype-prism-plus";
@@ -70,6 +71,19 @@ export default async function BlogPostPage({ params }: Props) {
                 {formatDate(post.date)} · {post.readingTime}
               </p>
             </header>
+
+            {/* Hero image */}
+            {post.heroImage && (
+              <div className="relative w-full aspect-[2/1] mb-10 rounded-sm overflow-hidden border border-border">
+                <Image
+                  src={post.heroImage}
+                  alt={post.heroImageAlt ?? post.title}
+                  fill
+                  className="object-cover grayscale"
+                  priority
+                />
+              </div>
+            )}
 
             {/* Content */}
             <div id="article-content" className="prose prose-lg max-w-none">

@@ -14,6 +14,8 @@ export interface BlogPost {
   date: string; // mapped from publishDate
   readingTime: string;
   featured: boolean;
+  heroImage?: string;
+  heroImageAlt?: string;
   content: string;
 }
 
@@ -88,6 +90,8 @@ function parsePost(slug: string): BlogPost {
     date: data.publishDate,
     readingTime: rt.text,
     featured: data.featured ?? false,
+    heroImage: data.heroImage,
+    heroImageAlt: data.heroImageAlt,
     content,
   };
 }
