@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const ogImage = post.heroImage ?? "https://davideimola.dev/images/davide-speaking-profile.webp";
+  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category)}`;
 
   return {
     title: post.title,
@@ -50,13 +50,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
-      images: [{ url: ogImage, alt: post.heroImageAlt ?? post.title }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [ogImage],
+      images: [ogImageUrl],
     },
   };
 }

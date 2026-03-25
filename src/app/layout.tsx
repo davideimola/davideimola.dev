@@ -31,10 +31,19 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://davideimola.dev",
     siteName: "Davide Imola",
+    images: [
+      {
+        url: "https://davideimola.dev/og?title=Davide+Imola",
+        width: 1200,
+        height: 630,
+        alt: "Davide Imola — Software Engineer & Speaker",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@davideimola",
+    images: ["https://davideimola.dev/og?title=Davide+Imola"],
   },
   alternates: {
     types: {
