@@ -1,4 +1,6 @@
 export { AuthorBio } from "./AuthorBio";
+export { ExperienceTimeline } from "./ExperienceTimeline";
+export type { ExperienceEntry, ExperienceRole } from "./ExperienceTimeline";
 export { BackToTop } from "./BackToTop";
 export { Badge } from "./Badge";
 export { Button, ButtonLink } from "./Button";

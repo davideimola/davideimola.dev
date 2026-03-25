@@ -16,7 +16,7 @@ export function SectionHeader({
   return (
     <div className={`flex items-baseline justify-between mb-12 ${className}`}>
       {variant === "section" ? (
-        <h2 className="font-mono text-[11px] font-medium text-text-3 tracking-[0.12em] uppercase flex items-center gap-2.5 before:content-['//'] before:text-accent before:opacity-70 before:text-[10px]">
+        <h2 className="font-mono text-[13px] font-semibold text-text-2 tracking-[0.12em] uppercase flex items-center gap-2.5 before:content-['//'] before:text-accent before:text-[11px]">
           {title}
         </h2>
       ) : (
