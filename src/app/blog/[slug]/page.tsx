@@ -186,17 +186,6 @@ export default async function BlogPostPage({ params }: Props) {
               />
             </div>
 
-            {/* Tags */}
-            {post.tags.length > 0 && (
-              <footer className="mt-12 pt-8 border-t border-border flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="category">
-                    {tag}
-                  </Badge>
-                ))}
-              </footer>
-            )}
-
             <AuthorBio />
             <ShareButtons slug={post.slug} title={post.title} />
             <PostNavigation prev={prev} next={next} />

@@ -25,7 +25,7 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
       {hasFilter && (
         <div className="flex items-center gap-2 font-mono text-[12px] mb-6">
           <span className="text-accent">❯</span>
-          <span className="text-text-3">filtering by</span>
+          <span className="text-text-3">grep --tag</span>
           <span className="text-accent">{filterLabel}</span>
           <a
             href="/blog"
