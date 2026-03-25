@@ -15,6 +15,8 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
     const el = ref.current;
     if (!el) return;
 
+    el.classList.remove("revealed");
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -26,8 +28,14 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
       { threshold: 0.1 }
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    // rAF lets the browser restore scroll position before we start observing,
+    // fixing back/forward navigation where elements above the fold stay hidden.
+    const raf = requestAnimationFrame(() => observer.observe(el));
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
   }, [delay]);
 
   return (
