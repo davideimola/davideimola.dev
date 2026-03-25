@@ -103,17 +103,21 @@ body::before {
 }
 
 /* ── Scroll reveal ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+/* Elements are visible by default — animation is additive only for
+   below-fold elements. Back/forward navigation always shows content. */
+.reveal.revealed {
+  animation: reveal-up 0.5s ease both;
 }
 
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ── Prose (Tailwind Typography) ── */

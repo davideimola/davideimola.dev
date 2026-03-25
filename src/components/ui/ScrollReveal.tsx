@@ -15,12 +15,16 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
     const el = ref.current;
     if (!el) return;
 
-    el.classList.remove("revealed");
+    // Only animate elements that start below the viewport.
+    // Elements already in view (or above) are visible by default via CSS —
+    // no animation needed, no timing issues on back/forward navigation.
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.transitionDelay = `${delay}ms`;
+          el.style.animationDelay = `${delay}ms`;
           el.classList.add("revealed");
           observer.disconnect();
         }
@@ -28,27 +32,8 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
       { threshold: 0.1 }
     );
 
-    const tryReveal = () => {
-      if (el.classList.contains("revealed")) return;
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        el.classList.add("revealed");
-      } else {
-        observer.observe(el);
-      }
-    };
-
-    // Immediate check for first render
-    tryReveal();
-
-    // Delayed check to handle Next.js scroll restoration on back/forward nav,
-    // which happens asynchronously after the component mounts.
-    const timer = setTimeout(tryReveal, 100);
-
-    return () => {
-      clearTimeout(timer);
-      observer.disconnect();
-    };
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [delay]);
 
   return (
