@@ -2,7 +2,8 @@ import { ScrollReveal } from "../ui";
 
 const LINKS = [
   { label: "GitHub", href: "https://github.com/davideimola" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/davideimola" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/davideimola/" },
+  { label: "BlueSky", href: "https://bsky.app/profile/davideimola.dev" },
 ];
 
 export function ConnectSection() {
@@ -15,8 +16,8 @@ export function ConnectSection() {
               <span className="text-accent mr-2">{"// "}</span>connect
             </h2>
             <p className="font-sans text-[15px] text-text-2 max-w-[480px] leading-relaxed">
-              I write about engineering, platform thinking, and open source. Find me online or reach
-              out directly.
+              Open to talks, collaborations, and interesting conversations. Find me online or send a
+              message directly.
             </p>
             <div className="flex flex-wrap justify-center gap-6">
               {LINKS.map((link) => (

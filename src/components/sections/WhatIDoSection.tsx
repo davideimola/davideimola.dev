@@ -2,22 +2,22 @@ import { ScrollReveal } from "../ui";
 
 const PILLARS = [
   {
-    command: "$ engineer",
+    command: "❯ engineer",
     title: "Engineering & Architecture",
     description:
       "Building resilient backend systems and infrastructure. Focused on Go, Kubernetes, and platform engineering. Believer in simplicity as the ultimate sophistication.",
   },
   {
-    command: "$ lead",
+    command: "❯ lead",
     title: "Tech Leadership",
     description:
       "Tech Lead at RedCarbon. Bridging product and engineering — from architecture decisions to team growth and delivery.",
   },
   {
-    command: "$ speaker",
+    command: "❯ speaker",
     title: "Conference Speaker",
     description:
-      "Co-founder of Schrodinger Hat. Speaking at conferences across Europe on DevOps, GitOps, Go, and security.",
+      "Co-founder of Schrodinger Hat and co-organizer of Open Source Day. Speaking at conferences across Europe on DevOps, GitOps, Go, and security.",
   },
 ];
 
