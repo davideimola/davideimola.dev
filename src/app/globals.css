@@ -172,6 +172,8 @@ body::before {
 
 .prose :where(pre) {
   font-family: var(--font-mono);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .prose :where(blockquote) {

@@ -6,11 +6,23 @@ import type React from "react";
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import { AuthorBio } from "../../../components/ui/AuthorBio";
+import { BackToTop } from "../../../components/ui/BackToTop";
 import { Badge } from "../../../components/ui/Badge";
 import { CodeBlock } from "../../../components/ui/CodeBlock";
+import { GiscusComments } from "../../../components/ui/GiscusComments";
+import { PostNavigation } from "../../../components/ui/PostNavigation";
 import { ReadingProgress } from "../../../components/ui/ReadingProgress";
+import { RelatedPosts } from "../../../components/ui/RelatedPosts";
+import { ShareButtons } from "../../../components/ui/ShareButtons";
 import { TableOfContents } from "../../../components/ui/TableOfContents";
-import { extractToc, getAllPosts, getPostBySlug } from "../../../lib/content";
+import {
+  extractToc,
+  getAllPosts,
+  getPostBySlug,
+  getPrevNextPosts,
+  getRelatedPosts,
+} from "../../../lib/content";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -24,9 +36,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
+
+  const ogImage = post.heroImage ?? "https://davideimola.dev/images/davide-speaking-profile.webp";
+
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://davideimola.dev/blog/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+      tags: post.tags,
+      images: [{ url: ogImage, alt: post.heroImageAlt ?? post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [ogImage],
+    },
   };
 }
 
@@ -44,10 +74,13 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const toc = extractToc(post.content);
+  const { prev, next } = getPrevNextPosts(slug);
+  const related = getRelatedPosts(slug);
 
   return (
     <>
       <ReadingProgress />
+      <BackToTop />
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
         {/* Back link */}
         <a
@@ -111,6 +144,12 @@ export default async function BlogPostPage({ params }: Props) {
                 ))}
               </footer>
             )}
+
+            <AuthorBio />
+            <ShareButtons slug={post.slug} title={post.title} />
+            <PostNavigation prev={prev} next={next} />
+            <RelatedPosts posts={related} />
+            <GiscusComments />
           </article>
 
           {/* Sticky ToC */}

@@ -110,3 +110,47 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 - Blog posts: `src/content/blog/` (MDX files)
 - Talks: `src/content/talks/` (MDX or JSON)
 - Projects: `src/content/projects/` (MDX or JSON)
+
+## MDX content conventions
+
+### Heading hierarchy
+
+The blog post page template renders the post `title` as `<h1>`. Therefore, **MDX content must never use `#` (h1) headings**. Always start from `##` (h2) and go deeper:
+
+- `##` → main sections
+- `###` → subsections
+- `####` → nested subsections (use sparingly)
+
+This ensures correct document outline, accessibility (single h1 per page), and proper ToC generation.
+
+## Blog post features
+
+Each blog post page (`/blog/[slug]`) includes these features below the article content:
+
+| Feature | Component | Type |
+|---------|-----------|------|
+| Author bio | `AuthorBio` | Server |
+| Share buttons (BlueSky, LinkedIn, copy link) | `ShareButtons` | Client |
+| Prev/next navigation | `PostNavigation` | Server |
+| Related posts (by tags + category) | `RelatedPosts` | Server |
+| GitHub Discussions comments | `GiscusComments` | Client |
+| Back to top (floating, appears at 400px scroll) | `BackToTop` | Client |
+
+### Giscus configuration
+
+Comments use [giscus](https://giscus.app) backed by GitHub Discussions on `davideimola/davideimola.dev`. Configure via environment variables:
+
+```env
+NEXT_PUBLIC_GISCUS_REPO_ID=      # from https://giscus.app
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=  # from https://giscus.app
+```
+
+Set the Discussion category to **Announcements** and enable Discussions on the repo.
+
+### Related posts algorithm
+
+`getRelatedPosts(slug, count)` in `src/lib/content.ts` scores posts by:
+- 2 points per shared tag
+- 1 point for same category
+
+Returns top `count` posts with score > 0, excluding the current post.

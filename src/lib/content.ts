@@ -114,6 +114,34 @@ export function getRecentPosts(count = 3): BlogPost[] {
   return getAllPosts().slice(0, count);
 }
 
+export function getRelatedPosts(slug: string, count = 3): BlogPost[] {
+  const all = getAllPosts();
+  const current = all.find((p) => p.slug === slug);
+  if (!current) return [];
+
+  return all
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      const sharedTags = p.tags.filter((t) => current.tags.includes(t)).length;
+      const sameCategory = p.category === current.category ? 1 : 0;
+      return { post: p, score: sharedTags * 2 + sameCategory };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, count)
+    .map(({ post }) => post);
+}
+
+export function getPrevNextPosts(slug: string): { prev: BlogPost | null; next: BlogPost | null } {
+  const all = getAllPosts(); // sorted newest first
+  const idx = all.findIndex((p) => p.slug === slug);
+  if (idx === -1) return { prev: null, next: null };
+  return {
+    prev: all[idx + 1] ?? null, // older
+    next: all[idx - 1] ?? null, // newer
+  };
+}
+
 // ── Talks (placeholder — replaced in issue #14) ───────────────────────────
 
 const TALKS: Talk[] = [

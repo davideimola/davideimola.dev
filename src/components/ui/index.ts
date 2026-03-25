@@ -1,9 +1,15 @@
+export { AuthorBio } from "./AuthorBio";
+export { BackToTop } from "./BackToTop";
 export { Badge } from "./Badge";
 export { Button, ButtonLink } from "./Button";
 export { Card } from "./Card";
 export { CodeBlock } from "./CodeBlock";
 export { CopyButton } from "./CopyButton";
+export { GiscusComments } from "./GiscusComments";
+export { PostNavigation } from "./PostNavigation";
 export { ReadingProgress } from "./ReadingProgress";
+export { RelatedPosts } from "./RelatedPosts";
 export { ScrollReveal } from "./ScrollReveal";
 export { SectionHeader } from "./SectionHeader";
+export { ShareButtons } from "./ShareButtons";
 export { TableOfContents } from "./TableOfContents";
