@@ -54,11 +54,11 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-3 animate-[fadeUp_0.5s_ease_0.4s_both]">
-            <ButtonLink variant="primary" href="/blog">
-              Read the blog →
+            <ButtonLink variant="primary" href="/about">
+              About me →
             </ButtonLink>
-            <ButtonLink variant="ghost" href="/speaking">
-              View talks →
+            <ButtonLink variant="ghost" href="/blog">
+              Read the blog →
             </ButtonLink>
           </div>
         </div>
