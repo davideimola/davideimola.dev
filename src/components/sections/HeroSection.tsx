@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { ButtonLink } from "../ui";
 
 const FULL_NAME = "Davide Imola";
@@ -11,13 +11,18 @@ export function HeroSection() {
   const [displayedName, setDisplayedName] = useState("");
   const [typingDone, setTypingDone] = useState(false);
 
-  useEffect(() => {
-    // Skip animation on back/forward navigation — show full name immediately
+  // useLayoutEffect runs before the browser paints — avoids the empty-name
+  // flash on back/forward navigation when the animation has already played.
+  useLayoutEffect(() => {
     if (sessionStorage.getItem("hero-animated")) {
       setDisplayedName(FULL_NAME);
       setTypingDone(true);
-      return;
     }
+  }, []);
+
+  // Typing animation — only on first visit
+  useEffect(() => {
+    if (sessionStorage.getItem("hero-animated")) return;
 
     sessionStorage.setItem("hero-animated", "1");
     let i = 0;
