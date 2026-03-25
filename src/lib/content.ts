@@ -42,6 +42,14 @@ export interface Project {
   description: string;
 }
 
+export interface OssContribution {
+  name: string;
+  description: string;
+  github: string;
+  url?: string;
+  tags: string[];
+}
+
 export interface TocItem {
   id: string;
   text: string;
@@ -181,6 +189,17 @@ export function getRecentTalks(count = 3): Talk[] {
 
 const PROJECTS: Project[] = [
   {
+    slug: "redcarbon",
+    title: "RedCarbon",
+    status: "active",
+    url: "https://redcarbon.ai",
+    period: "2023–present",
+    featured: true,
+    tags: ["AI", "Security", "Startup"],
+    description:
+      "AI-powered threat detection platform. I lead the engineering team, shaping architecture and driving the platform from seed to Series A.",
+  },
+  {
     slug: "schrodinger-hat",
     title: "Schrodinger Hat",
     status: "active",
@@ -190,6 +209,17 @@ const PROJECTS: Project[] = [
     tags: ["Community", "Open Source"],
     description:
       "International open source community. 20k+ people reached, 100+ speakers at events across Europe.",
+  },
+  {
+    slug: "os-day",
+    title: "OS Day",
+    status: "active",
+    url: "https://osday.dev",
+    period: "2022–present",
+    featured: true,
+    tags: ["Conference", "Open Source"],
+    description:
+      "Open source conference I co-organize. A full day of talks, workshops, and community connections for the Italian OSS ecosystem.",
   },
   {
     slug: "worky",
@@ -205,6 +235,29 @@ const PROJECTS: Project[] = [
   },
 ];
 
+const OSS_CONTRIBUTIONS: OssContribution[] = [
+  {
+    name: "Kubernetes",
+    description: "The de-facto standard for container orchestration.",
+    github: "https://github.com/kubernetes/kubernetes",
+    url: "https://kubernetes.io",
+    tags: ["Go", "Cloud Native"],
+  },
+  {
+    name: "Capsule",
+    description: "Multi-tenancy and policy management for Kubernetes clusters.",
+    github: "https://github.com/projectcapsule/capsule",
+    url: "https://capsule.clastix.io",
+    tags: ["Go", "Kubernetes"],
+  },
+  {
+    name: "Kannon",
+    description: "High-performance, self-hosted email sending platform.",
+    github: "https://github.com/kannon-email/kannon",
+    tags: ["Go", "Email"],
+  },
+];
+
 export function getAllProjects(): Project[] {
   return [...PROJECTS].sort((a, b) => {
     const order = { active: 0, "coming-soon": 1, archived: 2 };
@@ -214,4 +267,8 @@ export function getAllProjects(): Project[] {
 
 export function getFeaturedProjects(): Project[] {
   return PROJECTS.filter((p) => p.featured);
+}
+
+export function getOssContributions(): OssContribution[] {
+  return OSS_CONTRIBUTIONS;
 }
