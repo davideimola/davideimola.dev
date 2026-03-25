@@ -11,6 +11,7 @@ const STATIC_ROUTES = [
   { url: `${BASE_URL}/speaking`, priority: 0.7, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/projects`, priority: 0.7, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/uses`, priority: 0.6, changeFrequency: "monthly" as const },
+  { url: `${BASE_URL}/contact`, priority: 0.5, changeFrequency: "yearly" as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
