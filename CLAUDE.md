@@ -162,6 +162,19 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=  # from https://giscus.app
 - Talks: `src/content/talks/` (MDX or JSON)
 - Projects: `src/content/projects/` (MDX or JSON)
 
+## Blog post categories
+
+Use exactly these categories — do not invent new ones without updating this list:
+
+| Category | When to use |
+|----------|-------------|
+| `Technical` | Engineering, code, tools, infrastructure, security, DevOps |
+| `Personal` | Retrospectives, reflections, personal growth |
+| `Leadership` | Tech lead, team culture, engineering management *(use when content exists)* |
+| `Open Source` | Community building, OSS contributions, Schrodinger Hat *(use when content exists)* |
+
+Start with `Technical` or `Personal` for new posts. Add `Leadership` or `Open Source` only when you have actual content for them.
+
 ## MDX content conventions
 
 ### Heading hierarchy
