@@ -49,8 +49,7 @@ export async function GET(request: Request) {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage:
-            "radial-gradient(circle, rgba(201,31,55,0.12) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(201,31,55,0.12) 1px, transparent 1px)",
           backgroundSize: "24px 24px",
           opacity: 0.6,
         }}
@@ -129,9 +128,7 @@ export async function GET(request: Request) {
             justifyContent: "space-between",
           }}
         >
-          <span style={{ color: "#9A948E", fontSize: "16px" }}>
-            Davide Imola
-          </span>
+          <span style={{ color: "#9A948E", fontSize: "16px" }}>Davide Imola</span>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#C91F37", fontSize: "12px" }}>//</span>
             <span style={{ color: "#7E7874", fontSize: "14px" }}>
@@ -148,6 +145,6 @@ export async function GET(request: Request) {
         { name: "JetBrains Mono", data: fontBold, weight: 700, style: "normal" },
         { name: "JetBrains Mono", data: fontRegular, weight: 400, style: "normal" },
       ],
-    },
+    }
   );
 }

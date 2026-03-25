@@ -61,10 +61,7 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
         className="relative w-full max-w-[600px] border border-border rounded-sm overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <Command
-          className="bg-bg-card font-mono"
-          loop
-        >
+        <Command className="bg-bg-card font-mono" loop>
           {/* Input */}
           <div className="flex items-center gap-3 px-4 border-b border-border">
             <span className="text-accent text-[13px] shrink-0">❯</span>

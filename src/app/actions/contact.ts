@@ -11,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendContactEmail(
   _prev: ContactState,
-  formData: FormData,
+  formData: FormData
 ): Promise<ContactState> {
   const name = formData.get("name")?.toString().trim();
   const email = formData.get("email")?.toString().trim();

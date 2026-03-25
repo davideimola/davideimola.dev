@@ -20,9 +20,7 @@ export function SectionHeader({
           {title}
         </h2>
       ) : (
-        <h3 className="font-mono text-[13px] font-medium text-text-2 mb-0">
-          {title}
-        </h3>
+        <h3 className="font-mono text-[13px] font-medium text-text-2 mb-0">{title}</h3>
       )}
       {seeAllHref && (
         <a

@@ -4,8 +4,8 @@ import { Card } from "../../components/ui/Card";
 import { PageHero } from "../../components/ui/PageHero";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
-import { getAllProjects, getOssContributions } from "../../lib/content";
 import type { Project } from "../../lib/content";
+import { getAllProjects, getOssContributions } from "../../lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     title: "Projects — Davide Imola",
     description: "Open source tools, communities, and side projects I've built or contribute to.",
     url: "https://davideimola.dev/projects",
-    images: [{ url: "https://davideimola.dev/og?title=Projects&category=open+source", width: 1200, height: 630 }],
+    images: [
+      {
+        url: "https://davideimola.dev/og?title=Projects&category=open+source",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
 };
 
@@ -49,9 +55,7 @@ export default function ProjectsPage() {
             <Card className="h-full flex flex-col gap-4">
               {/* Status + period */}
               <div className="flex items-start justify-between gap-3">
-                <Badge variant={statusVariant(project.status)}>
-                  {statusLabel(project.status)}
-                </Badge>
+                <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
                 <span className="font-mono text-[11px] text-text-3 shrink-0">{project.period}</span>
               </div>
 
@@ -62,7 +66,10 @@ export default function ProjectsPage() {
                     {project.title}
                   </h2>
                   {project.role && (
-                    <span className="font-mono text-[11px] text-text-3">{"// "}{project.role}</span>
+                    <span className="font-mono text-[11px] text-text-3">
+                      {"// "}
+                      {project.role}
+                    </span>
                   )}
                 </div>
                 <p className="font-sans text-[13px] text-text-2 leading-relaxed">
@@ -73,7 +80,9 @@ export default function ProjectsPage() {
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <Badge key={tag} variant="category">{tag}</Badge>
+                  <Badge key={tag} variant="category">
+                    {tag}
+                  </Badge>
                 ))}
               </div>
 
@@ -123,7 +132,9 @@ export default function ProjectsPage() {
                 <span className="font-sans text-[13px] text-text-2 flex-1">{item.description}</span>
                 <div className="flex items-center gap-2 shrink-0">
                   {item.tags.map((tag) => (
-                    <Badge key={tag} variant="category">{tag}</Badge>
+                    <Badge key={tag} variant="category">
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
                 <div className="flex items-center gap-4 shrink-0">

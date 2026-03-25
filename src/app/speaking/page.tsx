@@ -13,7 +13,9 @@ export const metadata: Metadata = {
     title: "Speaking — Davide Imola",
     description: "Talks and presentations on Go, platform engineering, GitOps, and open source.",
     url: "https://davideimola.dev/speaking",
-    images: [{ url: "https://davideimola.dev/og?title=Speaking&category=talks", width: 1200, height: 630 }],
+    images: [
+      { url: "https://davideimola.dev/og?title=Speaking&category=talks", width: 1200, height: 630 },
+    ],
   },
 };
 
@@ -56,7 +58,9 @@ export default function SpeakingPage() {
       >
         <div className="flex flex-wrap gap-2 mt-6">
           {TOPICS.map((topic) => (
-            <Badge key={topic} variant="category">{topic}</Badge>
+            <Badge key={topic} variant="category">
+              {topic}
+            </Badge>
           ))}
         </div>
         <div className="mt-6">
@@ -86,7 +90,9 @@ export default function SpeakingPage() {
           <ScrollReveal>
             <div className="border border-border rounded-sm overflow-hidden">
               <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">SHORT BIO</span>
+                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+                  SHORT BIO
+                </span>
                 <CopyButton
                   code={SHORT_BIO}
                   label="copy"
@@ -103,7 +109,9 @@ export default function SpeakingPage() {
           <ScrollReveal>
             <div className="border border-border rounded-sm overflow-hidden">
               <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LONG BIO</span>
+                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+                  LONG BIO
+                </span>
                 <CopyButton
                   code={LONG_BIO}
                   label="copy"
@@ -126,11 +134,16 @@ export default function SpeakingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="border border-border rounded-sm overflow-hidden">
                 <div className="bg-bg-card border-b border-border px-4 py-2">
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">TOPIC AREAS</span>
+                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+                    TOPIC AREAS
+                  </span>
                 </div>
                 <ul className="px-4 py-4 flex flex-col gap-2">
                   {TOPICS.map((topic) => (
-                    <li key={topic} className="font-sans text-[14px] text-text-2 flex items-center gap-2">
+                    <li
+                      key={topic}
+                      className="font-sans text-[14px] text-text-2 flex items-center gap-2"
+                    >
                       <span className="text-accent font-mono text-[10px]">//</span>
                       {topic}
                     </li>
@@ -245,7 +258,9 @@ export default function SpeakingPage() {
                         <div className="flex flex-wrap items-center justify-between gap-3">
                           <div className="flex flex-wrap gap-2">
                             {talk.tags.map((tag) => (
-                              <Badge key={tag} variant="category">{tag}</Badge>
+                              <Badge key={tag} variant="category">
+                                {tag}
+                              </Badge>
                             ))}
                           </div>
                           {hasMedia && (

@@ -11,12 +11,48 @@ export interface SearchItem {
 
 const STATIC_PAGES: SearchItem[] = [
   { id: "page-home", type: "page", title: "Home", description: "davideimola.dev", href: "/" },
-  { id: "page-about", type: "page", title: "About", description: "Who I am, what I do, and how I got here.", href: "/about" },
-  { id: "page-now", type: "page", title: "Now", description: "What I'm working on and thinking about right now.", href: "/now" },
-  { id: "page-uses", type: "page", title: "Uses", description: "Hardware, software, and tools I use daily.", href: "/uses" },
-  { id: "page-speaking", type: "page", title: "Speaking", description: "Talks and presentations on Go, platform engineering, and open source.", href: "/speaking" },
-  { id: "page-blog", type: "page", title: "Blog", description: "Articles on engineering, security, and open source.", href: "/blog" },
-  { id: "page-projects", type: "page", title: "Projects", description: "Open source tools, communities, and side projects.", href: "/projects" },
+  {
+    id: "page-about",
+    type: "page",
+    title: "About",
+    description: "Who I am, what I do, and how I got here.",
+    href: "/about",
+  },
+  {
+    id: "page-now",
+    type: "page",
+    title: "Now",
+    description: "What I'm working on and thinking about right now.",
+    href: "/now",
+  },
+  {
+    id: "page-uses",
+    type: "page",
+    title: "Uses",
+    description: "Hardware, software, and tools I use daily.",
+    href: "/uses",
+  },
+  {
+    id: "page-speaking",
+    type: "page",
+    title: "Speaking",
+    description: "Talks and presentations on Go, platform engineering, and open source.",
+    href: "/speaking",
+  },
+  {
+    id: "page-blog",
+    type: "page",
+    title: "Blog",
+    description: "Articles on engineering, security, and open source.",
+    href: "/blog",
+  },
+  {
+    id: "page-projects",
+    type: "page",
+    title: "Projects",
+    description: "Open source tools, communities, and side projects.",
+    href: "/projects",
+  },
 ];
 
 export function buildSearchIndex(): SearchItem[] {

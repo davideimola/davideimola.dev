@@ -112,8 +112,7 @@ export const Full: Story = {
           {
             role: "DevOps Engineer",
             period: "Aug 2020 — Sep 2022",
-            description:
-              "Last-mile delivery platform. AWS, Kafka, PostgreSQL, Datadog.",
+            description: "Last-mile delivery platform. AWS, Kafka, PostgreSQL, Datadog.",
             current: false,
           },
         ],

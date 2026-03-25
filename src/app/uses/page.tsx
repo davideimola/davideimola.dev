@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     title: "Uses — Davide Imola",
     description: "Hardware, software, and tools I use daily to build and think.",
     url: "https://davideimola.dev/uses",
-    images: [{ url: "https://davideimola.dev/og?title=Uses&category=tools", width: 1200, height: 630 }],
+    images: [
+      { url: "https://davideimola.dev/og?title=Uses&category=tools", width: 1200, height: 630 },
+    ],
   },
 };
 
@@ -19,7 +21,7 @@ const HARDWARE = [
     category: "Computing",
     items: [
       {
-        name: "MacBook Pro 14\" M5 Pro (2026)",
+        name: 'MacBook Pro 14" M5 Pro (2026)',
         description: "Primary machine. Fast enough that I've stopped thinking about performance.",
       },
     ],
@@ -28,7 +30,7 @@ const HARDWARE = [
     category: "Display & Video",
     items: [
       {
-        name: "Samsung LU28R550 — 28\" 4K UHD",
+        name: 'Samsung LU28R550 — 28" 4K UHD',
         description: "3840×2160, 60Hz, HDR10, 99% sRGB. USB-C connected.",
       },
       {
@@ -42,7 +44,8 @@ const HARDWARE = [
     items: [
       {
         name: "Kinesis Freestyle Edge",
-        description: "Split mechanical keyboard, Cherry MX Brown switches. Takes a week to adapt, worth it.",
+        description:
+          "Split mechanical keyboard, Cherry MX Brown switches. Takes a week to adapt, worth it.",
       },
       {
         name: "Logitech MX Vertical",
@@ -81,7 +84,8 @@ const HARDWARE = [
     items: [
       {
         name: "iPad Pro + Apple Pencil",
-        description: "For sketching ideas, annotating, and thinking visually when the screen isn't enough.",
+        description:
+          "For sketching ideas, annotating, and thinking visually when the screen isn't enough.",
       },
       {
         name: "Paper & pen",
@@ -101,7 +105,8 @@ const SOFTWARE = [
       },
       {
         name: "Claude Code",
-        description: "AI coding workflow. How this site was built. Changes how you think about development.",
+        description:
+          "AI coding workflow. How this site was built. Changes how you think about development.",
       },
       {
         name: "iTerm2 + oh-my-zsh",
@@ -118,7 +123,8 @@ const SOFTWARE = [
       },
       {
         name: "Raycast",
-        description: "Replaced Spotlight. Launcher, clipboard history, snippets — faster than I expected.",
+        description:
+          "Replaced Spotlight. Launcher, clipboard history, snippets — faster than I expected.",
       },
       {
         name: "1Password",
@@ -148,11 +154,13 @@ const SOFTWARE = [
     items: [
       {
         name: "GitKraken",
-        description: "Visual Git client. GitKraken Ambassador — I use it for history and complex operations.",
+        description:
+          "Visual Git client. GitKraken Ambassador — I use it for history and complex operations.",
       },
       {
         name: "CLI + GitLens",
-        description: "For day-to-day commits and quick operations. GitLens in Cursor for inline blame.",
+        description:
+          "For day-to-day commits and quick operations. GitLens in Cursor for inline blame.",
       },
     ],
   },
@@ -181,7 +189,16 @@ const DEV_STACK = [
   },
   {
     category: "Infrastructure",
-    items: ["Kubernetes", "Flux", "Pulumi", "NATS", "GitHub Actions", "PostgreSQL", "Prometheus", "Grafana"],
+    items: [
+      "Kubernetes",
+      "Flux",
+      "Pulumi",
+      "NATS",
+      "GitHub Actions",
+      "PostgreSQL",
+      "Prometheus",
+      "Grafana",
+    ],
   },
   {
     category: "Cloud",
@@ -327,9 +344,7 @@ export default function UsesPage() {
                       >
                         <span className="text-accent text-[10px]">—</span>
                         {name}
-                        {note && (
-                          <span className="text-text-3 text-[10px]">({note})</span>
-                        )}
+                        {note && <span className="text-text-3 text-[10px]">({note})</span>}
                       </li>
                     );
                   })}

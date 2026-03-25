@@ -40,7 +40,10 @@ export function ContactForm() {
     <form action={action} className="flex flex-col gap-5">
       {/* Name */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="name" className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
+        <label
+          htmlFor="name"
+          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+        >
           Name
         </label>
         <input
@@ -56,7 +59,10 @@ export function ContactForm() {
 
       {/* Email */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
+        <label
+          htmlFor="email"
+          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+        >
           Email
         </label>
         <input
@@ -72,7 +78,10 @@ export function ContactForm() {
 
       {/* Message */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="message" className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
+        <label
+          htmlFor="message"
+          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+        >
           Message
         </label>
         <textarea

@@ -16,7 +16,6 @@ export default function PrivacyPage() {
       />
 
       <div className="max-w-2xl flex flex-col gap-10 font-sans text-[14px] text-text-2 leading-relaxed">
-
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
             // Data collected
@@ -81,8 +80,8 @@ export default function PrivacyPage() {
             >
               Vercel
             </a>
-            . Vercel may collect standard server logs (IP address, browser, request time) as part
-            of normal infrastructure operation. See{" "}
+            . Vercel may collect standard server logs (IP address, browser, request time) as part of
+            normal infrastructure operation. See{" "}
             <a
               href="https://vercel.com/legal/privacy-policy"
               target="_blank"
@@ -121,9 +120,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <p className="font-mono text-[11px] text-text-3">
-          Last updated: March 2026
-        </p>
+        <p className="font-mono text-[11px] text-text-3">Last updated: March 2026</p>
       </div>
     </div>
   );

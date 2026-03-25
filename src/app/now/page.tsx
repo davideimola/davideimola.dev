@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     title: "Now — Davide Imola",
     description: "What I'm working on, learning, and thinking about right now.",
     url: "https://davideimola.dev/now",
-    images: [{ url: "https://davideimola.dev/og?title=Now&category=status", width: 1200, height: 630 }],
+    images: [
+      { url: "https://davideimola.dev/og?title=Now&category=status", width: 1200, height: 630 },
+    ],
   },
 };
 
@@ -93,8 +95,8 @@ export default function NowPage() {
               </span>
               <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
                 Open-source tool for running workshops. Born out of a real need — managing
-                participants, materials, and flow during live sessions is harder than it looks.
-                Work in progress.
+                participants, materials, and flow during live sessions is harder than it looks. Work
+                in progress.
               </p>
             </div>
           </ScrollReveal>
@@ -174,8 +176,8 @@ export default function NowPage() {
             </span>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
               Currently playing <span className="text-text-1">Krug the Touchy</span> — a half-orc
-              barbarian folk hero who ran an inn and rages if you don't finish his food. The DM reset
-              the character sheets mid-campaign so I'm technically human now, but I miss Krug.
+              barbarian folk hero who ran an inn and rages if you don't finish his food. The DM
+              reset the character sheets mid-campaign so I'm technically human now, but I miss Krug.
             </p>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
               The longer campaign on hold features{" "}

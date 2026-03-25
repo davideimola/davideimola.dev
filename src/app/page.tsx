@@ -1,4 +1,3 @@
-import { JsonLd } from "../components/ui/JsonLd";
 import {
   ConnectSection,
   HeroSection,
@@ -7,6 +6,7 @@ import {
   WhatIDoSection,
   WritingSection,
 } from "../components/sections";
+import { JsonLd } from "../components/ui/JsonLd";
 
 const PERSON_SCHEMA = {
   "@context": "https://schema.org",

@@ -26,9 +26,7 @@ export function PageHero({
         <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-4">
           {title}
         </h1>
-        <p className="font-sans text-[15px] text-text-2 leading-relaxed max-w-2xl">
-          {description}
-        </p>
+        <p className="font-sans text-[15px] text-text-2 leading-relaxed max-w-2xl">{description}</p>
         {children}
       </header>
     </ScrollReveal>

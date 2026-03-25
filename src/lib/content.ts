@@ -192,7 +192,7 @@ export function getFeaturedProjects(): Project[] {
 export function getOssContributions(): OssContribution[] {
   const raw = fs.readFileSync(
     path.join(process.cwd(), "src/content/oss-contributions.json"),
-    "utf-8",
+    "utf-8"
   );
   return JSON.parse(raw) as OssContribution[];
 }

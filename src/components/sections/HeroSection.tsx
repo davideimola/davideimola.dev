@@ -7,16 +7,19 @@ import { ButtonLink } from "../ui";
 const FULL_NAME = "Davide Imola";
 const TYPING_SPEED = 80;
 
-// Module-level flag — persists across navigations within the same JS session
-// without timing issues (no sessionStorage, no useLayoutEffect needed).
+// Module-level flag — persists across navigations within the same JS session.
+// Set to true after the first mount so back navigation skips all animations.
 let hasAnimated = false;
 
 export function HeroSection() {
-  const [displayedName, setDisplayedName] = useState(hasAnimated ? FULL_NAME : "");
-  const [typingDone, setTypingDone] = useState(hasAnimated);
+  // Capture once synchronously at mount: true = first load, false = revisit
+  const [isFirstLoad] = useState(() => !hasAnimated);
+
+  const [displayedName, setDisplayedName] = useState(isFirstLoad ? "" : FULL_NAME);
+  const [typingDone, setTypingDone] = useState(!isFirstLoad);
 
   useEffect(() => {
-    if (hasAnimated) return;
+    if (hasAnimated) return; // module-level guard handles StrictMode correctly
 
     hasAnimated = true;
     let i = 0;
@@ -29,13 +32,21 @@ export function HeroSection() {
       }
     }, TYPING_SPEED);
     return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const anim0 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_both]" : "";
+  const anim1 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.1s_both]" : "";
+  const anim2 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.2s_both]" : "";
+  const anim3 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.3s_both]" : "";
+  const anim4 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.4s_both]" : "";
+  const anim5 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.5s_both]" : "";
 
   return (
     <section className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 md:pt-32 md:pb-24">
       <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-12 md:gap-8">
         {/* Text block */}
-        <div className="flex-1 animate-[fadeUp_0.5s_ease_both]">
+        <div className={`flex-1 ${anim0}`}>
           {/* Prompt */}
           <p className="font-mono text-[13px] text-text-3 mb-4 tracking-[0.04em]">
             <span className="text-accent mr-2">❯</span>whoami
@@ -50,17 +61,17 @@ export function HeroSection() {
           </h1>
 
           {/* Role */}
-          <p className="font-mono text-[13px] text-text-3 tracking-[0.04em] mb-2 animate-[fadeUp_0.5s_ease_0.2s_both]">
+          <p className={`font-mono text-[13px] text-text-3 tracking-[0.04em] mb-2 ${anim2}`}>
             Tech Lead · Speaker · Open Source
           </p>
 
           {/* Location */}
-          <p className="font-sans text-[14px] text-text-2 mb-8 animate-[fadeUp_0.5s_ease_0.3s_both]">
+          <p className={`font-sans text-[14px] text-text-2 mb-8 ${anim3}`}>
             Software Engineer based in Verona, Italy
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-3 mb-10 animate-[fadeUp_0.5s_ease_0.4s_both]">
+          <div className={`flex flex-wrap gap-3 mb-10 ${anim4}`}>
             <ButtonLink variant="primary" href="/about">
               About me →
             </ButtonLink>
@@ -70,7 +81,7 @@ export function HeroSection() {
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-x-8 gap-y-3 animate-[fadeUp_0.5s_ease_0.5s_both]">
+          <div className={`flex flex-wrap gap-x-8 gap-y-3 ${anim5}`}>
             {[
               { value: "17+", label: "talks & events" },
               { value: "20k+", label: "community members" },
@@ -89,7 +100,9 @@ export function HeroSection() {
         </div>
 
         {/* Photo */}
-        <div className="relative w-[180px] sm:w-[220px] md:w-[260px] shrink-0 mx-auto md:mx-0 animate-[fadeUp_0.5s_ease_0.1s_both]">
+        <div
+          className={`relative w-[180px] sm:w-[220px] md:w-[260px] shrink-0 mx-auto md:mx-0 ${anim1}`}
+        >
           <Image
             src="/images/davide-speaking-profile.webp"
             alt="Davide Imola speaking at a conference"

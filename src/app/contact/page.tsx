@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ContactForm } from "./ContactForm";
 import { PageHero } from "../../components/ui/PageHero";
+import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -9,14 +9,20 @@ export const metadata: Metadata = {
     title: "Contact — Davide Imola",
     description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
     url: "https://davideimola.dev/contact",
-    images: [{ url: "https://davideimola.dev/og?title=Contact&category=ping", width: 1200, height: 630 }],
+    images: [
+      { url: "https://davideimola.dev/og?title=Contact&category=ping", width: 1200, height: 630 },
+    ],
   },
 };
 
 const LINKS = [
   { label: "GitHub", handle: "@davideimola", href: "https://github.com/davideimola" },
   { label: "LinkedIn", handle: "in/davideimola", href: "https://www.linkedin.com/in/davideimola/" },
-  { label: "BlueSky", handle: "@davideimola.dev", href: "https://bsky.app/profile/davideimola.dev" },
+  {
+    label: "BlueSky",
+    handle: "@davideimola.dev",
+    href: "https://bsky.app/profile/davideimola.dev",
+  },
   { label: "Cal.com", handle: "book a call", href: "https://cal.com/davideimola" },
 ];
 
@@ -70,7 +76,10 @@ export default function ContactPage() {
             <p className="font-sans text-[12px] text-text-3 leading-relaxed">
               I'm open to talks and workshops on Go, platform engineering, GitOps, security, and
               open source. Check the{" "}
-              <a href="/speaking" className="text-text-2 hover:text-accent transition-colors duration-150">
+              <a
+                href="/speaking"
+                className="text-text-2 hover:text-accent transition-colors duration-150"
+              >
                 speaking page
               </a>{" "}
               for past events.
