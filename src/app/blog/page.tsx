@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Badge } from "../../components/ui/Badge";
+import { BlogList } from "../../components/sections/BlogList";
 import { PageHero } from "../../components/ui/PageHero";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { getAllPosts } from "../../lib/content";
 
 export const metadata: Metadata = {
@@ -18,14 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
 export default function BlogPage() {
   const posts = getAllPosts();
 
@@ -36,33 +27,7 @@ export default function BlogPage() {
         title="Writing"
         description={`${posts.length} articles on engineering, platform thinking, Go, and security.`}
       />
-
-      <ul className="flex flex-col divide-y divide-border">
-        {posts.map((post, i) => (
-          <ScrollReveal key={post.slug} delay={i * 40}>
-            <li>
-              <a
-                href={`/blog/${post.slug}`}
-                className="group block py-6 no-underline transition-colors duration-150"
-              >
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <Badge variant="category">{post.category}</Badge>
-                  {post.featured && <Badge variant="active">Featured</Badge>}
-                </div>
-                <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug mb-2 group-hover:text-accent transition-colors duration-150">
-                  {post.title}
-                </h2>
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed mb-4 line-clamp-2">
-                  {post.excerpt}
-                </p>
-                <p className="font-mono text-[11px] text-text-3">
-                  {formatDate(post.date)} · {post.readingTime}
-                </p>
-              </a>
-            </li>
-          </ScrollReveal>
-        ))}
-      </ul>
+      <BlogList posts={posts} />
     </div>
   );
 }
