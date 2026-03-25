@@ -188,6 +188,9 @@ export default function SpeakingPage() {
       </section>
 
       {/* Talks by year */}
+      <ScrollReveal>
+        <SectionHeader title="Talks" className="border-t border-border pt-10" />
+      </ScrollReveal>
       <div className="flex flex-col gap-12">
         {years.map((year) => (
           <section key={year}>
