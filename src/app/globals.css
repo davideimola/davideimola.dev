@@ -102,23 +102,6 @@ body::before {
   color: var(--text-1);
 }
 
-/* ── Scroll reveal ── */
-/* Elements are visible by default — animation is additive only for
-   below-fold elements. Back/forward navigation always shows content. */
-.reveal.revealed {
-  animation: reveal-up 0.5s ease both;
-}
-
-@keyframes reveal-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 
 /* ── Prose (Tailwind Typography) ── */
 .prose {

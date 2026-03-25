@@ -1,30 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonLink } from "../ui";
 
 const FULL_NAME = "Davide Imola";
 const TYPING_SPEED = 80;
 
+// Module-level flag — persists across navigations within the same JS session
+// without timing issues (no sessionStorage, no useLayoutEffect needed).
+let hasAnimated = false;
+
 export function HeroSection() {
-  const [displayedName, setDisplayedName] = useState("");
-  const [typingDone, setTypingDone] = useState(false);
+  const [displayedName, setDisplayedName] = useState(hasAnimated ? FULL_NAME : "");
+  const [typingDone, setTypingDone] = useState(hasAnimated);
 
-  // useLayoutEffect runs before the browser paints — avoids the empty-name
-  // flash on back/forward navigation when the animation has already played.
-  useLayoutEffect(() => {
-    if (sessionStorage.getItem("hero-animated")) {
-      setDisplayedName(FULL_NAME);
-      setTypingDone(true);
-    }
-  }, []);
-
-  // Typing animation — only on first visit
   useEffect(() => {
-    if (sessionStorage.getItem("hero-animated")) return;
+    if (hasAnimated) return;
 
-    sessionStorage.setItem("hero-animated", "1");
+    hasAnimated = true;
     let i = 0;
     const timer = setInterval(() => {
       i++;

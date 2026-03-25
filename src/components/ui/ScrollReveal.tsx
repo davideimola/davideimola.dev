@@ -1,6 +1,7 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -9,36 +10,15 @@ interface ScrollRevealProps {
 }
 
 export function ScrollReveal({ children, delay = 0, className = "" }: ScrollRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    // Only animate elements that start below the viewport.
-    // Elements already in view (or above) are visible by default via CSS —
-    // no animation needed, no timing issues on back/forward navigation.
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.style.animationDelay = `${delay}ms`;
-          el.classList.add("revealed");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
-
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut", delay: delay / 1000 }}
+      className={className}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 }
