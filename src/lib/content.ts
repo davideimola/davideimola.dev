@@ -33,6 +33,7 @@ export interface Talk {
 export interface Project {
   slug: string;
   title: string;
+  role?: string; // e.g. "Tech Lead" — shown when the project is a workplace, not something you built
   status: "active" | "coming-soon" | "archived";
   url?: string;
   github?: string;
@@ -150,125 +151,45 @@ export function getPrevNextPosts(slug: string): { prev: BlogPost | null; next: B
   };
 }
 
-// ── Talks (placeholder — replaced in issue #14) ───────────────────────────
+// ── Talks ─────────────────────────────────────────────────────────────────
 
-const TALKS: Talk[] = [
-  {
-    slug: "gitops-kcd-italy-2025",
-    title: "From chaos to control: GitOps for platform teams",
-    event: "KCD Italy 2025",
-    date: "2025-06-20",
-    location: "Milan, Italy",
-    tags: ["GitOps", "Kubernetes"],
-  },
-  {
-    slug: "go-security-codemotion-2025",
-    title: "Secure by design: building safer Go services",
-    event: "Codemotion Milan 2025",
-    date: "2025-04-10",
-    location: "Milan, Italy",
-    tags: ["Go", "Security"],
-  },
-  {
-    slug: "platform-eng-devops-days-2024",
-    title: "The platform engineering shift",
-    event: "DevOpsDays Zurich 2024",
-    date: "2024-09-15",
-    location: "Zurich, Switzerland",
-    tags: ["Platform Engineering", "DevOps"],
-  },
-];
+function loadTalks(): Talk[] {
+  const raw = fs.readFileSync(path.join(process.cwd(), "src/content/talks.json"), "utf-8");
+  return JSON.parse(raw) as Talk[];
+}
 
 export function getRecentTalks(count = 3): Talk[] {
-  return [...TALKS]
+  return loadTalks()
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, count);
 }
 
+export function getAllTalks(): Talk[] {
+  return loadTalks().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
 // ── Projects ──────────────────────────────────────────────────────────────
 
-const PROJECTS: Project[] = [
-  {
-    slug: "redcarbon",
-    title: "RedCarbon",
-    status: "active",
-    url: "https://redcarbon.ai",
-    period: "2023–present",
-    featured: true,
-    tags: ["AI", "Security", "Startup"],
-    description:
-      "AI-powered threat detection platform. I lead the engineering team, shaping architecture and driving the platform from seed to Series A.",
-  },
-  {
-    slug: "schrodinger-hat",
-    title: "Schrodinger Hat",
-    status: "active",
-    url: "https://schrodinger-hat.it",
-    period: "2020–present",
-    featured: true,
-    tags: ["Community", "Open Source"],
-    description:
-      "International open source community. 20k+ people reached, 100+ speakers at events across Europe.",
-  },
-  {
-    slug: "os-day",
-    title: "OS Day",
-    status: "active",
-    url: "https://osday.dev",
-    period: "2022–present",
-    featured: true,
-    tags: ["Conference", "Open Source"],
-    description:
-      "Open source conference I co-organize. A full day of talks, workshops, and community connections for the Italian OSS ecosystem.",
-  },
-  {
-    slug: "worky",
-    title: "Worky",
-    status: "coming-soon",
-    url: "https://worky.davideimola.dev",
-    github: "https://github.com/davideimola/worky",
-    period: "2026",
-    featured: true,
-    tags: ["Tool", "Workshops"],
-    description:
-      "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience.",
-  },
-];
-
-const OSS_CONTRIBUTIONS: OssContribution[] = [
-  {
-    name: "Kubernetes",
-    description: "The de-facto standard for container orchestration.",
-    github: "https://github.com/kubernetes/kubernetes",
-    url: "https://kubernetes.io",
-    tags: ["Go", "Cloud Native"],
-  },
-  {
-    name: "Capsule",
-    description: "Multi-tenancy and policy management for Kubernetes clusters.",
-    github: "https://github.com/projectcapsule/capsule",
-    url: "https://capsule.clastix.io",
-    tags: ["Go", "Kubernetes"],
-  },
-  {
-    name: "Kannon",
-    description: "High-performance, self-hosted email sending platform.",
-    github: "https://github.com/kannon-email/kannon",
-    tags: ["Go", "Email"],
-  },
-];
+function loadProjects(): Project[] {
+  const raw = fs.readFileSync(path.join(process.cwd(), "src/content/projects.json"), "utf-8");
+  return JSON.parse(raw) as Project[];
+}
 
 export function getAllProjects(): Project[] {
-  return [...PROJECTS].sort((a, b) => {
-    const order = { active: 0, "coming-soon": 1, archived: 2 };
-    return order[a.status] - order[b.status];
-  });
+  const order = { active: 0, "coming-soon": 1, archived: 2 };
+  return loadProjects().sort((a, b) => order[a.status] - order[b.status]);
 }
 
 export function getFeaturedProjects(): Project[] {
-  return PROJECTS.filter((p) => p.featured);
+  return loadProjects().filter((p) => p.featured);
 }
 
+// ── OSS Contributions ─────────────────────────────────────────────────────
+
 export function getOssContributions(): OssContribution[] {
-  return OSS_CONTRIBUTIONS;
+  const raw = fs.readFileSync(
+    path.join(process.cwd(), "src/content/oss-contributions.json"),
+    "utf-8",
+  );
+  return JSON.parse(raw) as OssContribution[];
 }

@@ -61,9 +61,14 @@ export default function ProjectsPage() {
 
               {/* Title & description */}
               <div className="flex-1">
-                <h2 className="font-mono text-[17px] font-semibold text-text-1 mb-2 group-hover:text-accent transition-colors duration-200">
-                  {project.title}
-                </h2>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h2 className="font-mono text-[17px] font-semibold text-text-1 group-hover:text-accent transition-colors duration-200">
+                    {project.title}
+                  </h2>
+                  {project.role && (
+                    <span className="font-mono text-[11px] text-text-3">// {project.role}</span>
+                  )}
+                </div>
                 <p className="font-sans text-[13px] text-text-2 leading-relaxed">
                   {project.description}
                 </p>

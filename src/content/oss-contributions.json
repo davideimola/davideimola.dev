@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Kubernetes",
+    "description": "The de-facto standard for container orchestration.",
+    "github": "https://github.com/kubernetes/kubernetes",
+    "url": "https://kubernetes.io",
+    "tags": ["Go", "Cloud Native"]
+  },
+  {
+    "name": "Capsule",
+    "description": "Multi-tenancy and policy management for Kubernetes clusters.",
+    "github": "https://github.com/projectcapsule/capsule",
+    "url": "https://capsule.clastix.io",
+    "tags": ["Go", "Kubernetes"]
+  },
+  {
+    "name": "Kannon",
+    "description": "High-performance, self-hosted email sending platform.",
+    "github": "https://github.com/kannon-email/kannon",
+    "tags": ["Go", "Email"]
+  }
+]

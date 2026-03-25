@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "gitops-kcd-italy-2025",
+    "title": "From chaos to control: GitOps for platform teams",
+    "event": "KCD Italy 2025",
+    "date": "2025-06-20",
+    "location": "Milan, Italy",
+    "tags": ["GitOps", "Kubernetes"]
+  },
+  {
+    "slug": "go-security-codemotion-2025",
+    "title": "Secure by design: building safer Go services",
+    "event": "Codemotion Milan 2025",
+    "date": "2025-04-10",
+    "location": "Milan, Italy",
+    "tags": ["Go", "Security"]
+  },
+  {
+    "slug": "platform-eng-devops-days-2024",
+    "title": "The platform engineering shift",
+    "event": "DevOpsDays Zurich 2024",
+    "date": "2024-09-15",
+    "location": "Zurich, Switzerland",
+    "tags": ["Platform Engineering", "DevOps"]
+  }
+]
