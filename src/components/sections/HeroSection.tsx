@@ -25,7 +25,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="max-w-[860px] mx-auto px-4 sm:px-8 pt-24 pb-20 md:pt-32 md:pb-24">
+    <section className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 md:pt-32 md:pb-24">
       <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-12 md:gap-8">
         {/* Text block */}
         <div className="flex-1 animate-[fadeUp_0.5s_ease_both]">

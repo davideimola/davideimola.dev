@@ -43,7 +43,7 @@ All tokens are CSS custom properties in `src/app/globals.css`. Use them via Tail
 | `--border-hover` | `rgba(201,31,55,0.30)` | `border-border-hover` |
 | `--text-1` | `#EAE5DF` | `text-text-1` |
 | `--text-2` | `#9A948E` | `text-text-2` |
-| `--text-3` | `#4E4A46` | `text-text-3` |
+| `--text-3` | `#7E7874` | `text-text-3` |
 | `--accent` | `#C91F37` (Akane Red) | `text-accent`, `bg-accent` |
 | `--accent-hover` | `#a8192e` | `bg-accent-hover` |
 | `--accent-glow` | `rgba(201,31,55,0.12)` | `bg-accent-glow` |

@@ -23,7 +23,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(8,8,7,0.85)] backdrop-blur-md">
-      <div className="relative z-10 max-w-[860px] mx-auto px-4 sm:px-8 flex items-center justify-between h-[52px]">
+      <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex items-center justify-between h-[52px]">
         {/* Logo */}
         <a
           href="/"
@@ -80,7 +80,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
       {/* Mobile menu dropdown */}
       {menuOpen && (
         <div className="md:hidden border-t border-border bg-[rgba(8,8,7,0.95)] backdrop-blur-md">
-          <ul className="max-w-[860px] mx-auto px-4 py-4 flex flex-col gap-0 list-none m-0">
+          <ul className="max-w-[1024px] mx-auto px-4 py-4 flex flex-col gap-0 list-none m-0">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a

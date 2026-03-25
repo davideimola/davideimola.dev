@@ -24,7 +24,7 @@ const PILLARS = [
 export function WhatIDoSection() {
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[860px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
           <h2 className="font-mono text-[11px] font-medium text-text-3 tracking-[0.12em] uppercase mb-12">
             <span className="text-accent mr-2">{"// "}</span>what I do

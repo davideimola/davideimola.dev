@@ -10,7 +10,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border py-6">
-      <div className="relative z-10 max-w-[860px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-0">
+      <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-0">
         <p className="font-mono text-[11px] text-text-3">
           © {year} <span className="text-accent">Davide Imola</span>
         </p>

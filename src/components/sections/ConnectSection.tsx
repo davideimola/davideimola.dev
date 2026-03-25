@@ -8,7 +8,7 @@ const LINKS = [
 export function ConnectSection() {
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[860px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
           <div className="flex flex-col items-center text-center gap-6">
             <h2 className="font-mono text-[11px] font-medium text-text-3 tracking-[0.12em] uppercase">

@@ -14,7 +14,7 @@ export function WritingSection() {
 
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[860px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
           <SectionHeader title="Latest writing" seeAllHref="/blog" seeAllLabel="All posts →" />
         </ScrollReveal>

@@ -16,7 +16,7 @@ Dark, terminal-inspired aesthetic. Not a literal terminal, but the feeling of pr
 | Border hover | `--border-hover` | `rgba(201,31,55,.30)` | Card hover border |
 | Text primary | `--text-1` | `#EAE5DF` | Headings, primary content |
 | Text secondary | `--text-2` | `#9A948E` | Body text, descriptions |
-| Text muted | `--text-3` | `#4E4A46` | Labels, metadata, nav links |
+| Text muted | `--text-3` | `#7E7874` | Labels, metadata, nav links |
 | Akane Red | `--accent` | `#C91F37` | Interactive elements, `//` prefix |
 | Akane hover | `--accent-hover` | `#a8192e` | Accent hover state |
 | Akane glow | `--accent-glow` | `rgba(201,31,55,.12)` | Card hover overlay |
@@ -54,7 +54,7 @@ Dark, terminal-inspired aesthetic. Not a literal terminal, but the feeling of pr
 Use Tailwind's default spacing scale. Key values in use:
 
 - Section padding: `py-20` (80px)
-- Container max-width: `max-w-[860px] mx-auto px-8`
+- Container max-width: `max-w-[1024px] mx-auto px-4 sm:px-8`
 - Card padding: `p-6`
 - Hero padding: `pt-40 pb-30`
 - Section header margin-bottom: `mb-12`
