@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import type React from "react";
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { Badge } from "../../../components/ui/Badge";
+import { CodeBlock } from "../../../components/ui/CodeBlock";
 import { ReadingProgress } from "../../../components/ui/ReadingProgress";
 import { TableOfContents } from "../../../components/ui/TableOfContents";
 import { extractToc, getAllPosts, getPostBySlug } from "../../../lib/content";
@@ -74,7 +76,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* Hero image */}
             {post.heroImage && (
-              <div className="relative w-full aspect-[2/1] mb-10 rounded-sm overflow-hidden border border-border">
+              <div className="relative w-full aspect-2/1 mb-10 rounded-sm overflow-hidden border border-border">
                 <Image
                   src={post.heroImage}
                   alt={post.heroImageAlt ?? post.title}
@@ -95,6 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
                     rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
                   },
                 }}
+                components={{ pre: CodeBlock as React.ComponentType<object> }}
               />
             </div>
 
