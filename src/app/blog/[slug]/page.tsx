@@ -7,6 +7,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { AuthorBio } from "../../../components/ui/AuthorBio";
+import { Breadcrumb } from "../../../components/ui/Breadcrumb";
 import { BackToTop } from "../../../components/ui/BackToTop";
 import { Badge } from "../../../components/ui/Badge";
 import { CodeBlock } from "../../../components/ui/CodeBlock";
@@ -78,6 +79,16 @@ export default async function BlogPostPage({ params }: Props) {
   const { prev, next } = getPrevNextPosts(slug);
   const related = getRelatedPosts(slug);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://davideimola.dev" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://davideimola.dev/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: `https://davideimola.dev/blog/${slug}` },
+    ],
+  };
+
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -96,17 +107,19 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={blogPostingSchema} />
       <ReadingProgress />
       <BackToTop />
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
-        {/* Back link */}
-        <a
-          href="/blog"
-          className="inline-flex items-center gap-2 font-mono text-[12px] text-text-3 no-underline hover:text-text-2 transition-colors duration-150 mb-10"
-        >
-          ← back to blog
-        </a>
+        <Breadcrumb
+          command="cat"
+          items={[
+            { label: "blog", href: "/blog" },
+            { label: `${slug}.mdx` },
+          ]}
+          className="mb-10"
+        />
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* Article */}

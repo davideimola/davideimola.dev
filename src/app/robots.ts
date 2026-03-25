@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: "/og",
     },
     sitemap: "https://davideimola.dev/sitemap.xml",
   };
