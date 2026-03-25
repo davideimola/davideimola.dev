@@ -22,7 +22,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(8,8,7,0.85)] backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-mid bg-[rgba(8,8,7,0.85)] backdrop-blur-md">
       <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex items-center justify-between h-[52px]">
         {/* Logo */}
         <a
@@ -38,7 +38,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="font-mono text-[11px] font-normal text-text-3 no-underline tracking-[0.04em] lowercase transition-colors duration-150 hover:text-text-1"
+                className="font-mono text-[12px] font-normal text-text-2 no-underline tracking-[0.04em] lowercase transition-colors duration-150 hover:text-text-1"
               >
                 {link.label}
               </a>
