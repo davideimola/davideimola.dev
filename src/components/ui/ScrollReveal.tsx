@@ -28,12 +28,25 @@ export function ScrollReveal({ children, delay = 0, className = "" }: ScrollReve
       { threshold: 0.1 }
     );
 
-    // rAF lets the browser restore scroll position before we start observing,
-    // fixing back/forward navigation where elements above the fold stay hidden.
-    const raf = requestAnimationFrame(() => observer.observe(el));
+    // Double rAF gives the browser time to restore scroll position on
+    // back/forward navigation before we check element visibility.
+    let raf2: number;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        // Element is already in or above the viewport — reveal immediately
+        // without animation (it's been "seen" before).
+        if (rect.top < window.innerHeight) {
+          el.classList.add("revealed");
+        } else {
+          observer.observe(el);
+        }
+      });
+    });
 
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
       observer.disconnect();
     };
   }, [delay]);
