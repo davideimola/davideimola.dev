@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import type { BlogPost } from "../../lib/content";
 
@@ -14,82 +11,98 @@ function formatDate(dateStr: string): string {
 
 interface BlogListProps {
   posts: BlogPost[];
+  activeTag?: string;
+  activeCategory?: string;
 }
 
-export function BlogList({ posts }: BlogListProps) {
-  const [active, setActive] = useState<string | null>(null);
-
-  const categories = Array.from(new Set(posts.map((p) => p.category))).sort();
-  const filtered = active ? posts.filter((p) => p.category === active) : posts;
+export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
+  const hasFilter = !!(activeTag || activeCategory);
+  const filterLabel = activeTag ? `#${activeTag}` : activeCategory;
 
   return (
     <>
-      {/* Category filters */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        <button
-          type="button"
-          onClick={() => setActive(null)}
-          className={[
-            "font-mono text-[11px] tracking-[0.06em] border rounded-[2px] px-3 py-1 transition-[border-color,color] duration-150",
-            active === null
-              ? "border-border-hover text-accent"
-              : "border-border text-text-3 hover:border-border-hover hover:text-accent",
-          ].join(" ")}
-        >
-          all
-        </button>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => setActive(cat === active ? null : cat)}
-            className={[
-              "font-mono text-[11px] tracking-[0.06em] border rounded-[2px] px-3 py-1 transition-[border-color,color] duration-150",
-              active === cat
-                ? "border-border-hover text-accent"
-                : "border-border text-text-3 hover:border-border-hover hover:text-accent",
-            ].join(" ")}
+      {/* Active filter chip */}
+      {hasFilter && (
+        <div className="flex items-center gap-2 font-mono text-[12px] mb-6">
+          <span className="text-accent">❯</span>
+          <span className="text-text-3">filtering by</span>
+          <span className="text-accent">{filterLabel}</span>
+          <a
+            href="/blog"
+            className="text-text-3 hover:text-accent transition-colors duration-150 ml-1"
+            aria-label="Clear filter"
           >
-            {cat.toLowerCase()}
-          </button>
-        ))}
-      </div>
+            ×
+          </a>
+        </div>
+      )}
 
       {/* Post list */}
-      <ul className="flex flex-col divide-y divide-border">
-        {filtered.map((post, i) => (
-          <ScrollReveal key={post.slug} delay={i * 40}>
-            <li>
-              <a
-                href={`/blog/${post.slug}`}
-                className="group block py-6 no-underline transition-colors duration-150"
-              >
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border">
+      {posts.length > 0 ? (
+        <ul className="flex flex-col divide-y divide-border">
+          {posts.map((post, i) => (
+            <ScrollReveal key={post.slug} delay={i * 40}>
+              <li className="py-6 flex flex-col gap-3">
+                {/* Category + featured */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={`/blog?category=${encodeURIComponent(post.category)}`}
+                    className={[
+                      "font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 transition-colors duration-150",
+                      activeCategory === post.category
+                        ? "text-accent bg-accent-glow border border-[rgba(201,31,55,0.2)]"
+                        : "text-text-3 bg-border hover:text-accent",
+                    ].join(" ")}
+                  >
                     {post.category}
-                  </span>
+                  </a>
                   {post.featured && (
                     <span className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border">
                       Featured
                     </span>
                   )}
                 </div>
-                <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug mb-2 group-hover:text-accent transition-colors duration-150">
-                  {post.title}
-                </h2>
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed mb-4 line-clamp-2">
-                  {post.excerpt}
-                </p>
-                <p className="font-mono text-[11px] text-text-3">
-                  {formatDate(post.date)} · {post.readingTime}
-                </p>
-              </a>
-            </li>
-          </ScrollReveal>
-        ))}
-      </ul>
 
-      {filtered.length === 0 && (
+                {/* Title + excerpt */}
+                <a
+                  href={`/blog/${post.slug}`}
+                  className="group block no-underline"
+                >
+                  <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug mb-2 group-hover:text-accent transition-colors duration-150">
+                    {post.title}
+                  </h2>
+                  <p className="font-sans text-[14px] text-text-2 leading-relaxed line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </a>
+
+                {/* Date + tags */}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="font-mono text-[11px] text-text-3">
+                    {formatDate(post.date)} · {post.readingTime}
+                  </p>
+                  <div className="flex flex-wrap gap-x-2 gap-y-1">
+                    {post.tags.map((tag) => (
+                      <a
+                        key={tag}
+                        href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+                        className={[
+                          "font-mono text-[11px] transition-colors duration-150",
+                          activeTag === tag.toLowerCase()
+                            ? "text-accent"
+                            : "text-text-3 hover:text-accent",
+                        ].join(" ")}
+                      >
+                        #{tag.toLowerCase()}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            </ScrollReveal>
+          ))}
+        </ul>
+      ) : (
         <p className="font-mono text-[13px] text-text-3 py-8">
           <span className="text-accent">~/</span> no posts found
         </p>

@@ -130,15 +130,33 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Header */}
             <header className="mb-10">
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <Badge variant="category">{post.category}</Badge>
+                <a
+                  href={`/blog?category=${encodeURIComponent(post.category)}`}
+                  className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border hover:text-accent transition-colors duration-150"
+                >
+                  {post.category}
+                </a>
                 {post.featured && <Badge variant="active">Featured</Badge>}
               </div>
               <h1 className="font-mono text-[26px] sm:text-[32px] font-bold text-text-1 tracking-[-0.03em] leading-tight mb-4">
                 {post.title}
               </h1>
-              <p className="font-mono text-[12px] text-text-3">
-                {formatDate(post.date)} · {post.readingTime}
-              </p>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <p className="font-mono text-[12px] text-text-3">
+                  {formatDate(post.date)} · {post.readingTime}
+                </p>
+                <div className="flex flex-wrap gap-x-2 gap-y-1">
+                  {post.tags.map((tag) => (
+                    <a
+                      key={tag}
+                      href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                    >
+                      #{tag.toLowerCase()}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </header>
 
             {/* Hero image */}

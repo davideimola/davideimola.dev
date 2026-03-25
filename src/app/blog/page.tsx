@@ -17,17 +17,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+interface PageProps {
+  searchParams: Promise<{ tag?: string; category?: string }>;
+}
+
+export default async function BlogPage({ searchParams }: PageProps) {
+  const { tag, category } = await searchParams;
+  const allPosts = getAllPosts();
+
+  const posts = allPosts.filter((p) => {
+    if (tag) return p.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase());
+    if (category) return p.category.toLowerCase() === category.toLowerCase();
+    return true;
+  });
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
       <PageHero
         command="ls ./blog"
         title="Writing"
-        description={`${posts.length} articles on engineering, platform thinking, Go, and security.`}
+        description={`${allPosts.length} articles on engineering, platform thinking, Go, and security.`}
       />
-      <BlogList posts={posts} />
+      <BlogList posts={posts} activeTag={tag} activeCategory={category} />
     </div>
   );
 }
