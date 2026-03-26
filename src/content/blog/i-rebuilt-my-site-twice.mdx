@@ -1,0 +1,87 @@
+---
+title: "I Rebuilt My Site Twice. Here's What the Second Time Taught Me."
+excerpt: "Two rebuilds, two different tools, two completely different experiences. The second one worked. Not because of the AI."
+category: "Technical"
+readTime: "6 min read"
+publishDate: "2026-03-27"
+tags: ["AI", "Developer Experience", "Next.js", "Personal"]
+featured: false
+heroImage: "/images/blog/i-rebuilt-my-site-twice/hero.webp"
+heroImageAlt: "Two overlapping website wireframes, one rough and inconsistent, one clean and structured, on a dark background with red accents"
+---
+
+{/* IMAGE: hero — AI prompt: "two overlapping website wireframes on a dark background, one rough and inconsistent, one clean and structured, deep red accent color, dark aesthetic, no text, minimal" */}
+
+I rebuilt my personal site. Then I rebuilt it again.
+
+The first time I thought the problem was the old site. The second time I realized the problem was how I was working.
+
+## Two versions, same problem
+
+The original site was built in Astro. I chose Astro because I wanted to experiment with something new. I'd been doing mostly backend and infrastructure work at the time, and my frontend skills were, let's say, still developing. The result was functional and completely forgettable: white text on a black background, no real personality, nothing that said anything about who I was or what I did.
+
+![The original Astro site: dark, minimal, forgettable](/images/blog/i-rebuilt-my-site-twice/old-site.webp)
+
+So I decided to rebuild it using AI. I had access to Cursor through work, so I started there. The workflow was straightforward: describe what you want, get a plan, let it generate most of the site at once.
+
+It was better. Some things were genuinely nice: red underlines styled like brushstrokes, a layout that felt more composed. But it was also a mess. Too many color variations that didn't quite agree with each other. And at some point, because I'd mentioned that I love Japanese culture and aesthetics, the AI decided the obvious move was to add **kanji characters** to the design.
+
+![The Cursor rebuild: more styled, but still inconsistent](/images/blog/i-rebuilt-my-site-twice/cursor-site.webp)
+
+I don't speak Japanese. I removed the kanji.
+
+The core issue wasn't the kanji. That was just the most visible symptom. The real problem was that I'd handed over a vague brief ("I like Japanese aesthetics") and gotten back a literal interpretation, with all the inconsistencies that come from generating a whole site in one go. **The design system wasn't solid because I'd never defined one.** Everything was a bit improvised.
+
+Still not working. But now I knew why.
+
+## Starting over with a different question
+
+I could have kept patching the Cursor version. Instead I started from scratch. Partly out of frustration, mostly out of curiosity. I'd been reading and watching more about AI-assisted development, and I wanted to try a fundamentally different approach.
+
+The question wasn't "can AI build my site?" I already knew it could. The question was: **what happens if I stop treating AI as a site generator and start treating it as a collaborator?**
+
+I switched to Claude Code and gave myself one constraint before touching a single component: I would define the design system first.
+
+## Design system first, everything else second
+
+This sounds obvious in retrospect. It wasn't obvious to me at the time.
+
+I'm not a designer. I can look at something and know whether it works, but I struggle to build the underlying system that makes it consistent. What I needed wasn't something to generate components. I needed something that would push back when my decisions were incoherent.
+
+So I started with tokens: background colors, text hierarchy, border values, a single accent color (Akane red, `#C91F37`). I set strict rules. The AI started flagging things I wouldn't have caught on my own: too many color variations, inconsistent visual language, patterns that looked fine in isolation but clashed in context.
+
+> "Too many colors. Pick a few that work together and stick to them."
+
+That kind of feedback is what a designer gives you. I was getting it from an AI, but only because I'd asked the right questions and **constrained the scope**. Working on one isolated part of the project at a time, not the whole thing, made the feedback loops tight and the outcomes predictable.
+
+The result was a design system I actually understood. Building the site on top of it was a completely different experience.
+
+## The voice input accident
+
+Somewhere in the middle of the second rebuild, I started using voice input.
+
+I didn't plan to. I'd seen someone mention it in a video, tried it out of curiosity, and kept using it because it worked better than I expected.
+
+The difference isn't speed. Typing is faster for precise, short instructions. The difference is **how you think**. When you speak, you reason out loud. You self-correct in real time. You catch yourself saying "actually, no, wait, what I really mean is..." and that process of rephrasing turns out to be genuinely useful.
+
+I started with the voice input built into Claude, then experimented with other tools. The prompts I produced with voice were longer, more specific, and more honest. I said things I wouldn't have bothered typing.
+
+I'm not claiming it's some revolutionary technique. It's just a different input method that, for me, unlocked a different way of communicating with the AI. Your mileage may vary.
+
+## The result: a terminal that works
+
+The site is live at [davideimola.dev](https://davideimola.dev).
+
+![The current davideimola.dev — terminal aesthetic, dark design system, character](/images/blog/i-rebuilt-my-site-twice/current-site.webp)
+
+The thing I'm most happy with is the **terminal aesthetic**: commands as navigation, monospace headings, a design language that feels like it was made by a developer, not by someone using a portfolio template. That direction came from the AI noticing what I kept gravitating toward and suggesting something more committed.
+
+It has character now. The old site didn't.
+
+The tech stack is Next.js, Tailwind v4, TypeScript. Everything I'd have chosen anyway, but this time built on a design system that makes the codebase coherent instead of a collection of decisions made in different moods.
+
+## What's next
+
+The rebuild was the experiment. What I took away from it was a method: a way of working with AI that I've since applied to other projects.
+
+I extracted that method into something replicable. That's the next post.

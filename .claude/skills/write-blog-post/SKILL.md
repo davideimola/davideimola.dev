@@ -31,6 +31,13 @@ Check the arguments:
 
 Combine the issue content + any free context the user passed. This is your starting point for the interview.
 
+**Editorial conflict check**: before starting the interview, scan all open blog-related GitHub issues (`gh issue list --label blog`) AND existing posts in `src/content/blog/`. Check for:
+- Overlap: does another issue or existing post already cover this topic or a key insight?
+- Scope creep: is the planned post trying to cover too much ground? If so, suggest splitting into multiple posts and flag which parts belong where.
+- Series continuity: if the post is part of a series, read the adjacent issues to understand what each post covers and where the boundaries are.
+
+Flag any conflicts or scope issues to the user before proceeding. This is editorial work — your job is to help Davide not accidentally write the same post twice or cram three posts into one.
+
 ---
 
 ## Step 2 — Interview (one question at a time)
@@ -148,6 +155,14 @@ After writing the post, suggest images for the hero and relevant inline spots.
 ```
 
 If you're unsure whether the user has a photo for something, ask before suggesting AI-generated — but only when it's genuinely ambiguous.
+
+**Image optimization**: once the user has placed their images in `public/images/blog/<slug>/`, run:
+
+```bash
+pnpm optimize-images public/images/blog/<slug>/ --clean
+```
+
+This converts all JPEG/PNG to WebP (85% quality, max 1600px wide) and removes the originals. Update any image references in the MDX from `.jpg`/`.jpeg`/`.png` to `.webp` after running it.
 
 ---
 

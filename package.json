@@ -15,7 +15,8 @@
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
@@ -56,6 +57,7 @@
     "@vitest/coverage-v8": "^4.1.1",
     "jsdom": "^29.0.1",
     "playwright": "^1.58.2",
+    "sharp": "^0.34.5",
     "storybook": "^10.3.3",
     "tailwindcss": "^4",
     "typescript": "^5",
