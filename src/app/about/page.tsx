@@ -180,11 +180,11 @@ const COMMUNITY = [
     href: "https://schrodinger-hat.it",
   },
   {
-    name: "Speaking",
-    role: "Speaker",
+    name: "Sharing",
+    role: "Speaker & Organizer",
     description:
       "GOLab, KCD Italy, WeAreDevelopers World Congress, DevSecOps Day, Incontro DevOps Italia and more. Concrete talks, honest about tradeoffs.",
-    href: "/speaking",
+    href: "/sharing",
   },
   {
     name: "Teaching",

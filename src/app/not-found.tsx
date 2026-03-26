@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const SUGGESTIONS = [
   { label: "/blog", href: "/blog" },
   { label: "/about", href: "/about" },
-  { label: "/speaking", href: "/speaking" },
+  { label: "/sharing", href: "/sharing" },
   { label: "/now", href: "/now" },
 ];
 

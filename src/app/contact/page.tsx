@@ -77,10 +77,10 @@ export default function ContactPage() {
               I'm open to talks and workshops on Go, platform engineering, GitOps, security, and
               open source. Check the{" "}
               <a
-                href="/speaking"
+                href="/sharing"
                 className="text-text-2 hover:text-accent transition-colors duration-150"
               >
-                speaking page
+                sharing page
               </a>{" "}
               for past events.
             </p>

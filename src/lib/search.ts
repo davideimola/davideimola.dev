@@ -33,11 +33,11 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/uses",
   },
   {
-    id: "page-speaking",
+    id: "page-sharing",
     type: "page",
-    title: "Speaking",
-    description: "Talks and presentations on Go, platform engineering, and open source.",
-    href: "/speaking",
+    title: "Sharing",
+    description: "Talks, workshops, and events on Go, platform engineering, and open source.",
+    href: "/sharing",
   },
   {
     id: "page-blog",
@@ -65,14 +65,16 @@ export function buildSearchIndex(): SearchItem[] {
     meta: p.category,
   }));
 
-  const talks: SearchItem[] = getAllTalks().map((t) => ({
-    id: `talk-${t.slug}`,
-    type: "talk",
-    title: t.title,
-    description: t.event,
-    href: `/speaking`,
-    meta: new Date(t.date).getFullYear().toString(),
-  }));
+  const talks: SearchItem[] = getAllTalks()
+    .filter((t) => !!t.session)
+    .map((t) => ({
+      id: `talk-${t.slug}`,
+      type: "talk",
+      title: t.session?.title as string,
+      description: t.event,
+      href: `/sharing`,
+      meta: new Date(t.date).getFullYear().toString(),
+    }));
 
   const projects: SearchItem[] = getAllProjects().map((p) => ({
     id: `project-${p.slug}`,

@@ -19,17 +19,24 @@ export interface BlogPost {
   content: string;
 }
 
-export interface Talk {
-  slug: string;
+export interface TalkSession {
   title: string;
-  event: string;
-  role: "Speaker" | "Organizer" | "Organizer & MC" | "Organizer & Speaker" | "MC" | "Guest";
-  type: "Conference" | "Meetup" | "Podcast/Stream" | "Workshop";
-  date: string;
-  location: string;
+  format: "Talk" | "Workshop" | "Interview" | "Panel" | "Lightning Talk";
   coSpeaker?: string;
   slides?: string;
   video?: string;
+}
+
+export interface Talk {
+  slug: string;
+  event: string;
+  type: "Conference" | "Meetup" | "Podcast/Stream";
+  date: string;
+  eventDateRange?: string;
+  location: string;
+  organizer?: boolean;
+  mc?: boolean;
+  session?: TalkSession;
   tags: string[];
 }
 
@@ -163,6 +170,7 @@ function loadTalks(): Talk[] {
 
 export function getRecentTalks(count = 3): Talk[] {
   return loadTalks()
+    .filter((t) => !!t.session)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, count);
 }

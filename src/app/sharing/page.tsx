@@ -10,14 +10,14 @@ import { SectionHeader } from "../../components/ui/SectionHeader";
 import { getAllTalks } from "../../lib/content";
 
 export const metadata: Metadata = {
-  title: "Speaking",
-  description: "Talks and presentations on Go, platform engineering, GitOps, and open source.",
+  title: "Sharing",
+  description: "Talks, workshops, and events on Go, platform engineering, GitOps, and open source.",
   openGraph: {
-    title: "Speaking — Davide Imola",
-    description: "Talks and presentations on Go, platform engineering, GitOps, and open source.",
-    url: "https://davideimola.dev/speaking",
+    title: "Sharing — Davide Imola",
+    description: "Talks, workshops, and events on Go, platform engineering, GitOps, and open source.",
+    url: "https://davideimola.dev/sharing",
     images: [
-      { url: "https://davideimola.dev/og?title=Speaking&category=talks", width: 1200, height: 630 },
+      { url: "https://davideimola.dev/og?title=Sharing&category=talks", width: 1200, height: 630 },
     ],
   },
 };
@@ -35,19 +35,19 @@ const SHORT_BIO =
 const LONG_BIO =
   "Davide Imola is a Tech Lead at RedCarbon, where he leads the engineering team building an AI-powered cybersecurity platform. He is co-founder of Schrodinger Hat, an international open source community that has reached 20k+ people across Europe, and co-organizer of Open Source Day, a yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GOLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on Go, GitOps, platform engineering, security, and building open source communities.\n\nHe believes that sharing knowledge in public — through talks, writing, and open source contributions — is one of the highest-leverage activities an engineer can do.";
 
-export default function SpeakingPage() {
+export default function SharingPage() {
   const allTalks = getAllTalks();
 
   const talksSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Speaking Engagements — Davide Imola",
+    name: "Sharing — Davide Imola",
     itemListElement: allTalks.map((talk, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
         "@type": "Event",
-        name: talk.title,
+        name: talk.session?.title ?? talk.event,
         startDate: talk.date,
         eventStatus: "https://schema.org/EventScheduled",
         location: {
@@ -64,7 +64,7 @@ export default function SpeakingPage() {
           name: "Davide Imola",
           url: "https://davideimola.dev",
         },
-        ...(talk.video ? { url: talk.video } : { url: `https://davideimola.dev/speaking#${talk.slug}` }),
+        ...(talk.session?.video ? { url: talk.session.video } : { url: `https://davideimola.dev/sharing#${talk.slug}` }),
       },
     })),
   };
@@ -73,9 +73,9 @@ export default function SpeakingPage() {
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
       <JsonLd data={talksSchema} />
       <PageHero
-        command="ls ./speaking"
-        title="Speaking"
-        description="I speak about the engineering problems I face day to day — Go, platform engineering, GitOps, security, and building open source communities. I like talks that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
+        command="ls ./sharing"
+        title="Sharing"
+        description="I share what I learn in public — through talks, workshops, and events on Go, platform engineering, GitOps, security, and open source. I like sessions that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
       >
         <div className="flex flex-wrap gap-2 mt-6">
           {TOPICS.map((topic) => (
