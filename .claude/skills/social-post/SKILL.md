@@ -68,14 +68,6 @@ If proceeding with a carousel, propose:
 - Title and one-line content for each slide
 - Which slide has the most scroll-stopping pull quote
 
-Use brand colors from davideimola.dev:
-- Background: `#080807`
-- Card: `#0F0E0D`
-- Accent red: `#C91F37`
-- Primary text: `#EAE5DF`
-- Secondary text: `#9A948E`
-- Font: JetBrains Mono for headings, IBM Plex Sans for body (via Google Fonts `<style>` tag in slides)
-
 ---
 
 ## Step 3 — Show and validate
@@ -90,30 +82,116 @@ Iterate until approved. This is bidirectional — push back if a suggestion weak
 
 ## Step 4 — Build carousel (if approved)
 
-Once the slide structure is approved, build it with mkcr:
+Once the slide structure is approved, build it with mkcr.
+
+**Important:** mkcr binary is at `/Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr` (GOBIN not in PATH). Always use the full path.
 
 ```bash
-mkcr init <slug> --format square
-mkcr preview <slug>
+cd /tmp
+/Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr init <slug> --format square
+/Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr preview <slug>
 ```
 
-Each slide is a numbered HTML file (`1.html`, `2.html`, etc.) with only inner content, styled with Tailwind CSS.
+Each slide is a numbered HTML file (`1.html`, `2.html`, etc.) inside `/tmp/<slug>/`, containing only inner content (no html/head/body tags), styled with Tailwind CSS and inline styles.
 
-Example slide:
+Load Google Fonts at the top of each slide:
 ```html
-<div class="w-full h-full flex flex-col items-center justify-center p-16" style="background:#080807">
-  <p class="text-sm mb-4" style="color:#C91F37; font-family:'JetBrains Mono',monospace">// davideimola.dev</p>
-  <h1 class="text-5xl font-bold text-center" style="color:#EAE5DF; font-family:'JetBrains Mono',monospace">Slide title</h1>
-  <p class="mt-6 text-lg text-center" style="color:#9A948E; font-family:'IBM Plex Sans',sans-serif">Supporting text</p>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap');
+</style>
+```
+
+### Brand colors
+| Token | Value | Usage |
+|-------|-------|-------|
+| Background | `#080807` | Slide background |
+| Card | `#0F0E0D` | Quote/callout boxes |
+| Accent red | `#C91F37` | `~` in brand, labels, borders, accents |
+| Primary text | `#EAE5DF` | Headlines, bold callouts |
+| Secondary text | `#9A948E` | Body copy, brand `/davideimola` part |
+| Muted | `#7E7874` | Footer labels, section tags |
+| Border | `#1C1A18` | Card borders |
+
+### Fonts
+- **JetBrains Mono** — brand label, section tags, footer, code-like elements, quote boxes
+- **IBM Plex Sans** — all headlines and body copy
+
+### Slide anatomy (every slide)
+
+Every slide uses the same three-zone layout:
+```html
+<div class="w-full h-full relative overflow-hidden" style="background:#080807">
+  <!-- optional: radial glow, positioned differently per slide for variety -->
+  <div class="absolute" style="...;background:radial-gradient(circle,rgba(201,31,55,0.08-0.12),transparent 55-60%);"></div>
+
+  <!-- decorative ❯ — bottom-right, all slides except the last -->
+  <div class="absolute" style="bottom:-80px;right:-40px;font-size:500px;color:rgba(201,31,55,0.06);line-height:1;font-weight:700;font-family:'JetBrains Mono',monospace">❯</div>
+
+  <div class="relative z-10 w-full h-full flex flex-col justify-between p-14">
+    <!-- TOP: brand + section tag -->
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700">
+        <span style="color:#C91F37">~</span><span style="color:#9A948E">/davideimola</span>
+      </p>
+      <!-- section tag: uppercase, #7E7874, letter-spacing 0.12em, font-size 13px -->
+      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7E7874;text-transform:uppercase;letter-spacing:0.12em">Section Name</p>
+    </div>
+
+    <!-- MIDDLE: headline + body -->
+    <div style="display:flex;flex-direction:column;gap:20-24px">
+      <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:72-90px;font-weight:700;color:#EAE5DF;line-height:0.95-1.0">Title</h2>
+      <p style="font-family:'IBM Plex Sans',sans-serif;font-size:24-26px;color:#9A948E;line-height:1.5">Body copy.</p>
+    </div>
+
+    <!-- BOTTOM: pagination -->
+    <div style="display:flex;justify-content:space-between">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">davideimola.dev</p>
+      <!-- all slides except last: muted with → -->
+      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">NN/total &nbsp;→</p>
+      <!-- last slide: number in accent red, no → -->
+      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#C91F37">total/total</p>
+    </div>
+  </div>
+</div>
+```
+
+### Design rules
+
+- **`~/davideimola` brand**: `~` always in `#C91F37`, `/davideimola` always in `#9A948E`. Only the tilde is red.
+- **Decorative `❯`**: present on all slides except the last. It signals "keep scrolling". Bottom-right, 500px, `rgba(201,31,55,0.06)`.
+- **`./` prefix**: use only for actual URL-like paths (`./davideimola.dev`, `./blog/post-slug`). Not as a decoration on every title.
+- **Titles**: IBM Plex Sans, 72-90px bold, `#EAE5DF`, line-height 0.95-1.0. Wrapping across 2 lines is fine; never break mid-word.
+- **Body copy**: 24-26px, `#9A948E` for regular, `#EAE5DF` bold for emphasis. 1-2 impactful sentences — not telegraphic, not verbose.
+- **Quote/callout box**: dark card `#0F0E0D`, border `1px solid #252220`, border-left `3px solid #C91F37`, border-radius 4px, padding `2rem 2.5rem`, `width:100%`. JetBrains Mono for quote text — makes it look like an AI/terminal response.
+- **Pivot slides** (for "start over" moments): centered layout — `align-items:center;text-align:center`. Visually distinct from the rest.
+- **Radial glow**: vary position (top-right, bottom-left, center) across slides for visual rhythm. Opacity 0.08-0.12.
+- **All text in English** — no Italian in slides, ever.
+- **No em-dashes** anywhere in slides.
+- **No dots at end of titles** unless the period is intentional as a stylistic beat (e.g., "Manual." "An accident." as standalone statements).
+
+### Quote box example
+```html
+<div style="background:#0F0E0D;border:1px solid #252220;border-left:3px solid #C91F37;border-radius:4px;padding:2rem 2.5rem;width:100%">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:28-32px;font-weight:700;color:#EAE5DF;line-height:1.4">Quote text here.</p>
 </div>
 ```
 
 After `mkcr preview`, ask for feedback on layout and visual balance. Iterate until approved, then:
 
 ```bash
-mkcr render <slug>
-# outputs <slug>/output.pdf — ready to upload to LinkedIn as a document post
+/Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
+# outputs /tmp/<slug>/<slug>.pdf — ready to upload to LinkedIn as a document post
 ```
+
+**After render**: commit the HTML slides to `.carousel/<slug>/` in the davideimola.dev repo. The PDF is in `.gitignore` — it's binary and regenerates in seconds.
+
+```bash
+mkdir -p /Users/davideimola/Development/davideimola/davideimola.dev/.carousel/<slug>
+cp /tmp/<slug>/*.html /Users/davideimola/Development/davideimola/davideimola.dev/.carousel/<slug>/
+```
+
+### LinkedIn post + carousel — algorithm note
+**Never put links in the LinkedIn post body.** LinkedIn suppresses reach for posts with links. Put the blog URL and any other links in the first comment instead. Mention in the post that the link is in the comments.
 
 ---
 
