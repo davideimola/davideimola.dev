@@ -23,14 +23,14 @@ export function Card({ children, className = "", href, hoverable = true }: CardP
   if (href) {
     return (
       <a href={href} className={`block no-underline ${classes}`}>
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10 h-full">{children}</div>
       </a>
     );
   }
 
   return (
     <div className={classes}>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 h-full">{children}</div>
     </div>
   );
 }

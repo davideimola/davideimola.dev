@@ -54,66 +54,65 @@ export default function ProjectsPage() {
           <ScrollReveal key={project.slug} delay={i * 80}>
             <Card className="h-full">
               <div className="flex flex-col gap-4 h-full">
-              {/* Status + period */}
-              <div className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}>
-                {project.status !== "active" && (
-                  <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
-                )}
-                <span className="font-mono text-[11px] text-text-3 shrink-0">{project.period}</span>
-              </div>
 
-              {/* Title & role & description */}
-              <div className="flex-1">
-                <div className="flex items-baseline gap-2 mb-3">
+                {/* TOP — period + optional badge */}
+                <div className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}>
+                  {project.status !== "active" && (
+                    <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
+                  )}
+                  <span className="font-mono text-[11px] text-text-3 shrink-0">{project.period}</span>
+                </div>
+
+                {/* TOP — title + role */}
+                <div className="flex items-baseline gap-2">
                   <h2 className="font-mono text-[17px] font-semibold text-text-1 group-hover:text-accent transition-colors duration-200">
                     {project.title}
                   </h2>
                   {project.role && (
-                    <span className="font-mono text-[11px] text-text-3">
-                      {"// "}
-                      {project.role}
-                    </span>
+                    <span className="font-mono text-[11px] text-text-3">// {project.role}</span>
                   )}
                 </div>
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed">
+
+                {/* MIDDLE — description (grows) */}
+                <p className="font-sans text-[14px] text-text-2 leading-relaxed flex-1">
                   {project.description}
                 </p>
-              </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="category">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              {/* Links */}
-              {(project.url || project.github) && (
-                <div className="flex items-center gap-4">
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                    >
-                      Website →
-                    </a>
-                  )}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                    >
-                      GitHub →
-                    </a>
-                  )}
+                {/* BOTTOM — tags */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <Badge key={tag} variant="category">
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
-              )}
+
+                {/* BOTTOM — links */}
+                {(project.url || project.github) && (
+                  <div className="flex items-center gap-4">
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                      >
+                        Website →
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                      >
+                        GitHub →
+                      </a>
+                    )}
+                  </div>
+                )}
+
               </div>
             </Card>
           </ScrollReveal>
