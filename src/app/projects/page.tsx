@@ -79,11 +79,11 @@ export default function ProjectsPage() {
                 </p>
 
                 {/* BOTTOM — tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-2 gap-y-1">
                   {project.tags.map((tag) => (
-                    <Badge key={tag} variant="category">
-                      {tag}
-                    </Badge>
+                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                      #{tag.toLowerCase()}
+                    </span>
                   ))}
                 </div>
 
@@ -133,11 +133,11 @@ export default function ProjectsPage() {
               <li className="py-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
                 <span className="font-mono text-[14px] text-text-1 w-36 shrink-0">{item.name}</span>
                 <span className="font-sans text-[13px] text-text-2 flex-1">{item.description}</span>
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex flex-wrap gap-x-2 gap-y-1 shrink-0">
                   {item.tags.map((tag) => (
-                    <Badge key={tag} variant="category">
-                      {tag}
-                    </Badge>
+                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                      #{tag.toLowerCase()}
+                    </span>
                   ))}
                 </div>
                 <div className="flex items-center gap-4 shrink-0">

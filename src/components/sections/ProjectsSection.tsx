@@ -1,5 +1,10 @@
 import { getFeaturedProjects } from "../../lib/content";
 import { Badge, Card, ScrollReveal, SectionHeader } from "../ui";
+import type { Project } from "../../lib/content";
+
+function statusVariant(status: Project["status"]): "coming-soon" | "category" {
+  return status === "coming-soon" ? "coming-soon" : "category";
+}
 
 export function ProjectsSection() {
   const projects = getFeaturedProjects();
@@ -15,24 +20,24 @@ export function ProjectsSection() {
           {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
               <Card href={project.url ?? `/projects/${project.slug}`} className="h-full">
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <Badge variant={project.status === "coming-soon" ? "coming-soon" : "active"}>
-                    {project.status === "coming-soon"
-                      ? "Coming soon"
-                      : `${project.tags[0]} · Active`}
-                  </Badge>
-                </div>
+                {project.status !== "active" && (
+                  <div className="mb-3">
+                    <Badge variant={statusVariant(project.status)}>
+                      {project.status === "coming-soon" ? "Coming soon" : "Archived"}
+                    </Badge>
+                  </div>
+                )}
                 <h3 className="font-mono text-[16px] font-semibold text-text-1 mb-2">
                   {project.title}
                 </h3>
                 <p className="font-sans text-[13px] text-text-2 leading-relaxed mb-4">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="flex flex-wrap gap-x-2 gap-y-1 mt-auto">
                   {project.tags.map((tag) => (
-                    <Badge key={tag} variant="category">
-                      {tag}
-                    </Badge>
+                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                      #{tag.toLowerCase()}
+                    </span>
                   ))}
                 </div>
               </Card>

@@ -112,6 +112,7 @@ Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Use Tailwind utility classes directly — avoid custom CSS unless absolutely necessary
 - Prefer `font-mono` for anything that looks like UI/terminal text
 - Akane Red (`text-accent`, `bg-accent`) is for accents only: hover states, active badges, decorative elements, `//` prefixes. Never use as a background fill for large areas
+- **Tags vs categories**: tags (`post.tags`, `project.tags`, `talk.tags`) are always rendered as `#xxx` in `font-mono text-[11px] text-text-3`. Badge pills are reserved for categories, status labels (Featured, Coming soon), and type classifications (Conference, Meetup). Never use Badge pills for tags.
 - Dot grid background: defined in `globals.css` as `body::before`. Use `.dot-grid` utility class for other elements
 - Card hover glow: `after:bg-accent-glow after:opacity-0 hover:after:opacity-100` pattern
 

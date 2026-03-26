@@ -289,11 +289,11 @@ export default function SpeakingPage() {
 
                         {/* Tags + links */}
                         <div className="flex flex-wrap items-center justify-between gap-3">
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-x-2 gap-y-1">
                             {talk.tags.map((tag) => (
-                              <Badge key={tag} variant="category">
-                                {tag}
-                              </Badge>
+                              <span key={tag} className="font-mono text-[11px] text-text-3">
+                                #{tag.toLowerCase()}
+                              </span>
                             ))}
                           </div>
                           {hasMedia && (

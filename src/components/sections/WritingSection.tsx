@@ -1,5 +1,5 @@
 import { getRecentPosts } from "../../lib/content";
-import { Badge, Card, ScrollReveal, SectionHeader } from "../ui";
+import { Card, ScrollReveal, SectionHeader } from "../ui";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -24,11 +24,11 @@ export function WritingSection() {
           {featured && (
             <ScrollReveal>
               <Card href={`/blog/${featured.slug}`} className="w-full">
-                <div className="flex flex-wrap items-center gap-2 mb-3">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
                   {featured.tags.map((tag) => (
-                    <Badge key={tag} variant="category">
-                      {tag}
-                    </Badge>
+                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                      #{tag.toLowerCase()}
+                    </span>
                   ))}
                 </div>
                 <h3 className="font-mono text-[18px] font-semibold text-text-1 mb-2 leading-snug">
@@ -49,11 +49,11 @@ export function WritingSection() {
             {rest.map((post, i) => (
               <ScrollReveal key={post.slug} delay={i * 80}>
                 <Card href={`/blog/${post.slug}`} className="h-full">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
                     {post.tags.slice(0, 2).map((tag) => (
-                      <Badge key={tag} variant="category">
-                        {tag}
-                      </Badge>
+                      <span key={tag} className="font-mono text-[11px] text-text-3">
+                        #{tag.toLowerCase()}
+                      </span>
                     ))}
                   </div>
                   <h3 className="font-mono text-[15px] font-semibold text-text-1 mb-2 leading-snug">
