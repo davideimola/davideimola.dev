@@ -90,12 +90,15 @@ export function TalksList({ talks }: TalksListProps) {
                           {talk.title}
                         </h2>
 
-                        {/* Role · type · co-speaker */}
+                        {/* Type · role (if not Speaker) · co-speaker */}
                         <div className="flex flex-wrap items-center gap-3">
-                          <Badge variant={talk.role === "Speaker" ? "category" : "active"}>
-                            {talk.role}
-                          </Badge>
                           <Badge variant="category">{talk.type}</Badge>
+                          {talk.role !== "Speaker" && (
+                            <span className="font-mono text-[11px] text-text-3">
+                              <span className="text-accent">// </span>
+                              {talk.role}
+                            </span>
+                          )}
                           {talk.coSpeaker && (
                             <span className="font-mono text-[11px] text-text-3">
                               w/ {talk.coSpeaker}
