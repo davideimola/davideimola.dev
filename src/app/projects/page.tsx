@@ -52,7 +52,8 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {projects.map((project, i) => (
           <ScrollReveal key={project.slug} delay={i * 80}>
-            <Card className="h-full flex flex-col gap-8 p-8!">
+            <Card className="h-full p-8!">
+              <div className="flex flex-col gap-6 h-full">
               {/* Status + period */}
               <div className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}>
                 {project.status !== "active" && (
@@ -113,6 +114,7 @@ export default function ProjectsPage() {
                   )}
                 </div>
               )}
+              </div>
             </Card>
           </ScrollReveal>
         ))}
