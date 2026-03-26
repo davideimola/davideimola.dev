@@ -94,6 +94,16 @@ cd /tmp
 
 Each slide is a numbered HTML file (`1.html`, `2.html`, etc.) inside `/tmp/<slug>/`, containing only inner content (no html/head/body tags), styled with Tailwind CSS and inline styles.
 
+**carousel.json** is required by mkcr and must be present alongside the slides:
+```json
+{
+  "name": "<slug>",
+  "width": 1080,
+  "height": 1080
+}
+```
+Always commit `carousel.json` to `.carousel/<slug>/` together with the HTML slides.
+
 Load Google Fonts at the top of each slide:
 ```html
 <style>
@@ -176,18 +186,26 @@ Every slide uses the same three-zone layout:
 </div>
 ```
 
-After `mkcr preview`, ask for feedback on layout and visual balance. Iterate until approved, then:
+After `mkcr preview`, ask for feedback on layout and visual balance. Iterate until approved, then render directly into the `.carousel` folder (the PDF is in `.gitignore` so it won't be committed):
 
 ```bash
+CAROUSEL=/Users/davideimola/Development/davideimola/davideimola.dev/.carousel
+cd "$CAROUSEL"
 /Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
-# outputs /tmp/<slug>/<slug>.pdf — ready to upload to LinkedIn as a document post
+# outputs .carousel/<slug>/<slug>.pdf — ready to upload to LinkedIn as a document post
 ```
 
-**After render**: commit the HTML slides to `.carousel/<slug>/` in the davideimola.dev repo. The PDF is in `.gitignore` — it's binary and regenerates in seconds.
+**After render**: commit the HTML slides and `carousel.json` to `.carousel/<slug>/` in the davideimola.dev repo. The PDF stays local (`.gitignore`) and regenerates in seconds from the committed sources.
 
 ```bash
 mkdir -p /Users/davideimola/Development/davideimola/davideimola.dev/.carousel/<slug>
-cp /tmp/<slug>/*.html /Users/davideimola/Development/davideimola/davideimola.dev/.carousel/<slug>/
+cp /tmp/<slug>/*.html /tmp/<slug>/carousel.json /Users/davideimola/Development/davideimola/davideimola.dev/.carousel/<slug>/
+```
+
+To re-render from committed sources in the future:
+```bash
+cd /Users/davideimola/Development/davideimola/davideimola.dev/.carousel
+/Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
 ```
 
 ### LinkedIn post + carousel — algorithm note
