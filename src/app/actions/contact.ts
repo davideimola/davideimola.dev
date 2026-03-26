@@ -13,6 +13,12 @@ export async function sendContactEmail(
   _prev: ContactState,
   formData: FormData
 ): Promise<ContactState> {
+  // Honeypot: bots fill this, humans don't
+  const honeypot = formData.get("website")?.toString();
+  if (honeypot) {
+    return { status: "success" };
+  }
+
   const name = formData.get("name")?.toString().trim();
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
@@ -28,6 +34,12 @@ export async function sendContactEmail(
 
   if (message.length < 10) {
     return { status: "error", message: "Message must be at least 10 characters." };
+  }
+
+  // Reject messages with 3+ URLs — classic spam pattern
+  const urlCount = (message.match(/https?:\/\//gi) ?? []).length;
+  if (urlCount >= 3) {
+    return { status: "success" };
   }
 
   try {
