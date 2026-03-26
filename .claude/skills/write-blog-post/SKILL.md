@@ -64,11 +64,17 @@ Propose:
 - **Estimated length** — infer from the content: complex technical post with code examples = longer (8-12 min read), opinion/reflection = shorter (2-4 min read). Propose it and explain why.
 - **Sections** — list each section with a one-line description of what it covers.
 
+**Tags consistency check**: before proposing tags, scan existing posts in `src/content/blog/` and use tags that already exist where they fit. Only invent new tags when truly necessary. Consistent tags power the related posts algorithm.
+
+**Internal linking**: scan existing posts and identify 1-3 that are genuinely relevant to link from within the new post. Mention them in the structure proposal so Davide can confirm they're worth linking.
+
 Be genuinely critical of your own proposal. If a section feels like filler, cut it. If the structure looks like every other blog post on the internet, say so and rethink it.
 
 This is a discussion, not a handoff. The user may push back, suggest different sections, or want to reorder things. Engage with their feedback — don't just accept every change, argue for the ones you believe in.
 
-Once structure is approved, update the GitHub issue with it (if one exists).
+Once structure is approved:
+- Update the GitHub issue with it (if one exists)
+- Create a branch: `git checkout -b blog/<slug>` — the post will live here until the PR is opened
 
 ---
 
@@ -96,6 +102,7 @@ heroImageAlt: ""
 - `publishDate`: today's date
 - `heroImage`: leave empty — you'll handle images in Step 5
 - `featured`: always `false` by default
+- `draft: true`: always set this while working — it prevents the post from going live before the PR is merged and reviewed. Remove it in the pre-PR checklist (Step 6).
 
 **Heading hierarchy:** Never use `#` (h1). Always start from `##`. The page template already renders the title as h1.
 
@@ -152,7 +159,24 @@ Don't just ask "does this look good?" Ask specifically: "What would you change? 
 
 Then give your own take first: point out what you think works, what feels weaker, and where the post sounds less like him. If you spot AI patterns you accidentally introduced, name them and suggest fixes.
 
-This is bidirectional. Iterate until Davide is happy. Update the GitHub issue when the post is done.
+This is bidirectional. Iterate until Davide is happy.
+
+Once the post is approved, run the pre-PR checklist before opening the PR:
+- [ ] `heroImage` is not empty (or Davide has explicitly decided to skip it)
+- [ ] No `TODO` comments left in the MDX
+- [ ] No `#` h1 headings in content
+- [ ] `draft: true` removed from frontmatter
+- [ ] `readTime` calculated and set
+
+Then commit, push the branch, and open the PR:
+```bash
+git add src/content/blog/<slug>.mdx
+git commit -m "feat(blog): add post '<title>'"
+git push -u origin blog/<slug>
+gh pr create --title "<post title>" --body "closes #<issue-number>\n\n<one-line summary of the post>"
+```
+
+Update the GitHub issue with the PR link when done.
 
 ---
 

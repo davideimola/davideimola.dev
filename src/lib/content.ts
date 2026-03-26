@@ -14,6 +14,7 @@ export interface BlogPost {
   date: string; // mapped from publishDate
   readingTime: string;
   featured: boolean;
+  draft?: boolean;
   heroImage?: string;
   heroImageAlt?: string;
   content: string;
@@ -109,6 +110,7 @@ function parsePost(slug: string): BlogPost {
     date: data.publishDate,
     readingTime: rt.text,
     featured: data.featured ?? false,
+    draft: data.draft ?? false,
     heroImage: data.heroImage,
     heroImageAlt: data.heroImageAlt,
     content,
@@ -120,13 +122,16 @@ export function getAllPosts(): BlogPost[] {
     .readdirSync(BLOG_DIR)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => parsePost(f.replace(".mdx", "")))
+    .filter((p) => !p.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
-  return parsePost(slug);
+  const post = parsePost(slug);
+  if (post.draft) return null;
+  return post;
 }
 
 export function getRecentPosts(count = 3): BlogPost[] {

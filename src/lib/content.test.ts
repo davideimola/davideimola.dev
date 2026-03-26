@@ -2,7 +2,9 @@ import fs from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   extractToc,
+  getAllPosts,
   getAllProjects,
+  getPostBySlug,
   getRelatedPosts,
   getPrevNextPosts,
   getRecentPosts,
@@ -27,6 +29,7 @@ function mdx(fields: {
   category: string;
   tags: string[];
   featured?: boolean;
+  draft?: boolean;
 }): string {
   return [
     "---",
@@ -35,6 +38,7 @@ function mdx(fields: {
     `category: "${fields.category}"`,
     `tags: [${fields.tags.map((t) => `"${t}"`).join(", ")}]`,
     `featured: ${fields.featured ?? false}`,
+    ...(fields.draft !== undefined ? [`draft: ${fields.draft}`] : []),
     "---",
     "",
     "Post content.",
@@ -187,6 +191,52 @@ describe("getRecentPosts", () => {
 
   it("defaults to 3 posts", () => {
     expect(getRecentPosts()).toHaveLength(3);
+  });
+});
+
+// ── draft filtering ────────────────────────────────────────────────────────
+
+describe("draft post filtering", () => {
+  it("getAllPosts excludes posts with draft: true", () => {
+    const draftPost = mdx({
+      title: "Draft Post",
+      publishDate: "2024-04-01",
+      category: "Engineering",
+      tags: [],
+      draft: true,
+    });
+    mockFs.readdirSync.mockReturnValue(["post-a.mdx", "draft.mdx"] as never);
+    mockFs.readFileSync.mockImplementation((filePath: unknown) => {
+      const p = String(filePath);
+      if (p.includes("post-a")) return POST_A;
+      if (p.includes("draft")) return draftPost;
+      return "";
+    });
+
+    const posts = getAllPosts();
+    expect(posts.every((p) => p.slug !== "draft")).toBe(true);
+    expect(posts).toHaveLength(1);
+  });
+
+  it("getPostBySlug returns null for a draft post", () => {
+    const draftPost = mdx({
+      title: "Draft Post",
+      publishDate: "2024-04-01",
+      category: "Engineering",
+      tags: [],
+      draft: true,
+    });
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(draftPost);
+
+    expect(getPostBySlug("draft-post")).toBeNull();
+  });
+
+  it("getPostBySlug returns the post when draft is false", () => {
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(POST_A);
+
+    expect(getPostBySlug("post-a")).not.toBeNull();
   });
 });
 
