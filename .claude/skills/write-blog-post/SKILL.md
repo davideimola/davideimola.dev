@@ -27,9 +27,7 @@ Examples:
 Check the arguments:
 
 - **Issue provided** → run `gh issue view <number>` (or fetch the URL) and read it. Use the issue as the foundation — title, description, any notes already there.
-- **No issue** → ask: "Esiste già una GitHub issue per questo post? Se sì, dammi il numero. Se no, vuoi che ne crei una?"
-  - If user says yes → create it with `gh issue create --title "<working title>" --body "<brief description>"` and update it throughout the process.
-  - If user says no → proceed without it.
+- **No issue** → ask: "Esiste già una GitHub issue per questo post? Se sì, dammi il numero." If the user has one, use it. If not, create one immediately: `gh issue create --title "<working title>" --body "<brief description>"`. Every post gets an issue — no exceptions.
 
 Combine the issue content + any free context the user passed. This is your starting point for the interview.
 
