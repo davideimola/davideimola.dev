@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { TalksList } from "../../components/sections/TalksList";
 import { Badge } from "../../components/ui/Badge";
 import { CopyButton } from "../../components/ui/CopyButton";
 import { JsonLd } from "../../components/ui/JsonLd";
@@ -33,21 +35,14 @@ const SHORT_BIO =
 const LONG_BIO =
   "Davide Imola is a Tech Lead at RedCarbon, where he leads the engineering team building an AI-powered cybersecurity platform. He is co-founder of Schrodinger Hat, an international open source community that has reached 20k+ people across Europe, and co-organizer of Open Source Day, a yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GOLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on Go, GitOps, platform engineering, security, and building open source communities.\n\nHe believes that sharing knowledge in public — through talks, writing, and open source contributions — is one of the highest-leverage activities an engineer can do.";
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-}
-
 export default function SpeakingPage() {
-  const talks = getAllTalks();
+  const allTalks = getAllTalks();
 
   const talksSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Speaking Engagements — Davide Imola",
-    itemListElement: talks.map((talk, i) => ({
+    itemListElement: allTalks.map((talk, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
@@ -73,13 +68,6 @@ export default function SpeakingPage() {
       },
     })),
   };
-
-  const byYear = talks.reduce<Record<string, typeof talks>>((acc, talk) => {
-    const year = new Date(talk.date).getFullYear().toString();
-    (acc[year] ??= []).push(talk);
-    return acc;
-  }, {});
-  const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
@@ -234,102 +222,10 @@ export default function SpeakingPage() {
         </div>
       </section>
 
-      {/* Talks by year */}
-      <ScrollReveal>
-        <SectionHeader title="Talks" className="border-t border-border pt-10" />
-      </ScrollReveal>
-      <div className="flex flex-col gap-12">
-        {years.map((year) => (
-          <section key={year}>
-            <ScrollReveal>
-              <SectionHeader title={year} variant="subsection" />
-            </ScrollReveal>
-            <ul className="flex flex-col divide-y divide-border">
-              {byYear[year].map((talk, i) => {
-                const hasMedia = !!(talk.slides || talk.video);
-                return (
-                  <ScrollReveal key={talk.slug} delay={i * 60}>
-                    <li id={talk.slug}>
-                      <div className="py-6 flex flex-col gap-4">
-                        {/* Top row: date · event · location */}
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                          <span className="font-mono text-[11px] text-text-3">
-                            {formatDate(talk.date)}
-                          </span>
-                          <span className="font-mono text-[11px] text-accent">{talk.event}</span>
-                          <span className="font-mono text-[11px] text-text-3">{talk.location}</span>
-                          {hasMedia && (
-                            <span className="font-mono text-[10px] text-text-3 border border-border rounded-[2px] px-1.5 py-0.5">
-                              {talk.video && talk.slides
-                                ? "video + slides"
-                                : talk.video
-                                  ? "video"
-                                  : "slides"}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Title */}
-                        <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug">
-                          {talk.title}
-                        </h2>
-
-                        {/* Role · type · co-speaker */}
-                        <div className="flex flex-wrap items-center gap-3">
-                          <Badge variant={talk.role === "Speaker" ? "category" : "active"}>
-                            {talk.role}
-                          </Badge>
-                          <Badge variant="category">{talk.type}</Badge>
-                          {talk.coSpeaker && (
-                            <span className="font-mono text-[11px] text-text-3">
-                              w/ {talk.coSpeaker}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Tags + links */}
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                          <div className="flex flex-wrap gap-x-2 gap-y-1">
-                            {talk.tags.map((tag) => (
-                              <span key={tag} className="font-mono text-[11px] text-text-3">
-                                #{tag.toLowerCase()}
-                              </span>
-                            ))}
-                          </div>
-                          {hasMedia && (
-                            <div className="flex items-center gap-4">
-                              {talk.slides && (
-                                <a
-                                  href={talk.slides}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                                >
-                                  Slides →
-                                </a>
-                              )}
-                              {talk.video && (
-                                <a
-                                  href={talk.video}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                                >
-                                  Video →
-                                </a>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                  </ScrollReveal>
-                );
-              })}
-            </ul>
-          </section>
-        ))}
-      </div>
+      {/* Talks */}
+      <Suspense>
+        <TalksList talks={allTalks} />
+      </Suspense>
 
       {/* CTA */}
       <ScrollReveal>

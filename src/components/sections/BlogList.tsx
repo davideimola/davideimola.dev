@@ -1,5 +1,9 @@
-import { ScrollReveal } from "../ui/ScrollReveal";
+"use client";
+
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { BlogPost } from "../../lib/content";
+import { ScrollReveal } from "../ui/ScrollReveal";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -11,11 +15,19 @@ function formatDate(dateStr: string): string {
 
 interface BlogListProps {
   posts: BlogPost[];
-  activeTag?: string;
-  activeCategory?: string;
 }
 
-export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
+export function BlogList({ posts }: BlogListProps) {
+  const searchParams = useSearchParams();
+  const activeTag = searchParams.get("tag") ?? undefined;
+  const activeCategory = searchParams.get("category") ?? undefined;
+
+  const filtered = posts.filter((p) => {
+    if (activeTag) return p.tags.map((t) => t.toLowerCase()).includes(activeTag.toLowerCase());
+    if (activeCategory) return p.category.toLowerCase() === activeCategory.toLowerCase();
+    return true;
+  });
+
   const hasFilter = !!(activeTag || activeCategory);
   const filterLabel = activeTag ? `#${activeTag}` : activeCategory;
 
@@ -27,26 +39,28 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
           <span className="text-accent">❯</span>
           <span className="text-text-3">grep --tag</span>
           <span className="text-accent">{filterLabel}</span>
-          <a
+          <Link
             href="/blog"
+            scroll={false}
             className="text-text-3 hover:text-accent transition-colors duration-150 ml-1"
             aria-label="Clear filter"
           >
             ×
-          </a>
+          </Link>
         </div>
       )}
 
       {/* Post list */}
-      {posts.length > 0 ? (
+      {filtered.length > 0 ? (
         <ul className="flex flex-col divide-y divide-border">
-          {posts.map((post, i) => (
+          {filtered.map((post, i) => (
             <ScrollReveal key={post.slug} delay={i * 40}>
               <li className="py-6 flex flex-col gap-3">
                 {/* Category + featured */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <a
+                  <Link
                     href={`/blog?category=${encodeURIComponent(post.category)}`}
+                    scroll={false}
                     className={[
                       "font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 transition-colors duration-150",
                       activeCategory === post.category
@@ -55,7 +69,7 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
                     ].join(" ")}
                   >
                     {post.category}
-                  </a>
+                  </Link>
                   {post.featured && (
                     <span className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border">
                       Featured
@@ -64,10 +78,7 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
                 </div>
 
                 {/* Title + excerpt */}
-                <a
-                  href={`/blog/${post.slug}`}
-                  className="group block no-underline"
-                >
+                <a href={`/blog/${post.slug}`} className="group block no-underline">
                   <h2 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug mb-2 group-hover:text-accent transition-colors duration-150">
                     {post.title}
                   </h2>
@@ -83,9 +94,10 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
                   </p>
                   <div className="flex flex-wrap gap-x-2 gap-y-1">
                     {post.tags.map((tag) => (
-                      <a
+                      <Link
                         key={tag}
                         href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+                        scroll={false}
                         className={[
                           "font-mono text-[11px] transition-colors duration-150",
                           activeTag === tag.toLowerCase()
@@ -94,7 +106,7 @@ export function BlogList({ posts, activeTag, activeCategory }: BlogListProps) {
                         ].join(" ")}
                       >
                         #{tag.toLowerCase()}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

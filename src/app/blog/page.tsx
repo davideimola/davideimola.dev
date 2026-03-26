@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { BlogList } from "../../components/sections/BlogList";
 import { PageHero } from "../../components/ui/PageHero";
 import { getAllPosts } from "../../lib/content";
@@ -17,19 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-interface PageProps {
-  searchParams: Promise<{ tag?: string; category?: string }>;
-}
-
-export default async function BlogPage({ searchParams }: PageProps) {
-  const { tag, category } = await searchParams;
+export default function BlogPage() {
   const allPosts = getAllPosts();
-
-  const posts = allPosts.filter((p) => {
-    if (tag) return p.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase());
-    if (category) return p.category.toLowerCase() === category.toLowerCase();
-    return true;
-  });
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
@@ -38,7 +28,9 @@ export default async function BlogPage({ searchParams }: PageProps) {
         title="Writing"
         description={`${allPosts.length} articles on engineering, platform thinking, Go, and security.`}
       />
-      <BlogList posts={posts} activeTag={tag} activeCategory={category} />
+      <Suspense>
+        <BlogList posts={allPosts} />
+      </Suspense>
     </div>
   );
 }

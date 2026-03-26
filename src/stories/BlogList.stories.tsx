@@ -55,19 +55,28 @@ const mockPosts = [
 
 export const Default: Story = {
   args: { posts: mockPosts },
+  parameters: {
+    nextjs: { navigation: { searchParams: {} } },
+  },
 };
 
 export const FilteredByTag: Story = {
-  args: { posts: mockPosts.slice(0, 2), activeTag: "security" },
+  args: { posts: mockPosts },
+  parameters: {
+    nextjs: { navigation: { searchParams: { tag: "security" } } },
+  },
 };
 
 export const FilteredByCategory: Story = {
-  args: {
-    posts: mockPosts.filter((p) => p.category === "Technical"),
-    activeCategory: "Technical",
+  args: { posts: mockPosts },
+  parameters: {
+    nextjs: { navigation: { searchParams: { category: "Technical" } } },
   },
 };
 
 export const NoResults: Story = {
-  args: { posts: [], activeTag: "typescript" },
+  args: { posts: mockPosts },
+  parameters: {
+    nextjs: { navigation: { searchParams: { tag: "typescript" } } },
+  },
 };
