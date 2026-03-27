@@ -39,7 +39,7 @@ export function ContactForm() {
   return (
     <form action={action} className="flex flex-col gap-5">
       {/* Honeypot — hidden from humans, filled by bots */}
-      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none", tabIndex: -1 }}>
+      <div aria-hidden="true" tabIndex={-1} style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
         <label htmlFor="website">Website</label>
         <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>

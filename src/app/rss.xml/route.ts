@@ -29,6 +29,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.excerpt)}</description>
+      <content:encoded><![CDATA[${post.content}]]></content:encoded>
       <pubDate>${pubDate}</pubDate>
       <author>noreply@davideimola.dev (${AUTHOR})</author>
       ${tags}
@@ -37,7 +38,7 @@ export async function GET() {
     .join("");
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>${AUTHOR}</title>
     <link>${BASE_URL}</link>
