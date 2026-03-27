@@ -118,19 +118,21 @@ function parsePost(slug: string): BlogPost {
 }
 
 export function getAllPosts(): BlogPost[] {
+  const isDev = process.env.NODE_ENV === "development";
   return fs
     .readdirSync(BLOG_DIR)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => parsePost(f.replace(".mdx", "")))
-    .filter((p) => !p.draft)
+    .filter((p) => isDev || !p.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
+  const isDev = process.env.NODE_ENV === "development";
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
   const post = parsePost(slug);
-  if (post.draft) return null;
+  if (!isDev && post.draft) return null;
   return post;
 }
 

@@ -31,6 +31,13 @@ Check the arguments:
 
 Combine the issue content + any free context the user passed. This is your starting point for the interview.
 
+**Editorial conflict check**: before starting the interview, scan all open blog-related GitHub issues (`gh issue list --label blog`) AND existing posts in `src/content/blog/`. Check for:
+- Overlap: does another issue or existing post already cover this topic or a key insight?
+- Scope creep: is the planned post trying to cover too much ground? If so, suggest splitting into multiple posts and flag which parts belong where.
+- Series continuity: if the post is part of a series, read the adjacent issues to understand what each post covers and where the boundaries are.
+
+Flag any conflicts or scope issues to the user before proceeding. This is editorial work — your job is to help Davide not accidentally write the same post twice or cram three posts into one.
+
 ---
 
 ## Step 2 — Interview (one question at a time)
@@ -149,6 +156,14 @@ After writing the post, suggest images for the hero and relevant inline spots.
 
 If you're unsure whether the user has a photo for something, ask before suggesting AI-generated — but only when it's genuinely ambiguous.
 
+**Image optimization**: once the user has placed their images in `public/images/blog/<slug>/`, run:
+
+```bash
+pnpm optimize-images public/images/blog/<slug>/ --clean
+```
+
+This converts all JPEG/PNG to WebP (85% quality, max 1600px wide) and removes the originals. Update any image references in the MDX from `.jpg`/`.jpeg`/`.png` to `.webp` after running it.
+
 ---
 
 ## Step 6 — Revision loop
@@ -182,68 +197,13 @@ Update the GitHub issue with the PR link when done.
 
 Once the post is approved, offer to create promotion content for BlueSky and LinkedIn.
 
-### BlueSky
+Hand off to the `/social-post` skill, passing the GitHub issue number and blog slug:
 
-Write a short post — max 300 characters. Casual, direct, sounds like a person. Include the blog post URL (use `https://davideimola.dev/blog/[slug]`). No hashtag spam — one or two at most if they add value, otherwise none.
-
-Bad: "Excited to share my latest blog post! In this article I explore how..."
-Good: "I spent the last week thinking about why Git mastery is overrated. Here's what I actually think matters. davideimola.dev/blog/..."
-
-### LinkedIn
-
-Write a long-form post. Structure:
-1. **Hook** — first line is what stops the scroll. A counterintuitive statement, a specific problem, or a direct opinion. No "I'm excited to share..."
-2. **Body** — 3-5 short paragraphs expanding on the main idea. Real experiences, specific details.
-3. **CTA** — end with a question or invitation to read the full post. Link to the blog.
-
-Use line breaks generously — LinkedIn renders them well and short paragraphs perform better.
-
-### LinkedIn carousel (optional but recommended for the right content)
-
-Carousels work well for: step-by-step processes, numbered insights, before/after comparisons, "X things I learned" formats. They don't add value for personal reflections or posts that are primarily narrative.
-
-**Assess fit first**: tell the user whether you think a carousel makes sense for this post and why. If yes, propose a slide structure (title slide + content slides + CTA slide) before building it.
-
-**Building the carousel with mkcr:**
-
-The tool is already installed. Use this workflow:
-
-```bash
-# Initialize the project
-mkcr init <post-slug> --format square
-
-# Preview (opens browser with live reload)
-mkcr preview <post-slug>
-
-# Render to PDF when approved (LinkedIn uses PDF for carousels)
-mkcr render <post-slug>
+```
+/social-post <issue-number>
 ```
 
-**Slide HTML format** — each slide is a numbered file (`1.html`, `2.html`, etc.) containing only inner content (no html/head/body tags), styled with Tailwind CSS classes.
-
-**Brand colors to use** (from davideimola.dev design system):
-- Background: `#080807` (dark)
-- Card background: `#0F0E0D`
-- Accent red: `#C91F37`
-- Primary text: `#EAE5DF`
-- Secondary text: `#9A948E`
-- Border: `#1C1A18`
-
-**Fonts**: use JetBrains Mono for headings/labels, IBM Plex Sans for body. Load via Google Fonts in a `<style>` tag inside the slide HTML if needed.
-
-**Example slide structure:**
-```html
-<!-- 1.html — title slide -->
-<div class="w-full h-full flex flex-col items-center justify-center p-16" style="background:#080807">
-  <p class="font-mono text-sm mb-4" style="color:#C91F37">// davideimola.dev</p>
-  <h1 class="font-mono text-5xl font-bold text-center" style="color:#EAE5DF">Your Post Title</h1>
-  <p class="mt-6 text-lg text-center" style="color:#9A948E; font-family:'IBM Plex Sans',sans-serif">A one-line hook</p>
-</div>
-```
-
-**Iteration loop**: after `mkcr preview`, ask for feedback on the slides — layout, content, visual balance. Revise the HTML files and re-preview until approved. Only run `mkcr render` when Davide explicitly says it looks good.
-
-Output PDF is at `<post-slug>/output.pdf` — ready to upload to LinkedIn as a document post.
+The `social-post` skill handles everything: BlueSky, LinkedIn long-form, LinkedIn carousel with mkcr, validation loop, and saving the final content as a comment on the GitHub issue. Do not duplicate that logic here.
 
 ---
 
