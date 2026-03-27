@@ -196,7 +196,15 @@ describe("getRecentPosts", () => {
 
 // ── draft filtering ────────────────────────────────────────────────────────
 
-describe("draft post filtering", () => {
+describe("draft post filtering (production)", () => {
+  beforeEach(() => {
+    vi.stubEnv("NODE_ENV", "production");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("getAllPosts excludes posts with draft: true", () => {
     const draftPost = mdx({
       title: "Draft Post",
@@ -237,6 +245,51 @@ describe("draft post filtering", () => {
     mockFs.readFileSync.mockReturnValue(POST_A);
 
     expect(getPostBySlug("post-a")).not.toBeNull();
+  });
+});
+
+describe("draft post filtering (development)", () => {
+  beforeEach(() => {
+    vi.stubEnv("NODE_ENV", "development");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("getAllPosts includes draft posts in development", () => {
+    const draftPost = mdx({
+      title: "Draft Post",
+      publishDate: "2024-04-01",
+      category: "Engineering",
+      tags: [],
+      draft: true,
+    });
+    mockFs.readdirSync.mockReturnValue(["post-a.mdx", "draft.mdx"] as never);
+    mockFs.readFileSync.mockImplementation((filePath: unknown) => {
+      const p = String(filePath);
+      if (p.includes("post-a")) return POST_A;
+      if (p.includes("draft")) return draftPost;
+      return "";
+    });
+
+    const posts = getAllPosts();
+    expect(posts.some((p) => p.slug === "draft")).toBe(true);
+    expect(posts).toHaveLength(2);
+  });
+
+  it("getPostBySlug returns draft posts in development", () => {
+    const draftPost = mdx({
+      title: "Draft Post",
+      publishDate: "2024-04-01",
+      category: "Engineering",
+      tags: [],
+      draft: true,
+    });
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(draftPost);
+
+    expect(getPostBySlug("draft-post")).not.toBeNull();
   });
 });
 
