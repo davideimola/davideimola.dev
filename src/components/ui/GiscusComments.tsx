@@ -8,6 +8,9 @@ import Giscus from "@giscus/react";
 const REPO_ID = process.env.NEXT_PUBLIC_GISCUS_REPO_ID ?? "";
 const CATEGORY_ID = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID ?? "";
 
+// Custom theme CSS served from the same origin — works in both dev and prod.
+const CUSTOM_THEME = `${typeof window !== "undefined" ? window.location.origin : "https://davideimola.dev"}/giscus-theme.css`;
+
 export function GiscusComments() {
   if (!REPO_ID || !CATEGORY_ID) return null;
 
@@ -23,7 +26,7 @@ export function GiscusComments() {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme="dark"
+        theme={CUSTOM_THEME}
         lang="en"
         loading="lazy"
       />

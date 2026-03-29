@@ -1,0 +1,395 @@
+/*
+ * Custom Giscus theme for davideimola.dev
+ * Dark terminal aesthetic — Akane Red (#C91F37) accents, JetBrains Mono UI
+ */
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --color-canvas-default:        #0f0e0d;
+  --color-canvas-subtle:         #141311;
+  --color-canvas-inset:          #080807;
+  --color-canvas-overlay:        #141311;
+
+  --color-border-default:        #252220;
+  --color-border-muted:          #1c1a18;
+
+  --color-fg-default:            #eae5df;
+  --color-fg-muted:              #9a948e;
+  --color-fg-subtle:             #7e7874;
+  --color-fg-on-emphasis:        #eae5df;
+
+  --color-accent-fg:             #c91f37;
+  --color-accent-emphasis:       #c91f37;
+  --color-accent-muted:          rgba(201, 31, 55, 0.12);
+  --color-accent-subtle:         rgba(201, 31, 55, 0.08);
+
+  /* Buttons — default */
+  --color-btn-text:              #eae5df;
+  --color-btn-bg:                #141311;
+  --color-btn-border:            #252220;
+  --color-btn-hover-bg:          #1c1a18;
+  --color-btn-hover-border:      rgba(201, 31, 55, 0.3);
+  --color-btn-active-bg:         #252220;
+  --color-btn-active-border:     rgba(201, 31, 55, 0.3);
+  --color-btn-shadow:            none;
+  --color-btn-inset-shadow:      none;
+  --color-btn-focused-shadow:    0 0 0 2px rgba(201, 31, 55, 0.25);
+
+  /* Buttons — primary */
+  --color-btn-primary-text:              #eae5df;
+  --color-btn-primary-bg:                #c91f37;
+  --color-btn-primary-border:            #c91f37;
+  --color-btn-primary-hover-bg:          #a8192e;
+  --color-btn-primary-hover-border:      #a8192e;
+  --color-btn-primary-selected-bg:       #a8192e;
+  --color-btn-primary-disabled-text:     rgba(234, 229, 223, 0.4);
+  --color-btn-primary-disabled-bg:       rgba(201, 31, 55, 0.4);
+  --color-btn-primary-disabled-border:   rgba(201, 31, 55, 0.4);
+  --color-btn-primary-focused-border:    #c91f37;
+  --color-btn-primary-icon:              #eae5df;
+  --color-btn-primary-shadow:            none;
+  --color-btn-primary-inset-shadow:      none;
+  --color-btn-primary-focused-shadow:    0 0 0 2px rgba(201, 31, 55, 0.35);
+
+  /* Inputs */
+  --color-input-bg:              #080807;
+  --color-input-disabled-bg:     #141311;
+  --color-input-border:          #252220;
+  --color-input-focus-border:    #c91f37;
+  --color-input-placeholder:     #7e7874;
+  --color-input-shadow:          none;
+
+  /* Neutral */
+  --color-neutral-emphasis-plus: #eae5df;
+  --color-neutral-emphasis:      #9a948e;
+  --color-neutral-muted:         rgba(154, 148, 142, 0.15);
+  --color-neutral-subtle:        rgba(154, 148, 142, 0.08);
+
+  /* Danger */
+  --color-danger-fg:             #c91f37;
+  --color-danger-emphasis:       #c91f37;
+  --color-danger-muted:          rgba(201, 31, 55, 0.15);
+  --color-danger-subtle:         rgba(201, 31, 55, 0.08);
+
+  /* Success */
+  --color-success-fg:            #4ade80;
+  --color-success-emphasis:      #4ade80;
+  --color-success-muted:         rgba(74, 222, 128, 0.15);
+  --color-success-subtle:        rgba(74, 222, 128, 0.08);
+
+  /* Syntax highlighting */
+  --color-prettylights-syntax-comment:            #7e7874;
+  --color-prettylights-syntax-constant:           #c91f37;
+  --color-prettylights-syntax-entity:             #9a948e;
+  --color-prettylights-syntax-storage-modifier-import: #eae5df;
+  --color-prettylights-syntax-entity-tag:         #eae5df;
+  --color-prettylights-syntax-keyword:            #c91f37;
+  --color-prettylights-syntax-string:             #9a948e;
+  --color-prettylights-syntax-variable:           #eae5df;
+  --color-prettylights-syntax-string-regexp:      #4ade80;
+  --color-prettylights-syntax-markup-heading:     #eae5df;
+  --color-prettylights-syntax-markup-bold:        #eae5df;
+  --color-prettylights-syntax-markup-italic:      #eae5df;
+  --color-prettylights-syntax-markup-deleted-bg:  #c91f37;
+  --color-prettylights-syntax-markup-deleted-text: #eae5df;
+  --color-prettylights-syntax-markup-inserted-bg: rgba(74, 222, 128, 0.2);
+  --color-prettylights-syntax-markup-inserted-text: #eae5df;
+  --color-prettylights-syntax-markup-changed-bg:  rgba(201, 31, 55, 0.2);
+  --color-prettylights-syntax-markup-changed-text: #eae5df;
+  --color-prettylights-syntax-markup-ignored-text: #7e7874;
+  --color-prettylights-syntax-markup-ignored-bg:  #141311;
+  --color-prettylights-syntax-meta-diff-range:    #c91f37;
+  --color-prettylights-syntax-brackethighlighter-angle: #9a948e;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #c91f37;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #7e7874;
+  --color-prettylights-syntax-constant-other-reference-link: #9a948e;
+  --color-prettylights-syntax-invalid-illegal-text: #eae5df;
+  --color-prettylights-syntax-invalid-illegal-bg:  #c91f37;
+  --color-prettylights-syntax-carriage-return-text: #eae5df;
+  --color-prettylights-syntax-carriage-return-bg:  #c91f37;
+  --color-prettylights-syntax-markup-list:        #eae5df;
+}
+
+/* ─── Base typography ───────────────────────────────────────────────────── */
+body {
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #eae5df;
+  background-color: transparent;
+}
+
+/* Mono for all UI chrome */
+.gsc-comment-author,
+.gsc-left-header,
+.gsc-right-header,
+.gsc-reactions-count,
+.gsc-reply-count,
+.gsc-social-reaction-summary-item,
+.gsc-comment-box-tabs button,
+.gsc-comment-box-bottom,
+.btn,
+a[href*="github.com"],
+.gsc-timeline-item time {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+/* ─── Comment cards ─────────────────────────────────────────────────────── */
+.gsc-comment {
+  background-color: #0f0e0d !important;
+  border-color: #252220 !important;
+  border-radius: 6px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Accent top-line on each comment card */
+.gsc-comment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #c91f37 0%, rgba(201, 31, 55, 0.3) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.gsc-comment:hover {
+  border-color: rgba(201, 31, 55, 0.35) !important;
+  box-shadow: 0 0 0 1px rgba(201, 31, 55, 0.1),
+              0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.gsc-comment:hover::before {
+  opacity: 1;
+}
+
+/* ─── Comment header ────────────────────────────────────────────────────── */
+.gsc-comment-header {
+  border-bottom-color: #1c1a18 !important;
+  background-color: transparent !important;
+}
+
+/* Author name — accent red with // prefix */
+.gsc-comment-author {
+  color: #c91f37 !important;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.gsc-comment-author::before {
+  content: "// ";
+  color: rgba(201, 31, 55, 0.5);
+  font-weight: 400;
+}
+
+/* Timestamp / metadata */
+.gsc-comment-author + span,
+.gsc-timeline-item time,
+relative-time {
+  color: #7e7874 !important;
+}
+
+/* ─── Comment body ──────────────────────────────────────────────────────── */
+.gsc-comment-content {
+  color: #eae5df;
+}
+
+.gsc-comment-content a {
+  color: #c91f37;
+  text-decoration-color: rgba(201, 31, 55, 0.4);
+}
+
+.gsc-comment-content a:hover {
+  text-decoration-color: #c91f37;
+}
+
+.gsc-comment-content code {
+  background-color: #141311;
+  border: 1px solid #252220;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: #eae5df;
+}
+
+.gsc-comment-content pre {
+  background-color: #080807 !important;
+  border: 1px solid #252220;
+  border-radius: 4px;
+  border-left: 2px solid #c91f37;
+}
+
+/* ─── Replies ───────────────────────────────────────────────────────────── */
+.gsc-replies {
+  background-color: #080807 !important;
+  border-color: #1c1a18 !important;
+}
+
+.gsc-reply {
+  border-top-color: #1c1a18 !important;
+}
+
+/* ─── Reactions ─────────────────────────────────────────────────────────── */
+.gsc-reactions-count {
+  color: #9a948e !important;
+}
+
+.gsc-social-reaction-summary-item {
+  background-color: #141311 !important;
+  border-color: #252220 !important;
+  color: #9a948e !important;
+  border-radius: 20px !important;
+  transition: all 0.15s ease;
+}
+
+.gsc-social-reaction-summary-item:hover {
+  background-color: rgba(201, 31, 55, 0.12) !important;
+  border-color: rgba(201, 31, 55, 0.35) !important;
+  color: #eae5df !important;
+}
+
+/* Selected / already reacted */
+.has-reacted .gsc-social-reaction-summary-item {
+  background-color: rgba(201, 31, 55, 0.15) !important;
+  border-color: rgba(201, 31, 55, 0.5) !important;
+  color: #c91f37 !important;
+  box-shadow: 0 0 8px rgba(201, 31, 55, 0.2) !important;
+}
+
+/* Emoji picker popover */
+.gsc-emoji-button {
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.gsc-emoji-button:hover {
+  background-color: rgba(201, 31, 55, 0.12) !important;
+}
+
+/* ─── Write / comment box ───────────────────────────────────────────────── */
+.gsc-comment-box {
+  border-color: #252220 !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+  background-color: #0f0e0d !important;
+}
+
+/* Tab bar */
+.gsc-comment-box-tabs {
+  background-color: #141311 !important;
+  border-bottom-color: #252220 !important;
+}
+
+.gsc-comment-box-tabs button {
+  color: #7e7874 !important;
+  border-color: transparent !important;
+}
+
+.gsc-comment-box-tabs button:hover {
+  color: #eae5df !important;
+}
+
+/* Active tab — Akane Red underline */
+.gsc-comment-box-tabs .color-text-link {
+  color: #eae5df !important;
+  border-bottom: 2px solid #c91f37 !important;
+}
+
+/* Textarea */
+.gsc-comment-box-textarea {
+  background-color: #080807 !important;
+  border-color: transparent !important;
+  color: #eae5df !important;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.gsc-comment-box-textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.gsc-comment-box-textarea::placeholder {
+  color: #7e7874 !important;
+}
+
+/* Bottom bar of the comment box */
+.gsc-comment-box-bottom {
+  background-color: #141311 !important;
+  border-top-color: #252220 !important;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 12px !important;
+  letter-spacing: -0.01em;
+  border-radius: 4px !important;
+  transition: all 0.15s ease !important;
+}
+
+/* Sign in button */
+.btn-primary {
+  background-color: #c91f37 !important;
+  border-color: #c91f37 !important;
+  color: #eae5df !important;
+  box-shadow: 0 0 12px rgba(201, 31, 55, 0.25) !important;
+}
+
+.btn-primary:hover {
+  background-color: #a8192e !important;
+  border-color: #a8192e !important;
+  box-shadow: 0 0 20px rgba(201, 31, 55, 0.4) !important;
+}
+
+/* Secondary / ghost buttons */
+.btn:not(.btn-primary) {
+  background-color: #141311 !important;
+  border-color: #252220 !important;
+  color: #9a948e !important;
+}
+
+.btn:not(.btn-primary):hover {
+  background-color: #1c1a18 !important;
+  border-color: rgba(201, 31, 55, 0.3) !important;
+  color: #eae5df !important;
+}
+
+/* ─── Reply count link ──────────────────────────────────────────────────── */
+.gsc-reply-count {
+  color: #7e7874 !important;
+  transition: color 0.15s ease;
+}
+
+.gsc-reply-count:hover {
+  color: #c91f37 !important;
+}
+
+/* ─── "Load more" / pagination ──────────────────────────────────────────── */
+.gsc-pagination .btn {
+  border-color: #252220 !important;
+}
+
+/* ─── Markdown preview ──────────────────────────────────────────────────── */
+.gsc-comment-box-preview {
+  background-color: #080807 !important;
+  border-top-color: #252220 !important;
+  color: #eae5df;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+}
+
+/* ─── Sign-in prompt ────────────────────────────────────────────────────── */
+.gsc-comment-box-signin {
+  color: #9a948e !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
