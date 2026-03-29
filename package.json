@@ -34,6 +34,7 @@
     "rehype-prism-plus": "^2.0.2",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
+    "remark-github-alerts": "^0.1.1",
     "resend": "^6.9.4"
   },
   "devDependencies": {
