@@ -43,6 +43,9 @@ After that, the image will be removed from our registry, but if you check the sp
 
 To execute the garbage-collect you must execute the following code, but I suggest running it before with the `-d` to understand which change it will be made to our beautiful registry.
 
+> [!TIP]
+> Always run the garbage collector with the `-d` (dry-run) flag first to preview which layers will be removed before actually freeing up disk space.
+
 ```bash
 /bin/registry garbage-collect /pat/to/registry/config.yml
 ```

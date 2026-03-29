@@ -6,6 +6,7 @@ import type React from "react";
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import remarkGithubAlerts from "remark-github-alerts";
 import { AuthorBio } from "../../../components/ui/AuthorBio";
 import { Breadcrumb } from "../../../components/ui/Breadcrumb";
 import { BackToTop } from "../../../components/ui/BackToTop";
@@ -178,7 +179,7 @@ export default async function BlogPostPage({ params }: Props) {
                 source={post.content}
                 options={{
                   mdxOptions: {
-                    remarkPlugins: [remarkGfm],
+                    remarkPlugins: [remarkGfm, remarkGithubAlerts],
                     rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
                   },
                 }}

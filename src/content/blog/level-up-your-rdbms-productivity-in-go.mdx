@@ -10,7 +10,8 @@ heroImage: "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?q=80&w=
 heroImageAlt: "Hard disk representing database storage"
 ---
 
-> **IMPORTANT**: All the things in this article are highly opinionated, and they are not a standard. I'm just sharing my experience and what I think is the best way to do it.
+> [!IMPORTANT]
+> All the things in this article are highly opinionated, and they are not a standard. I'm just sharing my experience and what I think is the best way to do it.
 > If you have a better way to do it, please let me know in the comments. Examples are in PostgreSQL, but you can use the same approach for MySQL, SQLite, etc.
 >
 > No DB have been harmed in the making of this article, but a couple was truncated. 🤫
@@ -98,6 +99,9 @@ func (s *Store) GetUser(ctx context.Context, id string) (*User, error) {
 ```
 
 As you see, we are using `fmt.Sprintf` to build our query. This is a very bad practice because we are exposing ourself to SQL Injection.
+
+> [!WARNING]
+> Never use string formatting to build SQL queries. Always use parameterized queries or a type-safe query generator to avoid SQL Injection vulnerabilities.
 
 SQL Injection is a code injection technique that might destroy your database. It is one of the most common web hacking techniques.
 
