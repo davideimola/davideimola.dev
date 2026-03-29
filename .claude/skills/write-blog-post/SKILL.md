@@ -94,7 +94,6 @@ Write the full MDX post in one shot. Use this frontmatter:
 title: ""
 excerpt: ""
 category: "Technical" | "Personal" | "Leadership" | "Open Source"
-readTime: "X min read"
 publishDate: "YYYY-MM-DD"
 tags: ["Tag1", "Tag2"]
 featured: false
@@ -103,7 +102,6 @@ heroImageAlt: ""
 ---
 ```
 
-- `readTime`: calculate after writing at ~200 words per minute, round to nearest minute
 - `publishDate`: today's date
 - `heroImage`: leave empty — you'll handle images in Step 5
 - `featured`: always `false` by default
@@ -179,7 +177,6 @@ Once the post is approved, run the pre-PR checklist before opening the PR:
 - [ ] No `TODO` comments left in the MDX
 - [ ] No `#` h1 headings in content
 - [ ] `draft: true` removed from frontmatter
-- [ ] `readTime` calculated and set
 
 Then commit, push the branch, and open the PR:
 ```bash
