@@ -215,6 +215,16 @@ export default function SharingPage() {
                       GitHub →
                     </a>
                   </li>
+                  <li>
+                    <a
+                      href="https://emblema.live/speaker/davideimola"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      Emblema →
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
