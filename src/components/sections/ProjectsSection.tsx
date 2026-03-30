@@ -1,6 +1,6 @@
+import type { Project } from "../../lib/content";
 import { getFeaturedProjects } from "../../lib/content";
 import { Badge, Card, ScrollReveal, SectionHeader } from "../ui";
-import type { Project } from "../../lib/content";
 
 function statusVariant(status: Project["status"]): "coming-soon" | "category" {
   return status === "coming-soon" ? "coming-soon" : "category";

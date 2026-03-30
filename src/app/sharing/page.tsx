@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   description: "Talks, workshops, and events on Go, platform engineering, GitOps, and open source.",
   openGraph: {
     title: "Sharing — Davide Imola",
-    description: "Talks, workshops, and events on Go, platform engineering, GitOps, and open source.",
+    description:
+      "Talks, workshops, and events on Go, platform engineering, GitOps, and open source.",
     url: "https://davideimola.dev/sharing",
     images: [
       { url: "https://davideimola.dev/og?title=Sharing&category=talks", width: 1200, height: 630 },
@@ -64,7 +65,9 @@ export default function SharingPage() {
           name: "Davide Imola",
           url: "https://davideimola.dev",
         },
-        ...(talk.session?.video ? { url: talk.session.video } : { url: `https://davideimola.dev/sharing#${talk.slug}` }),
+        ...(talk.session?.video
+          ? { url: talk.session.video }
+          : { url: `https://davideimola.dev/sharing#${talk.slug}` }),
       },
     })),
   };

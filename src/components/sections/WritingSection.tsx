@@ -38,7 +38,8 @@ export function WritingSection() {
                   {featured.excerpt}
                 </p>
                 <p className="font-mono text-[11px] text-text-3">
-                  {formatDate(featured.date)} · {featured.readingTime}                </p>
+                  {formatDate(featured.date)} · {featured.readingTime}{" "}
+                </p>
               </Card>
             </ScrollReveal>
           )}
@@ -62,7 +63,8 @@ export function WritingSection() {
                     {post.excerpt}
                   </p>
                   <p className="font-mono text-[11px] text-text-3">
-                    {formatDate(post.date)} · {post.readingTime}                  </p>
+                    {formatDate(post.date)} · {post.readingTime}{" "}
+                  </p>
                 </Card>
               </ScrollReveal>
             ))}

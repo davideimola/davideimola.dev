@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState } from "react";
 import type { ReactNode } from "react";
+import { useState } from "react";
 
 // Detect back/forward navigation before components mount.
 // popstate fires synchronously before Next.js re-renders the page.

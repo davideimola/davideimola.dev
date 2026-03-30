@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Optimize blog images: converts JPEG/PNG to WebP and resizes if needed.
  * Usage:
@@ -11,9 +12,9 @@
  * Output: writes .webp next to the original.
  */
 
-import sharp from "sharp";
 import { readdir, stat, unlink } from "node:fs/promises";
-import { join, extname, basename, dirname } from "node:path";
+import { basename, dirname, extname, join } from "node:path";
+import sharp from "sharp";
 
 const BLOG_IMAGES_DIR = "public/images/blog";
 const MAX_WIDTH = 1600; // hero images don't need to be wider than this
@@ -48,10 +49,7 @@ async function optimizeImage(filePath, clean = false) {
 
   const originalStat = await stat(filePath);
   const outputStat = await stat(outPath);
-  const saving = (
-    ((originalStat.size - outputStat.size) / originalStat.size) *
-    100
-  ).toFixed(1);
+  const saving = (((originalStat.size - outputStat.size) / originalStat.size) * 100).toFixed(1);
 
   if (clean) {
     await unlink(filePath);
@@ -81,7 +79,9 @@ async function main() {
     process.exit(0);
   }
 
-  console.log(`Optimizing ${files.length} image(s)${clean ? " (--clean: originals will be removed)" : ""}...\n`);
+  console.log(
+    `Optimizing ${files.length} image(s)${clean ? " (--clean: originals will be removed)" : ""}...\n`
+  );
   let converted = 0;
 
   for (const file of files) {
