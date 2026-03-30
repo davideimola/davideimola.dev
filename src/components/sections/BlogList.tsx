@@ -70,11 +70,6 @@ export function BlogList({ posts }: BlogListProps) {
                   >
                     {post.category}
                   </Link>
-                  {post.featured && (
-                    <span className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border">
-                      Featured
-                    </span>
-                  )}
                 </div>
 
                 {/* Title + excerpt */}

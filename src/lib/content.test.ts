@@ -28,7 +28,6 @@ function mdx(fields: {
   publishDate: string;
   category: string;
   tags: string[];
-  featured?: boolean;
   draft?: boolean;
 }): string {
   return [
@@ -37,7 +36,6 @@ function mdx(fields: {
     `publishDate: "${fields.publishDate}"`,
     `category: "${fields.category}"`,
     `tags: [${fields.tags.map((t) => `"${t}"`).join(", ")}]`,
-    `featured: ${fields.featured ?? false}`,
     ...(fields.draft !== undefined ? [`draft: ${fields.draft}`] : []),
     "---",
     "",

@@ -139,7 +139,6 @@ export default async function BlogPostPage({ params }: Props) {
                 >
                   {post.category}
                 </a>
-                {post.featured && <Badge variant="active">Featured</Badge>}
               </div>
               <h1 className="font-mono text-[26px] sm:text-[32px] font-bold text-text-1 tracking-[-0.03em] leading-tight mb-4">
                 {post.title}
