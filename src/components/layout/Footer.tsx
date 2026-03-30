@@ -1,3 +1,9 @@
+import {
+  IconBrandBluesky,
+  IconBrandGithub,
+  IconBrandLinkedin,
+} from "@tabler/icons-react";
+
 const FOOTER_LINKS = [
   { label: "contact", href: "/contact" },
   { label: "privacy", href: "/privacy" },
@@ -6,15 +12,49 @@ const FOOTER_LINKS = [
   { label: "source", href: "https://github.com/davideimola/davideimola.dev" },
 ];
 
+const SOCIAL_LINKS = [
+  {
+    icon: IconBrandGithub,
+    href: "https://github.com/davideimola",
+    label: "GitHub",
+  },
+  {
+    icon: IconBrandLinkedin,
+    href: "https://www.linkedin.com/in/davideimola/",
+    label: "LinkedIn",
+  },
+  {
+    icon: IconBrandBluesky,
+    href: "https://bsky.app/profile/davideimola.dev",
+    label: "BlueSky",
+  },
+];
+
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border py-6">
       <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-0">
-        <p className="font-mono text-[11px] text-text-3">
-          © {year} <span className="text-accent">Davide Imola</span>
-        </p>
+        <div className="flex items-center gap-4">
+          <p className="font-mono text-[11px] text-text-3">
+            © {year} <span className="text-accent">Davide Imola</span>
+          </p>
+          <div className="flex items-center gap-2">
+            {SOCIAL_LINKS.map((social) => (
+              <a
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="text-text-3 transition-colors duration-150 hover:text-text-2"
+              >
+                <social.icon size={14} stroke={1.5} />
+              </a>
+            ))}
+          </div>
+        </div>
         <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2">
           {FOOTER_LINKS.map((link) => (
             <a
