@@ -1,3 +1,14 @@
+import {
+  IconBallFootball,
+  IconDeviceGamepad2,
+  IconDice5,
+  IconGrill,
+  IconKarate,
+  IconMovie,
+  IconMusic,
+  IconPlane,
+  IconPokeball,
+} from "@tabler/icons-react";
 import type { Metadata } from "next";
 import type { ExperienceEntry } from "../../components/ui/ExperienceTimeline";
 import { ExperienceTimeline } from "../../components/ui/ExperienceTimeline";
@@ -28,7 +39,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About — Davide Imola",
     images: [
-      { url: "https://davideimola.dev/og?title=About&category=whoami", width: 1200, height: 630 },
+      {
+        url: "https://davideimola.dev/og?title=About&category=whoami",
+        width: 1200,
+        height: 630,
+      },
     ],
     description:
       "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",
@@ -198,60 +213,60 @@ const COMMUNITY = [
 const HOBBIES = [
   {
     label: "Football",
-    icon: "⚽",
+    icon: IconBallFootball,
     context: "I play futsal and follow Hellas Verona — home games included.",
     href: null,
   },
   {
     label: "BBQ & low and slow",
-    icon: "🔥",
+    icon: IconGrill,
     context:
       "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak (diaframma) — cheap, flavourful, unbeatable.",
     href: null,
   },
   {
     label: "Video games",
-    icon: "🎮",
+    icon: IconDeviceGamepad2,
     context:
       "RPGs and action-adventure. Loved: Clair Obscur Expedition 33, Baldur's Gate 3, Zelda BotW & TotK. Also a lifelong Pokémon fan.",
     href: null,
   },
   {
     label: "Pokémon cards",
-    icon: "🃏",
+    icon: IconPokeball,
     context:
       "Collecting for a couple of years. Building the Pokédex in rare and full-art variants. It's an obsession disguised as a hobby.",
     href: null,
   },
   {
     label: "Tabletop & D&D",
-    icon: "🎲",
+    icon: IconDice5,
     context: "Board game collector. Currently playing a D&D campaign — and writing one to DM soon.",
     href: null,
   },
   {
     label: "JuJutsu",
-    icon: "🥋",
+    icon: IconKarate,
     context: "Hontai Yōshin-ryū. White belt — still figuring out how to fall correctly.",
     href: null,
   },
   {
     label: "Music",
-    icon: "🎵",
+    icon: IconMusic,
     context:
       "Everything from Linkin Park to De André, Eminem to Hans Zimmer. I go to concerts whenever I can — saw LP live in 2025.",
     href: "https://open.spotify.com/playlist/1qLEh5nRfgkelDOQqBScxE?si=de08590bfe4f4eee",
   },
   {
     label: "Travel",
-    icon: "✈️",
+    icon: IconPlane,
     context:
       "I travel to learn. Japan was a dream — I'll go back. Asia draws me most: temples, art, religion, and food I'd never stop to think twice about trying.",
     href: null,
   },
   {
     label: "Film & Series",
-    icon: "🎬",
+    icon: IconMovie,
     context:
       "Fantasy and action. Lord of the Rings is untouchable. Grew up with Harry Potter. The occasional anime binge or documentary at midnight.",
     href: null,
@@ -346,7 +361,7 @@ export default function AboutPage() {
                 {TECHNOLOGIES.map((tech) => (
                   <li key={tech.name} className="flex flex-col gap-0.5">
                     <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                      <span className="text-accent text-[10px]">//</span>
+                      <span className="text-accent text-[10px]">{`//`}</span>
                       {tech.name}
                     </span>
                     <span className="font-sans text-[13px] text-text-3 pl-5">{tech.context}</span>
@@ -366,7 +381,7 @@ export default function AboutPage() {
                 {METHODOLOGIES.map((m) => (
                   <li key={m.name} className="flex flex-col gap-0.5">
                     <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                      <span className="text-accent text-[10px]">//</span>
+                      <span className="text-accent text-[10px]">{`//`}</span>
                       {m.name}
                     </span>
                     <span className="font-sans text-[13px] text-text-3 pl-5">{m.context}</span>
@@ -552,7 +567,7 @@ export default function AboutPage() {
             <ScrollReveal key={hobby.label} delay={i * 40}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
                 <div className="flex items-center gap-2">
-                  <span className="text-[16px]">{hobby.icon}</span>
+                  <hobby.icon size={18} stroke={1.5} className="text-text-3 shrink-0" />
                   <span className="font-mono text-[12px] font-medium text-text-1">
                     {hobby.label}
                   </span>
