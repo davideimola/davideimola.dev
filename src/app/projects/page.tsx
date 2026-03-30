@@ -54,13 +54,18 @@ export default function ProjectsPage() {
           <ScrollReveal key={project.slug} delay={i * 80}>
             <Card className="h-full">
               <div className="flex flex-col gap-4 h-full">
-
                 {/* TOP — period + optional badge */}
-                <div className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}>
+                <div
+                  className={`flex items-start gap-3 ${project.status !== "active" ? "justify-between" : "justify-end"}`}
+                >
                   {project.status !== "active" && (
-                    <Badge variant={statusVariant(project.status)}>{statusLabel(project.status)}</Badge>
+                    <Badge variant={statusVariant(project.status)}>
+                      {statusLabel(project.status)}
+                    </Badge>
                   )}
-                  <span className="font-mono text-[11px] text-text-3 shrink-0">{project.period}</span>
+                  <span className="font-mono text-[11px] text-text-3 shrink-0">
+                    {project.period}
+                  </span>
                 </div>
 
                 {/* TOP — title + role */}
@@ -112,7 +117,6 @@ export default function ProjectsPage() {
                     )}
                   </div>
                 )}
-
               </div>
             </Card>
           </ScrollReveal>

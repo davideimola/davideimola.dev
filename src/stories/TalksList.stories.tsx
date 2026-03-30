@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { Talk } from "../lib/content";
 import { TalksList } from "../components/sections/TalksList";
+import type { Talk } from "../lib/content";
 
 const meta: Meta<typeof TalksList> = {
   title: "Sections/TalksList",

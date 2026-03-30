@@ -27,11 +27,7 @@ function buildEngageCommand(talk: Talk): string {
   return `engage${flags.length > 0 ? ` ${flags.join(" ")}` : ""}`;
 }
 
-function TalkCard({
-  talk,
-  index,
-  activeTag,
-}: { talk: Talk; index: number; activeTag?: string }) {
+function TalkCard({ talk, index, activeTag }: { talk: Talk; index: number; activeTag?: string }) {
   const { session } = talk;
   const hasMedia = !!(session?.slides || session?.video);
   const displayDate = talk.eventDateRange ?? formatDate(talk.date);
@@ -53,9 +49,7 @@ function TalkCard({
             <span className="text-accent">./</span>
             <span className="text-text-2">{talk.event}</span>
             <span className="text-text-3"> / </span>
-            {session && (
-              <span className="text-text-1 font-semibold">{session.title}</span>
-            )}
+            {session && <span className="text-text-1 font-semibold">{session.title}</span>}
           </h2>
 
           {/* Event type badge */}

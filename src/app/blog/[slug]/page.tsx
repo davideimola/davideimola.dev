@@ -8,9 +8,9 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
 import { AuthorBio } from "../../../components/ui/AuthorBio";
-import { Breadcrumb } from "../../../components/ui/Breadcrumb";
 import { BackToTop } from "../../../components/ui/BackToTop";
 import { Badge } from "../../../components/ui/Badge";
+import { Breadcrumb } from "../../../components/ui/Breadcrumb";
 import { CodeBlock } from "../../../components/ui/CodeBlock";
 import { GiscusComments } from "../../../components/ui/GiscusComments";
 import { JsonLd } from "../../../components/ui/JsonLd";
@@ -89,7 +89,12 @@ export default async function BlogPostPage({ params }: Props) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://davideimola.dev" },
       { "@type": "ListItem", position: 2, name: "Blog", item: "https://davideimola.dev/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: `https://davideimola.dev/blog/${slug}` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `https://davideimola.dev/blog/${slug}`,
+      },
     ],
   };
 
@@ -118,10 +123,7 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
         <Breadcrumb
           command="cat"
-          items={[
-            { label: "blog", href: "/blog" },
-            { label: `${slug}.mdx` },
-          ]}
+          items={[{ label: "blog", href: "/blog" }, { label: `${slug}.mdx` }]}
           className="mb-10"
         />
 

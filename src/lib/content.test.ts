@@ -5,9 +5,9 @@ import {
   getAllPosts,
   getAllProjects,
   getPostBySlug,
-  getRelatedPosts,
   getPrevNextPosts,
   getRecentPosts,
+  getRelatedPosts,
 } from "./content";
 
 vi.mock("node:fs", () => ({
@@ -298,9 +298,33 @@ describe("draft post filtering (development)", () => {
 describe("getAllProjects", () => {
   it("sorts projects: active → coming-soon → archived", () => {
     const raw = [
-      { slug: "c", status: "archived", title: "C", featured: false, tags: [], period: "2020", description: "" },
-      { slug: "a", status: "active", title: "A", featured: true, tags: [], period: "2023", description: "" },
-      { slug: "b", status: "coming-soon", title: "B", featured: false, tags: [], period: "2025", description: "" },
+      {
+        slug: "c",
+        status: "archived",
+        title: "C",
+        featured: false,
+        tags: [],
+        period: "2020",
+        description: "",
+      },
+      {
+        slug: "a",
+        status: "active",
+        title: "A",
+        featured: true,
+        tags: [],
+        period: "2023",
+        description: "",
+      },
+      {
+        slug: "b",
+        status: "coming-soon",
+        title: "B",
+        featured: false,
+        tags: [],
+        period: "2025",
+        description: "",
+      },
     ];
     mockFs.readFileSync.mockReturnValue(JSON.stringify(raw));
 

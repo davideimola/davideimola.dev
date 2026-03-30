@@ -23,29 +23,20 @@ type Story = StoryObj<typeof Breadcrumb>;
 export const BlogPost: Story = {
   args: {
     command: "cat",
-    items: [
-      { label: "blog", href: "/blog" },
-      { label: "securing-secrets-in-the-gitops-era.mdx" },
-    ],
+    items: [{ label: "blog", href: "/blog" }, { label: "securing-secrets-in-the-gitops-era.mdx" }],
   },
 };
 
 export const DeepPath: Story = {
   args: {
     command: "cat",
-    items: [
-      { label: "blog", href: "/blog" },
-      { label: "ai-will-not-secure-your-codebase.mdx" },
-    ],
+    items: [{ label: "blog", href: "/blog" }, { label: "ai-will-not-secure-your-codebase.mdx" }],
   },
 };
 
 export const CustomCommand: Story = {
   args: {
     command: "open",
-    items: [
-      { label: "projects", href: "/projects" },
-      { label: "schrodinger-hat" },
-    ],
+    items: [{ label: "projects", href: "/projects" }, { label: "schrodinger-hat" }],
   },
 };

@@ -7,12 +7,7 @@ export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 export default async function AppleIcon() {
-  const fontPath = path.join(
-    process.cwd(),
-    "public",
-    "fonts",
-    "JetBrainsMono-Bold.ttf",
-  );
+  const fontPath = path.join(process.cwd(), "public", "fonts", "JetBrainsMono-Bold.ttf");
   const fontData = await readFile(fontPath);
 
   return new ImageResponse(
@@ -60,6 +55,6 @@ export default async function AppleIcon() {
           style: "normal",
         },
       ],
-    },
+    }
   );
 }

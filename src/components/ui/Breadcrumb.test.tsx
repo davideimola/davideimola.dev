@@ -4,19 +4,25 @@ import { Breadcrumb } from "./Breadcrumb";
 
 describe("Breadcrumb", () => {
   it("renders the command and prompt", () => {
-    render(<Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />);
+    render(
+      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
+    );
     expect(screen.getByText("❯")).toBeInTheDocument();
     expect(screen.getByText(/cat ~\//)).toBeInTheDocument();
   });
 
   it("renders linked items as anchors", () => {
-    render(<Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />);
+    render(
+      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
+    );
     const link = screen.getByRole("link", { name: "blog" });
     expect(link).toHaveAttribute("href", "/blog");
   });
 
   it("renders the last item as plain text, not a link", () => {
-    render(<Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />);
+    render(
+      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
+    );
     expect(screen.queryByRole("link", { name: "post.mdx" })).toBeNull();
     expect(screen.getByText("post.mdx")).toBeInTheDocument();
   });
