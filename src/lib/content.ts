@@ -48,6 +48,7 @@ export interface Project {
   status: "active" | "coming-soon" | "archived";
   url?: string;
   github?: string;
+  caseStudy?: string; // internal path to case study page, e.g. "/projects/redcarbon"
   period: string;
   featured: boolean;
   tags: string[];
