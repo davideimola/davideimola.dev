@@ -78,6 +78,14 @@ export function HeroSection() {
             <ButtonLink variant="ghost" href="/blog">
               Read the blog →
             </ButtonLink>
+            <ButtonLink
+              variant="ghost"
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download CV →
+            </ButtonLink>
           </div>
 
           {/* Stats */}

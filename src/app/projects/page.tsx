@@ -93,8 +93,16 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* BOTTOM — links */}
-                {(project.url || project.github) && (
+                {(project.url || project.github || project.caseStudy) && (
                   <div className="flex items-center gap-4">
+                    {project.caseStudy && (
+                      <a
+                        href={project.caseStudy}
+                        className="font-mono text-[11px] text-accent hover:text-accent-hover transition-colors duration-150"
+                      >
+                        Read case study →
+                      </a>
+                    )}
                     {project.url && (
                       <a
                         href={project.url}

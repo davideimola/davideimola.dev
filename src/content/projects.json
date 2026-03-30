@@ -5,7 +5,8 @@
     "role": "Tech Lead",
     "status": "active",
     "url": "https://redcarbon.ai",
-    "period": "2023–present",
+    "caseStudy": "/projects/redcarbon",
+    "period": "2022–present",
     "featured": true,
     "tags": ["AI", "Security", "Startup"],
     "description": "AI-powered threat detection platform. I lead the engineering team, shaping architecture and driving the platform from seed to Series A."
@@ -15,7 +16,8 @@
     "title": "Schrodinger Hat",
     "status": "active",
     "url": "https://schrodinger-hat.it",
-    "period": "2020–present",
+    "caseStudy": "/projects/schrodinger-hat",
+    "period": "2022–present",
     "featured": true,
     "tags": ["Community", "Open Source"],
     "description": "International open source community. 20k+ people reached, 100+ speakers at events across Europe."

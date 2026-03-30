@@ -2,6 +2,7 @@ import {
   IconBallFootball,
   IconDeviceGamepad2,
   IconDice5,
+  IconDownload,
   IconGrill,
   IconKarate,
   IconMovie,
@@ -310,6 +311,15 @@ export default function AboutPage() {
                   about the team's trajectory. If we don't all grow, the company doesn't.
                 </p>
               </div>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-[12px] text-text-3 hover:text-accent transition-colors duration-150 mt-2 w-fit"
+              >
+                <IconDownload size={13} stroke={1.5} />
+                Download CV →
+              </a>
             </div>
 
             {/* Photo */}
