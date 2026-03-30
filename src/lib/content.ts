@@ -13,7 +13,6 @@ export interface BlogPost {
   tags: string[];
   date: string; // mapped from publishDate
   readingTime: string;
-  featured: boolean;
   draft?: boolean;
   heroImage?: string;
   heroImageAlt?: string;
@@ -110,7 +109,6 @@ function parsePost(slug: string): BlogPost {
     tags: data.tags ?? [],
     date: data.publishDate,
     readingTime: rt.text,
-    featured: data.featured ?? false,
     draft: data.draft ?? false,
     heroImage: data.heroImage,
     heroImageAlt: data.heroImageAlt,

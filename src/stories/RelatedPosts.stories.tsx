@@ -26,7 +26,6 @@ const mockPosts = [
     tags: ["GitOps", "Security", "Kubernetes"],
     date: "2024-03-15",
     readingTime: "6 min read",
-    featured: false,
     content: "",
   },
   {
@@ -37,7 +36,6 @@ const mockPosts = [
     tags: ["AI", "Security"],
     date: "2025-03-10",
     readingTime: "7 min read",
-    featured: true,
     content: "",
   },
   {
@@ -48,7 +46,6 @@ const mockPosts = [
     tags: ["Go", "Database"],
     date: "2023-11-20",
     readingTime: "8 min read",
-    featured: false,
     content: "",
   },
 ];

@@ -25,7 +25,6 @@ const mockPost = (slug: string, title: string) => ({
   tags: ["Go"],
   date: "2025-01-01",
   readingTime: "5 min read",
-  featured: false,
   content: "",
 });
 
