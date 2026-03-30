@@ -152,30 +152,20 @@ export default function ProjectsPage() {
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center gap-4 shrink-0">
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                    >
-                      Website →
-                    </a>
-                  )}
-                  <a
-                    href={item.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                  >
-                    GitHub →
-                  </a>
-                </div>
               </li>
             </ScrollReveal>
           ))}
         </ul>
+        <ScrollReveal>
+          <a
+            href="https://github.com/davideimola"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block font-mono text-[12px] text-text-3 hover:text-accent transition-colors duration-150 mt-6"
+          >
+            See all contributions on GitHub →
+          </a>
+        </ScrollReveal>
       </section>
     </div>
   );
