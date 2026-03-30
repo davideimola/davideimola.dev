@@ -324,9 +324,9 @@ export default function AboutPage() {
 
             {/* Photo */}
             <div className="shrink-0 sm:mt-14">
-              <div className="w-[220px] sm:w-[280px] aspect-square overflow-hidden rounded-sm border border-border">
+              <div className="w-[220px] sm:w-[280px] aspect-3/4 overflow-hidden rounded-sm border border-border">
                 <img
-                  src="/images/davide-speaking-profile.webp"
+                  src="/images/davide-about-profile.webp"
                   alt="Davide Imola speaking at a conference"
                   className="w-full h-full object-cover object-top"
                 />
