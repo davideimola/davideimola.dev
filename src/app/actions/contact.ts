@@ -19,6 +19,34 @@ export async function sendContactEmail(
     return { status: "success" };
   }
 
+  // Time-based check: bots submit instantly; humans take at least a few seconds
+  const loadTime = Number(formData.get("_t")?.toString() ?? "0");
+  const elapsed = Date.now() - loadTime;
+  if (!loadTime || elapsed < 4000) {
+    return { status: "success" };
+  }
+
+  // Cloudflare Turnstile verification
+  const turnstileToken = formData.get("cf-turnstile-response")?.toString();
+  if (!turnstileToken) {
+    return { status: "error", message: "Please complete the security check." };
+  }
+  const turnstileRes = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        secret: process.env.TURNSTILE_SECRET_KEY,
+        response: turnstileToken,
+      }),
+    }
+  );
+  const turnstileData = (await turnstileRes.json()) as { success: boolean };
+  if (!turnstileData.success) {
+    return { status: "error", message: "Security check failed. Please try again." };
+  }
+
   const name = formData.get("name")?.toString().trim();
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
@@ -36,9 +64,9 @@ export async function sendContactEmail(
     return { status: "error", message: "Message must be at least 10 characters." };
   }
 
-  // Reject messages with 3+ URLs — classic spam pattern
+  // Reject messages with any URL — common spam pattern
   const urlCount = (message.match(/https?:\/\//gi) ?? []).length;
-  if (urlCount >= 3) {
+  if (urlCount >= 1) {
     return { status: "success" };
   }
 
