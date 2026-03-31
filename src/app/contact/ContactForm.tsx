@@ -1,12 +1,20 @@
 "use client";
 
-import { useActionState } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
+import { useActionState, useEffect, useRef } from "react";
 import { sendContactEmail } from "../actions/contact";
 
 const initialState = { status: "idle" as const };
 
 export function ContactForm() {
   const [state, action, pending] = useActionState(sendContactEmail, initialState);
+  const loadTimeRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (loadTimeRef.current) {
+      loadTimeRef.current.value = Date.now().toString();
+    }
+  }, []);
 
   if (state.status === "success") {
     return (
@@ -47,6 +55,9 @@ export function ContactForm() {
         <label htmlFor="website">Website</label>
         <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>
+
+      {/* Time-based check — value set by JS, empty means bot rendered server-side */}
+      <input ref={loadTimeRef} type="hidden" name="_t" value="" />
 
       {/* Name */}
       <div className="flex flex-col gap-1.5">
@@ -103,6 +114,12 @@ export function ContactForm() {
           className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-border-hover transition-colors duration-150 resize-none"
         />
       </div>
+
+      {/* Turnstile */}
+      <Turnstile
+        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+        options={{ theme: "dark", size: "normal" }}
+      />
 
       {/* Error */}
       {state.status === "error" && (
