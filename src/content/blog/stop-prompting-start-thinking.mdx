@@ -1,0 +1,131 @@
+---
+title: "Stop Prompting. Start Thinking."
+excerpt: "Not a tutorial. Not a list of prompts. This is the mental model I built working with AI: what works, what I changed my mind about, and why the same method applies whether I'm writing code or writing a blog post."
+category: "Technical"
+publishDate: "2026-04-17"
+tags: ["AI", "Developer Experience", "Productivity", "Tooling"]
+featured: false
+heroImage: "/images/blog/stop-prompting-start-thinking/hero.webp"
+heroImageAlt: "Abstract illustration of a brain merging with a circuit board"
+---
+
+This post exists because of a problem I've always had: when I sit down to write something (an article, a post, anything), the words don't come out right. My reasoning compresses. I end up with something weaker than what I actually think.
+
+I'm a talker. I do my best thinking out loud.
+
+For a while I tried to fix this with AI: give it a topic, get back a draft, edit it into something mine. It worked okay. But the output felt generic, detached. It didn't sound like me.
+
+Then I noticed something: the same problem was showing up in my development work. I'd hand a task to an AI tool, get back code that was technically correct but didn't feel right. Wrong abstractions, missing conventions, no real judgment. The AI was generating, not thinking.
+
+The fix in both cases turned out to be the same thing: stop treating AI as a generator. Start treating it as a thinking partner.
+
+This post is about how I made that shift and the workflow I built around it. It started as a method for development, but I've since applied it to writing, editorial work, branding. The underlying principle is the same everywhere.
+
+_(And yes, this post was written using that exact method. I spoke, the AI asked questions, pushed back, and helped shape what I was saying into something readable.)_
+
+## Think first. Then open the AI.
+
+The biggest mistake I see people make with AI is reaching for it too early.
+
+Before I type a single message, I read the requirements myself. I think about what needs to be done, what the tricky parts are, what I'd need to clarify with the PM or with myself. I form my own mental model of the problem.
+
+Only then do I bring in the AI.
+
+This isn't a ritual. It's practical. If I don't understand the task, I can't explain it well. And if I can't explain it well, I can't respond usefully when the AI starts asking hard questions. The quality of the entire session depends on that first ten minutes of thinking alone.
+
+There's also something else: when you understand the problem yourself first, you stay the senior in the room. AI tools are fast, confident, and occasionally wrong. If you haven't thought it through, you have no filter for the output.
+
+## Big picture first, then drill down
+
+Once I start working with an AI, I never jump straight to implementation details.
+
+I start broad: here's the task, here's the context, here's roughly what I think needs to happen. Then I use a skill called `grill-me`: a Socratic dialogue where the AI asks hard questions instead of immediately generating a plan. It pushes back, challenges assumptions, asks "why" a lot.
+
+This phase is where most of the real work happens. Questions asked upfront eliminate entire categories of rework later. A wrong assumption caught during design costs nothing. The same assumption caught during implementation costs a lot.
+
+The key insight is that going deeper on design isn't wasted time. It's the most leveraged time in the whole process. I used to feel like I was procrastinating by not writing code yet. Now I treat this phase as the actual work.
+
+One recurring problem I've had: even with a solid PRD, individual user stories get lost during implementation. You start a session, the AI tackles the obvious parts, and by the end something that was clearly in the spec is just... missing. Tools like [Ralph](https://github.com/snarktank/ralph) exist specifically for this: an autonomous agent loop that works through a PRD story by story, tracking progress across iterations so nothing falls through the cracks. I haven't fully integrated it yet, but the problem it solves is real and I've felt it.
+
+## Voice unlocks context you didn't know you had
+
+During design discussions, and honestly throughout the whole process, I use voice input instead of typing.
+
+Not because typing is slow. Because speaking makes me think differently.
+
+When I'm reading a response and the answer isn't a simple yes or no, when there are tradeoffs, nuances, things that depend on context I haven't fully explained, I switch to voice. Speaking out loud forces me to reason in real time. I self-correct mid-sentence. I remember things I forgot to mention. I add context that would have stayed locked in my head if I'd just typed a terse reply.
+
+Voice also makes longer, richer responses feel natural. Nobody wants to type three paragraphs. But talking for thirty seconds? Easy.
+
+The result is better input, better follow-up questions, and output that's more grounded in what I actually want.
+
+This applies to writing just as much as to development. I'm not a natural writer. The channel of "sit down and type an article" compresses my thinking instead of expanding it. Speaking to an AI as an editorial partner, having it ask me questions, challenge weak angles, surface the structure in what I'm saying: that's what made this post possible. The ideas were always there. I just needed a different way to get them out.
+
+## Skills and context files are guardrails, not magic
+
+When I first started using AI for development, I'd give it a task and it would produce code that worked. Technically correct. But not written the way I'd write it. No tests, or tests that weren't meaningful. Styling that didn't match the system. Abstractions that solved the problem but ignored the conventions already in the codebase.
+
+The fix wasn't better prompts. It was better context.
+
+I now have a `CLAUDE.md` file in every project: a context document that explains the stack, the conventions, the design tokens, what not to do. It gets read at the start of every session and it changes everything. The output starts looking like code that belongs in the codebase.
+
+Then I started using skills. A skill is a prompt template that encodes a specific process. Instead of explaining how I want something done every time, the skill carries that knowledge. `tdd` runs a test-first development loop. `simplify` does a post-implementation review for code quality. `grill-me` runs the Socratic design session.
+
+I was skeptical of domain-specific skills at first. I thought they'd be overkill. Then I loaded a frontend design skill and the output stopped looking generic. I changed my mind.
+
+### BYOS: Build Your Own Skills
+
+The most powerful thing you can do is write skills for your own workflows.
+
+The skills I use most aren't the built-in ones, they're the ones I wrote myself. `write-blog-post` (the skill behind this post) doesn't write for me. It interviews me, pushes back on weak angles, helps me find the structure in what I'm saying. `social-post` takes a finished post and turns it into platform-specific content for LinkedIn and BlueSky. I have a skill for [Worky](https://github.com/davideimola/worky) (an open-source project I'm building) that helps define issues in a way that's specific to that project's conventions.
+
+All of these are in my public repo if you want to look at them.
+
+The pattern is: when you find yourself repeating the same setup instructions at the start of a session, that's a skill waiting to be written. Once you write it, it works exactly the same way every time, for you and for anyone else on the project.
+
+The real unlock isn't any individual skill. It's the realization that you can codify your own processes.
+
+## A note on tools
+
+I use Claude Code as my main AI tool, specifically in agentic mode with Claude as the driver on implementation tasks while I stay in the PM seat. But the principles in this post aren't Claude-specific. The mental model, the voice habit, the context files, the skill pattern: these transfer to any AI tool that lets you shape the interaction.
+
+Agentic workflows (where the AI executes multi-step tasks autonomously) are where things are heading, and they make the guardrails even more important. The less you're in the loop on individual steps, the more your context files and skills need to encode your standards upfront.
+
+## The review loop
+
+After implementation, I don't just run the tests and move on. I do two reviews in parallel: mine and the AI's.
+
+I look at the code myself first. Then I ask Claude to review it too, specifically looking for things I might have missed: security issues, edge cases, patterns that work but don't belong. Then I compare. Some findings overlap. Some are mine only. Some are the AI's only. The merged list becomes the input for the next iteration.
+
+This back-and-forth is where a lot of quiet improvements happen. It's also where I catch the things that are technically correct but feel wrong: an abstraction that solves the problem but adds cognitive overhead, a test that passes but doesn't actually verify the behavior I care about.
+
+There are tools that try to automate this loop entirely. I'm curious and plan to experiment, but I'd want to keep my own review at the end regardless. Not every finding the AI surfaces is worth acting on, and not every real problem shows up in an automated scan. The loop is valuable. Removing the human from it entirely is a different bet.
+
+## You are still the senior developer
+
+Everything above is in service of one principle: the AI gives feedback. You evaluate it.
+
+Don't accept output because it looks confident. Don't accept a plan because it's detailed. When the AI produces something, read it. Think about whether it's what you actually wanted and whether it's written the way it should be. When you disagree, say so. Be specific about your reasoning: "I'd have done this differently, here's why, what do you think?" This usually produces a better answer than the original.
+
+AI-assisted work works when the human is still driving. The moment you stop exercising judgment, you're not working with an AI partner. You're just running an autocomplete on your codebase.
+
+---
+
+This is my workflow as it stands today. It'll evolve. I'm still figuring out how to make the review loop tighter, and I'm experimenting with new skills as I find new patterns.
+
+If you work differently, or if something here doesn't make sense for your context, I'd genuinely like to hear it. Leave a comment or find me on LinkedIn.
+
+## Resources
+
+The video that originally inspired a lot of this workflow (and where I first came across most of these skills):
+
+- [AI-Assisted Development workflow by Matt Pocock](https://youtu.be/hX7yG1KVYhI)
+
+The core skills I use, all open source:
+
+- [`grill-me`](https://github.com/mattpocock/skills/tree/main/grill-me)
+- [`write-a-prd`](https://github.com/mattpocock/skills/tree/main/write-a-prd)
+- [`prd-to-issues`](https://github.com/mattpocock/skills/tree/main/prd-to-issues)
+- [`tdd`](https://github.com/mattpocock/skills/tree/main/tdd)
+
+My own custom skills (write-blog-post, social-post, and others) are in [my public repo](https://github.com/davideimola/davideimola.dev/tree/main/.claude/skills).
