@@ -14,9 +14,9 @@ updates:
     groups:
       production:
         dependency-type: "production"
-        update-typess: ["minor", "patch"]
+        update-types: ["minor", "patch"]
       development:
         dependency-type: "development"
-        update-typess: ["minor", "patch"]
+        update-types: ["minor", "patch"]
       major:
         update-types: ["major"]
