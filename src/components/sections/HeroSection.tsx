@@ -40,7 +40,6 @@ export function HeroSection() {
   const anim2 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.2s_both]" : "";
   const anim3 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.3s_both]" : "";
   const anim4 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.4s_both]" : "";
-  const anim5 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.5s_both]" : "";
 
   return (
     <section className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 md:pt-32 md:pb-24">
@@ -61,41 +60,23 @@ export function HeroSection() {
           </h1>
 
           {/* Role */}
-          <p className={`font-mono text-[13px] text-text-3 tracking-[0.04em] mb-2 ${anim2}`}>
-            Tech Lead · Speaker · Open Source
+          <p className={`font-mono text-[13px] text-text-2 tracking-[0.04em] mb-2 ${anim2}`}>
+            Tech Lead @ RedCarbon · Co-founder @ Schrödinger Hat
           </p>
 
           {/* Location */}
-          <p className={`font-sans text-[14px] text-text-2 mb-8 ${anim3}`}>
-            Software Engineer based in Verona, Italy
+          <p className={`font-mono text-[12px] text-text-3 tracking-[0.04em] mb-8 ${anim3}`}>
+            Based in Verona, Italy
           </p>
 
           {/* CTAs */}
-          <div className={`flex flex-wrap gap-3 mb-10 ${anim4}`}>
+          <div className={`flex flex-wrap gap-3 ${anim4}`}>
             <ButtonLink variant="primary" href="/about">
               About me →
             </ButtonLink>
             <ButtonLink variant="ghost" href="/blog">
               Read the blog →
             </ButtonLink>
-          </div>
-
-          {/* Stats */}
-          <div className={`flex flex-wrap gap-x-8 gap-y-3 ${anim5}`}>
-            {[
-              { value: "17+", label: "talks & events" },
-              { value: "20k+", label: "community members" },
-              { value: "9", label: "articles" },
-            ].map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-0.5">
-                <span className="font-mono text-[20px] font-bold text-text-1 leading-none">
-                  {stat.value}
-                </span>
-                <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
 
