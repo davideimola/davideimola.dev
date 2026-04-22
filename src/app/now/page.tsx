@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-const LAST_UPDATED = "March 2026";
+const LAST_UPDATED = "April 2026";
 
 export default function NowPage() {
   return (
@@ -201,8 +201,9 @@ export default function NowPage() {
               context: "Hontai Yōshin-ryū. White belt. First kata for yellow belt exam.",
             },
             {
-              label: "Ghost of Tsushima",
-              context: "Slow, deliberate, beautiful. Exactly what I need after context-switching.",
+              label: "Crimson Desert",
+              context:
+                "A vast, living open world pulling me in hard. Clunky controls and thin characters, but the immersion wins.",
             },
           ].map((item, i) => (
             <ScrollReveal key={item.label} delay={i * 60}>
