@@ -37,7 +37,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-github-alerts": "^0.1.1",
-    "resend": "^6.12.0"
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.12",
