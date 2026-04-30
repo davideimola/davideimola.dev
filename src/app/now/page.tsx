@@ -101,7 +101,7 @@ export default function NowPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <ScrollReveal delay={120}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
@@ -128,34 +128,49 @@ export default function NowPage() {
                 </p>
               </div>
             </ScrollReveal>
+
+            <ScrollReveal delay={240}>
+              <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
+                <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
+                  <span className="text-accent text-[10px]">//</span>
+                  Reading
+                </span>
+                <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
+                  Fournier's <span className="text-text-2">The Manager's Path</span> and Larson's{" "}
+                  <span className="text-text-2">An Elegant Puzzle</span>, in parallel. Career map
+                  plus systems thinking — testing what holds against the Tech Lead transition I'm
+                  actually living.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* OS Day — standalone, no section header overhead */}
+      {/* SH Branches — standalone, no section header overhead */}
       <ScrollReveal>
         <div className="mb-14 border-t border-border pt-10">
           <div className="border-l-2 border-accent pl-6 flex flex-col gap-2">
             <div className="flex flex-wrap items-center gap-3">
               <span className="font-mono text-[13px] font-medium text-text-1">
-                Open Source Day 2026
+                Schrodinger Hat Branches
               </span>
               <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
                 co-organizer
               </span>
             </div>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed">
-              Deep in preparation for the next edition. Free, open to everyone — students,
-              developers, curious people without a budget. Alongside the conference, we're expanding
-              Schrodinger Hat Branches: free meetups across Italy and Europe.
+              Schrodinger Hat's distributed arm — free local meetups, each run by people on the
+              ground. I lead the program: spinning up new chapters and keeping the active ones
+              moving. Rome, Verona, Milan, Florence launching now. Looking abroad next.
             </p>
             <a
-              href="https://osday.dev"
+              href="https://schrodinger-hat.it"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start"
             >
-              osday.dev →
+              schrodinger-hat.it →
             </a>
           </div>
         </div>
