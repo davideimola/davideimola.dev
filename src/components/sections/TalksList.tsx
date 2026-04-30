@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import type { Talk } from "../../lib/content";
 import { Badge } from "../ui/Badge";
 import { ScrollReveal } from "../ui/ScrollReveal";
@@ -35,7 +36,7 @@ function TalkCard({ talk, index, activeTag }: { talk: Talk; index: number; activ
 
   return (
     <ScrollReveal delay={index * 60}>
-      <li id={talk.slug}>
+      <li id={talk.slug} className="scroll-mt-20">
         <div className="py-6 flex flex-col gap-4">
           {/* Top row: date · location */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-4">
@@ -118,6 +119,28 @@ function TalkCard({ talk, index, activeTag }: { talk: Talk; index: number; activ
 export function TalksList({ talks }: TalksListProps) {
   const searchParams = useSearchParams();
   const activeTag = searchParams.get("tag") ?? undefined;
+
+  // Re-trigger hash scroll after the list mounts.
+  // The native browser scroll fires before this client component hydrates,
+  // so direct links like /sharing#golab-2026 land at the top of the page.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    let cancelled = false;
+    const tryScroll = (attempts = 0) => {
+      if (cancelled) return;
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ block: "start" });
+      } else if (attempts < 20) {
+        requestAnimationFrame(() => tryScroll(attempts + 1));
+      }
+    };
+    tryScroll();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
