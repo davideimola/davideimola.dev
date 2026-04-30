@@ -1,5 +1,18 @@
 [
   {
+    "slug": "golab-2026",
+    "event": "GOLab 2026",
+    "type": "Conference",
+    "date": "2026-11-01",
+    "eventDateRange": "Nov 1–3",
+    "location": "Bologna, Italy",
+    "tags": ["Go", "Security", "Supply Chain", "Testing"],
+    "session": {
+      "title": "Securing Go for Production: Best Practices, Supply Chain, Testing",
+      "format": "Talk"
+    }
+  },
+  {
     "slug": "open-source-day-2026",
     "event": "Open Source Day 2026",
     "type": "Conference",
