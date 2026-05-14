@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 const TECHNOLOGIES = [
   {
     name: "Go",
-    context: "Primary language. Production microservices, two GOLab talks.",
+    context: "Primary language. Production microservices, two GoLab talks.",
   },
   {
     name: "Kubernetes",
@@ -79,7 +79,7 @@ const TECHNOLOGIES = [
 const METHODOLOGIES = [
   {
     name: "DDD",
-    context: "Domain-Driven Design. Modeling complex domains — GOLab 2024 talk on Go + DDD.",
+    context: "Domain-Driven Design. Modeling complex domains — GoLab 2024 talk on Go + DDD.",
   },
   {
     name: "TDD",
@@ -199,7 +199,7 @@ const COMMUNITY = [
     name: "Sharing",
     role: "Speaker & Organizer",
     description:
-      "GOLab, KCD Italy, WeAreDevelopers World Congress, DevSecOps Day, Incontro DevOps Italia and more. Concrete talks, honest about tradeoffs.",
+      "GoLab, KCD Italy, WeAreDevelopers World Congress, DevSecOps Day, Incontro DevOps Italia and more. Concrete talks, honest about tradeoffs.",
     href: "/sharing",
   },
   {
