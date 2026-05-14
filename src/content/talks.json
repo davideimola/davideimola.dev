@@ -1,7 +1,7 @@
 [
   {
     "slug": "golab-2026",
-    "event": "GOLab 2026",
+    "event": "GoLab 2026",
     "type": "Conference",
     "date": "2026-11-01",
     "eventDateRange": "Nov 1–3",
@@ -65,7 +65,7 @@
   },
   {
     "slug": "golab-2024",
-    "event": "GOLab 2024",
+    "event": "GoLab 2024",
     "type": "Conference",
     "date": "2024-11-13",
     "location": "Florence, Italy",
@@ -158,7 +158,7 @@
   },
   {
     "slug": "golab-2023",
-    "event": "GOLab 2023",
+    "event": "GoLab 2023",
     "type": "Conference",
     "date": "2023-11-21",
     "location": "Florence, Italy",

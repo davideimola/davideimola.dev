@@ -21,7 +21,7 @@ type Story = StoryObj<typeof TalksList>;
 const mockTalks: Talk[] = [
   {
     slug: "go-concurrency-patterns-golab-2024",
-    event: "GOLab",
+    event: "GoLab",
     date: "2024-10-28",
     location: "Florence, Italy",
     type: "Conference",
