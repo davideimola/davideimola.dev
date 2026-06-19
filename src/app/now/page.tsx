@@ -213,12 +213,12 @@ export default function NowPage() {
             },
             {
               label: "JuJutsu",
-              context: "Hontai Yōshin-ryū. White belt. First kata for yellow belt exam.",
+              context: "Hontai Yōshin-ryū. Yellow belt earned — now training for orange next year.",
             },
             {
-              label: "Crimson Desert",
+              label: "Gaming",
               context:
-                "A vast, living open world pulling me in hard. Clunky controls and thin characters, but the immersion wins.",
+                "Lost in Crimson Desert's open world, with Pokémon Pokopia as the cozy palate cleanser.",
             },
           ].map((item, i) => (
             <ScrollReveal key={item.label} delay={i * 60}>
