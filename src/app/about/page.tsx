@@ -248,7 +248,7 @@ const HOBBIES = [
   {
     label: "JuJutsu",
     icon: IconKarate,
-    context: "Hontai Yōshin-ryū. White belt — still figuring out how to fall correctly.",
+    context: "Hontai Yōshin-ryū. Yellow belt — orange is the next milestone.",
     href: null,
   },
   {
