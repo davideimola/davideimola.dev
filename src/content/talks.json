@@ -13,6 +13,19 @@
     }
   },
   {
+    "slug": "cometocode-2026",
+    "event": "ComeToCode 2026",
+    "type": "Conference",
+    "date": "2026-09-26",
+    "eventDateRange": "Sep 26–27",
+    "location": "Pignola, Italy",
+    "tags": ["Security", "AI"],
+    "session": {
+      "title": "Il security engineer che già AI",
+      "format": "Talk"
+    }
+  },
+  {
     "slug": "open-source-day-2026",
     "event": "Open Source Day 2026",
     "type": "Conference",
