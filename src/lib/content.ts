@@ -185,6 +185,15 @@ export function getAllTalks(): Talk[] {
   return loadTalks().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
+// Future engagements, soonest first — drives the forward-looking "Upcoming" modules.
+export function getUpcomingTalks(): Talk[] {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return loadTalks()
+    .filter((t) => new Date(t.date) >= today)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+}
+
 // ── Projects ──────────────────────────────────────────────────────────────
 
 function loadProjects(): Project[] {
