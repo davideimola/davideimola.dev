@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import type { Talk } from "../../lib/content";
+import { formatRelative } from "../../lib/dates";
 import { Badge } from "../ui/Badge";
+import { BookingPrompt } from "../ui/BookingPrompt";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { SectionHeader } from "../ui/SectionHeader";
 
@@ -13,15 +15,6 @@ function formatDate(dateStr: string): string {
     month: "short",
     day: "numeric",
   });
-}
-
-// Coarse, drift-tolerant proximity hint for the next upcoming stop.
-function formatRelative(dateStr: string, today: Date): string {
-  const days = Math.round((new Date(dateStr).getTime() - today.getTime()) / 86_400_000);
-  if (days <= 7) return "this week";
-  if (days <= 21) return "in a few weeks";
-  const months = Math.max(1, Math.round(days / 30));
-  return months === 1 ? "next month" : `in ${months} months`;
 }
 
 interface Timeline {
@@ -235,61 +228,88 @@ export function TalksList({ talks }: TalksListProps) {
         </div>
       )}
 
-      <div className="flex flex-col gap-16">
-        {upcoming.length > 0 && (
-          <section>
-            <ScrollReveal>
-              <SectionHeader title="Upcoming Engagements" />
-              <p className="font-sans text-[13px] text-text-3 -mt-8 mb-8">
-                Where you can catch me next — soonest first.
-              </p>
-            </ScrollReveal>
-            <ul className="flex flex-col">
-              {upcoming.map((talk, i) => (
-                <TalkCard
-                  key={talk.slug}
-                  talk={talk}
-                  index={i}
-                  activeTag={activeTag}
-                  timeline={{
-                    isFirst: i === 0,
-                    isLast: i === upcoming.length - 1,
-                    relative: i === 0 ? formatRelative(talk.date, today) : undefined,
-                  }}
-                />
-              ))}
-            </ul>
-          </section>
-        )}
+      {activeTag && upcoming.length === 0 && past.length === 0 ? (
+        // Filter matched nothing — give direction instead of a blank page.
+        <p className="font-mono text-[13px] text-text-2">
+          No engagements tagged <span className="text-accent">#{activeTag.toLowerCase()}</span> yet.{" "}
+          <Link
+            href="/sharing"
+            scroll={false}
+            className="text-text-3 hover:text-accent transition-colors duration-150"
+          >
+            Clear filter →
+          </Link>
+        </p>
+      ) : (
+        <div className="flex flex-col gap-16">
+          {upcoming.length > 0 ? (
+            <section>
+              <ScrollReveal>
+                <SectionHeader title="Upcoming Engagements" />
+                <p className="font-sans text-[13px] text-text-3 -mt-8 mb-8">
+                  Where you can catch me next — soonest first.
+                </p>
+              </ScrollReveal>
+              <ul className="flex flex-col">
+                {upcoming.map((talk, i) => (
+                  <TalkCard
+                    key={talk.slug}
+                    talk={talk}
+                    index={i}
+                    activeTag={activeTag}
+                    timeline={{
+                      isFirst: i === 0,
+                      isLast: i === upcoming.length - 1,
+                      relative: i === 0 ? formatRelative(talk.date, today) : undefined,
+                    }}
+                  />
+                ))}
+              </ul>
+            </section>
+          ) : (
+            // No upcoming dates — but only pitch when unfiltered (genuinely "calendar open").
+            // Under an active tag, an empty upcoming just means "none for this tag", so stay quiet.
+            !activeTag && (
+              <section>
+                <ScrollReveal>
+                  <SectionHeader title="Upcoming Engagements" />
+                </ScrollReveal>
+                <ScrollReveal>
+                  <BookingPrompt message="No public dates on the calendar right now — want me at your event?" />
+                </ScrollReveal>
+              </section>
+            )
+          )}
 
-        {past.length > 0 && (
-          <section>
-            <ScrollReveal>
-              <SectionHeader title="Past Engagements" />
-            </ScrollReveal>
-            <div className="flex flex-col gap-10">
-              {years.map((year) => (
-                <div key={year}>
-                  <ScrollReveal>
-                    {/* T3 group divider — year grouping, subordinate to the Past section */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="font-mono text-[11px] text-text-3 tracking-[0.08em]">
-                        {year}
-                      </span>
-                      <span aria-hidden className="h-px flex-1 bg-border" />
-                    </div>
-                  </ScrollReveal>
-                  <ul className="flex flex-col divide-y divide-border">
-                    {byYear[year].map((talk, i) => (
-                      <TalkCard key={talk.slug} talk={talk} index={i} activeTag={activeTag} />
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+          {past.length > 0 && (
+            <section>
+              <ScrollReveal>
+                <SectionHeader title="Past Engagements" />
+              </ScrollReveal>
+              <div className="flex flex-col gap-10">
+                {years.map((year) => (
+                  <div key={year}>
+                    <ScrollReveal>
+                      {/* T3 group divider — year grouping, subordinate to the Past section */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="font-mono text-[11px] text-text-3 tracking-[0.08em]">
+                          {year}
+                        </span>
+                        <span aria-hidden className="h-px flex-1 bg-border" />
+                      </div>
+                    </ScrollReveal>
+                    <ul className="flex flex-col divide-y divide-border">
+                      {byYear[year].map((talk, i) => (
+                        <TalkCard key={talk.slug} talk={talk} index={i} activeTag={activeTag} />
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      )}
     </div>
   );
 }
