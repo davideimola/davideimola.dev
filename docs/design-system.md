@@ -119,7 +119,7 @@ Base card with optional hover glow effect (Akane border + overlay on hover).
 
 ### NavBar
 
-Fixed, blurred backdrop. `davideimola.dev` domain-lockup logo (`.dev` in Akane), nav links, ⌘K button.
+Fixed, blurred backdrop. Wordmark logo — `davideimola` + red cursor bar, pairing with the `di` mark. Nav links, ⌘K button.
 Requires `"use client"` for the search handler.
 
 ### Footer

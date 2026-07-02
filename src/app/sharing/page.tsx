@@ -190,6 +190,14 @@ export default function SharingPage() {
                   </li>
                   <li>
                     <a
+                      href="/brand"
+                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                    >
+                      Brand assets (logo, wordmark) →
+                    </a>
+                  </li>
+                  <li>
+                    <a
                       href="https://bsky.app/profile/davideimola.dev"
                       target="_blank"
                       rel="noopener noreferrer"

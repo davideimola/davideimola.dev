@@ -24,8 +24,15 @@ safe to use anywhere (READMEs, stickers, external tools).
 | Domain lockup | `domain.svg` | `davideimola` + red `.dev`, light ink for dark surfaces |
 | Domain lockup, dark ink | `domain-dark.svg` | Same, for light surfaces |
 
-Regenerate with `python3 scripts/generate-brand.py` (requires `fonttools`:
-`python3 -m venv .venv && .venv/bin/pip install fonttools`).
+Regenerate the SVGs with `python3 scripts/generate-brand.py` (requires
+`fonttools`: `python3 -m venv .venv && .venv/bin/pip install fonttools`),
+then the PNG exports (`mark-512/1024.png`, `wordmark-1200.png`, …) with
+`pnpm brand:png`.
+
+The assets are publicly downloadable at
+[davideimola.dev/brand](https://davideimola.dev/brand) and licensed under
+CC BY-ND 4.0 — see `public/brand/LICENSE.md`. The license covers the brand
+assets only, not the site's source code.
 
 ## Construction
 
@@ -52,5 +59,11 @@ Regenerate with `python3 scripts/generate-brand.py` (requires `fonttools`:
 - `src/app/og/route.tsx` — OG image footer signature (`davide imola` + cursor)
 - `src/app/api/bluesky-cover/route.tsx`, `src/app/api/linkedin-cover/route.tsx`
   — social covers (domain lockup top-left, name + cursor as hero)
-- `src/components/layout/NavBar.tsx` — domain lockup as site logo
+- `src/components/layout/NavBar.tsx` — wordmark form as site logo
+  (`davideimola` + cursor, pairing with the mark)
+- `src/app/brand/page.tsx` — public brand page with downloads and license
 - `.claude/skills/social-post/SKILL.md` — carousel slide anatomy
+
+The domain lockup is reserved for contexts where the address itself is the
+signature: the OG image path, the social covers' top-left corner, and the
+carousel slides. The brand signature everywhere else is the cursor.
