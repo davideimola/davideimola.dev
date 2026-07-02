@@ -74,7 +74,7 @@ export function ContactForm() {
           required
           autoComplete="name"
           placeholder="Your name"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-border-hover transition-colors duration-150"
+          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150"
         />
       </div>
 
@@ -93,7 +93,7 @@ export function ContactForm() {
           required
           autoComplete="email"
           placeholder="your@email.com"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-border-hover transition-colors duration-150"
+          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150"
         />
       </div>
 
@@ -111,8 +111,12 @@ export function ContactForm() {
           required
           rows={6}
           placeholder="What's on your mind?"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-border-hover transition-colors duration-150 resize-none"
+          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150 resize-none"
         />
+        <p className="font-mono text-[11px] text-text-3">
+          <span className="text-accent">{"//"}</span> no links, please — you can share them once I
+          reply
+        </p>
       </div>
 
       {/* Turnstile */}
