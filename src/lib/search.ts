@@ -53,6 +53,20 @@ const STATIC_PAGES: SearchItem[] = [
     description: "Open source tools, communities, and side projects.",
     href: "/projects",
   },
+  {
+    id: "page-contact",
+    type: "page",
+    title: "Contact",
+    description: "Send me a message or find me online.",
+    href: "/contact",
+  },
+  {
+    id: "page-privacy",
+    type: "page",
+    title: "Privacy",
+    description: "Privacy policy for davideimola.dev.",
+    href: "/privacy",
+  },
 ];
 
 export function buildSearchIndex(): SearchItem[] {

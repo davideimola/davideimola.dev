@@ -146,18 +146,18 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
   if (!open) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] px-4"
-      onClick={onClose}
-    >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-[rgba(8,8,7,0.80)] backdrop-blur-sm" />
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] px-4">
+      {/* Backdrop — a real button so click-to-close is keyboard-accessible too */}
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label="Close search"
+        onClick={onClose}
+        className="absolute inset-0 bg-[rgba(8,8,7,0.80)] backdrop-blur-sm cursor-default"
+      />
 
       {/* Palette */}
-      <div
-        className="relative w-full max-w-[600px] border border-border rounded-sm overflow-hidden shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative w-full max-w-[600px] border border-border rounded-sm overflow-hidden shadow-2xl">
         <Command className="bg-bg-card font-mono" loop>
           {/* Input */}
           <div className="flex items-center gap-3 px-4 border-b border-border">

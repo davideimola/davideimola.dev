@@ -75,7 +75,7 @@ export default function NowPage() {
           <ScrollReveal>
             <div className="flex flex-col gap-2">
               <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                <span className="text-accent text-[10px]">//</span>
+                <span className="text-accent text-[10px]">{"//"}</span>
                 Tech Lead at RedCarbon
               </span>
               <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
@@ -90,7 +90,7 @@ export default function NowPage() {
           <ScrollReveal delay={60}>
             <div className="flex flex-col gap-2">
               <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                <span className="text-accent text-[10px]">//</span>
+                <span className="text-accent text-[10px]">{"//"}</span>
                 Building Worky
               </span>
               <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
@@ -105,7 +105,7 @@ export default function NowPage() {
             <ScrollReveal delay={120}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">//</span>
+                  <span className="text-accent text-[10px]">{"//"}</span>
                   Learning to work with AI
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
@@ -119,7 +119,7 @@ export default function NowPage() {
             <ScrollReveal delay={180}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">//</span>
+                  <span className="text-accent text-[10px]">{"//"}</span>
                   Security — daily practice
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
@@ -132,7 +132,7 @@ export default function NowPage() {
             <ScrollReveal delay={240}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">//</span>
+                  <span className="text-accent text-[10px]">{"//"}</span>
                   Reading
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
@@ -186,7 +186,7 @@ export default function NowPage() {
         <ScrollReveal>
           <div className="flex flex-col gap-2 mb-8">
             <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-              <span className="text-accent text-[10px]">//</span>
+              <span className="text-accent text-[10px]">{"//"}</span>
               D&D — playing and building
             </span>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
@@ -224,7 +224,7 @@ export default function NowPage() {
             <ScrollReveal key={item.label} delay={i * 60}>
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">//</span>
+                  <span className="text-accent text-[10px]">{"//"}</span>
                   {item.label}
                 </span>
                 <p className="font-sans text-[12px] text-text-3 leading-relaxed pl-5">

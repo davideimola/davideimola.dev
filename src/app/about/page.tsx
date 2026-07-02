@@ -11,27 +11,13 @@ import {
   IconPokeball,
 } from "@tabler/icons-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { ExperienceEntry } from "../../components/ui/ExperienceTimeline";
 import { ExperienceTimeline } from "../../components/ui/ExperienceTimeline";
 import { JsonLd } from "../../components/ui/JsonLd";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../components/ui/SectionHeader";
-
-const PERSON_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Davide Imola",
-  url: "https://davideimola.dev",
-  jobTitle: "Tech Lead",
-  worksFor: { "@type": "Organization", name: "RedCarbon" },
-  description:
-    "Tech Lead, platform engineer, open source builder. Conference speaker on DevOps, GitOps, and Go.",
-  sameAs: [
-    "https://github.com/davideimola",
-    "https://www.linkedin.com/in/davideimola/",
-    "https://bsky.app/profile/davideimola.dev",
-  ],
-};
+import { PERSON_SCHEMA } from "../../lib/schema";
 
 export const metadata: Metadata = {
   title: "About",
@@ -325,9 +311,11 @@ export default function AboutPage() {
             {/* Photo */}
             <div className="shrink-0 sm:mt-14">
               <div className="w-[220px] sm:w-[280px] aspect-3/4 overflow-hidden rounded-sm border border-border">
-                <img
+                <Image
                   src="/images/davide-about-profile.webp"
-                  alt="Davide Imola speaking at a conference"
+                  alt="Portrait of Davide Imola"
+                  width={280}
+                  height={373}
                   className="w-full h-full object-cover object-top"
                 />
               </div>

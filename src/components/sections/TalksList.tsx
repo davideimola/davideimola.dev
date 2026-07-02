@@ -4,18 +4,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import type { Talk } from "../../lib/content";
-import { formatRelative } from "../../lib/dates";
+import { formatRelative, formatShortDate } from "../../lib/dates";
 import { Badge } from "../ui/Badge";
 import { BookingPrompt } from "../ui/BookingPrompt";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { SectionHeader } from "../ui/SectionHeader";
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-}
 
 interface Timeline {
   isFirst: boolean;
@@ -49,7 +42,7 @@ function TalkCard({
 }) {
   const { session } = talk;
   const hasMedia = !!(session?.slides || session?.video);
-  const displayDate = talk.eventDateRange ?? formatDate(talk.date);
+  const displayDate = talk.eventDateRange ?? formatShortDate(talk.date);
   const hasRole = !!(talk.organizer || talk.mc || session);
 
   return (
@@ -206,7 +199,8 @@ export function TalksList({ talks }: TalksListProps) {
 
   const byYear = past.reduce<Record<string, typeof past>>((acc, talk) => {
     const year = new Date(talk.date).getFullYear().toString();
-    (acc[year] ??= []).push(talk);
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(talk);
     return acc;
   }, {});
   const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));

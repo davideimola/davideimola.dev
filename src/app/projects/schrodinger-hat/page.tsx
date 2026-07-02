@@ -50,15 +50,17 @@ export default function SchrodingerHatCaseStudy() {
             Schrodinger Hat
           </h1>
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="font-mono text-[12px] text-accent">// Co-founder & Admin Member</span>
+            <span className="font-mono text-[12px] text-accent">
+              {"// Co-founder & Admin Member"}
+            </span>
             <span className="font-mono text-[12px] text-text-3">2022 – present</span>
             <a
-              href="https://schrodinger-hat.org"
+              href="https://schrodinger-hat.it"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
             >
-              schrodinger-hat.org →
+              schrodinger-hat.it →
             </a>
           </div>
           <p className="font-sans text-[16px] text-text-2 leading-relaxed">
@@ -130,8 +132,8 @@ export default function SchrodingerHatCaseStudy() {
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               Over time, through consistent contribution, I became a socio fondatore — a co-founder
-              in the formal sense — and an admin member of the organization. I didn't start there.
-              I earned it.
+              in the formal sense — and an admin member of the organization. I didn't start there. I
+              earned it.
             </p>
           </div>
         </section>
@@ -214,8 +216,8 @@ export default function SchrodingerHatCaseStudy() {
           </h2>
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              Community can change your career in ways no job posting can. The company where I'm
-              now Tech Lead — I found through a connection I made at a community event. Not through
+              Community can change your career in ways no job posting can. The company where I'm now
+              Tech Lead — I found through a connection I made at a community event. Not through
               LinkedIn. Not through a recruiter. Through showing up consistently and building
               relationships with people who care about the same things.
             </p>

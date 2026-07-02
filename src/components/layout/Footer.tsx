@@ -1,34 +1,26 @@
-import {
-  IconBrandBluesky,
-  IconBrandGithub,
-  IconBrandLinkedin,
-} from "@tabler/icons-react";
+import { IconBrandBluesky, IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { SOCIAL_PROFILES } from "../../lib/social";
 
 const FOOTER_LINKS = [
   { label: "contact", href: "/contact" },
   { label: "privacy", href: "/privacy" },
   { label: "now", href: "/now" },
+  { label: "uses", href: "/uses" },
   { label: "rss", href: "/rss.xml" },
   { label: "source", href: "https://github.com/davideimola/davideimola.dev" },
 ];
 
-const SOCIAL_LINKS = [
-  {
-    icon: IconBrandGithub,
-    href: "https://github.com/davideimola",
-    label: "GitHub",
-  },
-  {
-    icon: IconBrandLinkedin,
-    href: "https://www.linkedin.com/in/davideimola/",
-    label: "LinkedIn",
-  },
-  {
-    icon: IconBrandBluesky,
-    href: "https://bsky.app/profile/davideimola.dev",
-    label: "BlueSky",
-  },
-];
+const SOCIAL_ICONS: Record<string, typeof IconBrandGithub> = {
+  GitHub: IconBrandGithub,
+  LinkedIn: IconBrandLinkedin,
+  BlueSky: IconBrandBluesky,
+};
+
+const SOCIAL_LINKS = SOCIAL_PROFILES.map((profile) => ({
+  icon: SOCIAL_ICONS[profile.label],
+  href: profile.url,
+  label: profile.label,
+}));
 
 export function Footer() {
   const year = new Date().getFullYear();

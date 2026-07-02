@@ -1,13 +1,6 @@
 import { getRecentPosts } from "../../lib/content";
+import { formatDate } from "../../lib/dates";
 import { Card, ScrollReveal, SectionHeader } from "../ui";
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-}
 
 export function WritingSection() {
   const [featured, ...rest] = getRecentPosts(3);

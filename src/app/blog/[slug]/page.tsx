@@ -9,7 +9,6 @@ import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
 import { AuthorBio } from "../../../components/ui/AuthorBio";
 import { BackToTop } from "../../../components/ui/BackToTop";
-import { Badge } from "../../../components/ui/Badge";
 import { Breadcrumb } from "../../../components/ui/Breadcrumb";
 import { CodeBlock } from "../../../components/ui/CodeBlock";
 import { GiscusComments } from "../../../components/ui/GiscusComments";
@@ -26,6 +25,7 @@ import {
   getPrevNextPosts,
   getRelatedPosts,
 } from "../../../lib/content";
+import { formatDate } from "../../../lib/dates";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -64,14 +64,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [ogImageUrl],
     },
   };
-}
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
 }
 
 export default async function BlogPostPage({ params }: Props) {

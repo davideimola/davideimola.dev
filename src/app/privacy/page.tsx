@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <div className="max-w-2xl flex flex-col gap-10 font-sans text-[14px] text-text-2 leading-relaxed">
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            // Data collected
+            {"// Data collected"}
           </h2>
           <p>
             This site does not collect personal data directly. No account, no login, no tracking
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            // Comments
+            {"// Comments"}
           </h2>
           <p>
             Blog post comments are powered by{" "}
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            // Hosting
+            {"// Hosting"}
           </h2>
           <p>
             This site is hosted on{" "}
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            // Cookies
+            {"// Cookies"}
           </h2>
           <p>
             This site sets no first-party cookies. Third-party services (Giscus/GitHub) may set
@@ -106,7 +106,7 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            // Contact
+            {"// Contact"}
           </h2>
           <p>
             For any privacy-related questions, reach me at{" "}
