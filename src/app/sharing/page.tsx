@@ -168,7 +168,7 @@ export default function SharingPage() {
                       key={topic}
                       className="font-sans text-[14px] text-text-2 flex items-center gap-2"
                     >
-                      <span className="text-accent font-mono text-[10px]">//</span>
+                      <span className="text-accent font-mono text-[10px]">{"//"}</span>
                       {topic}
                     </li>
                   ))}
@@ -236,7 +236,14 @@ export default function SharingPage() {
       </section>
 
       {/* Talks */}
-      <Suspense>
+      <Suspense
+        fallback={
+          <p className="font-mono text-[13px] text-text-3" aria-hidden="true">
+            <span className="text-accent">❯</span> loading
+            <span className="inline-block w-[3px] h-[1em] bg-accent ml-1 align-middle animate-[blink_1.1s_step-end_infinite]" />
+          </p>
+        }
+      >
         <TalksList talks={allTalks} />
       </Suspense>
 

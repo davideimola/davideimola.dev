@@ -1,17 +1,10 @@
 import type { Talk } from "../../lib/content";
 import { getRecentTalks, getUpcomingTalks } from "../../lib/content";
-import { formatRelative } from "../../lib/dates";
+import { formatMonthYear, formatRelative } from "../../lib/dates";
 import { BookingPrompt, ScrollReveal, SectionHeader } from "../ui";
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric",
-  });
-}
-
 function displayDate(talk: Talk): string {
-  return talk.eventDateRange ?? formatDate(talk.date);
+  return talk.eventDateRange ?? formatMonthYear(talk.date);
 }
 
 // The nearest engagement, given a little room to breathe and a clear "next" marker.

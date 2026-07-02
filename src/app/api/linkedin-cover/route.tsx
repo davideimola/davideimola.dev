@@ -44,8 +44,7 @@ export async function GET() {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage:
-            "radial-gradient(circle, rgba(201,31,55,0.12) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(201,31,55,0.12) 1px, transparent 1px)",
           backgroundSize: "20px 20px",
           opacity: 0.5,
         }}
@@ -174,6 +173,6 @@ export async function GET() {
         { name: "JetBrains Mono", data: fontBold, weight: 700, style: "normal" },
         { name: "JetBrains Mono", data: fontRegular, weight: 400, style: "normal" },
       ],
-    },
+    }
   );
 }

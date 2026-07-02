@@ -1,10 +1,5 @@
+import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 import { ScrollReveal } from "../ui";
-
-const LINKS = [
-  { label: "GitHub", href: "https://github.com/davideimola" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/davideimola/" },
-  { label: "BlueSky", href: "https://bsky.app/profile/davideimola.dev" },
-];
 
 export function ConnectSection() {
   return (
@@ -20,10 +15,10 @@ export function ConnectSection() {
               directly.
             </p>
             <div className="flex flex-wrap justify-center gap-6">
-              {LINKS.map((link) => (
+              {SOCIAL_PROFILES.map((link) => (
                 <a
                   key={link.label}
-                  href={link.href}
+                  href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-[13px] text-text-2 no-underline tracking-[0.04em] transition-colors duration-150 hover:text-accent"
@@ -35,7 +30,7 @@ export function ConnectSection() {
             </div>
             <div className="flex flex-wrap justify-center gap-3">
               <a
-                href="https://cal.com/davideimola"
+                href={CAL_COM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-[12px] text-text-1 bg-accent/10 border border-accent/30 rounded-[3px] px-4 py-2 no-underline transition-[border-color,color,background-color] duration-150 hover:bg-accent/20 hover:border-accent/50"

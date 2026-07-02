@@ -130,7 +130,7 @@ export async function GET(request: Request) {
         >
           <span style={{ color: "#9A948E", fontSize: "16px" }}>Davide Imola</span>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ color: "#C91F37", fontSize: "12px" }}>//</span>
+            <span style={{ color: "#C91F37", fontSize: "12px" }}>{"//"}</span>
             <span style={{ color: "#7E7874", fontSize: "14px" }}>
               Tech Lead · Speaker · Open Source
             </span>

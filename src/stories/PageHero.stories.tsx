@@ -50,7 +50,7 @@ export const WithChildren: Story = {
       >
         Last updated: <span style={{ color: "#9A948E" }}>March 2026</span>
         {" · "}
-        <a href="#" style={{ color: "inherit" }}>
+        <a href="/about" style={{ color: "inherit" }}>
           what is this?
         </a>
       </p>

@@ -56,7 +56,7 @@ export default function RedCarbonCaseStudy() {
             RedCarbon
           </h1>
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="font-mono text-[12px] text-accent">// Tech Lead</span>
+            <span className="font-mono text-[12px] text-accent">{"// Tech Lead"}</span>
             <span className="font-mono text-[12px] text-text-3">2022 – present</span>
             <a
               href="https://redcarbon.ai"
@@ -68,11 +68,11 @@ export default function RedCarbonCaseStudy() {
             </a>
           </div>
           <p className="font-sans text-[16px] text-text-2 leading-relaxed">
-            I joined RedCarbon as one of its first engineers when the company was barely formed. Over
-            four years, the team has grown from 3 to 10+ people, the platform now processes 500k+
-            alerts monthly, and the company has reached Series A funding. I'm Tech Lead of a team I
-            helped build from scratch — in a domain I had to teach myself, on a codebase I helped
-            design.
+            I joined RedCarbon as one of its first engineers when the company was barely formed.
+            Over four years, the team has grown from 3 to 10+ people, the platform now processes
+            500k+ alerts monthly, and the company has reached Series A funding. I'm Tech Lead of a
+            team I helped build from scratch — in a domain I had to teach myself, on a codebase I
+            helped design.
           </p>
         </header>
       </ScrollReveal>
@@ -124,8 +124,8 @@ export default function RedCarbonCaseStudy() {
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               My background was DevOps — infrastructure, pipelines, containers. I knew how systems
-              run. What I didn't know was how a product is built: how to read a business requirement,
-              how to model a domain, how to make tradeoffs that matter to a customer.
+              run. What I didn't know was how a product is built: how to read a business
+              requirement, how to model a domain, how to make tradeoffs that matter to a customer.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               The domain made this harder. Cybersecurity at the SOC level is a complex, specialized
@@ -133,8 +133,8 @@ export default function RedCarbonCaseStudy() {
               learn the theory and the practice simultaneously while shipping production code.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              I had to stop thinking in infrastructure terms and start thinking in product and domain
-              terms. That shift took time and it was uncomfortable. I wouldn't trade it.
+              I had to stop thinking in infrastructure terms and start thinking in product and
+              domain terms. That shift took time and it was uncomfortable. I wouldn't trade it.
             </p>
           </div>
         </section>
@@ -202,9 +202,9 @@ export default function RedCarbonCaseStudy() {
               misunderstandings.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              My approach to leadership is deliberate: I avoid micromanagement. Senior engineers
-              own their architectural decisions — I set direction and remove blockers. Where I focus
-              is on mentorship: helping juniors grow and, over time, positioning senior engineers to
+              My approach to leadership is deliberate: I avoid micromanagement. Senior engineers own
+              their architectural decisions — I set direction and remove blockers. Where I focus is
+              on mentorship: helping juniors grow and, over time, positioning senior engineers to
               become future team leaders themselves. If I do my job right, I make myself
               replaceable.
             </p>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SOCIAL_PROFILES } from "../../lib/social";
 
 export function AuthorBio() {
   return (
@@ -19,30 +20,17 @@ export function AuthorBio() {
           engineering, open source, and the human side of tech.
         </p>
         <div className="flex items-center gap-4 mt-3">
-          <a
-            href="https://bsky.app/profile/davideimola.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-          >
-            BlueSky
-          </a>
-          <a
-            href="https://www.linkedin.com/in/davideimola/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/davideimola"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-          >
-            GitHub
-          </a>
+          {SOCIAL_PROFILES.map((social) => (
+            <a
+              key={social.url}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+            >
+              {social.label}
+            </a>
+          ))}
         </div>
       </div>
     </div>

@@ -28,7 +28,14 @@ export default function BlogPage() {
         title="Writing"
         description={`${allPosts.length} articles on engineering, platform thinking, Go, and security.`}
       />
-      <Suspense>
+      <Suspense
+        fallback={
+          <p className="font-mono text-[13px] text-text-3" aria-hidden="true">
+            <span className="text-accent">❯</span> loading
+            <span className="inline-block w-[3px] h-[1em] bg-accent ml-1 align-middle animate-[blink_1.1s_step-end_infinite]" />
+          </p>
+        }
+      >
         <BlogList posts={allPosts} />
       </Suspense>
     </div>

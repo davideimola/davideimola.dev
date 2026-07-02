@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "../../components/ui/PageHero";
+import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
@@ -16,14 +17,12 @@ export const metadata: Metadata = {
 };
 
 const LINKS = [
-  { label: "GitHub", handle: "@davideimola", href: "https://github.com/davideimola" },
-  { label: "LinkedIn", handle: "in/davideimola", href: "https://www.linkedin.com/in/davideimola/" },
-  {
-    label: "BlueSky",
-    handle: "@davideimola.dev",
-    href: "https://bsky.app/profile/davideimola.dev",
-  },
-  { label: "Cal.com", handle: "book a call", href: "https://cal.com/davideimola" },
+  ...SOCIAL_PROFILES.map((profile) => ({
+    label: profile.label,
+    handle: profile.handle,
+    href: profile.url,
+  })),
+  { label: "Cal.com", handle: "book a call", href: CAL_COM_URL },
 ];
 
 export default function ContactPage() {

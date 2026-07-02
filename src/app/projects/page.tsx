@@ -52,7 +52,7 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {projects.map((project, i) => (
           <ScrollReveal key={project.slug} delay={i * 80}>
-            <Card className="h-full">
+            <Card className="group h-full">
               <div className="flex flex-col gap-4 h-full">
                 {/* TOP — period + optional badge */}
                 <div
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
                     {project.title}
                   </h2>
                   {project.role && (
-                    <span className="font-mono text-[11px] text-text-3">// {project.role}</span>
+                    <span className="font-mono text-[11px] text-text-3">{`// ${project.role}`}</span>
                   )}
                 </div>
 

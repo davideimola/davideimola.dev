@@ -22,7 +22,7 @@ export const NotConfigured: Story = {
   render: () => (
     <div className="mt-16 pt-10 border-t border-border">
       <p className="font-mono text-[11px] text-text-3">
-        // GiscusComments — renders when NEXT_PUBLIC_GISCUS_REPO_ID and
+        {"//"} GiscusComments — renders when NEXT_PUBLIC_GISCUS_REPO_ID and
         NEXT_PUBLIC_GISCUS_CATEGORY_ID are set
       </p>
     </div>

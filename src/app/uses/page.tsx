@@ -256,7 +256,7 @@ export default function UsesPage() {
                   {section.items.map((item) => (
                     <div key={item.name} className="flex flex-col gap-0.5">
                       <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                        <span className="text-accent text-[10px]">//</span>
+                        <span className="text-accent text-[10px]">{"//"}</span>
                         {item.name}
                       </span>
                       <span className="font-sans text-[13px] text-text-3 pl-5">
@@ -287,7 +287,7 @@ export default function UsesPage() {
                   {section.items.map((item) => (
                     <div key={item.name} className="flex flex-col gap-0.5">
                       <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                        <span className="text-accent text-[10px]">//</span>
+                        <span className="text-accent text-[10px]">{"//"}</span>
                         {item.name}
                       </span>
                       <span className="font-sans text-[13px] text-text-3 pl-5">

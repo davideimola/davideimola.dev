@@ -7,20 +7,7 @@ import {
   WritingSection,
 } from "../components/sections";
 import { JsonLd } from "../components/ui/JsonLd";
-
-const PERSON_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Davide Imola",
-  url: "https://davideimola.dev",
-  jobTitle: "Tech Lead",
-  worksFor: { "@type": "Organization", name: "RedCarbon" },
-  sameAs: [
-    "https://github.com/davideimola",
-    "https://www.linkedin.com/in/davideimola/",
-    "https://bsky.app/profile/davideimola.dev",
-  ],
-};
+import { PERSON_SCHEMA } from "../lib/schema";
 
 const WEBSITE_SCHEMA = {
   "@context": "https://schema.org",
