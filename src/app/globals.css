@@ -54,6 +54,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Visible keyboard focus on the near-black background. Lives in the base
+   layer so deliberate `outline-none` utilities (form fields with their own
+   border-based focus) still win. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
 body {
   background: var(--bg);
   color: var(--text-1);
@@ -341,5 +351,22 @@ pre[class*="language-"] {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ── Reduced motion ── */
+/* Near-zero duration instead of `animation: none` so fill-mode animations
+   (fadeUp with `both`) still complete and content never stays invisible. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

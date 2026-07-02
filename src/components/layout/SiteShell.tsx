@@ -1,5 +1,6 @@
 "use client";
 
+import { MotionConfig } from "motion/react";
 import { useEffect, useState } from "react";
 import type { SearchItem } from "../../lib/search";
 import { CommandPalette } from "./CommandPalette";
@@ -58,10 +59,10 @@ export function SiteShell({ items, children }: SiteShellProps) {
   }, []);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <NavBar onSearchOpen={() => setOpen(true)} />
       <CommandPalette open={open} onClose={() => setOpen(false)} items={items} />
       {children}
-    </>
+    </MotionConfig>
   );
 }
