@@ -58,7 +58,7 @@ const sampleItems: SearchItem[] = [
     type: "project",
     title: "Schrodinger Hat",
     description: "Open source community and events about software development.",
-    href: "https://schrodinger-hat.it",
+    href: "https://schroedinger-hat.org",
     meta: "Active",
   },
   {
