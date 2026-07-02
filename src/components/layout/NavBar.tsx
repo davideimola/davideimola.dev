@@ -30,7 +30,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
           href="/"
           className="font-mono text-[13px] font-medium text-text-1 no-underline tracking-[-0.02em]"
         >
-          <span className="text-accent">~</span>/davideimola
+          davideimola<span className="text-accent">.dev</span>
         </a>
 
         {/* Desktop: Nav links + search */}

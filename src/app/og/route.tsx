@@ -87,8 +87,8 @@ export async function GET(request: Request) {
           }}
         >
           <span style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-            <span style={{ color: "#C91F37" }}>~</span>
-            <span style={{ color: "#7E7874" }}>/davideimola</span>
+            <span style={{ color: "#7E7874" }}>davideimola</span>
+            <span style={{ color: "#C91F37" }}>.dev</span>
             {category && (
               <span style={{ color: "#7E7874" }}>
                 /<span style={{ color: "#9A948E" }}>{category.toLowerCase()}</span>
@@ -128,7 +128,12 @@ export async function GET(request: Request) {
             justifyContent: "space-between",
           }}
         >
-          <span style={{ color: "#9A948E", fontSize: "16px" }}>Davide Imola</span>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ color: "#9A948E", fontSize: "16px" }}>davide imola</span>
+            <div
+              style={{ width: "3px", height: "14px", background: "#C91F37", marginLeft: "6px" }}
+            />
+          </div>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#C91F37", fontSize: "12px" }}>{"//"}</span>
             <span style={{ color: "#7E7874", fontSize: "14px" }}>

@@ -6,6 +6,8 @@ export const runtime = "nodejs";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
+// The brand mark: "di" + red bar cursor — the hero typing animation's
+// end state. Mirrors public/brand/mark.svg (see docs/brand.md).
 export default async function AppleIcon() {
   const fontPath = path.join(process.cwd(), "public", "fonts", "JetBrainsMono-Bold.ttf");
   const fontData = await readFile(fontPath);
@@ -20,30 +22,26 @@ export default async function AppleIcon() {
         alignItems: "center",
         justifyContent: "center",
         fontFamily: "'JetBrains Mono'",
-        position: "relative",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "5px",
-          background: "#C91F37",
-        }}
-      />
       <span
         style={{
-          fontSize: "52px",
+          color: "#EAE5DF",
+          fontSize: "62px",
           fontWeight: 700,
           lineHeight: 1,
-          display: "flex",
         }}
       >
-        <span style={{ color: "#C91F37" }}>~/</span>
-        <span style={{ color: "#EAE5DF" }}>DI</span>
+        di
       </span>
+      <div
+        style={{
+          width: "11px",
+          height: "54px",
+          background: "#C91F37",
+          marginLeft: "7px",
+        }}
+      />
     </div>,
     {
       ...size,

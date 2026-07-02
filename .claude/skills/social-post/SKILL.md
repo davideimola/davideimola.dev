@@ -138,10 +138,10 @@ Every slide uses the same three-zone layout:
   <div class="absolute" style="bottom:-80px;right:-40px;font-size:500px;color:rgba(201,31,55,0.06);line-height:1;font-weight:700;font-family:'JetBrains Mono',monospace">❯</div>
 
   <div class="relative z-10 w-full h-full flex flex-col justify-between p-14">
-    <!-- TOP: brand + section tag -->
+    <!-- TOP: brand (domain lockup) + section tag -->
     <div style="display:flex;align-items:center;justify-content:space-between">
       <p style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700">
-        <span style="color:#C91F37">~</span><span style="color:#9A948E">/davideimola</span>
+        <span style="color:#9A948E">davideimola</span><span style="color:#C91F37">.dev</span>
       </p>
       <!-- section tag: uppercase, #7E7874, letter-spacing 0.12em, font-size 13px -->
       <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7E7874;text-transform:uppercase;letter-spacing:0.12em">Section Name</p>
@@ -153,9 +153,9 @@ Every slide uses the same three-zone layout:
       <p style="font-family:'IBM Plex Sans',sans-serif;font-size:24-26px;color:#9A948E;line-height:1.5">Body copy.</p>
     </div>
 
-    <!-- BOTTOM: pagination -->
+    <!-- BOTTOM: content path + pagination (brand is already top-left, don't repeat the domain) -->
     <div style="display:flex;justify-content:space-between">
-      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">davideimola.dev</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">./blog/post-slug</p>
       <!-- all slides except last: muted with → -->
       <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">NN/total &nbsp;→</p>
       <!-- last slide: number in accent red, no → -->
@@ -167,7 +167,8 @@ Every slide uses the same three-zone layout:
 
 ### Design rules
 
-- **`~/davideimola` brand**: `~` always in `#C91F37`, `/davideimola` always in `#9A948E`. Only the tilde is red.
+- **`davideimola.dev` brand (domain lockup)**: name always in `#9A948E`, `.dev` always in `#C91F37`. Only `.dev` is red. The old `~/davideimola` form is retired — never use it.
+- **Brand assets**: outlined SVGs live in `public/brand/` — `mark.svg` (the `di` + red cursor tile), `wordmark.svg` (`davide imola` + cursor), `domain.svg`. Construction and rules in `docs/brand.md`. Use `mark.svg` when a slide needs a logo block (e.g. the final CTA slide); the red bar cursor after a name is the brand signature.
 - **Decorative `❯`**: present on all slides except the last. It signals "keep scrolling". Bottom-right, 500px, `rgba(201,31,55,0.06)`.
 - **`./` prefix**: use only for actual URL-like paths (`./davideimola.dev`, `./blog/post-slug`). Not as a decoration on every title.
 - **Titles**: IBM Plex Sans, 72-90px bold, `#EAE5DF`, line-height 0.95-1.0. Wrapping across 2 lines is fine; never break mid-word.

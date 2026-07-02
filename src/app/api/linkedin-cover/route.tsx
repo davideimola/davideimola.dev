@@ -62,7 +62,7 @@ export async function GET() {
         }}
       />
 
-      {/* ~/davideimola — top left, sopra la zona foto profilo */}
+      {/* davideimola.dev — top left, above the profile photo zone */}
       <div
         style={{
           position: "absolute",
@@ -74,8 +74,8 @@ export async function GET() {
           letterSpacing: "0.01em",
         }}
       >
-        <span style={{ color: "#C91F37" }}>~/</span>
         <span style={{ color: "#9A948E" }}>davideimola</span>
+        <span style={{ color: "#C91F37" }}>.dev</span>
       </div>
 
       {/* Contenuto principale — left-aligned dal 200px, usa tutta la larghezza */}
@@ -106,18 +106,22 @@ export async function GET() {
           </span>
         </div>
 
-        {/* Nome — grande per occupare la larghezza */}
-        <div
-          style={{
-            color: "#EAE5DF",
-            fontSize: "96px",
-            fontWeight: 700,
-            lineHeight: 1,
-            letterSpacing: "-0.03em",
-            marginBottom: "14px",
-          }}
-        >
-          Davide Imola
+        {/* Name + brand cursor (see docs/brand.md) */}
+        <div style={{ display: "flex", alignItems: "center", marginBottom: "14px" }}>
+          <span
+            style={{
+              color: "#EAE5DF",
+              fontSize: "96px",
+              fontWeight: 700,
+              lineHeight: 1,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Davide Imola
+          </span>
+          <div
+            style={{ width: "13px", height: "82px", background: "#C91F37", marginLeft: "13px" }}
+          />
         </div>
 
         {/* Ruolo + # Schrodinger Hat sulla stessa riga */}
