@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-const LAST_UPDATED = "April 2026";
+const LAST_UPDATED = "June 2026";
 
 export default function NowPage() {
   return (
