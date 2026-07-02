@@ -4,6 +4,10 @@
 
 Dark, terminal-inspired aesthetic. Not a literal terminal, but the feeling of precision and control. Influenced by Japanese minimalism (ma/間 — negative space as a design element). Akane Red is used sparingly as the single accent.
 
+## Brand
+
+The personal mark is `di` + red bar cursor — the hero typing animation's end state. Outlined SVG assets live in `public/brand/`; construction and usage rules in [brand.md](./brand.md). The NavBar logo is the domain lockup: `davideimola` + `.dev` in Akane Red.
+
 ## Palette
 
 | Name | Variable | Value | Usage |
@@ -115,7 +119,7 @@ Base card with optional hover glow effect (Akane border + overlay on hover).
 
 ### NavBar
 
-Fixed, blurred backdrop. `~/davideimola` logo (tilde in Akane), nav links, ⌘K button.
+Fixed, blurred backdrop. `davideimola.dev` domain-lockup logo (`.dev` in Akane), nav links, ⌘K button.
 Requires `"use client"` for the search handler.
 
 ### Footer
