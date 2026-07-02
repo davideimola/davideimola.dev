@@ -22,6 +22,14 @@ export function HeroSection() {
     if (hasAnimated) return; // module-level guard handles StrictMode correctly
 
     hasAnimated = true;
+
+    // Respect OS-level reduced-motion: show the full name immediately
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayedName(FULL_NAME);
+      setTypingDone(true);
+      return;
+    }
+
     let i = 0;
     const timer = setInterval(() => {
       i++;
