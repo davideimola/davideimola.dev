@@ -179,7 +179,7 @@ const COMMUNITY = [
     role: "Co-founder",
     description:
       "International open source community. 20k+ people across Europe. Built from scratch, still growing.",
-    href: "https://schrodinger-hat.it",
+    href: "https://schroedinger-hat.org",
   },
   {
     name: "Sharing",

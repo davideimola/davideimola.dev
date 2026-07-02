@@ -55,12 +55,12 @@ export default function SchrodingerHatCaseStudy() {
             </span>
             <span className="font-mono text-[12px] text-text-3">2022 – present</span>
             <a
-              href="https://schrodinger-hat.it"
+              href="https://schroedinger-hat.org"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
             >
-              schrodinger-hat.it →
+              schroedinger-hat.org →
             </a>
           </div>
           <p className="font-sans text-[16px] text-text-2 leading-relaxed">

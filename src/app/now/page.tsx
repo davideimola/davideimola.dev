@@ -165,12 +165,12 @@ export default function NowPage() {
               moving. Rome, Verona, Milan, Florence launching now. Looking abroad next.
             </p>
             <a
-              href="https://schrodinger-hat.it"
+              href="https://schroedinger-hat.org"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start"
             >
-              schrodinger-hat.it →
+              schroedinger-hat.org →
             </a>
           </div>
         </div>
