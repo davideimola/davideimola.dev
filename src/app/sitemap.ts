@@ -11,6 +11,7 @@ const STATIC_ROUTES = [
   { url: `${BASE_URL}/sharing`, priority: 0.7, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/projects`, priority: 0.7, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/uses`, priority: 0.6, changeFrequency: "monthly" as const },
+  { url: `${BASE_URL}/brand`, priority: 0.4, changeFrequency: "yearly" as const },
   { url: `${BASE_URL}/contact`, priority: 0.5, changeFrequency: "yearly" as const },
 ];
 

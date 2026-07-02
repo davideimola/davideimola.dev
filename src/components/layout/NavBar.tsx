@@ -28,9 +28,10 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
         {/* Logo */}
         <a
           href="/"
-          className="font-mono text-[13px] font-medium text-text-1 no-underline tracking-[-0.02em]"
+          className="font-mono text-[13px] font-medium text-text-1 no-underline tracking-[-0.02em] flex items-center"
         >
-          davideimola<span className="text-accent">.dev</span>
+          davideimola
+          <span aria-hidden="true" className="inline-block w-[2px] h-[0.9em] bg-accent ml-[3px]" />
         </a>
 
         {/* Desktop: Nav links + search */}

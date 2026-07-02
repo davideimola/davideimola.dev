@@ -67,6 +67,13 @@ const STATIC_PAGES: SearchItem[] = [
     description: "Privacy policy for davideimola.dev.",
     href: "/privacy",
   },
+  {
+    id: "page-brand",
+    type: "page",
+    title: "Brand",
+    description: "Logo, wordmark, and brand assets — free to use as-is.",
+    href: "/brand",
+  },
 ];
 
 export function buildSearchIndex(): SearchItem[] {
