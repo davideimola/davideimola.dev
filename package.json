@@ -28,8 +28,8 @@
     "@vercel/speed-insights": "^2.0.0",
     "cmdk": "^1.1.1",
     "gray-matter": "^4.0.3",
-    "motion": "^12.40.0",
-    "next": "16.2.9",
+    "motion": "^12.42.2",
+    "next": "16.2.10",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
@@ -38,7 +38,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-github-alerts": "^0.1.1",
-    "resend": "^6.14.0"
+    "resend": "^6.16.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
