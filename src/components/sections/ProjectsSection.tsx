@@ -19,7 +19,10 @@ export function ProjectsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8">
           {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
-              <Card href={project.url ?? `/projects/${project.slug}`} className="h-full">
+              <Card
+                href={project.url ?? project.github ?? `/projects/${project.slug}`}
+                className="h-full"
+              >
                 {project.status !== "active" && (
                   <div className="mb-3">
                     <Badge variant={statusVariant(project.status)}>

@@ -33,13 +33,23 @@
     "description": "Open source conference I co-organize. A full day of talks, workshops, and community connections for the Italian OSS ecosystem."
   },
   {
+    "slug": "argus",
+    "title": "Argus",
+    "status": "active",
+    "github": "https://github.com/argusappsec/argus",
+    "period": "2026–present",
+    "featured": true,
+    "tags": ["AI", "Security", "Go"],
+    "description": "Open-source AI security review agent written in Go. It runs real scanners — Semgrep, Gitleaks, OSV-Scanner — reads their findings, and reasons about them like an analyst would."
+  },
+  {
     "slug": "worky",
     "title": "Worky",
     "status": "coming-soon",
     "url": "https://worky.davideimola.dev",
     "github": "https://github.com/davideimola/worky",
     "period": "2026",
-    "featured": true,
+    "featured": false,
     "tags": ["Tool", "Workshops"],
     "description": "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience."
   }
