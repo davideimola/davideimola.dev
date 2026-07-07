@@ -1,0 +1,113 @@
+---
+title: "I Built a Tool I Don't Use"
+excerpt: "I built Worky, a Go tool for running workshops, in a weekend. The workshop it was built for never happened. On what AI made cheap, what it didn't, and letting a project stay an experiment."
+category: "Technical"
+publishDate: "2026-07-08"
+tags: ["AI", "Developer Experience", "Go", "Tooling"]
+featured: false
+heroImage: "/images/blog/i-built-a-tool-i-dont-use/hero.webp"
+heroImageAlt: "A single well-crafted hand tool resting unused on a dark workbench, lit by a deep red glow"
+---
+
+Back in April, in [Stop Prompting. Start Thinking.](/blog/stop-prompting-start-thinking), I described Worky as "an open-source project I'm building". Present tense.
+
+That's no longer true. Worky is built. It works. I haven't touched it in months, and I don't use it.
+
+This is the retrospective of how that happened. Not because the tool failed: the tool came out fine, and I'm still proud of it. What collapsed was the premise underneath it. And the way it collapsed taught me more about AI-assisted development than the building did.
+
+## Where Worky came from
+
+Earlier this year I proposed a workshop to a conference. While waiting for the answer, I started preparing it: how I'd structure it, how participants would follow along, what the hands-on part would look like.
+
+I went looking for tools to run that hands-on part and didn't like anything I found. The options were paid, cloud-based, or clunky. Nothing matched how I think a workshop should feel from the participant's seat: fast, local, zero setup friction, always knowing where you are.
+
+So I thought: I could build this myself.
+
+Here's the part that matters. Five years ago, that sentence would have died right there. A tool like this would have cost me weeks of evenings: a web server, progress tracking, content rendering, a CLI. I would have waited for the conference to accept the workshop before writing a single line. The cost of building was a natural validation gate. Too expensive to build on a maybe.
+
+That gate is gone. I had the core of Worky working in one weekend. Then a few evenings over the next couple of weeks for refinements: three, maybe four days of actual work in total. So I didn't wait for the yes. I built on the maybe.
+
+## Not vibe coding, by the way
+
+You could call this vibe coding: I described what I wanted, and the AI wrote most of the code.
+
+I don't call it that, and not because the term offends me. The term is fine. The problem is what it has come to mean. "Vibe coding" now reads as a red flag: someone who doesn't think, doesn't check, lets the model generate whatever and ships the result.
+
+What I did was the opposite. I designed the tool. I made the architectural decisions, pushed back on the AI's choices, had it push back on mine, and iterated until things worked the way I had them in my head. The AI wrote most of the code; I never lost track of what it was doing or why.
+
+I described that whole workflow in [Stop Prompting. Start Thinking.](/blog/stop-prompting-start-thinking), so I won't repeat it here. The short version: I stayed the senior in the room.
+
+## What Worky actually is
+
+Worky deserves a proper introduction, because this is not a story about a bad tool.
+
+Worky is a Go library for building self-contained workshop tools. You define your workshop as a Go program: chapters, content, checks. It compiles into a single binary that participants download and run. No Docker, no cloud account, no "first, install these six things" slide.
+
+- **One binary, everything included.** Docs, checks, progress tracking, and the web UI all compile in. Content is embedded with Go's `embed`, Markdown is rendered server-side, no build step.
+- **Chapters unlock in sequence.** Chapter two stays locked until chapter one's checks pass. Nobody skips ahead and gets lost.
+- **Checks are code.** `FileExists`, `EnvVarSet`, `CommandSucceeds`, `HTTPStatus` out of the box, or any custom Go function you want to write.
+- **Real-time feedback.** The browser UI updates over SSE as checks pass. Participants watch chapters flip from locked to done as they work.
+
+![The Worky browser UI: a sidebar lists chapters with two completed and one still locked, while the main pane shows a chapter's checks and the commands to pass them](/images/blog/i-built-a-tool-i-dont-use/worky-chapter.webp)
+
+There's a `worky init` command that scaffolds a new workshop, and the [repo](https://github.com/davideimola/worky) plus a [showcase site](https://worky.davideimola.dev) cover the rest. It's the workshop experience I always wanted as a participant: run one thing, follow along, see your progress move.
+
+## The premise collapsed
+
+The conference said no.
+
+Nothing dramatic. Proposals get rejected all the time, that's the game. But Worky existed *for* that workshop. Later I ran a different workshop, and it wasn't a fit for Worky either. And that was it: a working tool with no workshop to run.
+
+For a while I told myself I'd get back to it. I didn't. And when I got honest about why, it came down to this: a tool without users can't tell you what to build next.
+
+Sure, I could have created fake workshops to test it against. But testing what, for whom? I had no way of knowing how a real participant would experience it, where it would break in a real room, which missing feature would actually hurt. Usage is what generates requirements. Without usage, the roadmap is fiction.
+
+That's what killed the motivation. Not failure. Purposelessness. There was no point left to reach, so my attention drifted to tools I actually use every day, and Worky quietly stopped being something I was building and became something I had built.
+
+The repo currently has two GitHub stars. I'm at peace with that.
+
+## Would I do it again? Yes.
+
+Strange thing to say in a retrospective about a tool nobody uses, but: absolutely yes.
+
+Worky cost me a weekend plus change. In exchange, it was the project where I properly stress-tested the AI workflow I now use on everything. It was fun. And it answered its own question fast: is this idea worth pursuing? No. Getting that answer in days instead of months is not a failed product. It's a successful experiment.
+
+That's the actual shift AI brought, and it's bigger than "AI writes code fast". Building became so cheap that building *is* the validation. You don't have to wonder for months whether an idea has legs. You build it and find out.
+
+## What I saw from the jury table
+
+In late June we organized a hackathon at RedCarbon together with [Regolo](https://regolo.ai), at OGR Torino: one day, teams of one or two people, AI applied to security problems. I was on the jury.
+
+The POCs that came out of a single day were the kind of thing that, a few years ago, a team that size wouldn't have finished in a week. Near-real projects, demoable by evening. And it wasn't just seasoned engineers: people who don't work in AI, some not even in security, showed up with an idea and shipped something working. I watched people use AI not just to build but to sharpen the idea itself: digging for the context they were missing, weighing one approach against another before committing.
+
+Ideas have never been this cheap to test. That's the good edge.
+
+The other edge was just as visible. The teams that struggled weren't short on building capacity; they were short on clarity. When the idea wasn't sharp, AI amplified the mess: more features, more components, more surface, less point. By presentation time, some projects were genuinely hard to explain. The demos that won were the simple ones.
+
+I can't be smug about it, because I did the exact same thing with Worky. I started out wanting it to do everything. I wrote full documentation and built a showcase website for a tool that had zero users, because I cared about it and, well, what kind of tool doesn't have a showcase site? The right order would have been the opposite: ship the core, find real usage, then earn the packaging. When adding things costs nothing, the discipline of not adding them has to come from you.
+
+## The expensive decision moved downstream
+
+So no, the lesson is not "validate before you build". Building is validating now, and it's cheap enough to do on a maybe. I did, and I'd do it again.
+
+The lesson is that the expensive decision moved. Building Worky cost a weekend. Maintaining it (triaging issues, evolving it, caring about it over time) costs exactly what it cost ten years ago: sustained attention. AI made ideas abundant and code cheap. It did nothing to make attention abundant. Attention is the bottleneck now, and it doesn't scale.
+
+Which means the judgment call changed shape. It used to be "should I build this?". Now it's "should I keep this alive?".
+
+And that second question is harder than it looks, because attachment gets a vote. I liked Worky. I still do. I invested time in it, dressed it up as a product, and that made it slower to admit the obvious: this wasn't my mission. Not my use case, not a problem I meet more than a couple of times a year, not the thing I want to spend my evenings on. Letting go of a project you like costs more than letting go of one you're indifferent to.
+
+Worky was the right project to build and the wrong mission to carry. Knowing the difference, before the maintenance bill arrives, might be the most valuable skill AI-assisted development asks of you.
+
+## It's yours if you want it
+
+The original plan for this post was a launch announcement. "Introducing Worky", with a call for beta testers. I'm glad I never wrote it. Asking people to invest in a tool whose own author had stopped showing up would have been dishonest.
+
+So here's the honest version instead.
+
+Worky works, and it's open source. If you run workshops (meetups, conference hands-on sessions, internal training) and the single-binary, zero-setup experience sounds right to you, try it: start from the [repo](https://github.com/davideimola/worky) or the [site](https://worky.davideimola.dev).
+
+And if it turns out to be useful to you, tell me. I'm not asking for a favor. I'm saying that real usage is the one thing that would put Worky back on my list, because users generate the roadmap I couldn't invent alone. If it earns users, it earns maintenance. That's the right order. I had it backwards the first time.
+
+---
+
+_If you've got your own shelf of working tools you never use, I'd love to hear what's on it. Leave a comment or find me on LinkedIn._
