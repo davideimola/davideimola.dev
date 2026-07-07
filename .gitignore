@@ -47,6 +47,7 @@ storybook-static
 
 # carousel rendered output
 .carousel/**/*.pdf
+.carousel/**/*.png
 .carousel/**/social-posts.md
 
 # local social posts drafts (not committed)
