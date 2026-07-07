@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-const LAST_UPDATED = "June 2026";
+const LAST_UPDATED = "July 2026";
 
 export default function NowPage() {
   return (
@@ -91,12 +91,12 @@ export default function NowPage() {
             <div className="flex flex-col gap-2">
               <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
                 <span className="text-accent text-[10px]">{"//"}</span>
-                Building Worky
+                Building Argus
               </span>
               <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
-                Open-source tool for running workshops. Born out of a real need — managing
-                participants, materials, and flow during live sessions is harder than it looks. Work
-                in progress.
+                Open-source AI agent for security code reviews, written in Go. It runs real scanners
+                (Semgrep, Gitleaks, OSV-Scanner), reads the findings, and reasons about them like an
+                analyst would. Early days, moving fast.
               </p>
             </div>
           </ScrollReveal>
