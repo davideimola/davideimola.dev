@@ -39,7 +39,11 @@ assets only, not the site's source code.
 - Type: JetBrains Mono Bold, lowercase, 0.6 em monospace advance.
 - Cursor bar: 0.14 em wide, 0.86 em tall, top at 0.78 em above the baseline
   (it slightly crosses it), 0.10 em gap after the last glyph. Always Akane Red.
-- Mark tile: glyphs at ~34% of tile height, optically centered.
+- Mark tile: glyphs at ~34% of tile height, optically centered. The air is
+  deliberate — circular avatar crops eat the edges.
+- Favicon cut (`src/app/icon.svg`, `apple-icon.tsx`): same mark scaled to
+  ~80% of the square's width. Favicons are never cropped, and at 16 px the
+  tile's padding would make the glyphs illegible.
 - Ink: `#EAE5DF` on `#080807` (dark), `#1A1816` on `#F0EDE9` (light).
 
 ## Rules

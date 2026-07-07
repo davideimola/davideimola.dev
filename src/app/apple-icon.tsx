@@ -27,7 +27,7 @@ export default async function AppleIcon() {
       <span
         style={{
           color: "#EAE5DF",
-          fontSize: "62px",
+          fontSize: "96px",
           fontWeight: 700,
           lineHeight: 1,
         }}
@@ -36,10 +36,10 @@ export default async function AppleIcon() {
       </span>
       <div
         style={{
-          width: "11px",
-          height: "54px",
+          width: "17px",
+          height: "84px",
           background: "#C91F37",
-          marginLeft: "7px",
+          marginLeft: "11px",
         }}
       />
     </div>,
