@@ -104,7 +104,10 @@ with open(os.path.join(OUT, "mark-mono.svg"), "w") as f:
     # single-color version: inherits `color` from the embedding context
     f.write(svg("0 0 512 512", mark_body(8, "currentColor", "currentColor")))
 
-# ── Site favicon: same mark, with light-mode media query ────────────────────
+# ── Site favicon: tighter cut of the mark, with light-mode media query ──────
+# The tile keeps air for circular avatar crops; the favicon is square and
+# uncropped, so the mark fills ~80% of the width to stay legible at 16 px.
+# Same geometry as the tile scaled by 34/22, centered in the 64 box.
 icon = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <style>
     .bg  {{ fill: {BG_DARK}; }}
@@ -115,8 +118,8 @@ icon = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     }}
   </style>
   <rect class="bg" width="64" height="64"/>
-  <path class="ink" d="{text_path('di', 15.8, 39.5, 22)}"/>
-  <rect fill="{ACCENT}" x="44.6" y="22.4" width="3.8" height="19.2"/>
+  <path class="ink" d="{text_path('di', 6.8, 43.55, 34)}"/>
+  <rect fill="{ACCENT}" x="51.3" y="17.15" width="5.9" height="29.7"/>
 </svg>
 """
 with open(os.path.join(REPO, "src/app/icon.svg"), "w") as f:
