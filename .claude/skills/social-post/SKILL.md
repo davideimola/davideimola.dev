@@ -1,7 +1,7 @@
 ---
 name: social-post
 description: >
-  Creates social media promotion content (BlueSky + LinkedIn) for any piece of content on davideimola.dev. Takes a GitHub issue number, blog post slug/URL, or free text description as input. Generates platform-specific posts, validates them with the user, builds a LinkedIn carousel with mkcr if appropriate, and saves everything as a comment on the GitHub issue. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for #24" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a GitHub issue number, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and saves everything as a comment on the GitHub issue. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for #24" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
@@ -39,27 +39,19 @@ If an issue exists and a matching blog post exists, read both — the issue has 
 
 ## Step 2 — Generate content
 
-Produce all three in one shot:
+LinkedIn only. BlueSky was dropped (2026-07): Davide no longer follows it.
 
-### BlueSky
-- Max 300 characters including the URL
-- Casual and direct, sounds like a person texting a thought
-- URL: `https://davideimola.dev/blog/<slug>` for blog posts, or the relevant URL
-- 0-2 hashtags max, only if they add real value
-- No "excited to share", no "check out my latest"
-
-**Bad:** "Excited to share my latest blog post! In this article I explore how AI can help..."
-**Good:** "I rebuilt my site. Then I rebuilt it again. The second time I stopped treating AI as a generator. davideimola.dev/blog/..."
+**Write a native post, not a promo.** Data from Davide's own analytics (2026-07): posts that promote a blog post get 5-20x fewer impressions than self-contained story posts. The post must deliver the full thought in the feed — story arc, lesson, specifics. The blog link goes in the first comment as the extended version, never as the point of the post.
 
 ### LinkedIn long-form
 1. **Hook** — first line stops the scroll. Counterintuitive statement, specific problem, or blunt opinion. Never "I'm excited to share..."
 2. **Body** — 3-5 short paragraphs. Real details from the content. First person.
-3. **CTA** — end with a question to invite engagement, then the link.
+3. **CTA** — one call to action max. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped. Ending on a strong statement or an offer is fine.
 
 Use line breaks generously. Short paragraphs perform better in the feed.
 
-### LinkedIn carousel (assess fit)
-Carousels work well for: step-by-step processes, before/after stories, numbered lessons, "X things I learned" formats. They don't add value for purely narrative or personal reflection content.
+### Visual: single image by default, carousel as exception
+Default to a single branded image card in portrait 4:5 (1080×1350 — takes more feed space on mobile than square; same design language as the carousel slides below, no pagination, no giant ❯) or no image at all for pure storytelling. Carousel reach has been declining (observed 2026-07) — only propose one for genuinely step-by-step content: processes, numbered lessons, before/after sequences. They don't add value for narrative or personal reflection content.
 
 **State your assessment first**: "I think a carousel works here because X" or "I'd skip the carousel here — the story doesn't break into clean slides." Then either propose the structure or explain why you're skipping it.
 
@@ -209,8 +201,8 @@ cd /Users/davideimola/Development/davideimola/davideimola.dev/.carousel
 /Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
 ```
 
-### LinkedIn post + carousel — algorithm note
-**Never put links in the LinkedIn post body.** LinkedIn suppresses reach for posts with links. Put the blog URL and any other links in the first comment instead. Mention in the post that the link is in the comments.
+### LinkedIn links — note
+The "link in first comment" trick doesn't measurably help (verified on Davide's own posts, 2026-07). Put links at the bottom of the post body, after the closing line. What kills reach is teaser structure ("the real content is elsewhere"), not the link itself — the post must deliver full value in the feed, with links as footer references.
 
 ---
 
@@ -222,7 +214,7 @@ Once everything is approved, post a comment on the relevant GitHub issue with al
 gh issue comment <number> --repo davideimola/davideimola.dev --body "..."
 ```
 
-Format the comment with clear sections: BlueSky, LinkedIn, Carousel slides (if built), and a note on the carousel PDF path.
+Format the comment with clear sections: LinkedIn post, first comment, image/carousel assets (with file paths).
 
 ---
 
