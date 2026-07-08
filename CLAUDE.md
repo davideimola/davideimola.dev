@@ -115,6 +115,7 @@ Every page uses a terminal-style command as its hero label. Follow this pattern:
 - **Tags vs categories**: tags (`post.tags`, `project.tags`, `talk.tags`) are always rendered as `#xxx` in `font-mono text-[11px] text-text-3`. Badge pills are reserved for categories, status labels (Featured, Coming soon), and type classifications (Conference, Meetup). Never use Badge pills for tags.
 - Dot grid background: defined in `globals.css` as `body::before`. Use `.dot-grid` utility class for other elements
 - Card hover glow: `after:bg-accent-glow after:opacity-0 hover:after:opacity-100` pattern
+- Blog post hero images: rendered at 60% desaturation with full-color reveal on hover (`grayscale-[0.6] transition-[filter] duration-500 hover:grayscale-0`). New hero images must look good both muted and in full color — dark scenes with Akane Red glow work best. Portraits (home, AuthorBio) stay full `grayscale` by design
 
 ### "use client" directive
 Only add `"use client"` when the component needs interactivity (event handlers, hooks). Most layout and UI components do not need it.

@@ -160,7 +160,7 @@ export default async function BlogPostPage({ params }: Props) {
                   src={post.heroImage}
                   alt={post.heroImageAlt ?? post.title}
                   fill
-                  className="object-cover grayscale"
+                  className="object-cover grayscale-[0.6] transition-[filter] duration-500 hover:grayscale-0"
                   priority
                 />
               </div>
