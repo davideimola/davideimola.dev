@@ -10,6 +10,7 @@ export type { ExperienceEntry, ExperienceRole } from "./ExperienceTimeline";
 export { ExperienceTimeline } from "./ExperienceTimeline";
 export { GiscusComments } from "./GiscusComments";
 export { JsonLd } from "./JsonLd";
+export { LinkTile } from "./LinkTile";
 export { PageHero } from "./PageHero";
 export { PostNavigation } from "./PostNavigation";
 export { ReadingProgress } from "./ReadingProgress";

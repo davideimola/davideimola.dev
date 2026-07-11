@@ -29,6 +29,18 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // links.davideimola.dev is assigned to this Vercel project and lands on
+      // the /links page — replaces the old third-party linktree service.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "links.davideimola.dev" }],
+        destination: "https://davideimola.dev/links",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
