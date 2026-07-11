@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { PageHero } from "../../components/ui/PageHero";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../components/ui/SectionHeader";
+import { PageHero } from "../../../components/ui/PageHero";
+import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { SectionHeader } from "../../../components/ui/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Brand",

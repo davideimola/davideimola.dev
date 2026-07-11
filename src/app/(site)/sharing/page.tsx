@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { TalksList } from "../../components/sections/TalksList";
-import { Badge } from "../../components/ui/Badge";
-import { CopyButton } from "../../components/ui/CopyButton";
-import { JsonLd } from "../../components/ui/JsonLd";
-import { PageHero } from "../../components/ui/PageHero";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../components/ui/SectionHeader";
-import { getAllTalks } from "../../lib/content";
+import { TalksList } from "../../../components/sections/TalksList";
+import { Badge } from "../../../components/ui/Badge";
+import { CopyButton } from "../../../components/ui/CopyButton";
+import { JsonLd } from "../../../components/ui/JsonLd";
+import { PageHero } from "../../../components/ui/PageHero";
+import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { getAllTalks } from "../../../lib/content";
 
 export const metadata: Metadata = {
   title: "Sharing",

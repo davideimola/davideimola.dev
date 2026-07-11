@@ -2,7 +2,7 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState, useEffect, useRef } from "react";
-import { sendContactEmail } from "../actions/contact";
+import { sendContactEmail } from "../../actions/contact";
 
 const initialState = { status: "idle" as const };
 

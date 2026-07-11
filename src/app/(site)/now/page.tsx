@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PageHero } from "../../components/ui/PageHero";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../components/ui/SectionHeader";
+import { PageHero } from "../../../components/ui/PageHero";
+import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { SectionHeader } from "../../../components/ui/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Now",

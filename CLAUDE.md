@@ -92,7 +92,7 @@ Apply with Tailwind: `font-mono`, `font-sans`
 
 **`ScrollReveal`** — wraps content in a `motion.div` that fades+slides up when scrolled into view. Detects browser back/forward navigation via a module-level `popstate` listener and skips animations (`initial={false}`) in that case to avoid content being stuck at opacity:0.
 
-**`SiteShell`** — client-side layout wrapper. Renders NavBar + CommandPalette (⌘K) + children + Footer. Routes listed in `BARE_ROUTES` (e.g. `/links`) skip NavBar and Footer for a standalone page. Does NOT use AnimatePresence — wrapping Next.js App Router children in AnimatePresence with `mode="wait"` breaks page rendering.
+**`SiteShell`** — client-side layout wrapper. Renders NavBar + CommandPalette (⌘K) + children. Used by the `(site)` route group layout, which also renders the Footer; standalone routes (e.g. `/links`) live outside the group and get no site chrome. Does NOT use AnimatePresence — wrapping Next.js App Router children in AnimatePresence with `mode="wait"` breaks page rendering.
 
 **`JsonLd`** — injects `<script type="application/ld+json">` for structured data.
 
@@ -106,7 +106,7 @@ Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Now: `❯ cat ./now.md`
 - Uses: `❯ cat ./uses.md`
 - Contact: `❯ ping davideimola.dev`
-- Links: multi-command terminal session (`❯ whoami`, `❯ ls -t ./blog | head -n 1`, `❯ ls ./talks --upcoming`, `❯ cal --book`, `❯ ls ./schrodinger-hat`) — standalone link-in-bio page rendered without NavBar/Footer (see `BARE_ROUTES` in `SiteShell`); `links.davideimola.dev` serves this page directly via a host-based rewrite in `next.config.ts` (deep paths on the subdomain redirect to the main site); revalidates daily (ISR) so dynamic blocks stay fresh
+- Links: multi-command terminal session (`❯ whoami`, `❯ ls -t ./blog | head -n 1`, `❯ ls ./talks --upcoming`, `❯ cal --book`, `❯ ls ./schrodinger-hat`) — standalone link-in-bio page living outside the `(site)` route group, so it renders without NavBar/Footer even when reached via rewrite; `links.davideimola.dev` serves this page directly via a host-based rewrite in `next.config.ts` (deep paths on the subdomain redirect to the main site); revalidates daily (ISR) so dynamic blocks stay fresh
 
 ### Rules
 - Every component in `src/components/ui/` and `src/components/layout/` MUST have a Storybook story

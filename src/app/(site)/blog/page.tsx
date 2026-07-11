@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { BlogList } from "../../components/sections/BlogList";
-import { PageHero } from "../../components/ui/PageHero";
-import { getAllPosts } from "../../lib/content";
+import { BlogList } from "../../../components/sections/BlogList";
+import { PageHero } from "../../../components/ui/PageHero";
+import { getAllPosts } from "../../../lib/content";
 
 export const metadata: Metadata = {
   title: "Blog",
