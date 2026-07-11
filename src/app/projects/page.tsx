@@ -134,8 +134,8 @@ export default function ProjectsPage() {
       {/* OSS Contributions */}
       <section className="mt-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="OSS Contributions" className="mb-2" />
-          <p className="font-sans text-[14px] text-text-2 mb-8 -mt-6">
+          <SectionHeader title="OSS Contributions" className="mb-6" />
+          <p className="font-sans text-[14px] text-text-2 mb-8">
             Projects I've contributed to — bug fixes, features, and documentation.
           </p>
         </ScrollReveal>

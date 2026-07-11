@@ -11,10 +11,10 @@ export function SectionHeader({
   variant = "section",
   seeAllHref,
   seeAllLabel = "See all →",
-  className = "",
+  className = "mb-12",
 }: SectionHeaderProps) {
   return (
-    <div className={`flex items-baseline justify-between mb-12 ${className}`}>
+    <div className={`flex items-baseline justify-between ${className}`}>
       {variant === "section" ? (
         <h2 className="font-mono text-[13px] font-semibold text-text-2 tracking-[0.12em] uppercase flex items-center gap-2.5 before:content-['//'] before:text-accent before:text-[11px]">
           {title}

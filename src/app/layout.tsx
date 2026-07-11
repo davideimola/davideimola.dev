@@ -2,7 +2,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
-import { Footer } from "../components/layout";
 import { SiteShell } from "../components/layout/SiteShell";
 import { buildSearchIndex } from "../lib/search";
 import "./globals.css";
@@ -70,7 +69,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col antialiased">
         <SiteShell items={searchItems}>
           <main className="flex-1">{children}</main>
-          <Footer />
         </SiteShell>
         <Analytics />
         <SpeedInsights />

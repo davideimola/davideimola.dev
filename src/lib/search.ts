@@ -61,6 +61,13 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/contact",
   },
   {
+    id: "page-links",
+    type: "page",
+    title: "Links",
+    description: "Profiles, projects, and communities — all in one page.",
+    href: "/links",
+  },
+  {
     id: "page-privacy",
     type: "page",
     title: "Privacy",

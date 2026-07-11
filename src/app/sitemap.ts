@@ -13,6 +13,7 @@ const STATIC_ROUTES = [
   { url: `${BASE_URL}/uses`, priority: 0.6, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/brand`, priority: 0.4, changeFrequency: "yearly" as const },
   { url: `${BASE_URL}/contact`, priority: 0.5, changeFrequency: "yearly" as const },
+  { url: `${BASE_URL}/links`, priority: 0.5, changeFrequency: "monthly" as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
