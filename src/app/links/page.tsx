@@ -22,6 +22,9 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: "Links",
   description: DESCRIPTION,
+  // The page is also served at links.davideimola.dev (host rewrite);
+  // this keeps one canonical URL across both hosts.
+  alternates: { canonical: "https://davideimola.dev/links" },
   openGraph: {
     title: "Links — Davide Imola",
     description: DESCRIPTION,
