@@ -31,15 +31,29 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // links.davideimola.dev is assigned to this Vercel project and lands on
-      // the /links page — replaces the old third-party linktree service.
+      // Deep paths on the links subdomain bounce to the main site, so the
+      // subdomain serves only the link-in-bio page. /_next is excluded:
+      // the rewritten page must load its assets from the same host.
       {
-        source: "/:path*",
+        source: "/:path((?!_next/).+)",
         has: [{ type: "host", value: "links.davideimola.dev" }],
-        destination: "https://davideimola.dev/links",
+        destination: "https://davideimola.dev/:path",
         permanent: false,
       },
     ];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // links.davideimola.dev serves the /links page directly, keeping the
+        // subdomain in the address bar — replaces the old linktree service.
+        {
+          source: "/",
+          has: [{ type: "host", value: "links.davideimola.dev" }],
+          destination: "/links",
+        },
+      ],
+    };
   },
   images: {
     remotePatterns: [
