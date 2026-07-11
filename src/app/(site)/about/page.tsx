@@ -12,12 +12,12 @@ import {
 } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import type { ExperienceEntry } from "../../components/ui/ExperienceTimeline";
-import { ExperienceTimeline } from "../../components/ui/ExperienceTimeline";
-import { JsonLd } from "../../components/ui/JsonLd";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../components/ui/SectionHeader";
-import { PERSON_SCHEMA } from "../../lib/schema";
+import type { ExperienceEntry } from "../../../components/ui/ExperienceTimeline";
+import { ExperienceTimeline } from "../../../components/ui/ExperienceTimeline";
+import { JsonLd } from "../../../components/ui/JsonLd";
+import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { PERSON_SCHEMA } from "../../../lib/schema";
 
 export const metadata: Metadata = {
   title: "About",

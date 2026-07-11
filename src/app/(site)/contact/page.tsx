@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { PageHero } from "../../components/ui/PageHero";
-import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
+import { PageHero } from "../../../components/ui/PageHero";
+import { CAL_COM_URL, SOCIAL_PROFILES } from "../../../lib/social";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {

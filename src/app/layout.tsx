@@ -2,8 +2,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
-import { SiteShell } from "../components/layout/SiteShell";
-import { buildSearchIndex } from "../lib/search";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -62,14 +60,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const searchItems = buildSearchIndex();
-
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <SiteShell items={searchItems}>
-          <main className="flex-1">{children}</main>
-        </SiteShell>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

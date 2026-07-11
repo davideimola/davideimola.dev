@@ -5,9 +5,9 @@ import {
   TalksSection,
   WhatIDoSection,
   WritingSection,
-} from "../components/sections";
-import { JsonLd } from "../components/ui/JsonLd";
-import { PERSON_SCHEMA } from "../lib/schema";
+} from "../../components/sections";
+import { JsonLd } from "../../components/ui/JsonLd";
+import { PERSON_SCHEMA } from "../../lib/schema";
 
 const WEBSITE_SCHEMA = {
   "@context": "https://schema.org",

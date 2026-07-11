@@ -7,25 +7,25 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
-import { AuthorBio } from "../../../components/ui/AuthorBio";
-import { BackToTop } from "../../../components/ui/BackToTop";
-import { Breadcrumb } from "../../../components/ui/Breadcrumb";
-import { CodeBlock } from "../../../components/ui/CodeBlock";
-import { GiscusComments } from "../../../components/ui/GiscusComments";
-import { JsonLd } from "../../../components/ui/JsonLd";
-import { PostNavigation } from "../../../components/ui/PostNavigation";
-import { ReadingProgress } from "../../../components/ui/ReadingProgress";
-import { RelatedPosts } from "../../../components/ui/RelatedPosts";
-import { ShareButtons } from "../../../components/ui/ShareButtons";
-import { TableOfContents } from "../../../components/ui/TableOfContents";
+import { AuthorBio } from "../../../../components/ui/AuthorBio";
+import { BackToTop } from "../../../../components/ui/BackToTop";
+import { Breadcrumb } from "../../../../components/ui/Breadcrumb";
+import { CodeBlock } from "../../../../components/ui/CodeBlock";
+import { GiscusComments } from "../../../../components/ui/GiscusComments";
+import { JsonLd } from "../../../../components/ui/JsonLd";
+import { PostNavigation } from "../../../../components/ui/PostNavigation";
+import { ReadingProgress } from "../../../../components/ui/ReadingProgress";
+import { RelatedPosts } from "../../../../components/ui/RelatedPosts";
+import { ShareButtons } from "../../../../components/ui/ShareButtons";
+import { TableOfContents } from "../../../../components/ui/TableOfContents";
 import {
   extractToc,
   getAllPosts,
   getPostBySlug,
   getPrevNextPosts,
   getRelatedPosts,
-} from "../../../lib/content";
-import { formatDate } from "../../../lib/dates";
+} from "../../../../lib/content";
+import { formatDate } from "../../../../lib/dates";
 
 interface Props {
   params: Promise<{ slug: string }>;

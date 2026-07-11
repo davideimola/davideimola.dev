@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Badge } from "../../components/ui/Badge";
-import { Card } from "../../components/ui/Card";
-import { PageHero } from "../../components/ui/PageHero";
-import { ScrollReveal } from "../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../components/ui/SectionHeader";
-import type { Project } from "../../lib/content";
-import { getAllProjects, getOssContributions } from "../../lib/content";
+import { Badge } from "../../../components/ui/Badge";
+import { Card } from "../../../components/ui/Card";
+import { PageHero } from "../../../components/ui/PageHero";
+import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { SectionHeader } from "../../../components/ui/SectionHeader";
+import type { Project } from "../../../lib/content";
+import { getAllProjects, getOssContributions } from "../../../lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",

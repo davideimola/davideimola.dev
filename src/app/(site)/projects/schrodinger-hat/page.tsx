@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { ScrollReveal } from "../../../../components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Schrodinger Hat — Case Study",

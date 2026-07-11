@@ -1,16 +1,10 @@
 "use client";
 
 import { MotionConfig } from "motion/react";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SearchItem } from "../../lib/search";
 import { CommandPalette } from "./CommandPalette";
-import { Footer } from "./Footer";
 import { NavBar } from "./NavBar";
-
-// Routes rendered without the site chrome (NavBar + Footer) — standalone
-// pages like the link-in-bio served via links.davideimola.dev.
-const BARE_ROUTES = new Set(["/links"]);
 
 interface SiteShellProps {
   items: SearchItem[];
@@ -19,8 +13,6 @@ interface SiteShellProps {
 
 export function SiteShell({ items, children }: SiteShellProps) {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const bare = BARE_ROUTES.has(pathname);
 
   // Console easter egg for curious devs
   useEffect(() => {
@@ -68,10 +60,9 @@ export function SiteShell({ items, children }: SiteShellProps) {
 
   return (
     <MotionConfig reducedMotion="user">
-      {!bare && <NavBar onSearchOpen={() => setOpen(true)} />}
+      <NavBar onSearchOpen={() => setOpen(true)} />
       <CommandPalette open={open} onClose={() => setOpen(false)} items={items} />
       {children}
-      {!bare && <Footer />}
     </MotionConfig>
   );
 }
