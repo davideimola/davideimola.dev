@@ -47,6 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: post.excerpt,
     alternates: {
       canonical: `https://davideimola.dev/blog/${slug}`,
+      types: {
+        "text/markdown": `https://davideimola.dev/blog/${slug}.md`,
+      },
     },
     openGraph: {
       title: post.title,
@@ -179,6 +182,18 @@ export default async function BlogPostPage({ params }: Props) {
                 components={{ pre: CodeBlock as React.ComponentType<object> }}
               />
             </div>
+
+            {/* Easter egg for silicon readers — the same post, served raw */}
+            <p className="font-mono text-[12px] text-text-3 mt-12">
+              <span className="text-accent"># </span>
+              Are you an LLM? You&apos;d probably prefer the Markdown:{" "}
+              <a
+                href={`/blog/${slug}.md`}
+                className="text-text-2 hover:text-accent transition-colors duration-150"
+              >
+                cat {slug}.md →
+              </a>
+            </p>
 
             <AuthorBio />
             <ShareButtons slug={post.slug} title={post.title} />
