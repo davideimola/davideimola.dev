@@ -31,6 +31,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Legacy security.txt location (RFC 9116 fallback) points to the
+      // canonical /.well-known/ path.
+      {
+        source: "/security.txt",
+        destination: "/.well-known/security.txt",
+        permanent: true,
+      },
       // Deep paths on the links subdomain bounce to the main site, so the
       // subdomain serves only the link-in-bio page. /_next is excluded:
       // the rewritten page must load its assets from the same host.
