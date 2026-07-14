@@ -8,7 +8,8 @@
     "tags": ["AI", "Design System", "Software Design"],
     "session": {
       "title": "AI Won't Design Your System. You Have To.",
-      "format": "Talk"
+      "format": "Talk",
+      "abstract": "AI is a great collaborator and a terrible architect. How rebuilding my site twice taught me to define the design system before letting AI touch a single component — shown live with Claude Code."
     }
   },
   {
@@ -21,7 +22,8 @@
     "tags": ["Go", "Security", "Supply Chain", "Testing"],
     "session": {
       "title": "Securing Go for Production: Best Practices, Supply Chain, Testing",
-      "format": "Talk"
+      "format": "Talk",
+      "abstract": "Why Go security matters now, starting from a one-line auth bypass caught by testing. Best practices, fuzzing, govulncheck, and supply chain hygiene — with offline-friendly demos."
     }
   },
   {
@@ -34,7 +36,8 @@
     "tags": ["Security", "AI"],
     "session": {
       "title": "Il security engineer che già AI",
-      "format": "Talk"
+      "format": "Talk",
+      "abstract": "Security engineering with mainstream AI tools and no enterprise budget: finding and fixing broken access control, auditing dependencies, and growing your own structured security agents."
     }
   },
   {
@@ -98,6 +101,7 @@
     "session": {
       "title": "Gophers Gone Domain-Driven: a tale of Go and DDD",
       "format": "Talk",
+      "abstract": "A journey into Domain-Driven Design in Go: what worked, what hurt, and how we shaped a production codebase around the domain.",
       "video": "https://golab.io/talks/gophers-gone-domain-driven"
     }
   },
@@ -110,7 +114,8 @@
     "tags": ["DevOps", "Sustainability", "GreenOps"],
     "session": {
       "title": "GreenOps: Bridging the Gap Between DevOps and Sustainability",
-      "format": "Talk"
+      "format": "Talk",
+      "abstract": "Software has a carbon footprint. GreenOps brings sustainability into DevOps practice: measuring impact and making greener operational choices."
     }
   },
   {
@@ -122,7 +127,8 @@
     "tags": ["GitOps", "Kubernetes", "Flux"],
     "session": {
       "title": "How to GitOps your cluster with Flux",
-      "format": "Talk"
+      "format": "Talk",
+      "abstract": "An introduction to GitOps with Flux: declare your Kubernetes cluster state in Git and let the automation keep it true."
     }
   },
   {
@@ -168,6 +174,7 @@
     "session": {
       "title": "Securing Secrets in the GitOps Era",
       "format": "Talk",
+      "abstract": "Managing secrets in a GitOps world without committing them in plain text: sealed secrets, secret managers, and CSI drivers compared.",
       "video": "https://www.wearedevelopers.com/en/videos/852/securing-secrets-in-the-gitops-era-1707725810",
       "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
     }
@@ -191,6 +198,7 @@
     "session": {
       "title": "Level UP your RDBMS Productivity with GO",
       "format": "Talk",
+      "abstract": "Developing with a database can be difficult: typing issues, test database instances, migrations. By combining dbmate, sqlc, and test containers, we can effortlessly improve our database experience in Go.",
       "coSpeaker": "Ludovico Russo",
       "video": "https://youtu.be/kS5LpcmB3O4?si=6MQK0h5DhHGQMKDK",
       "slides": "https://www.slideshare.net/DavideImola/level-up-your-rdbms-productivity-in-go"
@@ -238,6 +246,7 @@
     "session": {
       "title": "Securing Secrets in the GitOps Era",
       "format": "Talk",
+      "abstract": "Managing secrets in a GitOps world without committing them in plain text: sealed secrets, secret managers, and CSI drivers compared.",
       "video": "https://www.youtube.com/watch?v=HYVaSSqGyyE&list=PLWK9j6ps_unmhH5KbPWc7NXwJJ46fnXFq&index=2",
       "slides": "https://www.slideshare.net/DavideImola/securing-secrets-in-the-gitops-era"
     }
@@ -315,6 +324,7 @@
     "session": {
       "title": "How to GitOps your Kubernetes cluster with Flux",
       "format": "Talk",
+      "abstract": "An introduction to GitOps with Flux: declare your Kubernetes cluster state in Git and let the automation keep it true.",
       "video": "https://www.youtube.com/watch?v=56JnkdoClPQ&list=PLWK9j6ps_unkOGNPvoDhrnoGSmtFo9Pyr&index=2",
       "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
     }
@@ -342,6 +352,7 @@
     "session": {
       "title": "How to GitOps your Kubernetes cluster with Flux",
       "format": "Talk",
+      "abstract": "An introduction to GitOps with Flux: declare your Kubernetes cluster state in Git and let the automation keep it true.",
       "video": "https://www.wearedevelopers.com/en/videos/547/how-to-gitops-your-cluster-with-flux",
       "slides": "https://www.slideshare.net/DavideImola/how-to-gitops-your-cluster-with-flux"
     }
