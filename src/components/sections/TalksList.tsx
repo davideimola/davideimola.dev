@@ -117,10 +117,10 @@ function TalkCard({
             <span className="font-mono text-[11px] text-text-3">{talk.location}</span>
             <Badge variant="category">{talk.type}</Badge>
             {session && session.format !== "Talk" && (
-              <Badge variant="category">{session.format}</Badge>
+              <Badge variant="outline">{session.format}</Badge>
             )}
-            {talk.organizer && <Badge variant="category">Organizer</Badge>}
-            {talk.mc && <Badge variant="category">MC</Badge>}
+            {talk.organizer && <Badge variant="accent">Organizer</Badge>}
+            {talk.mc && <Badge variant="accent">MC</Badge>}
           </div>
 
           {/* Path: ./event / session title */}
