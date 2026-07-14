@@ -107,6 +107,7 @@ Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Uses: `❯ cat ./uses.md`
 - Contact: `❯ ping davideimola.dev`
 - Links: multi-command terminal session (`❯ whoami`, `❯ ls -t ./blog | head -n 1`, `❯ ls ./talks --upcoming`, `❯ cal --book`, `❯ ls ./schrodinger-hat`) — standalone link-in-bio page living outside the `(site)` route group, so it renders without NavBar/Footer even when reached via rewrite; `links.davideimola.dev` serves this page directly via a host-based rewrite in `next.config.ts` (deep paths on the subdomain redirect to the main site); revalidates daily (ISR) so dynamic blocks stay fresh
+- Terminal: `❯ ssh guest@davideimola.dev` — a REAL interactive shell at `/terminal`: the visitor types commands and the site answers. Pure command engine in `src/lib/terminal.ts` (unit-tested, no React/browser APIs), client component `InteractiveTerminal` in `src/components/sections/`, data (posts/talks/projects) injected by the server page. Includes easter eggs (`sudo`, `rm`, `nmap`, `argus`, `vim`, `ssh`, `ping`); an `ask` AI command (Gemini free tier) is planned but not built. Linked from footer and 404; revalidates daily (ISR)
 
 ### Rules
 - Every component in `src/components/ui/` and `src/components/layout/` MUST have a Storybook story

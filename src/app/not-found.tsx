@@ -63,6 +63,13 @@ export default function NotFound() {
           or go back to{" "}
           <a href="/" className="text-text-2 hover:text-accent transition-colors duration-150">
             ~/home
+          </a>{" "}
+          — or open{" "}
+          <a
+            href="/terminal"
+            className="text-text-2 hover:text-accent transition-colors duration-150"
+          >
+            a shell
           </a>
         </p>
       </div>

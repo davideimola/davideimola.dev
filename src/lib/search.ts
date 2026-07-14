@@ -68,6 +68,13 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/links",
   },
   {
+    id: "page-terminal",
+    type: "page",
+    title: "Terminal",
+    description: "An interactive shell for this site. Some commands are undocumented.",
+    href: "/terminal",
+  },
+  {
     id: "page-privacy",
     type: "page",
     title: "Privacy",
