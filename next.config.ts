@@ -53,6 +53,14 @@ const nextConfig: NextConfig = {
           destination: "/links",
         },
       ],
+      afterFiles: [
+        // Raw-Markdown version of each post for LLM consumers (llms.txt
+        // convention): append .md to the canonical post URL.
+        {
+          source: "/blog/:slug.md",
+          destination: "/blog-md/:slug",
+        },
+      ],
     };
   },
   images: {

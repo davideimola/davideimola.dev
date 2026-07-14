@@ -136,6 +136,7 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 - Robots: `src/app/robots.ts`
 - RSS feed: `src/app/rss.xml/route.ts`
 - JSON-LD structured data via `<JsonLd>` component in each page
+- LLM-ready (llms.txt convention, builders in `src/lib/llms.ts`): `/llms.txt` (index), `/llms-full.txt` (all posts inlined), and each post as raw Markdown at `/blog/[slug].md` — served by `src/app/blog-md/[slug]/route.ts` via an `afterFiles` rewrite in `next.config.ts`. Post pages advertise the Markdown version via `alternates.types`
 
 ## What NOT to do
 
