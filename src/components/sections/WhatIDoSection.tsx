@@ -11,13 +11,13 @@ const PILLARS = [
     command: "❯ lead",
     title: "Tech Leadership",
     description:
-      "Tech Lead at RedCarbon. Bridging product and engineering — from architecture decisions to team growth and delivery.",
+      "Tech Lead at RedCarbon, leading the team that builds AI analysts for security operations. Bridging product and engineering — from architecture decisions to team growth and delivery.",
   },
   {
     command: "❯ speaker",
     title: "Conference Speaker",
     description:
-      "Co-founder of Schrodinger Hat and co-organizer of Open Source Day. Speaking at conferences across Europe on DevOps, GitOps, Go, and security.",
+      "Co-founder of Schrodinger Hat and co-organizer of Open Source Day. Speaking at conferences across Europe on AI, security, Go, and DevOps.",
   },
 ];
 

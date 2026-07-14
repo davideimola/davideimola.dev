@@ -10,6 +10,6 @@ export const PERSON_SCHEMA = {
   jobTitle: "Tech Lead",
   worksFor: { "@type": "Organization", name: "RedCarbon" },
   description:
-    "Tech Lead, platform engineer, open source builder. Conference speaker on DevOps, GitOps, and Go.",
+    "Tech Lead at RedCarbon, building AI agents for cybersecurity. Open source builder and conference speaker on AI, security, and Go.",
   sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
 };

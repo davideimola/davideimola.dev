@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | Davide Imola",
   },
   description:
-    "Tech Lead at RedCarbon. Software engineer focused on backend, infrastructure, and security. Conference speaker on DevOps, GitOps, and Go.",
+    "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go. Co-founder of Schrödinger Hat.",
   metadataBase: new URL("https://davideimola.dev"),
   openGraph: {
     type: "website",
