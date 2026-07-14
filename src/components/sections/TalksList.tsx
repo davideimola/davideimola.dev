@@ -21,15 +21,6 @@ interface TalksListProps {
   talks: Talk[];
 }
 
-function buildEngageCommand(talk: Talk): string {
-  const flags: string[] = [];
-  if (talk.organizer) flags.push("--organizer");
-  if (talk.mc) flags.push("--mc");
-  if (talk.session) flags.push(`--format ${talk.session.format.toLowerCase().replace(" ", "-")}`);
-  if (talk.session?.coSpeaker) flags.push(`--with "${talk.session.coSpeaker}"`);
-  return `engage${flags.length > 0 ? ` ${flags.join(" ")}` : ""}`;
-}
-
 function AbstractToggle({ abstract }: { abstract: string }) {
   const [open, setOpen] = useState(false);
 
@@ -83,7 +74,6 @@ function TalkCard({
   const { session } = talk;
   const hasMedia = !!(session?.slides || session?.video);
   const displayDate = talk.eventDateRange ?? formatShortDate(talk.date);
-  const hasRole = !!(talk.organizer || talk.mc || session);
 
   return (
     <ScrollReveal delay={index * 60}>
@@ -92,21 +82,21 @@ function TalkCard({
           <>
             {/* Itinerary spine: a continuous line bounded by the first and last nodes */}
             {!timeline.isFirst && (
-              <span aria-hidden className="absolute left-[5px] top-0 h-6 w-px bg-border" />
+              <span aria-hidden className="absolute left-[5px] top-0 h-5 w-px bg-border" />
             )}
             {!timeline.isLast && (
-              <span aria-hidden className="absolute left-[5px] top-6 bottom-0 w-px bg-border" />
+              <span aria-hidden className="absolute left-[5px] top-5 bottom-0 w-px bg-border" />
             )}
             {/* Stop node: filled accent for the next stop, hollow for the rest */}
             <span
               aria-hidden
-              className={`absolute left-[1px] top-5 z-10 h-[9px] w-[9px] rounded-[1px] ${
+              className={`absolute left-[1px] top-4 z-10 h-[9px] w-[9px] rounded-[1px] ${
                 timeline.isFirst ? "bg-accent" : "border border-border-mid bg-bg"
               }`}
             />
           </>
         )}
-        <div className="py-6 flex flex-col gap-4">
+        <div className="py-5 flex flex-col gap-3">
           {/* Next-stop eyebrow */}
           {timeline?.isFirst && (
             <div className="flex items-center gap-2 font-mono text-[11px]">
@@ -120,35 +110,33 @@ function TalkCard({
             </div>
           )}
 
-          {/* Top row: date · location */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+          {/* Meta row: date · location · type/role badges */}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 sm:gap-x-3">
             <span className="font-mono text-[11px] text-text-3">{displayDate}</span>
             <span className="font-mono text-[11px] text-text-3">·</span>
             <span className="font-mono text-[11px] text-text-3">{talk.location}</span>
+            <Badge variant="category">{talk.type}</Badge>
+            {session && session.format !== "Talk" && (
+              <Badge variant="category">{session.format}</Badge>
+            )}
+            {talk.organizer && <Badge variant="category">Organizer</Badge>}
+            {talk.mc && <Badge variant="category">MC</Badge>}
           </div>
 
           {/* Path: ./event / session title */}
           <h3 className="font-mono text-[16px] sm:text-[18px] leading-snug">
             <span className="text-accent">./</span>
             <span className="text-text-2">{talk.event}</span>
-            <span className="text-text-3"> / </span>
-            {session && <span className="text-text-1 font-semibold">{session.title}</span>}
+            {session && (
+              <>
+                <span className="text-text-3"> / </span>
+                <span className="text-text-1 font-semibold">{session.title}</span>
+              </>
+            )}
+            {session?.coSpeaker && (
+              <span className="text-text-3 font-normal text-[13px]"> w/ {session.coSpeaker}</span>
+            )}
           </h3>
-
-          {/* Event type badge */}
-          <div className="flex flex-wrap items-center gap-3">
-            <Badge variant="category">{talk.type}</Badge>
-          </div>
-
-          {/* Terminal engage command */}
-          {hasRole && (
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-[12px] text-text-3">
-                <span className="text-accent">❯ </span>
-                <span className="text-text-2">{buildEngageCommand(talk)}</span>
-              </span>
-            </div>
-          )}
 
           {/* Collapsible short abstract */}
           {session?.abstract && <AbstractToggle abstract={session.abstract} />}
