@@ -1,0 +1,6 @@
+# security.txt for davideimola.dev — RFC 9116
+Contact: mailto:hello@davideimola.dev
+Contact: https://davideimola.dev/contact
+Expires: 2027-07-01T00:00:00.000Z
+Preferred-Languages: en, it
+Canonical: https://davideimola.dev/.well-known/security.txt
