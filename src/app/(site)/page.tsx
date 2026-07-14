@@ -15,7 +15,7 @@ const WEBSITE_SCHEMA = {
   name: "Davide Imola",
   url: "https://davideimola.dev",
   description:
-    "Tech Lead at RedCarbon. Software engineer focused on backend, infrastructure, and security. Conference speaker on DevOps, GitOps, and Go.",
+    "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go. Co-founder of Schrödinger Hat.",
 };
 
 export default function HomePage() {

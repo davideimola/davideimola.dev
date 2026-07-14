@@ -73,8 +73,8 @@ export default function ContactPage() {
               Speaking & workshops
             </span>
             <p className="font-sans text-[12px] text-text-3 leading-relaxed">
-              I'm open to talks and workshops on Go, platform engineering, GitOps, security, and
-              open source. Check the{" "}
+              I'm open to talks and workshops on AI, security, Go, GitOps, and open source. Check
+              the{" "}
               <a
                 href="/sharing"
                 className="text-text-2 hover:text-accent transition-colors duration-150"

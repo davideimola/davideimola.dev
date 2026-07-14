@@ -9,8 +9,8 @@ export const SITE_URL = "https://davideimola.dev";
 
 const SITE_SUMMARY =
   "Personal site of Davide Imola — Tech Lead at RedCarbon, co-founder of Schrodinger Hat, " +
-  "co-organizer of Open Source Day. Writing and speaking about AI-assisted development, " +
-  "security, Go, platform engineering, and open source communities.";
+  "co-organizer of Open Source Day. Building AI agents for cybersecurity. Writing and " +
+  "speaking about AI applied to security, AI-assisted development, Go, and open source communities.";
 
 const PAGES: { title: string; path: string; description: string }[] = [
   { title: "About", path: "/about", description: "Who Davide is, career timeline, and values" },

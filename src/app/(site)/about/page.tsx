@@ -22,7 +22,7 @@ import { PERSON_SCHEMA } from "../../../lib/schema";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",
+    "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.",
   openGraph: {
     title: "About — Davide Imola",
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       },
     ],
     description:
-      "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",
+      "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.",
     url: "https://davideimola.dev/about",
   },
 };
@@ -96,7 +96,7 @@ const EXPERIENCE: ExperienceEntry[] = [
         role: "Tech Lead",
         period: "Jan 2026 — Present",
         description:
-          "Tech lead for the development team building an AI-powered cybersecurity platform. I still write code every day — the role is about helping the team move faster and grow, not stepping back from engineering.",
+          "Tech lead for the development team building AI analysts for security operations. I still write code every day — the role is about helping the team move faster and grow, not stepping back from engineering.",
         current: true,
       },
       {
@@ -289,8 +289,9 @@ export default function AboutPage() {
                   systems, moving infrastructure into code. Then I moved deeper into backend
                   engineering, found DDD, and started treating software as a language for domains,
                   not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead a
-                  team of developers building an AI-powered cybersecurity platform — and still write
-                  code every day.
+                  team of developers building AI analysts for security operations — and still write
+                  code every day. AI that does real security work, and security for the code AI
+                  writes: that's the intersection I work in, and the one I write about.
                 </p>
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
                   The shift to leadership changed something: I care less about my own code and more
@@ -514,7 +515,7 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="border-l-2 border-accent pl-5 flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[13px] font-medium text-text-1">Security</span>
+                <span className="font-mono text-[13px] font-medium text-text-1">AI × Security</span>
                 <span className="flex items-center gap-1 font-mono text-[10px] text-accent">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
                   in progress
@@ -522,8 +523,8 @@ export default function AboutPage() {
               </div>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
                 Working inside a cybersecurity company changes how you think about every line of
-                code. The field is moving fast and there's no standing still — I'm deep in it daily
-                at RedCarbon.
+                code. My focus is AI agents that do real security work — and the flip side: keeping
+                the code AI writes secure.
               </p>
             </div>
           </ScrollReveal>

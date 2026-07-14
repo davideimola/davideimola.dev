@@ -36,7 +36,7 @@ const STATIC_PAGES: SearchItem[] = [
     id: "page-sharing",
     type: "page",
     title: "Sharing",
-    description: "Talks, workshops, and events on Go, platform engineering, and open source.",
+    description: "Talks, workshops, and events on AI, security, Go, and open source.",
     href: "/sharing",
   },
   {

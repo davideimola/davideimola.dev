@@ -67,8 +67,15 @@ export function HeroSection() {
             />
           </h1>
 
+          {/* Tagline */}
+          <p
+            className={`font-sans text-[15px] text-text-2 leading-relaxed max-w-[46ch] mb-5 ${anim2}`}
+          >
+            I build AI agents for cybersecurity — and share everything I learn building them.
+          </p>
+
           {/* Role */}
-          <p className={`font-mono text-[13px] text-text-2 tracking-[0.04em] mb-2 ${anim2}`}>
+          <p className={`font-mono text-[13px] text-text-2 tracking-[0.04em] mb-2 ${anim3}`}>
             Tech Lead @ RedCarbon · Co-founder @ Schrödinger Hat
           </p>
 
