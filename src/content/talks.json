@@ -1,5 +1,17 @@
 [
   {
+    "slug": "reactjsday-2026",
+    "event": "reactjsday 2026",
+    "type": "Conference",
+    "date": "2026-11-19",
+    "location": "Verona, Italy",
+    "tags": ["AI", "Design System", "Software Design"],
+    "session": {
+      "title": "AI Won't Design Your System. You Have To.",
+      "format": "Talk"
+    }
+  },
+  {
     "slug": "golab-2026",
     "event": "GoLab 2026",
     "type": "Conference",

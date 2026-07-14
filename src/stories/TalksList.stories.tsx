@@ -7,6 +7,7 @@ const meta: Meta<typeof TalksList> = {
   component: TalksList,
   parameters: {
     layout: "padded",
+    nextjs: { appDirectory: true },
     backgrounds: {
       default: "dark",
       values: [{ name: "dark", value: "#080807" }],
