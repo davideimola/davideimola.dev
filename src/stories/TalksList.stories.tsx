@@ -30,6 +30,8 @@ const mockTalks: Talk[] = [
     session: {
       title: "Concurrency Patterns in Go You Should Know",
       format: "Talk",
+      abstract:
+        "Goroutines are easy to start and hard to get right. A tour of the concurrency patterns that survive production.",
       slides: "https://speakerdeck.com/davideimola/example",
       video: "https://youtube.com/watch?v=example",
     },

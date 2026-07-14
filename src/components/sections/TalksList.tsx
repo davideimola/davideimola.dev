@@ -1,8 +1,9 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Talk } from "../../lib/content";
 import { formatRelative, formatShortDate } from "../../lib/dates";
 import { Badge } from "../ui/Badge";
@@ -27,6 +28,45 @@ function buildEngageCommand(talk: Talk): string {
   if (talk.session) flags.push(`--format ${talk.session.format.toLowerCase().replace(" ", "-")}`);
   if (talk.session?.coSpeaker) flags.push(`--with "${talk.session.coSpeaker}"`);
   return `engage${flags.length > 0 ? ` ${flags.join(" ")}` : ""}`;
+}
+
+function AbstractToggle({ abstract }: { abstract: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="group font-mono text-[12px] cursor-pointer"
+      >
+        <span className="text-accent">❯ </span>
+        <span
+          className={`transition-colors duration-150 ${
+            open ? "text-accent" : "text-text-2 group-hover:text-accent"
+          }`}
+        >
+          cat abstract.md
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="overflow-hidden"
+          >
+            <p className="font-sans text-[13px] leading-relaxed text-text-2 border-l border-border-mid pl-3 mt-3 max-w-[640px]">
+              {abstract}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 function TalkCard({
@@ -109,6 +149,9 @@ function TalkCard({
               </span>
             </div>
           )}
+
+          {/* Collapsible short abstract */}
+          {session?.abstract && <AbstractToggle abstract={session.abstract} />}
 
           {/* Tags + links */}
           <div className="flex flex-wrap items-center justify-between gap-3">

@@ -22,6 +22,7 @@ export interface BlogPost {
 export interface TalkSession {
   title: string;
   format: "Talk" | "Workshop" | "Interview" | "Panel" | "Lightning Talk";
+  abstract?: string; // short, 1–2 sentences — rendered as a collapsible row
   coSpeaker?: string;
   slides?: string;
   video?: string;
