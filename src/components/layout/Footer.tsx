@@ -6,6 +6,7 @@ const FOOTER_LINKS = [
   { label: "privacy", href: "/privacy" },
   { label: "now", href: "/now" },
   { label: "uses", href: "/uses" },
+  { label: "terminal", href: "/terminal" },
   { label: "brand", href: "/brand" },
   { label: "rss", href: "/rss.xml" },
   { label: "source", href: "https://github.com/davideimola/davideimola.dev" },
