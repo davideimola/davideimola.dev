@@ -1,4 +1,4 @@
-type BadgeVariant = "default" | "active" | "coming-soon" | "category";
+type BadgeVariant = "default" | "active" | "coming-soon" | "category" | "outline" | "accent";
 
 interface BadgeProps {
   variant?: BadgeVariant;
@@ -11,6 +11,10 @@ const variantClasses: Record<BadgeVariant, string> = {
   active: "text-text-3 bg-border",
   "coming-soon": "text-accent bg-accent-glow border border-[rgba(201,31,55,0.2)]",
   category: "text-text-3 bg-border",
+  // Hollow sibling of `category` — secondary classifications (e.g. session format)
+  outline: "text-text-3 border border-border-mid bg-transparent",
+  // Accent-tinted — personal role labels (e.g. Organizer, MC)
+  accent: "text-accent bg-accent-glow border border-[rgba(201,31,55,0.2)]",
 };
 
 export function Badge({ variant = "default", children, className = "" }: BadgeProps) {

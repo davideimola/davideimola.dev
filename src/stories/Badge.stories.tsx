@@ -15,7 +15,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "active", "coming-soon", "category"],
+      options: ["default", "active", "coming-soon", "category", "outline", "accent"],
     },
   },
 };
@@ -51,6 +51,20 @@ export const Category: Story = {
   },
 };
 
+export const Outline: Story = {
+  args: {
+    variant: "outline",
+    children: "Workshop",
+  },
+};
+
+export const Accent: Story = {
+  args: {
+    variant: "accent",
+    children: "Organizer",
+  },
+};
+
 export const AllVariants: Story = {
   render: () => (
     <div className="flex gap-2 flex-wrap p-6">
@@ -60,6 +74,8 @@ export const AllVariants: Story = {
       <Badge variant="category">Security</Badge>
       <Badge variant="category">DevOps</Badge>
       <Badge variant="category">Go</Badge>
+      <Badge variant="outline">Workshop</Badge>
+      <Badge variant="accent">Organizer</Badge>
     </div>
   ),
 };
