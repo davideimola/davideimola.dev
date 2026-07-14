@@ -61,7 +61,7 @@ export const Outline: Story = {
 export const Accent: Story = {
   args: {
     variant: "accent",
-    children: "Organizer",
+    children: "@Organizer",
   },
 };
 
@@ -75,7 +75,7 @@ export const AllVariants: Story = {
       <Badge variant="category">DevOps</Badge>
       <Badge variant="category">Go</Badge>
       <Badge variant="outline">Workshop</Badge>
-      <Badge variant="accent">Organizer</Badge>
+      <Badge variant="accent">@Organizer</Badge>
     </div>
   ),
 };

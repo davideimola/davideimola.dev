@@ -119,8 +119,8 @@ function TalkCard({
             {session && session.format !== "Talk" && (
               <Badge variant="outline">{session.format}</Badge>
             )}
-            {talk.organizer && <Badge variant="accent">Organizer</Badge>}
-            {talk.mc && <Badge variant="accent">MC</Badge>}
+            {talk.organizer && <Badge variant="accent">@Organizer</Badge>}
+            {talk.mc && <Badge variant="accent">@MC</Badge>}
           </div>
 
           {/* Path: ./event / session title */}
