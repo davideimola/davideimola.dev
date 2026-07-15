@@ -63,6 +63,31 @@ const mockTalks: Talk[] = [
     },
   },
   {
+    // The mixed case: organized the event AND ran a session there
+    slug: "open-source-day-2024",
+    event: "Open Source Day 2024",
+    date: "2024-03-08",
+    location: "Florence, Italy",
+    type: "Conference",
+    organizer: true,
+    tags: ["Open Source", "Community"],
+    session: {
+      title: "From Git to Deploy",
+      format: "Workshop",
+      coSpeaker: "Lorenzo Bugli",
+    },
+  },
+  {
+    slug: "typescript-meetup-2023",
+    event: "TypeScript Meetup",
+    date: "2023-10-26",
+    location: "Florence, Italy",
+    type: "Meetup",
+    organizer: true,
+    mc: true,
+    tags: ["TypeScript", "Community"],
+  },
+  {
     slug: "open-source-day-2023",
     event: "Open Source Day 2023",
     date: "2023-03-28",
@@ -91,5 +116,19 @@ export const NoResults: Story = {
   args: { talks: mockTalks },
   parameters: {
     nextjs: { navigation: { searchParams: { tag: "rust" } } },
+  },
+};
+
+export const FilteredBySpeakerRole: Story = {
+  args: { talks: mockTalks },
+  parameters: {
+    nextjs: { navigation: { searchParams: { role: "speaker" } } },
+  },
+};
+
+export const FilteredByOrganizerRole: Story = {
+  args: { talks: mockTalks },
+  parameters: {
+    nextjs: { navigation: { searchParams: { role: "organizer" } } },
   },
 };
