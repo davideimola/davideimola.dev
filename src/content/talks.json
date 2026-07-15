@@ -9,7 +9,7 @@
     "session": {
       "title": "AI Won't Design Your System. You Have To.",
       "format": "Talk",
-      "abstract": "AI is a great collaborator and a terrible architect. How rebuilding my site twice taught me to define the design system before letting AI touch a single component — shown live with Claude Code."
+      "abstract": "AI is a great collaborator and a terrible architect. How rebuilding my site twice taught me to define the design system before letting AI touch a single component, shown live with Claude Code."
     }
   },
   {
@@ -23,7 +23,7 @@
     "session": {
       "title": "Securing Go for Production: Best Practices, Supply Chain, Testing",
       "format": "Talk",
-      "abstract": "Why Go security matters now, starting from a one-line auth bypass caught by testing. Best practices, fuzzing, govulncheck, and supply chain hygiene — with offline-friendly demos."
+      "abstract": "Why Go security matters now, starting from a one-line auth bypass caught by testing. Best practices, fuzzing, govulncheck, and supply chain hygiene, with offline-friendly demos."
     }
   },
   {

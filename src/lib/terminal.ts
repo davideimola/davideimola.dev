@@ -61,8 +61,8 @@ const link = (text: string, href: string): TerminalToken => ({ text, href });
 // ── Static content ─────────────────────────────────────────────────────────
 
 const WHOAMI_LINES: TerminalLine[] = [
-  [accent("Davide Imola"), muted(" — Tech Lead @ RedCarbon")],
-  [t("I build AI agents for cybersecurity — and share everything I learn building them.")],
+  [accent("Davide Imola"), muted(" - Tech Lead @ RedCarbon")],
+  [t("I build AI agents for cybersecurity, and I share everything I learn building them.")],
   [muted("Co-founder @ Schrödinger Hat · Co-organizer @ Open Source Day")],
   [muted("Based in Verona, Italy · "), link("/about", "/about")],
 ];
@@ -70,8 +70,8 @@ const WHOAMI_LINES: TerminalLine[] = [
 const HELP_COMMANDS: { name: string; args: string; description: string }[] = [
   { name: "help", args: "", description: "show this help" },
   { name: "whoami", args: "", description: "who is Davide" },
-  { name: "ls", args: "[dir]", description: "list contents — try ./blog, ./talks, ./projects" },
-  { name: "cat", args: "<file>", description: "read a file — try now.md or blog/<slug>.md" },
+  { name: "ls", args: "[dir]", description: "list contents (try ./blog, ./talks, ./projects)" },
+  { name: "cat", args: "<file>", description: "read a file (try now.md or blog/<slug>.md)" },
   { name: "open", args: "<path>", description: "go to a page" },
   { name: "echo", args: "<text>", description: "print text" },
   { name: "date", args: "", description: "current date" },
@@ -154,7 +154,7 @@ function cmdLs(arg: string | undefined, data: TerminalData): CommandResult {
     const lines: TerminalLine[] = data.talks.map((talk) => [
       talk.upcoming ? accent("→ ") : t("  "),
       muted(`${talk.date.slice(0, 10)}  `),
-      link(`${talk.event} — ${talk.title}`, "/sharing"),
+      link(`${talk.event} - ${talk.title}`, "/sharing"),
       muted(`  · ${talk.location}`),
     ]);
     lines.push([]);
@@ -165,7 +165,7 @@ function cmdLs(arg: string | undefined, data: TerminalData): CommandResult {
     const lines: TerminalLine[] = data.projects.map((p) => [
       muted(`[${p.status}]`.padEnd(14)),
       link(p.title, p.href),
-      muted(`  — ${p.description}`),
+      muted(`  - ${p.description}`),
     ]);
     return { lines };
   }
@@ -180,7 +180,7 @@ function cmdCat(arg: string | undefined, data: TerminalData): CommandResult {
   if (path === "now.md") {
     return {
       lines: [
-        [muted("# now — this file changes often. The live version:")],
+        [muted("# now - this file changes often. The live version:")],
         [link("davideimola.dev/now", "/now")],
       ],
     };
@@ -188,7 +188,7 @@ function cmdCat(arg: string | undefined, data: TerminalData): CommandResult {
   if (path === "uses.md") {
     return {
       lines: [
-        [muted("# uses — hardware, software, and tools. The live version:")],
+        [muted("# uses - hardware, software, and tools. The live version:")],
         [link("davideimola.dev/uses", "/uses")],
       ],
     };
@@ -219,7 +219,7 @@ function cmdCat(arg: string | undefined, data: TerminalData): CommandResult {
 }
 
 function cmdOpen(arg: string | undefined, data: TerminalData): CommandResult {
-  if (!arg) return { lines: [[error("open: missing operand — try 'open blog'")]] };
+  if (!arg) return { lines: [[error("open: missing operand (try 'open blog')")]] };
   const path = normalizePath(arg);
 
   if (arg.startsWith("http")) {
@@ -258,7 +258,7 @@ function cmdSudo(): CommandResult {
 }
 
 function cmdRm(): CommandResult {
-  return { lines: [[error("rm: permission denied"), muted(" — nice try.")]] };
+  return { lines: [[error("rm: permission denied"), muted(" - nice try.")]] };
 }
 
 function cmdNmap(): CommandResult {
@@ -273,7 +273,7 @@ function cmdNmap(): CommandResult {
       [t("443/tcp   open      https     "), muted("# you are here")],
       [],
       [
-        muted("Nmap done: 1 host up. Nothing to see — "),
+        muted("Nmap done: 1 host up. Nothing to see, "),
         accent("argus"),
         muted(" already reviewed this host."),
       ],
@@ -284,7 +284,7 @@ function cmdNmap(): CommandResult {
 function cmdArgus(): CommandResult {
   return {
     lines: [
-      [accent("Argus"), muted(" — AI-driven security review agent, written in Go")],
+      [accent("Argus"), muted(" - AI-driven security review agent, written in Go")],
       [t("Wraps real scanners and reasons about their findings with context.")],
       [link("github.com/argusappsec/argus", "https://github.com/argusappsec/argus")],
     ],

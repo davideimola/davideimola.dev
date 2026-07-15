@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.",
   openGraph: {
-    title: "About — Davide Imola",
+    title: "About · Davide Imola",
     images: [
       {
         url: "https://davideimola.dev/og?title=About&category=whoami",
@@ -65,7 +65,7 @@ const TECHNOLOGIES = [
 const METHODOLOGIES = [
   {
     name: "DDD",
-    context: "Domain-Driven Design. Modeling complex domains — GoLab 2024 talk on Go + DDD.",
+    context: "Domain-Driven Design. Modeling complex domains (GoLab 2024 talk on Go + DDD).",
   },
   {
     name: "TDD",
@@ -89,19 +89,19 @@ const METHODOLOGIES = [
 const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "RedCarbon",
-    period: "Sep 2022 — Present",
+    period: "Sep 2022 – Present",
     current: true,
     roles: [
       {
         role: "Tech Lead",
-        period: "Jan 2026 — Present",
+        period: "Jan 2026 – Present",
         description:
-          "Tech lead for the development team building AI analysts for security operations. I still write code every day — the role is about helping the team move faster and grow, not stepping back from engineering.",
+          "Tech lead for the development team building AI analysts for security operations. I still write code every day. The role is about helping the team move faster and grow, not stepping back from engineering.",
         current: true,
       },
       {
         role: "Software Engineer",
-        period: "Sep 2022 — Dec 2025",
+        period: "Sep 2022 – Dec 2025",
         description:
           "Backend engineering on a Go microservices platform. Kubernetes, GCP, gRPC, Next.js. Grew into the tech lead role from here.",
         current: false,
@@ -110,12 +110,12 @@ const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "Milkman Technologies",
-    period: "Aug 2020 — Sep 2022",
+    period: "Aug 2020 – Sep 2022",
     current: false,
     roles: [
       {
         role: "DevOps Engineer",
-        period: "Aug 2020 — Sep 2022",
+        period: "Aug 2020 – Sep 2022",
         description:
           "Last-mile delivery platform. AWS, Kafka, PostgreSQL, Datadog. Focus on reliability and observability.",
         current: false,
@@ -124,12 +124,12 @@ const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "Codemotion",
-    period: "Jan 2021 — Apr 2021",
+    period: "Jan 2021 – Apr 2021",
     current: false,
     roles: [
       {
         role: "IT Instructor",
-        period: "Jan 2021 — Apr 2021",
+        period: "Jan 2021 – Apr 2021",
         description:
           "Freelance instructor. Wrote and delivered courses on IaC, DevOps practices, and Cloud Security.",
         current: false,
@@ -138,12 +138,12 @@ const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "ASEM S.r.l.",
-    period: "Dec 2017 — Aug 2020",
+    period: "Dec 2017 – Aug 2020",
     current: false,
     roles: [
       {
         role: "DevOps Engineer",
-        period: "Dec 2017 — Aug 2020",
+        period: "Dec 2017 – Aug 2020",
         description:
           "Industrial automation software. Built CI/CD pipelines, containerized legacy systems with Docker, C#.",
         current: false,
@@ -152,12 +152,12 @@ const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "EDALab",
-    period: "Nov 2016 — Sep 2017",
+    period: "Nov 2016 – Sep 2017",
     current: false,
     roles: [
       {
         role: "Software Engineer",
-        period: "Nov 2016 — Sep 2017",
+        period: "Nov 2016 – Sep 2017",
         description:
           "Internship turned first job. Embedded systems, Qt, iOS, C++. Where engineering got serious.",
         current: false,
@@ -201,14 +201,14 @@ const HOBBIES = [
   {
     label: "Football",
     icon: IconBallFootball,
-    context: "I play futsal and follow Hellas Verona — home games included.",
+    context: "I play futsal and follow Hellas Verona, home games included.",
     href: null,
   },
   {
     label: "BBQ & low and slow",
     icon: IconGrill,
     context:
-      "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak (diaframma) — cheap, flavourful, unbeatable.",
+      "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak (diaframma). Cheap, flavourful, unbeatable.",
     href: null,
   },
   {
@@ -228,27 +228,27 @@ const HOBBIES = [
   {
     label: "Tabletop & D&D",
     icon: IconDice5,
-    context: "Board game collector. Currently playing a D&D campaign — and writing one to DM soon.",
+    context: "Board game collector. Currently playing a D&D campaign, and writing one to DM soon.",
     href: null,
   },
   {
     label: "JuJutsu",
     icon: IconKarate,
-    context: "Hontai Yōshin-ryū. Yellow belt — orange is the next milestone.",
+    context: "Hontai Yōshin-ryū. Yellow belt; orange is the next milestone.",
     href: null,
   },
   {
     label: "Music",
     icon: IconMusic,
     context:
-      "Everything from Linkin Park to De André, Eminem to Hans Zimmer. I go to concerts whenever I can — saw LP live in 2025.",
+      "Everything from Linkin Park to De André, Eminem to Hans Zimmer. I go to concerts whenever I can (saw LP live in 2025).",
     href: "https://open.spotify.com/playlist/1qLEh5nRfgkelDOQqBScxE?si=de08590bfe4f4eee",
   },
   {
     label: "Travel",
     icon: IconPlane,
     context:
-      "I travel to learn. Japan was a dream — I'll go back. Asia draws me most: temples, art, religion, and food I'd never stop to think twice about trying.",
+      "I travel to learn. Japan was a dream; I'll go back. Asia draws me most: temples, art, religion, and food I'd never stop to think twice about trying.",
     href: null,
   },
   {
@@ -279,17 +279,17 @@ export default function AboutPage() {
               <div className="flex flex-col gap-4">
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
                   I started with curiosity. A CS degree from Verona, a lot of self-taught tools, and
-                  the drive to understand how things actually work — not just how to make them run.
+                  the drive to understand how things actually work, not just how to make them run.
                   My first real team job taught me that readable code isn't just a nicety: it's the
                   difference between a codebase that scales and one that breaks you. Clean Code and
                   Clean Architecture landed at the right moment.
                 </p>
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  I spent about ten years in the DevOps world — building pipelines, containerizing
+                  I spent about ten years in the DevOps world: building pipelines, containerizing
                   systems, moving infrastructure into code. Then I moved deeper into backend
                   engineering, found DDD, and started treating software as a language for domains,
                   not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead a
-                  team of developers building AI analysts for security operations — and still write
+                  team of developers building AI analysts for security operations, and still write
                   code every day. AI that does real security work, and security for the code AI
                   writes: that's the intersection I work in, and the one I write about.
                 </p>
@@ -333,7 +333,7 @@ export default function AboutPage() {
               What you learn, you must share.
               <br />
               <span className="text-text-2 text-[13px] sm:text-[15px]">
-                Knowledge shared is not knowledge lost — it's knowledge multiplied.
+                Knowledge shared is not knowledge lost: it's knowledge multiplied.
               </span>
             </p>
           </blockquote>
@@ -423,13 +423,13 @@ export default function AboutPage() {
                 Università degli Studi di Verona
               </span>
               <span className="font-sans text-[13px] text-text-2">
-                B.Sc. Computer Science — 94/110, 2014–2017
+                B.Sc. Computer Science · 94/110, 2014–2017
               </span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="font-mono text-[13px] text-text-1">ITI G. Marconi, Verona</span>
               <span className="font-sans text-[13px] text-text-2">
-                Technical high school — 2009–2014
+                Technical high school · 2009–2014
               </span>
             </div>
           </div>
@@ -460,10 +460,10 @@ export default function AboutPage() {
             </div>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed">
               Yearly open source conference in Florence, Italy. 500+ attendees, international
-              speakers — and completely free. Students, early-career developers, anyone without a
+              speakers, and completely free. Students, early-career developers, anyone without a
               budget: everyone can come. Knowledge should be open and accessible to all. That's not
               a tagline, it's the reason this conference exists. There's an enormous amount of
-              invisible work behind every edition — and that's exactly why it matters.
+              invisible work behind every edition, and that's exactly why it matters.
             </p>
             <a
               href="https://osday.dev"
@@ -523,7 +523,7 @@ export default function AboutPage() {
               </div>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
                 Working inside a cybersecurity company changes how you think about every line of
-                code. My focus is AI agents that do real security work — and the flip side: keeping
+                code. My focus is AI agents that do real security work, and the flip side: keeping
                 the code AI writes secure.
               </p>
             </div>
@@ -541,7 +541,7 @@ export default function AboutPage() {
               </div>
               <p className="font-sans text-[13px] text-text-2 leading-relaxed">
                 Model hosting, MLOps, vLLM on Kubernetes. AI is changing how software is built and I
-                want to understand the infrastructure layer — not just use the APIs.
+                want to understand the infrastructure layer, not just use the APIs.
               </p>
             </div>
           </ScrollReveal>

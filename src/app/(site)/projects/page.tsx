@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Projects",
   description: "Open source tools, communities, and side projects I've built or contribute to.",
   openGraph: {
-    title: "Projects — Davide Imola",
+    title: "Projects · Davide Imola",
     description: "Open source tools, communities, and side projects I've built or contribute to.",
     url: "https://davideimola.dev/projects",
     images: [
@@ -136,7 +136,7 @@ export default function ProjectsPage() {
         <ScrollReveal>
           <SectionHeader title="OSS Contributions" className="mb-6" />
           <p className="font-sans text-[14px] text-text-2 mb-8">
-            Projects I've contributed to — bug fixes, features, and documentation.
+            Projects I've contributed to: bug fixes, features, and documentation.
           </p>
         </ScrollReveal>
         <ul className="flex flex-col divide-y divide-border">

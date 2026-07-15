@@ -7,11 +7,11 @@ import type { TerminalData } from "../../../lib/terminal";
 export const metadata: Metadata = {
   title: "Terminal",
   description:
-    "An interactive shell for davideimola.dev. Type 'help' to get started — a few commands are undocumented.",
+    "An interactive shell for davideimola.dev. Type 'help' to get started. A few commands are undocumented.",
   openGraph: {
-    title: "Terminal — Davide Imola",
+    title: "Terminal · Davide Imola",
     description:
-      "An interactive shell for davideimola.dev. Type 'help' to get started — a few commands are undocumented.",
+      "An interactive shell for davideimola.dev. Type 'help' to get started. A few commands are undocumented.",
     url: "https://davideimola.dev/terminal",
     images: [
       { url: "https://davideimola.dev/og?title=Terminal&category=shell", width: 1200, height: 630 },
@@ -64,7 +64,7 @@ export default function TerminalPage() {
       <PageHero
         command="ssh guest@davideimola.dev"
         title="Terminal"
-        description="Every page on this site pretends to be a terminal. This one actually answers. Type 'help' to get started — a few commands are undocumented."
+        description="Every page on this site pretends to be a terminal. This one actually answers. Type 'help' to get started. A few commands are undocumented."
         className="mb-10"
       />
       <InteractiveTerminal data={data} />

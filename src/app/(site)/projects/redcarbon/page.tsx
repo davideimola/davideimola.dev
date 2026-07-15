@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { ScrollReveal } from "../../../../components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "RedCarbon — Case Study",
+  title: "RedCarbon Case Study",
   description:
     "How I joined a 3-person cybersecurity startup and helped grow the engineering team to 10+, from Software Engineer to Tech Lead.",
   openGraph: {
-    title: "RedCarbon — Case Study · Davide Imola",
+    title: "RedCarbon Case Study · Davide Imola",
     description:
       "How I joined a 3-person cybersecurity startup and helped grow the engineering team to 10+, from Software Engineer to Tech Lead.",
     url: "https://davideimola.dev/projects/redcarbon",
@@ -71,7 +71,7 @@ export default function RedCarbonCaseStudy() {
             I joined RedCarbon as one of its first engineers when the company was barely formed.
             Over four years, the team has grown from 3 to 10+ people, the platform now processes
             500k+ alerts monthly, and the company has reached Series A funding. I'm Tech Lead of a
-            team I helped build from scratch — in a domain I had to teach myself, on a codebase I
+            team I helped build from scratch, in a domain I had to teach myself, on a codebase I
             helped design.
           </p>
         </header>
@@ -104,7 +104,7 @@ export default function RedCarbonCaseStudy() {
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               RedCarbon had just been founded when I joined. The team was three people: one
               Engineering Manager handling the backend, two frontend engineers. I was hired to help
-              the EM scale up the backend side — a Go microservices platform powering an AI-driven
+              the EM scale up the backend side: a Go microservices platform powering an AI-driven
               Security Operations Center product.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
@@ -123,13 +123,13 @@ export default function RedCarbonCaseStudy() {
           </h2>
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              My background was DevOps — infrastructure, pipelines, containers. I knew how systems
+              My background was DevOps: infrastructure, pipelines, containers. I knew how systems
               run. What I didn't know was how a product is built: how to read a business
               requirement, how to model a domain, how to make tradeoffs that matter to a customer.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               The domain made this harder. Cybersecurity at the SOC level is a complex, specialized
-              field. Threat detection, alert correlation, incident response workflows — I had to
+              field. Threat detection, alert correlation, incident response workflows: I had to
               learn the theory and the practice simultaneously while shipping production code.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
@@ -155,19 +155,19 @@ export default function RedCarbonCaseStudy() {
               },
               {
                 title: "Infrastructure as code",
-                body: "I brought my DevOps background to bear on the cloud layer. Migrated infrastructure management to Pulumi on GCP — code-first, version-controlled, reproducible. No more manual configuration drift.",
+                body: "I brought my DevOps background to bear on the cloud layer. Migrated infrastructure management to Pulumi on GCP: code-first, version-controlled, reproducible. No more manual configuration drift.",
               },
               {
                 title: "GitOps on Kubernetes",
-                body: "Kubernetes and GitOps were already part of the stack when I joined. I took ownership of that layer, deepened it, and brought the same expertise I'd been developing independently — eventually speaking about it at KCD Italy, Incontro DevOps, and other conferences.",
+                body: "Kubernetes and GitOps were already part of the stack when I joined. I took ownership of that layer, deepened it, and brought the same expertise I'd been developing independently, eventually speaking about it at KCD Italy, Incontro DevOps, and other conferences.",
               },
               {
                 title: "Observability from zero",
-                body: "The platform had no monitoring. I built the full Grafana + Prometheus stack — dashboards, alerts, service-level indicators. For the first time the team could see what was actually happening in production.",
+                body: "The platform had no monitoring. I built the full Grafana + Prometheus stack: dashboards, alerts, service-level indicators. For the first time the team could see what was actually happening in production.",
               },
               {
                 title: "Go backend & hiring",
-                body: "I grew into Go microservices development and became one of the primary contributors to the backend platform. As the team needed to grow, I helped the EM with interviews and hiring — learning to build a team, not just join one.",
+                body: "I grew into Go microservices development and became one of the primary contributors to the backend platform. As the team needed to grow, I helped the EM with interviews and hiring, learning to build a team, not just join one.",
               },
             ].map((item) => (
               <div key={item.title} className="flex flex-col gap-2 border-l border-border pl-5">
@@ -195,7 +195,7 @@ export default function RedCarbonCaseStudy() {
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               I work closely with the PM on roadmap and planning, and interface directly with
-              C-level stakeholders — translating business requirements into technical decisions, and
+              C-level stakeholders, translating business requirements into technical decisions and
               translating technical constraints back into product language. Domain-Driven Design
               became my foundation for this: having a shared ubiquitous language between engineers
               and business stakeholders is not a luxury, it's what prevents costly
@@ -203,7 +203,7 @@ export default function RedCarbonCaseStudy() {
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               My approach to leadership is deliberate: I avoid micromanagement. Senior engineers own
-              their architectural decisions — I set direction and remove blockers. Where I focus is
+              their architectural decisions; I set direction and remove blockers. Where I focus is
               on mentorship: helping juniors grow and, over time, positioning senior engineers to
               become future team leaders themselves. If I do my job right, I make myself
               replaceable.
@@ -222,7 +222,7 @@ export default function RedCarbonCaseStudy() {
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               Engineering skills get you in the door. Domain understanding keeps you relevant.
-              Knowing how a business makes money — and what it needs to stay alive — changes how you
+              Knowing how a business makes money, and what it needs to stay alive, changes how you
               write every line of code.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">

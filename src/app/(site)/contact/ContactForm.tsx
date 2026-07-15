@@ -114,7 +114,7 @@ export function ContactForm() {
           className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150 resize-none"
         />
         <p className="font-mono text-[11px] text-text-3">
-          <span className="text-accent">{"//"}</span> no links, please — you can share them once I
+          <span className="text-accent">{"//"}</span> no links, please. You can share them once I
           reply
         </p>
       </div>

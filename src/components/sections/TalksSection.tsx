@@ -24,7 +24,7 @@ function FeaturedNext({ talk, relative }: { talk: Talk; relative: string }) {
           <div className="font-mono text-[15px] sm:text-[16px] leading-snug">
             <span className="text-accent">./</span>
             <span className="text-text-1 font-semibold">{talk.event}</span>
-            {talk.session?.title && <span className="text-text-2"> — {talk.session.title}</span>}
+            {talk.session?.title && <span className="text-text-2"> / {talk.session.title}</span>}
           </div>
         </div>
         <span className="font-mono text-[13px] text-text-3 group-hover:text-accent group-hover:translate-x-1 transition-[color,transform] duration-150 shrink-0 hidden sm:inline">
@@ -119,7 +119,7 @@ export function TalksSection() {
         <ScrollReveal>
           <BookingPrompt
             className="mt-8 pt-6 border-t border-border"
-            message="No public dates right now — want me at your event?"
+            message="No public dates right now. Want me at your event?"
           />
         </ScrollReveal>
       </SectionWrapper>
@@ -135,7 +135,7 @@ export function TalksSection() {
       <ScrollReveal>
         <BookingPrompt
           className="mt-8"
-          message="I speak about Go, security & open source — let's talk."
+          message="I speak about Go, security & open source. Let's talk."
         />
       </ScrollReveal>
     </SectionWrapper>
