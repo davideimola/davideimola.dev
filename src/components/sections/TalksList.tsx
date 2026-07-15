@@ -21,6 +21,22 @@ interface TalksListProps {
   talks: Talk[];
 }
 
+type Role = "speaker" | "organizer";
+
+const ROLE_FLAGS: { flag: string; role?: Role }[] = [
+  { flag: "--all" },
+  { flag: "--speaker", role: "speaker" },
+  { flag: "--organizer", role: "organizer" },
+];
+
+function sharingHref(role?: Role, tag?: string) {
+  const params = new URLSearchParams();
+  if (tag) params.set("tag", tag);
+  if (role) params.set("role", role);
+  const qs = params.toString();
+  return qs ? `/sharing?${qs}` : "/sharing";
+}
+
 function AbstractToggle({ abstract }: { abstract: string }) {
   const [open, setOpen] = useState(false);
 
@@ -64,11 +80,13 @@ function TalkCard({
   talk,
   index,
   activeTag,
+  activeRole,
   timeline,
 }: {
   talk: Talk;
   index: number;
   activeTag?: string;
+  activeRole?: Role;
   timeline?: Timeline;
 }) {
   const { session } = talk;
@@ -119,6 +137,8 @@ function TalkCard({
             {session && session.format !== "Talk" && (
               <Badge variant="outline">{session.format}</Badge>
             )}
+            {/* @-prefixed role badges are always explicit and share the accent tier (personal roles) */}
+            {session && <Badge variant="accent">@Speaker</Badge>}
             {talk.organizer && <Badge variant="accent">@Organizer</Badge>}
             {talk.mc && <Badge variant="accent">@MC</Badge>}
           </div>
@@ -147,7 +167,7 @@ function TalkCard({
               {talk.tags.map((t) => (
                 <Link
                   key={t}
-                  href={`/sharing?tag=${encodeURIComponent(t.toLowerCase())}`}
+                  href={sharingHref(activeRole, t.toLowerCase())}
                   scroll={false}
                   className={[
                     "font-mono text-[11px] transition-colors duration-150",
@@ -192,6 +212,9 @@ function TalkCard({
 export function TalksList({ talks }: TalksListProps) {
   const searchParams = useSearchParams();
   const activeTag = searchParams.get("tag") ?? undefined;
+  const roleParam = searchParams.get("role");
+  const activeRole: Role | undefined =
+    roleParam === "speaker" || roleParam === "organizer" ? roleParam : undefined;
 
   // Re-trigger hash scroll after the list mounts.
   // The native browser scroll fires before this client component hydrates,
@@ -218,9 +241,11 @@ export function TalksList({ talks }: TalksListProps) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const filtered = activeTag
-    ? talks.filter((t) => t.tags.map((tag) => tag.toLowerCase()).includes(activeTag.toLowerCase()))
-    : talks;
+  const matchesTag = (t: Talk) =>
+    !activeTag || t.tags.map((tag) => tag.toLowerCase()).includes(activeTag.toLowerCase());
+  const matchesRole = (t: Talk) =>
+    !activeRole || (activeRole === "speaker" ? !!t.session : !!(t.organizer || t.mc));
+  const filtered = talks.filter((t) => matchesTag(t) && matchesRole(t));
 
   // Upcoming reads as an itinerary: soonest stop first. Past stays newest-first.
   const upcoming = filtered
@@ -238,13 +263,32 @@ export function TalksList({ talks }: TalksListProps) {
 
   return (
     <div className="border-t border-border pt-10">
+      {/* Role filter, styled as flags on an ls command */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[12px] mb-10">
+        <span className="text-accent">❯</span>
+        <span className="text-text-3">ls ./talks</span>
+        {ROLE_FLAGS.map(({ flag, role }) => (
+          <Link
+            key={flag}
+            href={sharingHref(role, activeTag)}
+            scroll={false}
+            aria-current={activeRole === role ? "true" : undefined}
+            className={`transition-colors duration-150 ${
+              activeRole === role ? "text-accent" : "text-text-3 hover:text-accent"
+            }`}
+          >
+            {flag}
+          </Link>
+        ))}
+      </div>
+
       {activeTag && (
-        <div className="flex items-center gap-2 font-mono text-[12px] mb-10">
+        <div className="flex items-center gap-2 font-mono text-[12px] -mt-6 mb-10">
           <span className="text-accent">❯</span>
           <span className="text-text-3">grep --tag</span>
           <span className="text-accent">#{activeTag.toLowerCase()}</span>
           <Link
-            href="/sharing"
+            href={sharingHref(activeRole)}
             scroll={false}
             className="text-text-3 hover:text-accent border border-border hover:border-border-hover rounded-[2px] px-1.5 py-0.5 transition-[color,border-color] duration-150"
           >
@@ -253,16 +297,16 @@ export function TalksList({ talks }: TalksListProps) {
         </div>
       )}
 
-      {activeTag && upcoming.length === 0 && past.length === 0 ? (
-        // Filter matched nothing — give direction instead of a blank page.
+      {(activeTag || activeRole) && upcoming.length === 0 && past.length === 0 ? (
+        // Filters matched nothing — give direction instead of a blank page.
         <p className="font-mono text-[13px] text-text-2">
-          No engagements tagged <span className="text-accent">#{activeTag.toLowerCase()}</span> yet.{" "}
+          No engagements match the current filter.{" "}
           <Link
             href="/sharing"
             scroll={false}
             className="text-text-3 hover:text-accent transition-colors duration-150"
           >
-            Clear filter →
+            Clear filters →
           </Link>
         </p>
       ) : (
@@ -282,6 +326,7 @@ export function TalksList({ talks }: TalksListProps) {
                     talk={talk}
                     index={i}
                     activeTag={activeTag}
+                    activeRole={activeRole}
                     timeline={{
                       isFirst: i === 0,
                       isLast: i === upcoming.length - 1,
@@ -293,8 +338,9 @@ export function TalksList({ talks }: TalksListProps) {
             </section>
           ) : (
             // No upcoming dates — but only pitch when unfiltered (genuinely "calendar open").
-            // Under an active tag, an empty upcoming just means "none for this tag", so stay quiet.
-            !activeTag && (
+            // Under an active filter, an empty upcoming just means "none matching", so stay quiet.
+            !activeTag &&
+            !activeRole && (
               <section>
                 <ScrollReveal>
                   <SectionHeader title="Upcoming Engagements" />
@@ -325,7 +371,13 @@ export function TalksList({ talks }: TalksListProps) {
                     </ScrollReveal>
                     <ul className="flex flex-col divide-y divide-border">
                       {byYear[year].map((talk, i) => (
-                        <TalkCard key={talk.slug} talk={talk} index={i} activeTag={activeTag} />
+                        <TalkCard
+                          key={talk.slug}
+                          talk={talk}
+                          index={i}
+                          activeTag={activeTag}
+                          activeRole={activeRole}
+                        />
                       ))}
                     </ul>
                   </div>
