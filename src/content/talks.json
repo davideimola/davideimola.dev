@@ -41,6 +41,15 @@
     }
   },
   {
+    "slug": "ai-for-security-hackathon-2026",
+    "event": "AI for Security Hackathon",
+    "type": "Hackathon",
+    "organizer": true,
+    "date": "2026-06-27",
+    "location": "Turin, Italy",
+    "tags": ["AI", "Security"]
+  },
+  {
     "slug": "open-source-day-2026",
     "event": "Open Source Day 2026",
     "type": "Conference",

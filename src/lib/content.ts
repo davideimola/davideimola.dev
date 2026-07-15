@@ -31,7 +31,7 @@ export interface TalkSession {
 export interface Talk {
   slug: string;
   event: string;
-  type: "Conference" | "Meetup" | "Podcast/Stream";
+  type: "Conference" | "Meetup" | "Hackathon" | "Podcast/Stream";
   date: string;
   eventDateRange?: string;
   location: string;
