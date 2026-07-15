@@ -44,13 +44,13 @@ const EASTER_EGGS: Record<string, EasterEgg> = {
     output: "Hacking in progress......... access denied. (Points for trying.)",
   },
   whoami: {
-    output: "davideimola — Tech Lead, OSS contributor, Speaker.",
+    output: "davideimola - Tech Lead, OSS contributor, Speaker.",
   },
   "ls -la": {
     output: "drwxr-xr-x  blog/  projects/  talks/  about/  contact/",
   },
   "cat /etc/passwd": {
-    output: "root:x:0:0:root:/root:/bin/zsh — nice try.",
+    output: "root:x:0:0:root:/root:/bin/zsh - nice try.",
   },
   "exit 1": {
     output: "Cannot exit. You are already here.",

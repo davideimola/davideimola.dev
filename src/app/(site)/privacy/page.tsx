@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <PageHero
         command="cat ./privacy.md"
         title="Privacy"
-        description="How this site handles your data — short version: as little as possible."
+        description="How this site handles your data. Short version: as little as possible."
       />
 
       <div className="max-w-2xl flex flex-col gap-10 font-sans text-[14px] text-text-2 leading-relaxed">

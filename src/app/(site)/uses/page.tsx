@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Uses",
   description: "Hardware, software, and tools I use daily to build and think.",
   openGraph: {
-    title: "Uses — Davide Imola",
+    title: "Uses · Davide Imola",
     description: "Hardware, software, and tools I use daily to build and think.",
     url: "https://davideimola.dev/uses",
     images: [
@@ -30,7 +30,7 @@ const HARDWARE = [
     category: "Display & Video",
     items: [
       {
-        name: 'Samsung LU28R550 — 28" 4K UHD',
+        name: 'Samsung LU28R550 · 28" 4K UHD',
         description: "3840×2160, 60Hz, HDR10, 99% sRGB. USB-C connected.",
       },
       {
@@ -110,7 +110,7 @@ const SOFTWARE = [
       },
       {
         name: "iTerm2 + oh-my-zsh",
-        description: "Terminal setup. Unchanged for years — means it works.",
+        description: "Terminal setup. Unchanged for years, which means it works.",
       },
     ],
   },
@@ -124,7 +124,7 @@ const SOFTWARE = [
       {
         name: "Raycast",
         description:
-          "Replaced Spotlight. Launcher, clipboard history, snippets — faster than I expected.",
+          "Replaced Spotlight. Launcher, clipboard history, snippets. Faster than I expected.",
       },
       {
         name: "1Password",
@@ -136,7 +136,7 @@ const SOFTWARE = [
       },
       {
         name: "pgAdmin",
-        description: "Current PostgreSQL GUI. Looking for something better — suggestions welcome.",
+        description: "Current PostgreSQL GUI. Looking for something better; suggestions welcome.",
       },
     ],
   },
@@ -155,7 +155,7 @@ const SOFTWARE = [
       {
         name: "GitKraken",
         description:
-          "Visual Git client. GitKraken Ambassador — I use it for history and complex operations.",
+          "Visual Git client. GitKraken Ambassador. I use it for history and complex operations.",
       },
       {
         name: "CLI + GitLens",
@@ -342,7 +342,7 @@ export default function UsesPage() {
                         key={name}
                         className="font-mono text-[12px] text-text-2 flex items-center gap-2"
                       >
-                        <span className="text-accent text-[10px]">—</span>
+                        <span className="text-accent text-[10px]">-</span>
                         {name}
                         {note && <span className="text-text-3 text-[10px]">({note})</span>}
                       </li>

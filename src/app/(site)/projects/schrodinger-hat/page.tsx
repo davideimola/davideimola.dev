@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { ScrollReveal } from "../../../../components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Schrodinger Hat — Case Study",
+  title: "Schrodinger Hat Case Study",
   description:
     "How I joined an open source community as an unknown and, through contribution and hard work, became a co-founder and admin member.",
   openGraph: {
-    title: "Schrodinger Hat — Case Study · Davide Imola",
+    title: "Schrodinger Hat Case Study · Davide Imola",
     description:
       "How I joined an open source community as an unknown and, through contribution and hard work, became a co-founder and admin member.",
     url: "https://davideimola.dev/projects/schrodinger-hat",
@@ -65,7 +65,7 @@ export default function SchrodingerHatCaseStudy() {
           </div>
           <p className="font-sans text-[16px] text-text-2 leading-relaxed">
             I didn't found Schrodinger Hat. I joined it as an unknown, worked hard, and earned my
-            place — to the point of becoming a co-founder and one of the principal members of the
+            place, to the point of becoming a co-founder and one of the principal members of the
             organization. This is the story of what happens when a developer decides to leave the
             comfort zone and build something with others.
           </p>
@@ -99,7 +99,7 @@ export default function SchrodingerHatCaseStudy() {
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               Schrodinger Hat was founded in 2021 by a small group of developers who put out a call
               to action: come build an international open source community with us. I saw it in 2022
-              and thought: why not? It was an uncomfortable choice — I was shy, not particularly
+              and thought: why not? It was an uncomfortable choice. I was shy, not particularly
               public-facing, and had no experience running anything beyond a codebase.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
@@ -125,14 +125,14 @@ export default function SchrodingerHatCaseStudy() {
               appear in any engineering job description.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              Open Source Day is our flagship conference — a full-day, free event in Florence.
+              Open Source Day is our flagship conference: a full-day, free event in Florence.
               Keeping it free means finding the money elsewhere. I've sat across from companies and
               made the case for a sponsorship worth thousands of euros. That's not a skill you learn
               by writing Go code.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              Over time, through consistent contribution, I became a socio fondatore — a co-founder
-              in the formal sense — and an admin member of the organization. I didn't start there. I
+              Over time, through consistent contribution, I became a socio fondatore, a co-founder
+              in the formal sense, and an admin member of the organization. I didn't start there. I
               earned it.
             </p>
           </div>
@@ -154,15 +154,15 @@ export default function SchrodingerHatCaseStudy() {
               },
               {
                 title: "Selling ideas",
-                body: "Finding sponsors taught me how to communicate value to people who don't speak engineering. That same skill translates directly to selling a technical decision to a C-level or a PM — understanding their concerns, framing the solution in their language.",
+                body: "Finding sponsors taught me how to communicate value to people who don't speak engineering. That same skill translates directly to selling a technical decision to a C-level or a PM: understanding their concerns, framing the solution in their language.",
               },
               {
                 title: "Finance & logistics",
-                body: "Managing a budget of €7–10k per event, negotiating with vendors, tracking costs — it made me more commercially aware as an engineer. I now understand why business constraints exist, not just that they exist.",
+                body: "Managing a budget of €7–10k per event, negotiating with vendors, tracking costs: it all made me more commercially aware as an engineer. I now understand why business constraints exist, not just that they exist.",
               },
               {
                 title: "Cross-functional collaboration",
-                body: "A community is made of people with very different skills. Designers, marketers, speakers, sponsors, volunteers. Learning to work with all of them — and coordinate without authority — is the best preparation for leading an engineering team.",
+                body: "A community is made of people with very different skills. Designers, marketers, speakers, sponsors, volunteers. Learning to work with all of them, and coordinate without authority, is the best preparation for leading an engineering team.",
               },
             ].map((item) => (
               <div key={item.title} className="flex flex-col gap-2 border-l border-border pl-5">
@@ -184,13 +184,13 @@ export default function SchrodingerHatCaseStudy() {
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               Five editions. Free admission. Florence. Hundreds of developers, students, and
-              professionals who come because they want to be part of something — not because their
+              professionals who come because they want to be part of something, not because their
               company paid for it.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               The feedback we hear most often is that Open Source Day feels like a community, not a
-              conference. That's intentional. Every logistical choice — from the schedule to the
-              hallway layout — is made with one question: does this help people connect?
+              conference. That's intentional. Every logistical choice, from the schedule to the
+              hallway layout, is made with one question: does this help people connect?
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               It's the project I'm most proud of. And the one that costs me the most sleep.
@@ -216,13 +216,13 @@ export default function SchrodingerHatCaseStudy() {
           </h2>
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              Community can change your career in ways no job posting can. The company where I'm now
-              Tech Lead — I found through a connection I made at a community event. Not through
+              Community can change your career in ways no job posting can. I found the company where
+              I'm now Tech Lead through a connection I made at a community event. Not through
               LinkedIn. Not through a recruiter. Through showing up consistently and building
               relationships with people who care about the same things.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              The comfort zone is a slow trap. It feels safe because nothing is changing — but
+              The comfort zone is a slow trap. It feels safe because nothing is changing, but
               nothing is growing either. Joining Schrodinger Hat was uncomfortable. So was speaking
               on stage for the first time, and cold-calling sponsors, and managing a budget I'd
               never managed before. Every one of those discomforts made me better at the things that
@@ -233,7 +233,7 @@ export default function SchrodingerHatCaseStudy() {
                 The community is open to everyone.
                 <br />
                 <span className="text-text-2 text-[13px]">
-                  Anyone can contribute, volunteer, and grow — regardless of where they start.
+                  Anyone can contribute, volunteer, and grow, regardless of where they start.
                 </span>
               </p>
             </blockquote>

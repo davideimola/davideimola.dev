@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
   openGraph: {
-    title: "Contact — Davide Imola",
+    title: "Contact · Davide Imola",
     description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
     url: "https://davideimola.dev/contact",
     images: [

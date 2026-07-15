@@ -7,11 +7,11 @@ import { SectionHeader } from "../../../components/ui/SectionHeader";
 export const metadata: Metadata = {
   title: "Brand",
   description:
-    "Logo, wordmark, and brand assets for Davide Imola — free to use as-is in conference programs, event pages, and articles.",
+    "Logo, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
   openGraph: {
-    title: "Brand — Davide Imola",
+    title: "Brand · Davide Imola",
     description:
-      "Logo, wordmark, and brand assets for Davide Imola — free to use as-is in conference programs, event pages, and articles.",
+      "Logo, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
     url: "https://davideimola.dev/brand",
     images: [
       { url: "https://davideimola.dev/og?title=Brand&category=assets", width: 1200, height: 630 },
@@ -47,7 +47,7 @@ export default function BrandPage() {
       <PageHero
         command="cat ./brand.md"
         title="Brand"
-        description="The mark is the end state of this site's hero: the name has just been typed, the red cursor is still there. Use these assets as-is to refer to me — conference programs, event pages, articles."
+        description="The mark is the end state of this site's hero: the name has just been typed, the red cursor is still there. Use these assets as-is to refer to me in conference programs, event pages, articles."
       />
 
       {/* Mark */}
@@ -177,7 +177,7 @@ export default function BrandPage() {
         <ScrollReveal>
           <SectionHeader title="Domain lockup" />
           <p className="font-sans text-[14px] text-text-2 -mt-6 mb-8">
-            The URL as a mark — for contexts where the address itself is the signature.{" "}
+            The URL as a mark, for contexts where the address itself is the signature.{" "}
             <span className="font-mono text-text-2">
               davideimola<span className="text-accent">.dev</span>
             </span>
@@ -235,7 +235,7 @@ export default function BrandPage() {
         </ScrollReveal>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { name: "Akane Red", hex: "#C91F37", note: "the cursor — always" },
+            { name: "Akane Red", hex: "#C91F37", note: "the cursor, always" },
             { name: "Background", hex: "#080807", note: "dark surfaces" },
             { name: "Ink on dark", hex: "#EAE5DF", note: "glyphs, dark surfaces" },
             { name: "Ink on light", hex: "#1A1816", note: "glyphs, light surfaces" },
@@ -262,7 +262,7 @@ export default function BrandPage() {
           <ul className="flex flex-col gap-2 mb-8">
             {[
               "Use the assets as-is to refer to me: conference programs, event pages, talk announcements, articles.",
-              "Don't recolor them — the cursor is always Akane Red.",
+              "Don't recolor them: the cursor is always Akane Red.",
               "Don't restyle or remove the cursor, don't change the typeface, don't crop the lockups.",
               "In animated contexts the cursor may blink (1.1s step-end), respecting prefers-reduced-motion.",
             ].map((rule) => (
@@ -283,8 +283,8 @@ export default function BrandPage() {
               className="text-text-1 underline decoration-border-mid hover:text-accent hover:decoration-accent transition-colors duration-150"
             >
               CC BY-ND 4.0
-            </a>{" "}
-            — see the{" "}
+            </a>
+            {"; see the "}
             <a
               href="/brand/LICENSE.md"
               className="text-text-1 underline decoration-border-mid hover:text-accent hover:decoration-accent transition-colors duration-150"

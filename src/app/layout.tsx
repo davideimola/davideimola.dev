@@ -21,7 +21,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Davide Imola — Software Engineer & Speaker",
+    default: "Davide Imola · Software Engineer & Speaker",
     template: "%s | Davide Imola",
   },
   description:
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
         url: "https://davideimola.dev/og?title=Davide+Imola",
         width: 1200,
         height: 630,
-        alt: "Davide Imola — Software Engineer & Speaker",
+        alt: "Davide Imola · Software Engineer & Speaker",
       },
     ],
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   alternates: {
     types: {
       "application/rss+xml": [
-        { url: "https://davideimola.dev/rss.xml", title: "Davide Imola — Blog" },
+        { url: "https://davideimola.dev/rss.xml", title: "Davide Imola · Blog" },
       ],
     },
   },

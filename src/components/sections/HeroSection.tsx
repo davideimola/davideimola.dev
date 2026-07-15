@@ -71,7 +71,7 @@ export function HeroSection() {
           <p
             className={`font-sans text-[15px] text-text-2 leading-relaxed max-w-[46ch] mb-5 ${anim2}`}
           >
-            I build AI agents for cybersecurity — and share everything I learn building them.
+            I build AI agents for cybersecurity, and I share everything I learn building them.
           </p>
 
           {/* Role */}

@@ -71,7 +71,7 @@ export async function sendContactEmail(
     return {
       status: "error",
       message:
-        "Links are not allowed in the message — please remove them. You can share them once I reply.",
+        "Links are not allowed in the message. Please remove them; you can share them once I reply.",
     };
   }
 

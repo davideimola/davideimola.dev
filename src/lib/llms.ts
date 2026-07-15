@@ -8,7 +8,7 @@ import type { BlogPost, Project, Talk } from "./content";
 export const SITE_URL = "https://davideimola.dev";
 
 const SITE_SUMMARY =
-  "Personal site of Davide Imola — Tech Lead at RedCarbon, co-founder of Schrodinger Hat, " +
+  "Personal site of Davide Imola: Tech Lead at RedCarbon, co-founder of Schrodinger Hat, " +
   "co-organizer of Open Source Day. Building AI agents for cybersecurity. Writing and " +
   "speaking about AI applied to security, AI-assisted development, Go, and open source communities.";
 
@@ -103,7 +103,7 @@ export function buildLlmsTxt({ posts, talks, projects }: LlmsTxtInput, baseUrl =
 
 /** Build the /llms-full.txt document with every post inlined. */
 export function buildLlmsFullTxt(posts: BlogPost[], baseUrl = SITE_URL): string {
-  const header = ["# Davide Imola — full blog content", "", `> ${SITE_SUMMARY}`, ""].join("\n");
+  const header = ["# Davide Imola, full blog content", "", `> ${SITE_SUMMARY}`, ""].join("\n");
   const body = posts.map((post) => postToMarkdown(post, baseUrl)).join("\n---\n\n");
   return `${header}\n${body}`;
 }

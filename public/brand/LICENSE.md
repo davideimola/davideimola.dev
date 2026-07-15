@@ -7,7 +7,7 @@ domain lockup, in SVG and PNG form) are licensed under the
 
 In short, you may:
 
-- Use and redistribute these assets as-is to refer to Davide Imola — for
+- Use and redistribute these assets as-is to refer to Davide Imola, for
   example in conference programs, event pages, talk announcements, podcast
   show notes, or articles.
 
@@ -22,7 +22,7 @@ The red is Akane Red `#C91F37`. Construction and usage rules live in
 [`docs/brand.md`](../../docs/brand.md) of the
 [site repository](https://github.com/davideimola/davideimola.dev).
 
-Note: this license applies to the brand assets in this directory only — it
+Note: this license applies to the brand assets in this directory only; it
 does not cover the site's source code or content.
 
 For anything not covered here: https://davideimola.dev/contact

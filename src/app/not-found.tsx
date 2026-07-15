@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "404 — Page not found",
+  title: "404: Page not found",
   description: "This page does not exist.",
 };
 
@@ -63,8 +63,8 @@ export default function NotFound() {
           or go back to{" "}
           <a href="/" className="text-text-2 hover:text-accent transition-colors duration-150">
             ~/home
-          </a>{" "}
-          — or open{" "}
+          </a>
+          {", or open "}
           <a
             href="/terminal"
             className="text-text-2 hover:text-accent transition-colors duration-150"

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Now",
   description: "What I'm working on, learning, and thinking about right now.",
   openGraph: {
-    title: "Now — Davide Imola",
+    title: "Now · Davide Imola",
     description: "What I'm working on, learning, and thinking about right now.",
     url: "https://davideimola.dev/now",
     images: [
@@ -24,7 +24,7 @@ export default function NowPage() {
       <PageHero
         command="cat ./now.md"
         title="Now"
-        description="A snapshot of what I'm focused on right now — updated when something changes."
+        description="A snapshot of what I'm focused on right now, updated when something changes."
       >
         <p className="font-mono text-[12px] text-text-3 mt-4">
           Last updated: <span className="text-text-2">{LAST_UPDATED}</span>
@@ -80,7 +80,7 @@ export default function NowPage() {
               </span>
               <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
                 I'm navigating the hardest part of the Tech Lead transition: the duality between
-                deep product work and people work. When I'm building, I go full focus — and that
+                deep product work and people work. When I'm building, I go full focus, and that
                 makes it hard to context-switch into mentoring mode. I haven't found the right
                 balance yet. I'm working on it.
               </p>
@@ -110,8 +110,8 @@ export default function NowPage() {
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
                   Until recently, the answer was "write more code." Now I'm building the meta-skill
-                  of knowing when and how to use AI — agents, tools, prompting patterns. A new way
-                  of thinking about work.
+                  of knowing when and how to use AI: agents, tools, prompting patterns. A new way of
+                  thinking about work.
                 </p>
               </div>
             </ScrollReveal>
@@ -120,7 +120,7 @@ export default function NowPage() {
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
                   <span className="text-accent text-[10px]">{"//"}</span>
-                  Security — daily practice
+                  Security: daily practice
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
                   SOC teams, threat models, secure architectures. Outbox pattern, event integrity,
@@ -138,7 +138,7 @@ export default function NowPage() {
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
                   Fournier's <span className="text-text-2">The Manager's Path</span> and Larson's{" "}
                   <span className="text-text-2">An Elegant Puzzle</span>, in parallel. Career map
-                  plus systems thinking — testing what holds against the Tech Lead transition I'm
+                  plus systems thinking, testing what holds against the Tech Lead transition I'm
                   actually living.
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function NowPage() {
               </span>
             </div>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed">
-              Schrodinger Hat's distributed arm — free local meetups, each run by people on the
+              Schrodinger Hat's distributed arm: free local meetups, each run by people on the
               ground. I lead the program: spinning up new chapters and keeping the active ones
               moving. Rome, Verona, Milan, Florence launching now. Looking abroad next.
             </p>
@@ -187,10 +187,10 @@ export default function NowPage() {
           <div className="flex flex-col gap-2 mb-8">
             <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
               <span className="text-accent text-[10px]">{"//"}</span>
-              D&D — playing and building
+              D&D: playing and building
             </span>
             <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
-              Currently playing <span className="text-text-1">Krug the Touchy</span> — a half-orc
+              Currently playing <span className="text-text-1">Krug the Touchy</span>, a half-orc
               barbarian folk hero who ran an inn and rages if you don't finish his food. The DM
               reset the character sheets mid-campaign so I'm technically human now, but I miss Krug.
             </p>
@@ -198,7 +198,7 @@ export default function NowPage() {
               The longer campaign on hold features{" "}
               <span className="text-text-1">Thalion Melora</span>, a half-elf bard who wields a
               violin as a psychic weapon and heals through sound waves. Favourite character I've
-              ever played. Meanwhile I'm writing my own campaign to DM — world, NPCs, encounters.
+              ever played. Meanwhile I'm writing my own campaign to DM: world, NPCs, encounters.
               Surprisingly addictive.
             </p>
           </div>
@@ -209,11 +209,11 @@ export default function NowPage() {
           {[
             {
               label: "Pokémon cards",
-              context: "Building the Pokédex in rare and full-art. A long game — emphasis on long.",
+              context: "Building the Pokédex in rare and full-art. A long game. Emphasis on long.",
             },
             {
               label: "JuJutsu",
-              context: "Hontai Yōshin-ryū. Yellow belt earned — now training for orange next year.",
+              context: "Hontai Yōshin-ryū. Yellow belt earned; now training for orange next year.",
             },
             {
               label: "Gaming",

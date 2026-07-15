@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Blog",
   description: "Articles on backend engineering, platform thinking, Go, security, and open source.",
   openGraph: {
-    title: "Blog — Davide Imola",
+    title: "Blog · Davide Imola",
     description:
       "Articles on backend engineering, platform thinking, Go, security, and open source.",
     url: "https://davideimola.dev/blog",

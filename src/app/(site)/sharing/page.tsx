@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Sharing",
   description: "Talks, workshops, and events on AI, security, Go, and open source.",
   openGraph: {
-    title: "Sharing — Davide Imola",
+    title: "Sharing · Davide Imola",
     description: "Talks, workshops, and events on AI, security, Go, and open source.",
     url: "https://davideimola.dev/sharing",
     images: [
@@ -33,7 +33,7 @@ const SHORT_BIO =
   "Davide Imola is a Tech Lead at RedCarbon, co-founder of Schrodinger Hat, and co-organizer of Open Source Day. He speaks about AI applied to security, Go, and the human side of open source.";
 
 const LONG_BIO =
-  "Davide Imola is a Tech Lead at RedCarbon, where he leads the engineering team building AI analysts for security operations. He is co-founder of Schrodinger Hat, an international open source community that has reached 20k+ people across Europe, and co-organizer of Open Source Day, a yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GoLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on AI applied to security, Go, GitOps, and building open source communities.\n\nHe believes that sharing knowledge in public — through talks, writing, and open source contributions — is one of the highest-leverage activities an engineer can do.";
+  "Davide Imola is a Tech Lead at RedCarbon, where he leads the engineering team building AI analysts for security operations. He is co-founder of Schrodinger Hat, an international open source community that has reached 20k+ people across Europe, and co-organizer of Open Source Day, a yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GoLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on AI applied to security, Go, GitOps, and building open source communities.\n\nHe believes that sharing knowledge in public, through talks, writing, and open source contributions, is one of the highest-leverage activities an engineer can do.";
 
 export default function SharingPage() {
   const allTalks = getAllTalks();
@@ -41,7 +41,7 @@ export default function SharingPage() {
   const talksSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Sharing — Davide Imola",
+    name: "Sharing · Davide Imola",
     itemListElement: allTalks.map((talk, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -77,7 +77,7 @@ export default function SharingPage() {
       <PageHero
         command="ls ./sharing"
         title="Sharing"
-        description="I share what I learn in public — through talks, workshops, and events on AI, security, Go, GitOps, and open source. I like sessions that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
+        description="I share what I learn in public through talks, workshops, and events on AI, security, Go, GitOps, and open source. I like sessions that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
       >
         <div className="flex flex-wrap gap-2 mt-6">
           {TOPICS.map((topic) => (

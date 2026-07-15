@@ -17,7 +17,7 @@ import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 export const revalidate = 86400;
 
 const DESCRIPTION =
-  "Profiles, latest writing, and upcoming talks — every place you can find me, in one page.";
+  "Profiles, latest writing, and upcoming talks: every place you can find me, in one page.";
 
 export const metadata: Metadata = {
   title: "Links",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   // this keeps one canonical URL across both hosts.
   alternates: { canonical: "https://davideimola.dev/links" },
   openGraph: {
-    title: "Links — Davide Imola",
+    title: "Links · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/links",
     // og:image comes from the co-located opengraph-image.tsx (file-based metadata)
@@ -121,7 +121,7 @@ export default function LinksPage() {
                     <a
                       key={link.href}
                       href={link.href}
-                      aria-label={`${link.label} — ${link.handle}`}
+                      aria-label={`${link.label}, ${link.handle}`}
                       title={link.label}
                       className="flex h-11 w-11 items-center justify-center rounded-md border border-border bg-bg-card text-text-1 transition-colors duration-150 hover:border-border-hover hover:text-accent"
                       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -196,7 +196,7 @@ export default function LinksPage() {
                           {talk.event}
                         </p>
                         <p className="font-sans text-[12px] text-text-2 mt-1 line-clamp-1">
-                          {talk.session?.title ?? talk.type} — {talk.location}
+                          {talk.session?.title ?? talk.type} · {talk.location}
                         </p>
                       </div>
                     </div>

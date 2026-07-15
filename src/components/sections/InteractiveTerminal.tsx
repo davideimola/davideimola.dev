@@ -13,7 +13,7 @@ import {
 const MOTD: TerminalLine[] = [
   [
     { text: "davideimola.dev", variant: "accent" },
-    { text: " — guest shell", variant: "muted" },
+    { text: " - guest shell", variant: "muted" },
   ],
   [{ text: "Type 'help' to see what you can do here.", variant: "muted" }],
   [],
@@ -191,7 +191,7 @@ export function InteractiveTerminal({ data }: InteractiveTerminalProps) {
           <span className="w-2 h-2 rounded-full bg-border-mid" />
         </div>
         <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
-          guest@davideimola.dev — zsh
+          guest@davideimola.dev - zsh
         </span>
       </div>
 

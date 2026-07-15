@@ -99,7 +99,7 @@ describe("buildLlmsTxt", () => {
 describe("buildLlmsFullTxt", () => {
   it("inlines every post after the site header", () => {
     const txt = buildLlmsFullTxt([post], "https://example.com");
-    expect(txt).toContain("# Davide Imola — full blog content");
+    expect(txt).toContain("# Davide Imola, full blog content");
     expect(txt).toContain("# Test Post");
   });
 });

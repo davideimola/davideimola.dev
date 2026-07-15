@@ -40,7 +40,7 @@
     "period": "2026–present",
     "featured": true,
     "tags": ["AI", "Security", "Go"],
-    "description": "Open-source AI security review agent written in Go. It runs real scanners — Semgrep, Gitleaks, OSV-Scanner — reads their findings, and reasons about them like an analyst would."
+    "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner), reads their findings, and reasons about them like an analyst would."
   },
   {
     "slug": "worky",

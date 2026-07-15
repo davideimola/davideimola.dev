@@ -64,7 +64,7 @@ const STATIC_PAGES: SearchItem[] = [
     id: "page-links",
     type: "page",
     title: "Links",
-    description: "Profiles, projects, and communities — all in one page.",
+    description: "Profiles, projects, and communities, all in one page.",
     href: "/links",
   },
   {
@@ -85,7 +85,7 @@ const STATIC_PAGES: SearchItem[] = [
     id: "page-brand",
     type: "page",
     title: "Brand",
-    description: "Logo, wordmark, and brand assets — free to use as-is.",
+    description: "Logo, wordmark, and brand assets, free to use as-is.",
     href: "/brand",
   },
 ];

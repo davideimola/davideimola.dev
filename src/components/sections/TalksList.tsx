@@ -316,7 +316,7 @@ export function TalksList({ talks }: TalksListProps) {
               <ScrollReveal>
                 <SectionHeader title="Upcoming Engagements" />
                 <p className="font-sans text-[13px] text-text-3 -mt-8 mb-8">
-                  Where you can catch me next — soonest first.
+                  Where you can catch me next, soonest first.
                 </p>
               </ScrollReveal>
               <ul className="flex flex-col">
@@ -346,7 +346,7 @@ export function TalksList({ talks }: TalksListProps) {
                   <SectionHeader title="Upcoming Engagements" />
                 </ScrollReveal>
                 <ScrollReveal>
-                  <BookingPrompt message="No public dates on the calendar right now — want me at your event?" />
+                  <BookingPrompt message="No public dates on the calendar right now. Want me at your event?" />
                 </ScrollReveal>
               </section>
             )
