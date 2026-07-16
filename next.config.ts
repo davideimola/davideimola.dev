@@ -40,9 +40,11 @@ const nextConfig: NextConfig = {
       },
       // Deep paths on the links subdomain bounce to the main site, so the
       // subdomain serves only the link-in-bio page. /_next is excluded:
-      // the rewritten page must load its assets from the same host.
+      // the rewritten page must load its assets from the same host. /relay is
+      // excluded too, so the Umami analytics proxy (see rewrites below) still
+      // works on the subdomain instead of being redirected away.
       {
-        source: "/:path((?!_next/).+)",
+        source: "/:path((?!_next/|relay/).+)",
         has: [{ type: "host", value: "links.davideimola.dev" }],
         destination: "https://davideimola.dev/:path",
         permanent: false,
@@ -58,6 +60,15 @@ const nextConfig: NextConfig = {
           source: "/",
           has: [{ type: "host", value: "links.davideimola.dev" }],
           destination: "/links",
+        },
+        // First-party proxy for Umami Cloud analytics: the tracker loads from
+        // /relay/script.js and posts events to /relay/api/send, both served
+        // from this domain so cloud.umami.is never appears in a request an ad
+        // blocker can match. Keep /relay in sync with UMAMI_PROXY_PATH in
+        // src/components/analytics/UmamiAnalytics.tsx.
+        {
+          source: "/relay/:path*",
+          destination: "https://cloud.umami.is/:path*",
         },
       ],
       afterFiles: [
