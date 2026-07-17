@@ -80,9 +80,9 @@ const METHODOLOGIES = [
     context: "CI/CD, IaC, developer experience as engineering leverage. ~10 years background.",
   },
   {
-    name: "Agile / team leadership",
+    name: "Technical leadership",
     context:
-      "Growing a team, not just shipping features. If we don't all grow, the company doesn't.",
+      "Setting the technical direction across the platform and growing the people around me. If we don't all grow, the company doesn't.",
   },
 ];
 
@@ -96,7 +96,7 @@ const EXPERIENCE: ExperienceEntry[] = [
         role: "Tech Lead",
         period: "Jan 2026 – Present",
         description:
-          "Tech lead for the development team building AI analysts for security operations. I still write code every day. The role is about helping the team move faster and grow, not stepping back from engineering.",
+          "Tech lead for platform engineering. I own the technical decisions across the whole platform, from frontend to infrastructure, and build the AI agents on top, coordinating with the AI and security teams. I still write code every day: the role is about technical direction, not stepping back from engineering.",
         current: true,
       },
       {
@@ -288,10 +288,11 @@ export default function AboutPage() {
                   I spent about ten years in the DevOps world: building pipelines, containerizing
                   systems, moving infrastructure into code. Then I moved deeper into backend
                   engineering, found DDD, and started treating software as a language for domains,
-                  not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead a
-                  team of developers building AI analysts for security operations, and still write
-                  code every day. AI that does real security work, and security for the code AI
-                  writes: that's the intersection I work in, and the one I write about.
+                  not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead
+                  platform engineering: the technical calls across the whole platform, from frontend
+                  to infrastructure, and the AI agents that run on it. I still write code every day.
+                  AI that does real security work, and security for the code AI writes: that's the
+                  intersection I work in, and the one I write about.
                 </p>
                 <p className="font-sans text-[15px] text-text-2 leading-relaxed">
                   The shift to leadership changed something: I care less about my own code and more

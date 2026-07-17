@@ -16,7 +16,7 @@ export function AuthorBio() {
         <p className="font-mono text-[13px] text-text-1 font-semibold mb-0.5">Davide Imola</p>
         <p className="font-mono text-[11px] text-text-3 mb-2">Tech Lead · Speaker · Open Source</p>
         <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-          Engineering leader at RedCarbon, co-founder of Schrodinger Hat. I write about Go, platform
+          Tech Lead at RedCarbon, co-founder of Schrodinger Hat. I write about Go, platform
           engineering, open source, and the human side of tech.
         </p>
         <div className="flex items-center gap-4 mt-3">
