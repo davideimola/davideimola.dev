@@ -11,7 +11,7 @@ const PILLARS = [
     command: "❯ lead",
     title: "Tech Leadership",
     description:
-      "Tech Lead at RedCarbon, leading the team that builds AI analysts for security operations. Bridging product and engineering, from architecture decisions to team growth and delivery.",
+      "Tech Lead at RedCarbon, leading platform engineering. I make the technical calls across the whole platform, from frontend to infrastructure, and build the AI agents on top, coordinating with the AI and security teams while still shipping code.",
   },
   {
     command: "❯ speaker",

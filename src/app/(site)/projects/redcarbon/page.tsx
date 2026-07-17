@@ -188,10 +188,11 @@ export default function RedCarbonCaseStudy() {
           </h2>
           <div className="flex flex-col gap-4">
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-              As the product matured, we split into two teams with distinct contexts. I took
-              technical ownership of one team and the overall engineering direction of the
-              department. The role came with a different kind of responsibility: not just what to
-              build, but how the whole team builds it.
+              As the product matured, we split into teams with distinct contexts. I took technical
+              ownership of the platform: the technical calls across the whole stack, from frontend
+              to infrastructure, plus the AI agents that run on it. The Engineering Manager owns the
+              AI and security areas; my job is the platform and the integration across all of them.
+              A different kind of responsibility: not just what to build, but how we build it.
             </p>
             <p className="font-sans text-[15px] text-text-2 leading-relaxed">
               I work closely with the PM on roadmap and planning, and interface directly with
