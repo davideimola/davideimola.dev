@@ -2,6 +2,10 @@
 
 AI context for Claude Code and other AI assistants working on this codebase.
 
+## Editorial home: content-os
+
+Editorial planning — ideas, proposals, the content calendar, the blog/LinkedIn/talk Pipeline — lives on **[`davideimola/content-os`](https://github.com/davideimola/content-os)**, not here. This repo is **site code + published posts** (`src/content/blog/`). The writing skills here (`editorial-route`, `write-blog-post`, `social-post`) read and write Pipeline issues on content-os; a blog PR stays here but references the owning `davideimola/content-os#<n>` issue. **Do not open editorial / content-planning issues on this repo** — capture them on content-os (`contentos idea create`, or the content-os capture doors).
+
 ## Stack
 
 - **Framework:** Next.js 16 (App Router), TypeScript strict
