@@ -1,7 +1,7 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a GitHub issue number, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and saves everything as a comment on the GitHub issue. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for #24" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a GitHub issue number, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and saves everything as a comment on the content-os Pipeline issue. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for #24" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
@@ -27,7 +27,7 @@ Examples:
 
 Depending on the input:
 
-- **Issue number** → run `gh issue view <number> --repo davideimola/davideimola.dev` and read it
+- **Issue number** → run `gh issue view <number> --repo davideimola/content-os` and read it (the Pipeline issue)
 - **Blog slug** → read `src/content/blog/<slug>.mdx`
 - **URL** → fetch the page or derive the slug and read the MDX
 - **Free text** → use it directly as the source
@@ -208,10 +208,10 @@ The "link in first comment" trick doesn't measurably help (verified on Davide's 
 
 ## Step 5 — Save to GitHub issue
 
-Once everything is approved, post a comment on the relevant GitHub issue with all the final content:
+Once everything is approved, post a comment on the relevant **content-os Pipeline issue** with all the final content:
 
 ```bash
-gh issue comment <number> --repo davideimola/davideimola.dev --body "..."
+gh issue comment <number> --repo davideimola/content-os --body "..."
 ```
 
 Format the comment with clear sections: LinkedIn post, first comment, image/carousel assets (with file paths).

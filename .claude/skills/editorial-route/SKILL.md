@@ -12,7 +12,7 @@ Your job is to take a raw idea, **listen**, **read signals**, **decide**, **expl
 
 ```
 /editorial-route [free-form idea or context, optional]
-/editorial-route 39                # an existing GitHub issue number for context
+/editorial-route 39                # an existing content-os Pipeline issue number for context
 ```
 
 If invoked with no arguments, open with the listening prompt below.
@@ -62,7 +62,7 @@ From the user's free-form dump, infer the following dimensions. Do NOT ask him t
 - If outside: this is "stretching the voice" — not automatically wrong, but flag it.
 
 ### Signal: pipeline conflict
-- Run `gh issue list --label blog` and skim `src/content/blog/` for overlap with planned/published posts.
+- The Pipeline lives on **content-os** (`davideimola/content-os`): run `gh issue list --repo davideimola/content-os --label blog` for planned/in-flight posts, and skim `src/content/blog/` here for already-published overlap.
 - Read `project_blog_content_plan` memory for any series in flight.
 - If the idea overlaps with a planned issue: flag it. Either it's a duplicate, or it's a piece *of* something already planned.
 
@@ -144,7 +144,7 @@ Once the verdict is locked:
    - `Skill(skill: "write-blog-post", args: "<issue-number-or-context>")`
    - `Skill(skill: "social-post", args: "<issue-number-or-blog-slug>")`
 
-3. If the idea isn't ready (e.g. needs cooking, needs an episode, has pipeline conflict), don't route. Suggest concretely what would unblock it ("vivi il weekend, raccogli un aneddoto, poi torniamo qui") and offer to open a tracking GitHub issue with a placeholder so the idea isn't lost.
+3. If the idea isn't ready (e.g. needs cooking, needs an episode, has pipeline conflict), don't route. Suggest concretely what would unblock it ("vivi il weekend, raccogli un aneddoto, poi torniamo qui") and offer to capture it as an **Idea on the content-os Pipeline** (`contentos idea create "<the spark>"`, or `gh issue create --repo davideimola/content-os --label idea`) so the idea isn't lost. Never open editorial issues on this site repo — the Pipeline lives on content-os.
 
 ---
 
@@ -169,13 +169,13 @@ After a routing decision is taken, consider updating these memories:
 - **`project_blog_content_plan`** — if a new post lands in the pipeline as a result of this session, add it (or update the existing entry).
 - **`feedback_editorial_questions`** — only if Davide gives meta-feedback on the *style* of this skill itself (e.g. "questa domanda non funziona, prova così").
 
-Do NOT log every routing decision into memory. The GitHub issues are the pipeline source of truth, not memory.
+Do NOT log every routing decision into memory. The content-os Pipeline issues are the source of truth, not memory.
 
 ---
 
 ## What this skill is NOT
 
-- **Not a content calendar manager.** Use GitHub issues for that.
+- **Not a content calendar manager.** Use the content-os Pipeline for that.
 - **Not an analytics tool.** It does not predict engagement.
 - **Not a writer.** It routes — it doesn't draft. The downstream skills draft.
 - **Not a fixed questionnaire.** It is conversational, adaptive, and decisional.

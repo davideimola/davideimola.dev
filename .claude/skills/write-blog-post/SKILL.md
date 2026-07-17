@@ -26,12 +26,12 @@ Examples:
 
 Check the arguments:
 
-- **Issue provided** → run `gh issue view <number>` (or fetch the URL) and read it. Use the issue as the foundation — title, description, any notes already there.
-- **No issue** → ask: "Esiste già una GitHub issue per questo post? Se sì, dammi il numero." If the user has one, use it. If not, create one immediately: `gh issue create --title "<working title>" --body "<brief description>"`. Every post gets an issue — no exceptions.
+- **Issue provided** → run `gh issue view <number> --repo davideimola/content-os` (or fetch the URL) and read it. Use the Pipeline issue as the foundation — title, description, any notes already there.
+- **No issue** → ask: "Esiste già una issue sul Pipeline content-os per questo post? Se sì, dammi il numero." If the user has one, use it. If not, create one immediately **on the content-os Pipeline**: `gh issue create --repo davideimola/content-os --title "<working title>" --body "<brief description>" --label "blog,in-production"`. Every post gets a Pipeline issue on content-os — no exceptions, and never on this site repo.
 
 Combine the issue content + any free context the user passed. This is your starting point for the interview.
 
-**Editorial conflict check**: before starting the interview, scan all open blog-related GitHub issues (`gh issue list --label blog`) AND existing posts in `src/content/blog/`. Check for:
+**Editorial conflict check**: before starting the interview, scan all open blog-related Pipeline issues on content-os (`gh issue list --repo davideimola/content-os --label blog`) AND existing posts in `src/content/blog/`. Check for:
 - Overlap: does another issue or existing post already cover this topic or a key insight?
 - Scope creep: is the planned post trying to cover too much ground? If so, suggest splitting into multiple posts and flag which parts belong where.
 - Series continuity: if the post is part of a series, read the adjacent issues to understand what each post covers and where the boundaries are.
@@ -178,15 +178,15 @@ Once the post is approved, run the pre-PR checklist before opening the PR:
 - [ ] No `#` h1 headings in content
 - [ ] `draft: true` removed from frontmatter
 
-Then commit, push the branch, and open the PR:
+Then commit, push the branch, and open the PR on this site repo — it **references** the owning content-os Pipeline issue (a cross-repo link, not `closes`: the Pipeline issue's state is driven by its labels and the Beats, not auto-closed by the merge):
 ```bash
 git add src/content/blog/<slug>.mdx
 git commit -m "feat(blog): add post '<title>'"
 git push -u origin blog/<slug>
-gh pr create --title "<post title>" --body "closes #<issue-number>\n\n<one-line summary of the post>"
+gh pr create --title "<post title>" --body "Pipeline: davideimola/content-os#<issue-number>\n\n<one-line summary of the post>"
 ```
 
-Update the GitHub issue with the PR link when done.
+Update the content-os Pipeline issue with the PR link when done (`gh issue comment <issue-number> --repo davideimola/content-os --body "PR: <pr-url>"`).
 
 ---
 
