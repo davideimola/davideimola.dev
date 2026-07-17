@@ -6,6 +6,20 @@ AI context for Claude Code and other AI assistants working on this codebase.
 
 Editorial planning — ideas, proposals, the content calendar, the blog/LinkedIn/talk Pipeline — lives on **[`davideimola/content-os`](https://github.com/davideimola/content-os)**, not here. This repo is **site code + published posts** (`src/content/blog/`). The writing skills here (`editorial-route`, `write-blog-post`, `social-post`) read and write Pipeline issues on content-os; a blog PR stays here but references the owning `davideimola/content-os#<n>` issue. **Do not open editorial / content-planning issues on this repo** — capture them on content-os (`contentos idea create`, or the content-os capture doors).
 
+## Agent skills
+
+### Issue tracker
+
+Engineering issues (site code, bugs, features) live on GitHub Issues at `davideimola/davideimola.dev` via the `gh` CLI. Editorial / content-planning issues go to `content-os`, not here. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five canonical roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
 ## Stack
 
 - **Framework:** Next.js 16 (App Router), TypeScript strict
