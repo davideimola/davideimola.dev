@@ -2,13 +2,16 @@
  * Umami Cloud analytics, proxied first-party to survive ad blockers.
  *
  * Both the tracker script and its `/api/send` collection endpoint are served
- * from this domain, so `cloud.umami.is` never appears in a request an ad
- * blocker can match. The script is a passive rewrite in `next.config.ts`; the
- * collection endpoint is the route at `src/app/relay/api/send/route.ts`, which
- * forwards the visitor's real IP so Umami geolocates the visitor and not the
- * Vercel edge node. `data-host-url` is a relative path (not an absolute URL)
+ * from this domain through the `${UMAMI_PROXY_PATH}/*` rewrite in
+ * `next.config.ts`, so `cloud.umami.is` never appears in a request an ad
+ * blocker can match. `data-host-url` is a relative path (not an absolute URL)
  * so events resolve against the current origin — the same build works on
  * localhost, Vercel previews, and production without hardcoding a domain.
+ *
+ * Trade-off: proxying the collection endpoint makes Umami geolocate the
+ * visitor's country to the Vercel edge region, not the real visitor (Umami
+ * Cloud ignores a forwarded X-Forwarded-For; see umami#3478). Referrers and
+ * UTM params are unaffected — they live in the event payload, not the IP.
  *
  * Renders nothing until NEXT_PUBLIC_UMAMI_WEBSITE_ID is set, so local dev and
  * preview deploys without the variable stay clean.
