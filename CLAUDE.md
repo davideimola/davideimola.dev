@@ -177,7 +177,12 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 RESEND_API_KEY=                  # Resend API key for contact form
 NEXT_PUBLIC_GISCUS_REPO_ID=      # from https://giscus.app
 NEXT_PUBLIC_GISCUS_CATEGORY_ID=  # from https://giscus.app
+NEXT_PUBLIC_UMAMI_WEBSITE_ID=    # from https://cloud.umami.is (Settings → Websites → Edit); empty = no analytics
 ```
+
+## Analytics
+
+Web analytics use **Umami Cloud** (free Hobby tier), not Vercel Web Analytics — see `docs/adr/0001-switch-analytics-to-umami-cloud.md`. The `UmamiAnalytics` component (`src/components/analytics/`) renders a cookieless tracker script in the root layout, proxied first-party through the `/relay/*` rewrite in `next.config.ts` so ad blockers can't match `cloud.umami.is`. Keep the `/relay` path in sync between `UMAMI_PROXY_PATH` and the rewrite source. Vercel **Speed Insights** (`@vercel/speed-insights`) is a separate product and stays. Renders nothing when `NEXT_PUBLIC_UMAMI_WEBSITE_ID` is unset.
 
 ## Content sources
 
