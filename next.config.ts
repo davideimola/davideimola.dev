@@ -61,14 +61,17 @@ const nextConfig: NextConfig = {
           has: [{ type: "host", value: "links.davideimola.dev" }],
           destination: "/links",
         },
-        // First-party proxy for Umami Cloud analytics: the tracker loads from
-        // /relay/script.js and posts events to /relay/api/send, both served
-        // from this domain so cloud.umami.is never appears in a request an ad
-        // blocker can match. Keep /relay in sync with UMAMI_PROXY_PATH in
-        // src/components/analytics/UmamiAnalytics.tsx.
+        // First-party proxy for the Umami tracker SCRIPT, so cloud.umami.is
+        // never appears in a request an ad blocker can match. The collection
+        // endpoint (/relay/api/send) is deliberately NOT rewritten here: it is
+        // handled by src/app/relay/api/send/route.ts, which forwards the
+        // visitor's real IP via X-Forwarded-For. A passive rewrite makes Umami
+        // Cloud geolocate every hit to the Vercel edge node (e.g. Frankfurt)
+        // instead of the actual visitor. Keep /relay in sync with
+        // UMAMI_PROXY_PATH in src/components/analytics/UmamiAnalytics.tsx.
         {
-          source: "/relay/:path*",
-          destination: "https://cloud.umami.is/:path*",
+          source: "/relay/script.js",
+          destination: "https://cloud.umami.is/script.js",
         },
       ],
       afterFiles: [
