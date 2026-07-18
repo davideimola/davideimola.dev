@@ -4,7 +4,7 @@ AI context for Claude Code and other AI assistants working on this codebase.
 
 ## Editorial home: content-os
 
-Editorial planning — ideas, proposals, the content calendar, the blog/LinkedIn/talk Pipeline — lives on **[`davideimola/content-os`](https://github.com/davideimola/content-os)**, not here. This repo is **site code + published posts** (`src/content/blog/`). The writing skills here (`editorial-route`, `write-blog-post`, `social-post`) read and write Pipeline issues on content-os; a blog PR stays here but references the owning `davideimola/content-os#<n>` issue. **Do not open editorial / content-planning issues on this repo** — capture them on content-os (`contentos idea create`, or the content-os capture doors).
+Editorial planning (ideas, the Pipeline, channel decisions, lifecycle) lives on **[`davideimola/content-os`](https://github.com/davideimola/content-os)**, not here. This repo is the **blog Factory**: it holds **artifacts** (the posts in `src/content/blog/`, the blog PRs) that reference the owning **content-os Pipeline issue**. An accepted Idea spawns one **Piece** per channel (ADR-0011); this repo produces the blog Piece's artifact, and the content-os Pipeline issue stays the single source of truth every editorial-lifecycle skill reads context from and writes outcomes to (ADR-0012). The writing skills here (`write-blog-post`, `social-post`) read and write those Pipeline issues; a blog PR lives here but references its `davideimola/content-os#<n>` Piece. **Do not open editorial or content-planning issues on this repo**: capture them on content-os with the `/idea` skill (or `gh issue create --repo davideimola/content-os --label idea`).
 
 ## Agent skills
 

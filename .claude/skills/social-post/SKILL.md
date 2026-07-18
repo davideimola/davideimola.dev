@@ -6,6 +6,8 @@ description: >
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
 
+When you amplify a blog (or any Factory artifact with a canonical home), you produce a **sneak-peek amplifier**: a social **Piece** that teases the piece and points home, deliberately **not** a duplicate of it. A social Piece that reproduces the blog's full content depresses the blog's own reach, so the amplifier gives a real taste and sends the reader home for the rest. The artifact you produce references its social Piece on content-os (a separate Piece blocked by the blog Piece, ADR-0011). For a talk, project, or event with no canonical page to point to, the post stays self-contained instead.
+
 ## Arguments
 
 ```
@@ -41,12 +43,12 @@ If an issue exists and a matching blog post exists, read both — the issue has 
 
 LinkedIn only. BlueSky was dropped (2026-07): Davide no longer follows it.
 
-**Write a native post, not a promo.** Data from Davide's own analytics (2026-07): posts that promote a blog post get 5-20x fewer impressions than self-contained story posts. The post must deliver the full thought in the feed — story arc, lesson, specifics. The blog link goes in the first comment as the extended version, never as the point of the post.
+**Write the sneak-peek amplifier defined above.** One craft fact from Davide's own analytics (2026-07) governs the feed half: a bare promo ("new post, go read it") gets 5-20x fewer impressions than a post that carries real value. So pay out a genuine taste (the hook, one real specific, the shape of the idea), then stop at the threshold and point home for the payoff. Native craft, deliberate hold-back. The link sits at the bottom of the post body as the home for the rest, never as the point of the post.
 
 ### LinkedIn long-form
 1. **Hook** — first line stops the scroll. Counterintuitive statement, specific problem, or blunt opinion. Never "I'm excited to share..."
-2. **Body** — 3-5 short paragraphs. Real details from the content. First person.
-3. **CTA** — one call to action max. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped. Ending on a strong statement or an offer is fine.
+2. **Body** — 3-5 short paragraphs, first person. A real, specific taste of the content: one concrete detail or turn worth reading. Leave the full argument or payoff at the blog.
+3. **CTA** — point home. One line naming what the reader gets by clicking through (the rest of the story, the how, the numbers), plus the link. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped.
 
 Use line breaks generously. Short paragraphs perform better in the feed.
 
@@ -202,19 +204,19 @@ cd /Users/davideimola/Development/davideimola/davideimola.dev/.carousel
 ```
 
 ### LinkedIn links — note
-The "link in first comment" trick doesn't measurably help (verified on Davide's own posts, 2026-07). Put links at the bottom of the post body, after the closing line. What kills reach is teaser structure ("the real content is elsewhere"), not the link itself — the post must deliver full value in the feed, with links as footer references.
+The "link in first comment" trick doesn't measurably help (verified on Davide's own posts, 2026-07). Put the link at the bottom of the post body, after the closing line. The failure mode to avoid is the **empty** teaser: a post that withholds all value and just says the real content is elsewhere. The sneak-peek amplifier is the opposite: value in the feed plus a concrete reason to click is what carries reach.
 
 ---
 
-## Step 5 — Save to GitHub issue
+## Step 5 — Save to the social Piece
 
-Once everything is approved, post a comment on the relevant **content-os Pipeline issue** with all the final content:
+Once everything is approved, post a comment with all the final content on the **social Piece** issue on content-os (the amplifier's own Piece, a separate Piece blocked by the blog Piece per ADR-0011):
 
 ```bash
 gh issue comment <number> --repo davideimola/content-os --body "..."
 ```
 
-Format the comment with clear sections: LinkedIn post, first comment, image/carousel assets (with file paths).
+Format the comment with clear sections: LinkedIn post, image/carousel assets (with file paths).
 
 ---
 
