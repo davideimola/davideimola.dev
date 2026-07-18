@@ -2,7 +2,7 @@
 
 Engineering issues and PRDs for this repo — bugs, features, and refactors on the **site code** — live as GitHub issues on `davideimola/davideimola.dev`. Use the `gh` CLI for all operations.
 
-> **Editorial exception.** Content-planning work (ideas, proposals, the blog/LinkedIn/talk Pipeline) does **not** live here — it lives on [`davideimola/content-os`](https://github.com/davideimola/content-os). The writing skills (`editorial-route`, `write-blog-post`, `social-post`) read and write Pipeline issues there; a blog PR stays in this repo but references the owning `davideimola/content-os#<n>` issue. The conventions below apply only to engineering issues on this repo.
+> **Editorial exception.** Content-planning work (ideas, the Pipeline, channel and lifecycle decisions) does **not** live here: it lives on [`davideimola/content-os`](https://github.com/davideimola/content-os). This repo is the blog Factory; its writing skills (`write-blog-post`, `social-post`) read and write content-os Pipeline issues, and a blog PR stays in this repo referencing the owning `davideimola/content-os#<n>` Piece. The conventions below apply only to engineering issues on this repo.
 
 ## Conventions
 
