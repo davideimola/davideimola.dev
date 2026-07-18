@@ -96,6 +96,37 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
+            {"// Analytics"}
+          </h2>
+          <p>
+            This site uses{" "}
+            <a
+              href="https://umami.is"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-1 hover:text-accent transition-colors duration-150"
+            >
+              Umami
+            </a>{" "}
+            to understand which pages get read, in aggregate. Umami is cookieless and privacy-first:
+            it sets no cookies, does not follow you across sites, and collects no personally
+            identifiable information. It records anonymous, aggregated data such as page views,
+            referrer, and approximate country, browser, and device type. The tracker is served
+            first-party from this domain. See{" "}
+            <a
+              href="https://umami.is/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-1 hover:text-accent transition-colors duration-150"
+            >
+              Umami's privacy policy
+            </a>{" "}
+            for details.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
             {"// Cookies"}
           </h2>
           <p>
@@ -120,7 +151,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <p className="font-mono text-[11px] text-text-3">Last updated: March 2026</p>
+        <p className="font-mono text-[11px] text-text-3">Last updated: July 2026</p>
       </div>
     </div>
   );
