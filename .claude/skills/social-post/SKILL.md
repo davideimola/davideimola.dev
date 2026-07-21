@@ -47,10 +47,10 @@ LinkedIn only. BlueSky was dropped (2026-07): Davide no longer follows it.
 
 ### LinkedIn long-form
 1. **Hook** — first line stops the scroll. Counterintuitive statement, specific problem, or blunt opinion. Never "I'm excited to share..."
-2. **Body** — 3-5 short paragraphs, first person. A real, specific taste of the content: one concrete detail or turn worth reading. Leave the full argument or payoff at the blog.
+2. **Body** — 3-6 paragraphs, first person, conversational. Write flowing prose, not staccato one-liners: full sentences that connect and let the story breathe. Give a real, specific taste of the content: one concrete detail or turn worth reading. Leave the full argument or payoff at the blog.
 3. **CTA** — point home. One line naming what the reader gets by clicking through (the rest of the story, the how, the numbers), plus the link. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped.
 
-Use line breaks generously. Short paragraphs perform better in the feed.
+Use line breaks generously between paragraphs (they perform better in the feed), but keep the sentences inside each paragraph conversational and connected. The `reactjsday-2026-speaker` post is the tone benchmark: warm, discursive, first person, never telegraphic.
 
 ### Visual: single image by default, carousel as exception
 Default to a single branded image card in portrait 4:5 (1080×1350 — takes more feed space on mobile than square; same design language as the carousel slides below, no pagination, no giant ❯) or no image at all for pure storytelling. Carousel reach has been declining (observed 2026-07) — only propose one for genuinely step-by-step content: processes, numbered lessons, before/after sequences. They don't add value for narrative or personal reflection content.
@@ -239,7 +239,7 @@ For a talk, project, or free-text promo with no social Piece on the Pipeline, th
 ### Always:
 - First person, direct opinions stated without hedging
 - Specific details (names, tools, numbers, events) over generic statements
-- Short sentences. One idea per line on LinkedIn.
+- Conversational, flowing prose. Break paragraphs with line breaks, but never chop every sentence into its own fragment: telegraphic staccato reads as try-hard. (Davide's explicit preference, 2026-07.)
 - Hook that works even without reading the rest
 - Self-deprecating humor when it fits naturally — don't force it
 - If you read a sentence back and it sounds like a press release, rewrite it
