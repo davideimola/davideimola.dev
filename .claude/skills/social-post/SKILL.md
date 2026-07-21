@@ -1,7 +1,7 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a GitHub issue number, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and saves everything as a comment on the content-os Pipeline issue. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for #24" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a content-os Piece id, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and records the final copy and assets on the content-os Pipeline Piece through the MCP server. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
@@ -11,12 +11,12 @@ When you amplify a blog (or any Factory artifact with a canonical home), you pro
 ## Arguments
 
 ```
-/social-post [issue-number or blog-slug or URL or free text]
+/social-post [Piece id or blog-slug or URL or free text]
 ```
 
 Examples:
 ```
-/social-post 24
+/social-post piece_a1b2c3
 /social-post i-rebuilt-my-site-twice
 /social-post https://davideimola.dev/blog/i-rebuilt-my-site-twice
 /social-post I gave a talk at GoLab about Kubernetes security
@@ -29,13 +29,13 @@ Examples:
 
 Depending on the input:
 
-- **Issue number** → run `gh issue view <number> --repo davideimola/content-os` and read it (the Pipeline issue)
+- **Piece id** → find it through the MCP server: call `list_calendar` and `list_proposals`, locate the item with that id, and read its channel, Flag/Side, and linked source Ideas (`list_ideas`) for context
 - **Blog slug** → read `src/content/blog/<slug>.mdx`
 - **URL** → fetch the page or derive the slug and read the MDX
 - **Free text** → use it directly as the source
-- **No input** → ask: "What do you want to promote? Give me a GitHub issue number, blog post slug, or describe it."
+- **No input** → ask: "Cosa vuoi promuovere? Dammi un id di Piece content-os, uno slug di post, o descrivimelo."
 
-If an issue exists and a matching blog post exists, read both — the issue has context, the post has the final content.
+When both a Piece and its blog post exist, read both — the Piece carries the editorial framing, the post carries the final content.
 
 ---
 
@@ -208,15 +208,17 @@ The "link in first comment" trick doesn't measurably help (verified on Davide's 
 
 ---
 
-## Step 5 — Save to the social Piece
+## Step 5 — Record the artifact on the social Piece
 
-Once everything is approved, post a comment with all the final content on the **social Piece** issue on content-os (the amplifier's own Piece, a separate Piece blocked by the blog Piece per ADR-0011):
+The final copy has a durable home in this repo: save it as `.carousel/<slug>/social-post.md`, committed next to the visual assets (existing convention). LinkedIn is published by hand, so also present the copy to Davide ready to paste.
 
-```bash
-gh issue comment <number> --repo davideimola/content-os --body "..."
+Then hand the artifact back to the Pipeline. When a **social Piece** exists on content-os (the amplifier's own `linkedin` Piece, blocked by the blog per ADR-0011 — its id is the one Davide gave you, or the one `/desk` spawned), point it at the committed assets:
+
+```
+set_piece_artifact(<social-piece-id>, <url of the committed .carousel/<slug>/ assets or the PR>)
 ```
 
-Format the comment with clear sections: LinkedIn post, image/carousel assets (with file paths).
+For a talk, project, or free-text promo with no social Piece on the Pipeline, there is nothing to point at — the copy committed in the repo plus what you showed Davide is the deliverable.
 
 ---
 
