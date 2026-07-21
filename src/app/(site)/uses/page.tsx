@@ -24,6 +24,11 @@ const HARDWARE = [
         name: 'MacBook Pro 14" M5 Pro (2026)',
         description: "Primary machine. Fast enough that I've stopped thinking about performance.",
       },
+      {
+        name: "UGREEN RevoDok Max 213 · 13-in-1 Thunderbolt 4",
+        description:
+          "The desk hub. One cable docks the MacBook: dual 4K display, 90W charging, and every peripheral at once.",
+      },
     ],
   },
   {
@@ -31,7 +36,7 @@ const HARDWARE = [
     items: [
       {
         name: 'Samsung LU28R550 · 28" 4K UHD',
-        description: "3840×2160, 60Hz, HDR10, 99% sRGB. USB-C connected.",
+        description: "3840×2160, 60Hz, HDR10, 99% sRGB.",
       },
       {
         name: "Aukey Webcam",
