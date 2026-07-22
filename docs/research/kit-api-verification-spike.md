@@ -147,6 +147,26 @@ So programmatic sending is available on the free Newsletter plan — the MailerL
 paywall the research warned about does **not** apply to Kit. (Delivery reaches the list per
 the `subscriber_filter`; the test send went to the sole subscriber, the author.)
 
+#### Deliverability note — the test send landed in spam
+
+The confirmed test send **delivered but landed in the Junk folder** (iCloud). Two causes,
+one of them a real pre-build finding:
+
+1. **Not representative content.** The test broadcast was a one-line, link-less body with an
+   `[SPIKE TEST] … — ignore` subject — textbook thin/spammy mail. A real issue (intro +
+   harvested sections + links + unsubscribe footer) starts from a much better baseline.
+2. **The domain is not authenticated for Kit sending.** `GET /v4/account` reports the sending
+   address as `is_verified: true` but **`is_dmarc_configured: false`**. A brand-new Kit sender
+   on `davideimola.dev` with no DMARC alignment, into a strict provider (iCloud), reliably
+   lands in spam. The domain already authenticates **Resend** (transactional), but **Kit's own
+   domain authentication (DKIM CNAMEs from Kit, SPF include, DMARC alignment) must be set up
+   before real issues go out.** This is separate from "can we send via API" (yes) — it governs
+   inbox placement.
+
+**Action for the build (before issue #1 ships):** complete Kit domain authentication for
+`davideimola.dev` and re-test placement. Tracked as a deliverability prerequisite, not an API
+limitation.
+
 ## Verdicts
 
 | Assumption | Verdict | Evidence |
@@ -190,6 +210,7 @@ Added to `.env.local.example`, **server-side only** (never `NEXT_PUBLIC_`):
 ## What this unblocks
 
 Auth, broadcast create, and broadcast send are all proven, so the digest→email→broadcast
-path (#75, #77) and the archive/loader work (#72) can proceed against this contract. The
-**subscribe capability (#74) is gated** on the double-opt-in decision above — that is the
-one open item this spike surfaced.
+path (#75, #77) and the archive/loader work (#72) can proceed against this contract. Two
+open items this spike surfaced: (1) the **subscribe capability (#74) is gated** on the
+double-opt-in decision above; (2) **Kit domain authentication** for `davideimola.dev` is a
+deliverability prerequisite before issue #1 ships (see the deliverability note).
