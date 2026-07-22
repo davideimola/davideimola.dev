@@ -7,6 +7,7 @@ import { JsonLd } from "../../../components/ui/JsonLd";
 import { PageHero } from "../../../components/ui/PageHero";
 import { ScrollReveal } from "../../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { SubscribeCTA } from "../../../components/ui/SubscribeCTA";
 import { getAllTalks } from "../../../lib/content";
 
 export const metadata: Metadata = {
@@ -268,6 +269,16 @@ export default function SharingPage() {
               Get in touch →
             </a>
           </p>
+        </div>
+      </ScrollReveal>
+
+      {/* Newsletter CTA: framed around upcoming talks */}
+      <ScrollReveal>
+        <div className="mt-10">
+          <SubscribeCTA
+            heading="Catch my next talk"
+            description="Get my upcoming talks and workshops in your inbox, plus what I publish, once a month. No spam, unsubscribe anytime."
+          />
         </div>
       </ScrollReveal>
     </div>
