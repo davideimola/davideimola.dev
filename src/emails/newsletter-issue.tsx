@@ -14,16 +14,18 @@ import {
 import { formatDate } from "../lib/dates";
 import type { NewsletterIssue } from "../lib/newsletter";
 
-// Brand tokens (mirrors src/app/globals.css). Custom fonts are stripped by most email
-// clients, so headings fall back to monospace and body to a system sans, approximating
-// the site's JetBrains Mono / IBM Plex Sans pairing.
+// Light palette, per the brand's light-surface lockup (docs/brand.md: ink #1A1816 on a
+// warm light surface, Akane Red accent). Deliberately light — not the site's dark theme —
+// so the digest reads as the same family as Kit's (light) double opt-in confirmation email.
+// Custom fonts are stripped by most email clients, so headings fall back to monospace and
+// body to a system sans, approximating the site's JetBrains Mono / IBM Plex Sans pairing.
 const c = {
-  bg: "#080807",
-  card: "#0F0E0D",
-  border: "#1C1A18",
-  text1: "#EAE5DF",
-  text2: "#9A948E",
-  text3: "#7E7874",
+  bg: "#EDE8E1",
+  card: "#FAF8F5",
+  border: "#E1DBD3",
+  text1: "#1A1816",
+  text2: "#48423C",
+  text3: "#6E6862",
   accent: "#C91F37",
 };
 const mono = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace";
