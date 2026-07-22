@@ -18,7 +18,8 @@
     "build-storybook": "storybook build",
     "optimize-images": "node scripts/optimize-images.mjs",
     "brand:png": "node scripts/generate-brand-pngs.mjs",
-    "email:dev": "email dev --dir src/emails/previews --port 3001"
+    "email:dev": "email dev --dir src/emails/previews --port 3001",
+    "newsletter:draft": "tsx --env-file=.env.local scripts/newsletter-draft.mts"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
@@ -68,6 +69,7 @@
     "sharp": "^0.35.3",
     "storybook": "^10.4.6",
     "tailwindcss": "^4",
+    "tsx": "^4.23.1",
     "typescript": "^6",
     "vite": "^8.1.4",
     "vitest": "^4.1.10"
