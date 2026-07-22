@@ -1,6 +1,8 @@
 "use server";
 
 import { Resend } from "resend";
+import { isValidEmail } from "../../lib/email";
+import { verifyTurnstile } from "../../lib/turnstile";
 
 export interface ContactState {
   status: "idle" | "success" | "error";
@@ -33,16 +35,7 @@ export async function sendContactEmail(
   if (!turnstileToken) {
     return { status: "error", message: "Please complete the security check." };
   }
-  const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      secret: process.env.TURNSTILE_SECRET_KEY,
-      response: turnstileToken,
-    }),
-  });
-  const turnstileData = (await turnstileRes.json()) as { success: boolean };
-  if (!turnstileData.success) {
+  if (!(await verifyTurnstile(turnstileToken))) {
     return { status: "error", message: "Security check failed. Please try again." };
   }
 
@@ -54,8 +47,7 @@ export async function sendContactEmail(
     return { status: "error", message: "All fields are required." };
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  if (!isValidEmail(email)) {
     return { status: "error", message: "Please enter a valid email address." };
   }
 
