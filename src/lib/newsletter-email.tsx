@@ -1,5 +1,5 @@
 import { render } from "@react-email/render";
-import { NewsletterIssueEmail } from "../emails/newsletter-issue";
+import { NewsletterIssueBody } from "../emails/newsletter-issue";
 import { createBroadcastDraft } from "./kit";
 import type { NewsletterIssue } from "./newsletter";
 
@@ -14,13 +14,15 @@ function absolutizeLinks(markdown: string): string {
 
 /**
  * Render a frozen newsletter issue to email-safe HTML, with the "read on web" link
- * pointing at the on-site /newsletter/[slug]. Provider-agnostic output (posted to Kit
- * as the broadcast content).
+ * pointing at the on-site /newsletter/[slug]. Content-only (no <html>/<body>, no header
+ * or footer): it is injected into the Kit template's {{ message_content }} slot, which
+ * supplies the wordmark header, the footer (with the {{ unsubscribe_url }} link), and the
+ * page background. Provider-agnostic output (posted to Kit as the broadcast content).
  */
 export async function renderIssueEmail(issue: NewsletterIssue): Promise<string> {
   const webUrl = `${SITE_URL}/newsletter/${issue.slug}`;
   const forEmail = { ...issue, content: absolutizeLinks(issue.content) };
-  return render(<NewsletterIssueEmail issue={forEmail} webUrl={webUrl} />);
+  return render(<NewsletterIssueBody issue={forEmail} webUrl={webUrl} />);
 }
 
 /**

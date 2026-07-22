@@ -18,6 +18,14 @@ describe("renderIssueEmail", () => {
     expect(html).toContain("Intro");
   });
 
+  it("is content-only: a fragment with no <html>/<body> wrapper or footer chrome", async () => {
+    const html = await renderIssueEmail(issue);
+    // The Kit template supplies the <html>/<body>, the header, and the footer/unsubscribe.
+    expect(html).not.toMatch(/<html/i);
+    expect(html).not.toMatch(/<body/i);
+    expect(html).not.toContain("Unsubscribe");
+  });
+
   it("points the read-on-web link at the on-site issue URL", async () => {
     const html = await renderIssueEmail(issue);
     expect(html).toContain("https://davideimola.dev/newsletter/2026-07");
