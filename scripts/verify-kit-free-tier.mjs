@@ -85,6 +85,15 @@ function classifySubscriber(data) {
   return { state, doubleOptIn };
 }
 
+// The direct-path test (step 1) makes TEST_EMAIL `active`, and Kit will not re-send a
+// confirmation to an already-active subscriber — so the Form path (step 3) must use a
+// DISTINCT address or its double opt-in can never be observed. A plus-tag keeps it in
+// the same inbox (davide@x.com → davide+form@x.com) while being a new subscriber to Kit.
+function plusTag(email, tag) {
+  const [local, domain] = email.split("@");
+  return domain ? `${local}+${tag}@${domain}` : email;
+}
+
 // Single place that talks to Kit. Logs the request (key redacted) and the response
 // verbatim so the real contract is captured no matter what the shapes turn out to be.
 async function kit(method, path, body) {
@@ -178,23 +187,35 @@ console.log("  come back INACTIVE (double opt-in pending) or ACTIVE (no confirma
 
 // ── 2. Form subscriber create (the double opt-in fallback path) ──────────────────
 section("2. Discover forms — GET /forms");
-let resolvedFormId = FORM_ID;
+let resolvedFormId = null;
 {
   const { ok, data } = await kit("GET", "/forms");
   const forms = data?.forms ?? [];
   if (ok && forms.length) {
-    console.log("  Forms found (id — name — format — required double opt-in?):");
+    // The v4 list does NOT expose the double-opt-in setting, so it can't be printed
+    // here — it is observed empirically from the subscriber state in step 3.
+    console.log("  Forms found (id — uid — name — format):");
     for (const f of forms) {
-      console.log(
-        `   • ${f.id} — ${f.name} — ${f.format ?? "?"} — ${f.settings?.opt_in_required ?? "?"}`
-      );
+      console.log(`   • id=${f.id} — uid=${f.uid ?? "?"} — ${f.name} — ${f.format ?? "?"}`);
     }
-    if (!resolvedFormId) {
+    // The API expects the numeric `id`; the embed URL/JS uses the string `uid`. Accept
+    // either in KIT_FORM_ID and resolve to the numeric id so the URL gotcha can't bite.
+    if (FORM_ID) {
+      const match = forms.find(
+        (f) => String(f.id) === String(FORM_ID) || f.uid === String(FORM_ID)
+      );
+      if (match) {
+        resolvedFormId = match.id;
+        if (String(match.id) !== String(FORM_ID)) {
+          console.log(`  KIT_FORM_ID=${FORM_ID} is a uid → resolved to numeric id ${match.id}.`);
+        }
+      } else {
+        console.log(`  ⚠ KIT_FORM_ID=${FORM_ID} matches no form id/uid — the form path will 404.`);
+      }
+    } else {
       resolvedFormId = forms[0].id;
       console.log(`  No KIT_FORM_ID set — defaulting to the first form: ${resolvedFormId}`);
-      console.log(
-        "  For a clean test, set KIT_FORM_ID to a form with double opt-in enabled and re-run."
-      );
+      console.log("  For a clean test, set KIT_FORM_ID to a form with double opt-in enabled.");
     }
   } else {
     console.log(
@@ -204,11 +225,14 @@ let resolvedFormId = FORM_ID;
 }
 
 if (resolvedFormId) {
+  // Distinct address from the direct test so double opt-in can actually be observed.
+  const formEmail = plusTag(TEST_EMAIL, "form");
   section(`3. Form subscriber — POST /forms/${resolvedFormId}/subscribers { email_address }`);
+  console.log(`  Using a fresh address for this path: ${formEmail}`);
   findings.formSubscriber.attempted = true;
   findings.formSubscriber.formId = resolvedFormId;
   const { ok, data } = await kit("POST", `/forms/${resolvedFormId}/subscribers`, {
-    email_address: TEST_EMAIL,
+    email_address: formEmail,
   });
   const { state, doubleOptIn } = classifySubscriber(data);
   findings.formSubscriber.state = state;
@@ -217,7 +241,7 @@ if (resolvedFormId) {
     console.log(`  → resulting state: ${state ?? "(not reported)"}`);
     console.log(
       doubleOptIn === true
-        ? `  ✓ state=inactive → double opt-in pending via the Form path. CONFIRM the email arrived in ${TEST_EMAIL}.`
+        ? `  ✓ state=inactive → double opt-in pending via the Form path. CONFIRM the email arrived in ${formEmail}.`
         : "  ⚠ state is not 'inactive' via the Form — the form may not have double opt-in enabled."
     );
   }
