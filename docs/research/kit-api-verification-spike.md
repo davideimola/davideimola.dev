@@ -3,10 +3,11 @@
 **Issue:** [#71](https://github.com/davideimola/davideimola.dev/issues/71) (parent PRD [#70](https://github.com/davideimola/davideimola.dev/issues/70)) · **ADR:** [ADR-0002](../adr/0002-newsletter-hybrid-kit-in-repo-content.md) · **Research:** [newsletter-free-tier-comparison](./newsletter-free-tier-comparison.md)
 
 > **Live-run status: RUN 2026-07-22** against a real free-tier account (plan `free`,
-> 10,000-subscriber limit). Auth, subscriber-create, form-associate, broadcast-create, and
-> broadcast **send** are confirmed below. **The double opt-in assumption FAILED** — the v4
-> API has no confirmation-email flow; a fallback is required (see the verdict). Re-run
-> `scripts/verify-kit-free-tier.mjs` to reproduce.
+> 10,000-subscriber limit). **All four assumptions verified.** Auth, subscriber-create,
+> broadcast-create, and broadcast **send** work on the free plan; **double opt-in is
+> achievable via the v4 API** (create-inactive → associate with an opt-in Kit Form triggers
+> the confirmation email). One deliverability prerequisite surfaced (domain authentication).
+> Re-run `scripts/verify-kit-free-tier.mjs` to reproduce.
 
 ## Why this spike
 
@@ -25,8 +26,8 @@ If either fails, the fallback must be known before any integration code is writt
 ```bash
 KIT_API_KEY=<free-tier v4 key> \
 KIT_TEST_EMAIL=<an inbox you control> \
-KIT_FORM_ID=<form id OR uid, optional> \
-node scripts/verify-kit-free-tier.mjs            # draft only, no email sent
+KIT_FORM_ID=<double-opt-in form id OR uid> \
+node scripts/verify-kit-free-tier.mjs            # draft only, no broadcast sent
 
 # add --send to perform a REAL scheduled broadcast send (5 min out, cancellable)
 # add --cleanup to delete created drafts (and cancel a scheduled send)
@@ -40,58 +41,69 @@ is a manual inbox check.
 ## Authentication — CONFIRMED
 
 - **Mechanism:** a **v4** API key in the `X-Kit-Api-Key` request header. A single key (not
-  the v3 `api_key` + `api_secret` pair — see the double-opt-in note, where v3 matters).
-  Generate at Kit → Settings → Developer. Free accounts don't support OAuth; API keys are
-  unrestricted on every plan including free.
+  the v3 `api_key` + `api_secret` pair; the v3 key is a different credential and is **not
+  needed** — double opt-in works on v4, see below). Generate at Kit → Settings → Developer.
+  Free accounts don't support OAuth; API keys are unrestricted on every plan including free.
 - **Base URL:** `https://api.kit.com/v4`
 - **Server-side only:** consumed by the subscribe server action and the digest skill; never
   reaches the client. Env var `KIT_API_KEY` (no `NEXT_PUBLIC_` prefix).
 
 `GET /v4/account` → `200`. Confirms the key, and that this account is on `plan_type: "free"`
-with `subscriber_limit: 10000` and a verified sending address (`is_verified: true`).
+with `subscriber_limit: 10000` and a verified sending address (`is_verified: true`, but note
+`is_dmarc_configured: false` — see the deliverability note).
 
-## Subscriber creation
+## Subscriber creation & double opt-in — CONFIRMED (two-call flow)
 
-### Path A — direct: `POST /v4/subscribers` — CONFIRMED, no double opt-in
+Double opt-in **is achievable on v4**, but not through a single call. The confirmation email
+is a **Form** behavior, so the flow is: create the subscriber `inactive`, then associate it
+with a double-opt-in-enabled Kit Form, which sends Kit's "confirm your subscription" email.
+
+### Step 1 — create the subscriber (as inactive): `POST /v4/subscribers`
 
 ```
-POST /v4/subscribers    { "email_address": "reader@example.com" }
+POST /v4/subscribers    { "email_address": "reader@example.com", "state": "inactive" }
 ```
 
-Response `200/201`:
+Response `201`:
 
 ```jsonc
-{
-  "subscriber": {
-    "id": 4219670893,
-    "first_name": null,
-    "email_address": "reader@example.com",
-    "state": "active",        // ← created ACTIVE with NO confirmation email
-    "created_at": "2026-07-22T…Z",
-    "fields": {}
-  }
-}
+{ "subscriber": { "id": 4219900293, "email_address": "reader@example.com", "state": "inactive", … } }
 ```
 
 Accepts `first_name`, `email_address` (required), `state` (`active` | `inactive` | `cancelled`
-| `bounced` | `complained`, **defaults to `active`**), and `fields`. You _can_ pass
-`state: "inactive"`, but the endpoint **sends no confirmation email** and its own docs warn
-"Updating the subscriber state with this endpoint is not supported" — so an `inactive`
-subscriber created this way has no way to self-confirm. **This path never triggers double
-opt-in.**
+| `bounced` | `complained`, **defaults to `active`**), and `fields`. **Creating a subscriber
+alone sends no email** — with the default `active` state it silently subscribes them (no
+double opt-in). Passing `state: "inactive"` creates a pending record, again with no email
+yet; the confirmation email comes from step 2. (Note: this endpoint's docs warn "Updating the
+subscriber state with this endpoint is not supported", so set the state at creation.)
 
-### Path B — associate with a Form: `POST /v4/forms/{id}/subscribers` — CONFIRMED, not an opt-in flow
+### Step 2 — associate with a double-opt-in Form: `POST /v4/forms/{id}/subscribers`
+
+```
+POST /v4/forms/9713978/subscribers    { "email_address": "reader@example.com" }
+```
 
 Two gotchas confirmed live:
 
 1. **id vs uid.** The API path wants the numeric form **`id`** (e.g. `9713978`). The embed
    URL/JS uses the string **`uid`** (e.g. `2484145147`). Passing the uid returns `404`. The
    harness resolves either form of `KIT_FORM_ID` against `GET /v4/forms` to the numeric id.
-2. **The subscriber must already exist.** Per the v4 docs, this endpoint _associates an
-   existing subscriber with a form_ — it does **not** create one. Posting an unknown email
-   returns `404 "Not Found"`. Posting an **existing** subscriber returns `201` with an
-   `added_at` timestamp — and the subscriber's `state` is unchanged (stays `active`). **No
-   confirmation email is sent; this is not a double opt-in trigger.**
+2. **The subscriber must already exist** (hence step 1). Posting an unknown email returns
+   `404 "Not Found"`; posting an existing one returns `201` with `added_at`, preserving the
+   subscriber's `state`.
+
+**When the form has double opt-in enabled, this call triggers Kit's confirmation email** —
+observed live: for the `inactive` subscriber created in step 1, Kit sent an
+`"Important: confirm your subscription"` email from `hello@davideimola.dev` with a **"Confirm
+your subscription"** button and a compliant `Unsubscribe · Privacy` footer, and the subscriber
+stayed `inactive` (pending). Clicking the button confirms them → `active`. That is exactly the
+double opt-in ADR-0002 requires, and it needs no v3 API and no embedded Kit form.
+
+> The double-opt-in behavior lives in the **form's settings**, which the v4 `GET /v4/forms`
+> list does not expose — so the target form must have double opt-in turned on in the Kit UI,
+> and `KIT_FORM_ID` must point at it. Associating an already-`active` subscriber also sends the
+> email but does not gate anything (they are already subscribed), so the `inactive`-first
+> order matters.
 
 ## Broadcast creation + send
 
@@ -108,10 +120,8 @@ Response `201`:
   "broadcast": {
     "id": 25108320,
     "publication_id": 21713461,
-    "created_at": "2026-07-22T…Z",
     "subject": "…",
     "preview_text": null,
-    "description": null,
     "public": false,
     "published_at": null,
     "send_at": null,
@@ -125,9 +135,9 @@ Response `201`:
 }
 ```
 
-Note the default `subscriber_filter` is **all_subscribers** — a send with no narrower filter
-goes to the entire list. (At spike time the account had exactly **1** subscriber, so a test
-send only reaches the author.)
+The default `subscriber_filter` is **all_subscribers** — a send with no narrower filter goes
+to the whole list. The `email_template` is a pre-existing account template; it can be changed
+later and is not a spike concern.
 
 ### Send / schedule: `send_at` on `POST /v4/broadcasts` — CONFIRMED
 
@@ -135,17 +145,12 @@ send only reaches the author.)
 "send" verb). Live result: the free plan **accepted** the scheduled send — `201`, no plan
 restriction (no `402`/`403`):
 
-```
-POST /v4/broadcasts   { "subject": "…", "content": "<p>…</p>", "public": false, "send_at": "…Z" }
-```
-
 ```jsonc
 { "broadcast": { "id": 25109796, "send_at": "2026-07-22T15:57:55Z", "status": "scheduled", … } }
 ```
 
 So programmatic sending is available on the free Newsletter plan — the MailerLite-style
-paywall the research warned about does **not** apply to Kit. (Delivery reaches the list per
-the `subscriber_filter`; the test send went to the sole subscriber, the author.)
+paywall the research warned about does **not** apply to Kit.
 
 #### Deliverability note — the test send landed in spam
 
@@ -174,43 +179,36 @@ limitation.
 | Auth via `X-Kit-Api-Key` works on free tier | ✅ **CONFIRMED** | `GET /v4/account` → 200, `plan_type: free` |
 | Broadcast **create** works on free tier | ✅ **CONFIRMED** | `POST /v4/broadcasts` → 201, `status: draft` |
 | Broadcast **send** works on free tier | ✅ **CONFIRMED** | `POST /v4/broadcasts` + `send_at` → 201, `status: scheduled`, no plan block |
-| API-created subscriber triggers **double opt-in** | ❌ **FAILED** | direct → `active`, no email; form-associate → state unchanged, no email |
-| **Fallback needed?** (route via Kit Form) | ⚠️ **YES — required** | see below |
+| API-created subscriber triggers **double opt-in** | ✅ **CONFIRMED (two-call)** | create `inactive` → associate with opt-in form → Kit sent the "confirm your subscription" email; subscriber stayed `inactive` |
+| Deliverability / inbox placement | ⚠️ **NEEDS DOMAIN AUTH** | test send hit spam; `is_dmarc_configured: false` |
 
-### Double opt-in: the assumption is false — fallback required
+### Double opt-in verdict (corrected)
 
-The v4 API has **no double-opt-in / confirmation-email flow**. Neither creating a subscriber
-(`POST /v4/subscribers`) nor associating one with a form (`POST /v4/forms/{id}/subscribers`)
-sends a confirmation email; the first creates an `active` subscriber outright, the second
-leaves the state as-is. Kit's confirmation email belongs to the **form-submission** flow,
-not the admin API. Options for a compliant double opt-in, to decide before building #74:
+An earlier draft of this doc concluded double opt-in was impossible on v4 — **that was wrong**,
+based on testing only an already-`active` subscriber. The correct finding: **double opt-in works
+on v4** via the two-call flow (create `inactive` → `POST /v4/forms/{id}/subscribers` against a
+double-opt-in form). The subscribe capability (#74) can therefore build a clean, all-v4 flow:
 
-1. **Legacy v3 form-subscribe API** — `POST /v3/forms/{form_id}/subscribe` (needs a separate
-   **v3** API key; the v4 key returns `401` there). Historically triggers the confirmation
-   email when the form has opt-in enabled, keeping our own React form. **Risk:** v3 is
-   marked legacy/deprecated — building a new integration on it is fragile.
-2. **Kit embedded/hosted form** — Kit's JS embed or hosted page does native double opt-in,
-   but puts Kit's form UI in play, conflicting with ADR-0002's "site owns the form".
-3. **Single opt-in via v4 + logged consent** — `POST /v4/subscribers` (active immediately),
-   paired with an explicit consent checkbox + stored proof. Simpler and all-v4, but diverges
-   from ADR-0002's deliberate double-opt-in choice; revisit the ADR before choosing this.
+1. Our own React form → subscribe server action (honeypot + Turnstile, per the contact-form pattern).
+2. `POST /v4/subscribers { email_address, state: "inactive" }`.
+3. `POST /v4/forms/{KIT_FORM_ID}/subscribers { email_address }` → Kit sends the confirmation email.
+4. The subscriber clicks "Confirm your subscription" → Kit flips them to `active` and (per the
+   form's setting) can redirect to our on-site "you're in" landing page.
 
-**This needs a decision (and likely an ADR-0002 update) before issue #74 is built.** It does
-not block #72/#73/#75/#77, which don't touch the subscribe path.
+No v3 API (deprecated) and no embedded Kit form are needed.
 
 ## Env vars (added by this spike)
 
 Added to `.env.local.example`, **server-side only** (never `NEXT_PUBLIC_`):
 
 - `KIT_API_KEY` — v4 API key (`X-Kit-Api-Key` header).
-- `KIT_FORM_ID` — a Kit Form id (or uid; the harness resolves either). Whether it is used at
-  all depends on the double-opt-in decision above; if option 1 is chosen, a `v3` API key env
-  var would also be needed.
+- `KIT_FORM_ID` — the numeric id (or uid; the harness resolves either) of a Kit Form with
+  **double opt-in enabled**, used in step 2 of the subscribe flow.
 
 ## What this unblocks
 
-Auth, broadcast create, and broadcast send are all proven, so the digest→email→broadcast
-path (#75, #77) and the archive/loader work (#72) can proceed against this contract. Two
-open items this spike surfaced: (1) the **subscribe capability (#74) is gated** on the
-double-opt-in decision above; (2) **Kit domain authentication** for `davideimola.dev` is a
-deliverability prerequisite before issue #1 ships (see the deliverability note).
+Auth, broadcast create + send, and the double-opt-in subscribe flow are all proven, so the
+integration issues can proceed against this contract: the subscribe capability (#74, the
+two-call flow above), the digest→email→broadcast path (#75, #77), and the archive/loader
+work (#72). The one remaining prerequisite is **Kit domain authentication** for
+`davideimola.dev` (deliverability), which should be completed before issue #1 ships.

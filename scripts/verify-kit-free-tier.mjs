@@ -225,12 +225,18 @@ let resolvedFormId = null;
 }
 
 if (resolvedFormId) {
-  // Distinct address from the direct test so double opt-in can actually be observed.
+  // The real double-opt-in flow is TWO calls: create the subscriber `inactive`, then
+  // associate it with a double-opt-in Form — the association is what makes Kit send the
+  // "confirm your subscription" email. A distinct address (plus-tag) keeps the direct
+  // test (step 1) from pre-activating it and masking the pending state.
   const formEmail = plusTag(TEST_EMAIL, "form");
-  section(`3. Form subscriber — POST /forms/${resolvedFormId}/subscribers { email_address }`);
+  section("3. Double opt-in flow — create inactive, then associate with the Form");
   console.log(`  Using a fresh address for this path: ${formEmail}`);
   findings.formSubscriber.attempted = true;
   findings.formSubscriber.formId = resolvedFormId;
+  // 3a. Create as inactive (no email yet).
+  await kit("POST", "/subscribers", { email_address: formEmail, state: "inactive" });
+  // 3b. Associate with the opt-in Form — this triggers the confirmation email.
   const { ok, data } = await kit("POST", `/forms/${resolvedFormId}/subscribers`, {
     email_address: formEmail,
   });
@@ -241,8 +247,8 @@ if (resolvedFormId) {
     console.log(`  → resulting state: ${state ?? "(not reported)"}`);
     console.log(
       doubleOptIn === true
-        ? `  ✓ state=inactive → double opt-in pending via the Form path. CONFIRM the email arrived in ${formEmail}.`
-        : "  ⚠ state is not 'inactive' via the Form — the form may not have double opt-in enabled."
+        ? `  ✓ state=inactive → double opt-in pending. CONFIRM the "confirm your subscription" email arrived in ${formEmail}.`
+        : "  ⚠ state is not 'inactive' — check the form has double opt-in enabled in the Kit UI."
     );
   }
 } else {
@@ -350,10 +356,11 @@ findings.verdicts.freeTierSend = DO_SEND
 findings.verdicts.doubleOptIn = (() => {
   const direct = findings.directSubscriber.doubleOptIn;
   const form = findings.formSubscriber.doubleOptIn;
-  if (direct === true) return "DIRECT API path triggers double opt-in (no Form needed)";
-  if (form === true) return "FALLBACK required: route subscribers through a double-opt-in Kit Form";
+  if (direct === true) return "DIRECT create triggers double opt-in (no Form needed)";
+  if (form === true)
+    return "WORKS via v4: create inactive → associate with a double-opt-in Form (confirm email sent)";
   if (direct === false && form !== true)
-    return "NO double opt-in observed on either path — investigate";
+    return "NO double opt-in observed — check the form has double opt-in enabled";
   return "INCONCLUSIVE — confirm the inbox manually";
 })();
 
