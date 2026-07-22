@@ -3,6 +3,7 @@ import { SOCIAL_PROFILES } from "../../lib/social";
 
 const FOOTER_LINKS = [
   { label: "contact", href: "/contact" },
+  { label: "newsletter", href: "/newsletter" },
   { label: "privacy", href: "/privacy" },
   { label: "now", href: "/now" },
   { label: "uses", href: "/uses" },

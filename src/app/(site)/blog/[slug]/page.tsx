@@ -17,6 +17,7 @@ import { PostNavigation } from "../../../../components/ui/PostNavigation";
 import { ReadingProgress } from "../../../../components/ui/ReadingProgress";
 import { RelatedPosts } from "../../../../components/ui/RelatedPosts";
 import { ShareButtons } from "../../../../components/ui/ShareButtons";
+import { SubscribeCTA } from "../../../../components/ui/SubscribeCTA";
 import { TableOfContents } from "../../../../components/ui/TableOfContents";
 import {
   extractToc,
@@ -197,6 +198,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             <AuthorBio />
             <ShareButtons slug={post.slug} title={post.title} />
+            <SubscribeCTA className="mt-12" />
             <PostNavigation prev={prev} next={next} />
             <RelatedPosts posts={related} />
             <GiscusComments />
