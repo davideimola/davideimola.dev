@@ -17,6 +17,10 @@ export interface KitSubscriber {
   state: string;
 }
 
+export interface KitBroadcast {
+  id: number;
+}
+
 /**
  * Subscribe an email via Kit's double opt-in flow. Returns the created (pending)
  * subscriber. Throws if the Kit env is missing or the API rejects either call; the
@@ -43,11 +47,37 @@ export async function createSubscriber(email: string): Promise<KitSubscriber> {
   return (created.subscriber ?? created) as KitSubscriber;
 }
 
+/**
+ * Create a Kit broadcast as a DRAFT (never sends) and return its id. The HTML is the
+ * fully-rendered issue email; the "read on web" link lives inside that HTML. Sending is
+ * always a manual, human-triggered step in the Kit dashboard (ADR-0002). Throws if the
+ * env is missing or the API rejects the call.
+ */
+export async function createBroadcastDraft(input: {
+  subject: string;
+  html: string;
+}): Promise<number> {
+  const apiKey = process.env.KIT_API_KEY;
+  if (!apiKey) {
+    throw new Error("Missing KIT_API_KEY environment variable.");
+  }
+  const data = await kitPost("/broadcasts", apiKey, {
+    subject: input.subject,
+    content: input.html,
+    public: false,
+  });
+  const id = ((data.broadcast ?? data) as KitBroadcast)?.id;
+  if (!id) {
+    throw new Error("Kit broadcast create returned no id.");
+  }
+  return id;
+}
+
 async function kitPost(
   path: string,
   apiKey: string,
   body: Record<string, unknown>
-): Promise<{ subscriber?: KitSubscriber }> {
+): Promise<Record<string, unknown>> {
   const res = await fetch(`${KIT_BASE_URL}${path}`, {
     method: "POST",
     headers: {

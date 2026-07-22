@@ -17,11 +17,14 @@
     "build:storybook": "storybook build",
     "build-storybook": "storybook build",
     "optimize-images": "node scripts/optimize-images.mjs",
-    "brand:png": "node scripts/generate-brand-pngs.mjs"
+    "brand:png": "node scripts/generate-brand-pngs.mjs",
+    "email:dev": "email dev --dir src/emails/previews --port 3001"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
     "@marsidev/react-turnstile": "^1.5.3",
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.1.0",
     "@tabler/icons-react": "^3.44.0",
     "@tailwindcss/typography": "^0.5.20",
     "@vercel/speed-insights": "^2.0.0",
@@ -42,6 +45,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.3",
     "@chromatic-com/storybook": "^5.2.1",
+    "@react-email/ui": "^6.9.0",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-onboarding": "^10.4.6",
@@ -60,6 +64,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^29.1.1",
     "playwright": "^1.61.1",
+    "react-email": "^6.9.0",
     "sharp": "^0.35.3",
     "storybook": "^10.4.6",
     "tailwindcss": "^4",
