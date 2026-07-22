@@ -2,6 +2,7 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState, useEffect, useRef } from "react";
+import { StdoutPanel } from "../../../components/ui/StdoutPanel";
 import { sendContactEmail } from "../../actions/contact";
 
 const initialState = { status: "idle" as const };
@@ -18,12 +19,7 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="border border-border rounded-sm overflow-hidden">
-        <div className="bg-bg-card border-b border-border px-4 py-2">
-          <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
-            stdout
-          </span>
-        </div>
+      <StdoutPanel>
         <div className="px-4 py-8 flex flex-col gap-3">
           <p className="font-mono text-[13px]">
             <span className="text-accent">✓</span>{" "}
@@ -40,7 +36,7 @@ export function ContactForm() {
             ← send another
           </button>
         </div>
-      </div>
+      </StdoutPanel>
     );
   }
 
