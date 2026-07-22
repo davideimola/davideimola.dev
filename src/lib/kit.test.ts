@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createSubscriber } from "./kit";
+import { createBroadcastDraft, createSubscriber } from "./kit";
 
 const fetchMock = vi.fn();
 vi.stubGlobal("fetch", fetchMock);
@@ -86,6 +86,49 @@ describe("createSubscriber", () => {
     vi.stubEnv("KIT_FORM_ID", "");
 
     await expect(createSubscriber("jane@example.com")).rejects.toThrow(/KIT_/);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+});
+
+function okBroadcast(id = 25108320) {
+  return { ok: true, status: 201, json: async () => ({ broadcast: { id } }) };
+}
+
+describe("createBroadcastDraft", () => {
+  it("creates a draft (public:false) and returns its id", async () => {
+    fetchMock.mockReset().mockResolvedValue(okBroadcast(42));
+
+    const id = await createBroadcastDraft({ subject: "July digest", html: "<p>hi</p>" });
+
+    expect(id).toBe(42);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://api.kit.com/v4/broadcasts");
+    expect(init.method).toBe("POST");
+    expect(init.headers["X-Kit-Api-Key"]).toBe("test-key");
+    expect(JSON.parse(init.body)).toEqual({
+      subject: "July digest",
+      content: "<p>hi</p>",
+      public: false,
+    });
+  });
+
+  it("surfaces an API error as a thrown error", async () => {
+    fetchMock.mockReset().mockResolvedValue({
+      ok: false,
+      status: 422,
+      json: async () => ({ errors: ["bad"] }),
+    });
+
+    await expect(createBroadcastDraft({ subject: "x", html: "<p>x</p>" })).rejects.toThrow();
+  });
+
+  it("throws when KIT_API_KEY is missing", async () => {
+    vi.stubEnv("KIT_API_KEY", "");
+
+    await expect(createBroadcastDraft({ subject: "x", html: "<p>x</p>" })).rejects.toThrow(
+      /KIT_API_KEY/
+    );
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
