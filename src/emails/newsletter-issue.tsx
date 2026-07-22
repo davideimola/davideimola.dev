@@ -59,9 +59,30 @@ export function NewsletterIssueEmail({ issue, webUrl }: NewsletterIssueEmailProp
             </Link>
           </Section>
 
-          <Section style={{ padding: "14px 28px 0" }}>
-            <Text style={{ fontFamily: mono, fontSize: "15px", color: c.text1, margin: 0 }}>
-              <span style={{ color: c.accent }}>❯</span> davideimola.dev
+          {/* Wordmark: "davideimola" + the red cursor bar (per docs/brand.md). Text-based
+              so it always renders (no image blocking); the cursor is always Akane Red. */}
+          <Section style={{ padding: "16px 28px 0" }}>
+            <Text
+              style={{
+                fontFamily: mono,
+                fontSize: "16px",
+                fontWeight: 700,
+                letterSpacing: "-0.03em",
+                color: c.text1,
+                margin: 0,
+              }}
+            >
+              davideimola
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "3px",
+                  height: "13px",
+                  backgroundColor: c.accent,
+                  marginLeft: "3px",
+                  verticalAlign: "middle",
+                }}
+              />
             </Text>
           </Section>
 
