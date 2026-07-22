@@ -39,6 +39,11 @@ const HARDWARE = [
         description: "3840×2160, 60Hz, HDR10, 99% sRGB.",
       },
       {
+        name: 'Dell S2722QC · 27" 4K UHD',
+        description:
+          "Second display, rotated to portrait for long docs and code review. USB-C hub, 3840×2160, 60Hz.",
+      },
+      {
         name: "Aukey Webcam",
         description: "External webcam for calls, talks, and workshops.",
       },
