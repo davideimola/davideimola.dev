@@ -3,11 +3,10 @@
 **Issue:** [#71](https://github.com/davideimola/davideimola.dev/issues/71) (parent PRD [#70](https://github.com/davideimola/davideimola.dev/issues/70)) · **ADR:** [ADR-0002](../adr/0002-newsletter-hybrid-kit-in-repo-content.md) · **Research:** [newsletter-free-tier-comparison](./newsletter-free-tier-comparison.md)
 
 > **Live-run status: RUN 2026-07-22** against a real free-tier account (plan `free`,
-> 10,000-subscriber limit). Auth, subscriber-create, form-subscribe, and broadcast-create
-> are confirmed below. **Broadcast _send_ (criterion 1) is not yet executed** — see its
-> section. **The double opt-in assumption FAILED** — the v4 API has no confirmation-email
-> flow; a fallback is required (see the verdict). Re-run `scripts/verify-kit-free-tier.mjs`
-> to reproduce.
+> 10,000-subscriber limit). Auth, subscriber-create, form-associate, broadcast-create, and
+> broadcast **send** are confirmed below. **The double opt-in assumption FAILED** — the v4
+> API has no confirmation-email flow; a fallback is required (see the verdict). Re-run
+> `scripts/verify-kit-free-tier.mjs` to reproduce.
 
 ## Why this spike
 
@@ -130,19 +129,23 @@ Note the default `subscriber_filter` is **all_subscribers** — a send with no n
 goes to the entire list. (At spike time the account had exactly **1** subscriber, so a test
 send only reaches the author.)
 
-### Send / schedule: `send_at` on `POST /v4/broadcasts` — NOT YET TESTED
+### Send / schedule: `send_at` on `POST /v4/broadcasts` — CONFIRMED
 
-Per the primary source, `POST /v4/broadcasts` with a `send_at` ISO-8601 timestamp
-**schedules the send** (no separate "send" verb). The harness `--send` creates a broadcast
-with `send_at` a few minutes out and reports whether the free plan accepts it (2xx) or
-returns a plan restriction (`402`/`403`, the MailerLite-style block the research warned of).
+`POST /v4/broadcasts` with a `send_at` ISO-8601 timestamp **schedules the send** (no separate
+"send" verb). Live result: the free plan **accepted** the scheduled send — `201`, no plan
+restriction (no `402`/`403`):
 
 ```
 POST /v4/broadcasts   { "subject": "…", "content": "<p>…</p>", "public": false, "send_at": "…Z" }
 ```
 
-> `LIVE RESULT: pending` — run with `--send` (safe: 1 subscriber = the author only), confirm
-> a 2xx / non-restricted response, then confirm the email lands. Use `--cleanup` to cancel.
+```jsonc
+{ "broadcast": { "id": 25109796, "send_at": "2026-07-22T15:57:55Z", "status": "scheduled", … } }
+```
+
+So programmatic sending is available on the free Newsletter plan — the MailerLite-style
+paywall the research warned about does **not** apply to Kit. (Delivery reaches the list per
+the `subscriber_filter`; the test send went to the sole subscriber, the author.)
 
 ## Verdicts
 
@@ -150,7 +153,7 @@ POST /v4/broadcasts   { "subject": "…", "content": "<p>…</p>", "public": fal
 |---|---|---|
 | Auth via `X-Kit-Api-Key` works on free tier | ✅ **CONFIRMED** | `GET /v4/account` → 200, `plan_type: free` |
 | Broadcast **create** works on free tier | ✅ **CONFIRMED** | `POST /v4/broadcasts` → 201, `status: draft` |
-| Broadcast **send** works on free tier | ⏳ **NOT YET TESTED** | needs a `--send` run |
+| Broadcast **send** works on free tier | ✅ **CONFIRMED** | `POST /v4/broadcasts` + `send_at` → 201, `status: scheduled`, no plan block |
 | API-created subscriber triggers **double opt-in** | ❌ **FAILED** | direct → `active`, no email; form-associate → state unchanged, no email |
 | **Fallback needed?** (route via Kit Form) | ⚠️ **YES — required** | see below |
 
@@ -186,7 +189,7 @@ Added to `.env.local.example`, **server-side only** (never `NEXT_PUBLIC_`):
 
 ## What this unblocks
 
-Broadcast create + auth are proven, so the digest→email→broadcast-draft path (#75, #77) and
-the archive/loader work (#72) can proceed against this contract. The **subscribe capability
-(#74) is gated** on the double-opt-in decision above. The broadcast **send** proof (#75's
-eventual send) should be closed with a `--send` run when convenient.
+Auth, broadcast create, and broadcast send are all proven, so the digest→email→broadcast
+path (#75, #77) and the archive/loader work (#72) can proceed against this contract. The
+**subscribe capability (#74) is gated** on the double-opt-in decision above — that is the
+one open item this spike surfaced.
