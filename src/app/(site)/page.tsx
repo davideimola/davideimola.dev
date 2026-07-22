@@ -27,9 +27,9 @@ export default function HomePage() {
       <HeroSection />
       <WhatIDoSection />
       <WritingSection />
+      <NewsletterSection />
       <TalksSection />
       <ProjectsSection />
-      <NewsletterSection />
       <ConnectSection />
     </>
   );
