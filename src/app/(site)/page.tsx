@@ -1,6 +1,7 @@
 import {
   ConnectSection,
   HeroSection,
+  NewsletterSection,
   ProjectsSection,
   TalksSection,
   WhatIDoSection,
@@ -28,6 +29,7 @@ export default function HomePage() {
       <WritingSection />
       <TalksSection />
       <ProjectsSection />
+      <NewsletterSection />
       <ConnectSection />
     </>
   );

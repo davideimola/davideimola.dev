@@ -18,4 +18,5 @@ export { RelatedPosts } from "./RelatedPosts";
 export { ScrollReveal } from "./ScrollReveal";
 export { SectionHeader } from "./SectionHeader";
 export { ShareButtons } from "./ShareButtons";
+export { SubscribeCTA } from "./SubscribeCTA";
 export { TableOfContents } from "./TableOfContents";
