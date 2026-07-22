@@ -1,27 +1,3 @@
-<!--
-  Kit account email template (paste into Kit → the email template editor).
-  This ONE template wraps BOTH the double opt-in confirmation email and the monthly
-  digest broadcast: Kit injects the body where {{ message_content }} is. Keeping it as
-  the single wrapper is what makes the confirmation and the digest read as one brand.
-
-  LIGHT by design. A dark body background does not survive email rendering (iCloud and
-  others strip/override it and then auto-invert the text), so we design light on purpose:
-  a light surface + dark ink renders predictably with no client tampering.
-
-  Refreshed to the current brand (docs/brand.md): the "davideimola" + red cursor wordmark
-  (was the old 道 + Playfair serif), warm brand grays (was Tailwind bluish grays), Akane
-  Red #C91F37 cursor.
-
-  NOTE - two things this template does NOT control (set them in Kit, not here):
-    1. The confirm button colour: it lives inside {{ message_content }} (Kit's confirmation
-       content) and uses Kit's brand/accent colour setting. Set that to #C91F37 in Kit.
-    2. The confirmation copy ("Thanks for signing up…") is Kit's confirmation-email text,
-       edited in Kit's form/confirmation settings, not here.
-
-  The digest's {{ message_content }} is the HTML we render in-repo (react-email); it will
-  be made content-only (no header/footer of its own) so it slots in cleanly under this
-  wrapper.
--->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -30,14 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Davide Imola Newsletter</title>
     <style type="text/css">
-        /* Reset */
         body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
         body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
         a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
-
-        /* Mobile */
         @media screen and (max-width: 600px) {
             .email-container { width: 100% !important; }
             .mobile-padding { padding: 24px 16px !important; }
@@ -48,14 +21,12 @@
     <center style="width: 100%; background-color: #EDE8E1;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: 0 auto;" class="email-container">
 
-            <!-- Header: davideimola wordmark + Akane Red cursor -->
             <tr>
                 <td style="padding: 40px 20px 30px; text-align: center; border-bottom: 1px solid #E1DBD3;">
                     <span style="font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace; font-size: 20px; font-weight: 700; letter-spacing: -0.03em; color: #1A1816;">davideimola</span><span style="display: inline-block; width: 3px; height: 16px; background-color: #C91F37; margin-left: 3px; vertical-align: middle;"></span>
                 </td>
             </tr>
 
-            <!-- Content (from Kit: confirmation copy, or the rendered digest) -->
             <tr>
                 <td style="padding: 30px 20px;" class="mobile-padding">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -68,7 +39,6 @@
                 </td>
             </tr>
 
-            <!-- Footer -->
             <tr>
                 <td style="padding: 30px 20px; border-top: 1px solid #E1DBD3; text-align: center;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
