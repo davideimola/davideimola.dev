@@ -52,3 +52,6 @@ storybook-static
 
 # local social posts drafts (not committed)
 .social-posts
+
+# react-email preview build
+.react-email/
