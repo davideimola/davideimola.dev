@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "../lib/content";
+import { getAllIssues } from "../lib/newsletter";
 
 const BASE_URL = "https://davideimola.dev";
 
@@ -13,6 +14,7 @@ const STATIC_ROUTES = [
   { url: `${BASE_URL}/uses`, priority: 0.6, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/brand`, priority: 0.4, changeFrequency: "yearly" as const },
   { url: `${BASE_URL}/contact`, priority: 0.5, changeFrequency: "yearly" as const },
+  { url: `${BASE_URL}/newsletter`, priority: 0.6, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/links`, priority: 0.5, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/terminal`, priority: 0.4, changeFrequency: "monthly" as const },
 ];
@@ -25,5 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
   }));
 
-  return [...STATIC_ROUTES, ...posts];
+  const issues = getAllIssues().map((issue) => ({
+    url: `${BASE_URL}/newsletter/${issue.slug}`,
+    lastModified: new Date(issue.date),
+    priority: 0.5,
+    changeFrequency: "yearly" as const,
+  }));
+
+  return [...STATIC_ROUTES, ...posts, ...issues];
 }
