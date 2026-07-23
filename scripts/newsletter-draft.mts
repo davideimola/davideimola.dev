@@ -10,7 +10,7 @@
 // Kit's "Send test email" to check it. Nothing sends automatically.
 
 import { getIssueBySlug, getLatestIssue } from "../src/lib/newsletter";
-import { draftIssueBroadcast } from "../src/lib/newsletter-email";
+import { draftIssueBroadcast } from "../src/lib/newsletter-email.mjs";
 
 const slug = process.argv[2];
 const issue = slug ? getIssueBySlug(slug) : getLatestIssue();
