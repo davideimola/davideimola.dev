@@ -10,6 +10,7 @@ import { Card } from "../../components/ui/Card";
 import { JsonLd } from "../../components/ui/JsonLd";
 import { LinkTile } from "../../components/ui/LinkTile";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
+import { SubscribeForm } from "../../components/ui/SubscribeForm";
 import { getAllPosts, getUpcomingTalks } from "../../lib/content";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 
@@ -171,6 +172,19 @@ export default function LinksPage() {
           </section>
         </ScrollReveal>
       )}
+
+      {/* ❯ subscribe — capture the owned audience: the newsletter is this page's conversion point */}
+      <ScrollReveal>
+        <section className="mb-12">
+          <CommandLine command="subscribe --newsletter" className="mb-5" />
+          <div className="border border-border rounded-sm bg-bg-card px-6 py-6">
+            <p className="font-sans text-[13px] text-text-3 leading-relaxed mb-4">
+              One email a month: new posts, upcoming talks, the occasional project.
+            </p>
+            <SubscribeForm mode="compact" />
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* ❯ upcoming talks */}
       {upcomingTalks.length > 0 && (
