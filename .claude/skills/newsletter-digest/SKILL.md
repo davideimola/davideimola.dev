@@ -10,7 +10,7 @@ Architecture (ADR-0002): the site owns the content, the archive, and the subscri
 
 You orchestrate three things that already exist and are tested:
 - `harvestWindow({ from, to, posts, talks, projects? })` in `src/lib/harvest.ts` - the selection engine.
-- `renderIssueEmail(issue)` / `draftIssueBroadcast(issue)` in `src/lib/newsletter-email.tsx` - email HTML + Kit draft. Runnable as `pnpm newsletter:draft [slug]`.
+- `renderIssueEmail(issue)` / `draftIssueBroadcast(issue)` in `src/lib/newsletter-email.mts` - compiles the issue MDX with the email component map and creates the Kit draft. Runnable as `pnpm newsletter:draft [slug]`.
 - The Kit wrapper template (`docs/newsletter/kit-email-template.html`) supplies the header, footer, and unsubscribe - so the issue body stays content-only.
 
 ## Arguments
@@ -71,15 +71,53 @@ sendDate: "YYYY-MM-DD"   # the send date (end of the reported month)
 ---
 ```
 
+The body is **MDX**: prose interleaved with inline components. The SAME components render on the on-site archive and in the email (see the component reference at the bottom), so you author once. Keep it a bit discursive - a line of prose between the component blocks is welcome, and the structure can vary month to month.
+
 Body, in order:
 
-1. **Intro (suggested, to rewrite).** Write 2-4 sentences of intro as a *starting point* and tell Davide clearly it's a draft to rewrite in his own voice. The intro is the non-negotiable minimum of voice - everything else is harvested. Keep the suggestion honest and specific, never "I'm excited to share".
-2. **`## New on the blog`** - the harvested posts, each as a Markdown link to `/blog/<slug>` (root-relative; `renderIssueEmail` absolutizes them for email) with a one-line why-read-it. Snapshot the real titles at draft time.
-3. **`## Where to catch me`** - the upcoming talks, event + date + city, so the newsletter doubles as a way to catch Davide at events. Omit the section if there are none.
-4. **(Optional) `## Also`** - a featured project/OSS highlight, only if it genuinely adds something.
-5. **A short close** - one or two lines, in voice (again, a suggestion to rewrite).
+1. **Intro (suggested, to rewrite).** Write 2-4 sentences of prose as a *starting point* and tell Davide clearly it's a draft to rewrite in his own voice. The intro is the non-negotiable minimum of voice - everything else is harvested. Keep the suggestion honest and specific, never "I'm excited to share".
+2. **`<SectionHeader title="New on the blog" />`** then one **`<PostCard />`** per harvested post. Map from the post: `title`, `url="/blog/<slug>"` (root-relative; the email renderer absolutizes it), `category` (the post category), `description` (a one-line why-read-it you write), `meta="<Mon D, YYYY> · <readingTime>"` (from `post.date` + `post.readingTime`). Snapshot the real titles at draft time.
+3. **`<SectionHeader title="Where to catch me" />`** then one **`<TalkRow />`** per upcoming talk: `event`, `date` (formatted), `location`, `type` (Conference/Meetup/...), optional `sessionTitle` (`talk.session.title`) and `url="/sharing#<slug>"`. Omit the whole section (header included) if there are no upcoming talks.
+4. **(Optional) `<SectionHeader title="Also" />`** + a featured project/OSS highlight, only if it genuinely adds something. There is no ProjectCard: write it as prose with a Markdown link.
+5. **A short close** - one or two lines of prose, in voice (again, a suggestion to rewrite). Optionally end with a **`<Cta href="/newsletter" variant="primary">Browse the archive →</Cta>`** and/or a ghost `<Cta>` inviting a reply.
 
-Rules: headings start at `##` (never `#`), content in **English**, **no em dash** (use a colon, comma, or a new sentence), no AI tells ("dive into", "it's worth noting", "delve"). Write real specifics, not filler.
+Rules:
+- Section breaks are **`<SectionHeader title="…" />`**, not Markdown `##`. Reserve `##`/`###` for sub-structure inside prose if ever needed (never `#`).
+- **JSX attribute escaping**: use double-quoted attributes. Apostrophes are fine inside them (`description="A tool I don't use"`). If a value needs a literal double quote, use `&quot;` or an expression: `description={'Why "AI review" is not a strategy'}`.
+- Content in **English**, **no em dash** (use a colon, comma, or a new sentence), no AI tells ("dive into", "it's worth noting", "delve"). Write real specifics, not filler.
+
+Example body:
+
+```mdx
+Prose intro, in voice, a bit discursive: what this month was about.
+
+<SectionHeader title="New on the blog" />
+
+<PostCard
+  title="AI will not secure your codebase"
+  url="/blog/ai-will-not-secure-your-codebase"
+  category="Technical"
+  description="Why 'we added an AI reviewer' is not a security strategy."
+  meta="Jul 18, 2026 · 7 min read"
+/>
+
+A short line of connective prose, because I want a bit of narrative here.
+
+<SectionHeader title="Where to catch me" />
+
+<TalkRow
+  event="reactjsday 2026"
+  date="Oct 23, 2026"
+  location="Verona, Italy"
+  type="Conference"
+  sessionTitle="Shipping AI you can actually trust"
+  url="/sharing#reactjsday-2026"
+/>
+
+Short close, in voice.
+
+<Cta href="/newsletter" variant="primary">Browse the archive →</Cta>
+```
 
 Propose the `subject` and `previewText` too, and iterate with Davide on the intro/subject the way write-blog-post does - this is a short collaboration on the voice, not a handoff. The harvested sections are factual and rarely need debate.
 
@@ -123,5 +161,11 @@ The newsletter is a channel, but its editorial planning is optional on content-o
 
 - **Issue file**: `src/content/newsletter/YYYY-MM.mdx` (frozen; loaded by `src/lib/newsletter.ts`).
 - **Frontmatter**: `issue` (number), `subject`, `previewText`, `sendDate` (ISO). Optional `draft: true` while working (hidden outside dev), removed before the PR.
+- **Body components** (authored inline in the `.mdx`; the same names render on the site archive and in the email, so author once):
+  - `<SectionHeader title="…" />` - a section break.
+  - `<PostCard title url description category? meta? />` - a blog post; `url` root-relative (`/blog/<slug>`).
+  - `<TalkRow event date location type? sessionTitle? url? />` - an upcoming talk; `url` root-relative (`/sharing#<slug>`).
+  - `<Cta href variant?>label</Cta>` - a button; `variant` is `"primary"` (default) or `"ghost"`.
+  Web implementations live in `src/components/newsletter/`, email ones in `src/emails/components/`; the name→component wiring is `mdx-components.tsx` in each (web) / (`src/emails/`). Links are absolutized for email automatically.
 - **Cadence**: monthly, near end of month, covering the month just closing. Assisted send only.
 - **Tone**: Davide's voice for the intro/close (direct, first person, specific, self-aware); harvested sections are factual. English, no em dash, no AI tells. Same rules as write-blog-post / social-post.

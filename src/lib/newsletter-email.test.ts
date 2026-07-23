@@ -36,6 +36,36 @@ describe("renderIssueEmail", () => {
     expect(html).toContain("https://davideimola.dev/blog/hello");
     expect(html).not.toContain('href="/blog/hello"');
   });
+
+  it("renders inline MDX components and absolutizes their url/href props", async () => {
+    const withComponents: NewsletterIssue = {
+      ...issue,
+      content: [
+        "Intro prose.",
+        "",
+        '<SectionHeader title="New on the blog" />',
+        "",
+        '<PostCard title="Hello post" url="/blog/hello" category="Technical" description="Why it matters." meta="Jul 1 · 3 min" />',
+        "",
+        '<TalkRow event="reactjsday 2026" date="Oct 23" location="Verona" type="Conference" url="/sharing#x" />',
+        "",
+        '<Cta href="/newsletter" variant="primary">Browse the archive →</Cta>',
+      ].join("\n"),
+    };
+    const html = await renderIssueEmail(withComponents);
+    // Components rendered (not left as raw MDX text).
+    expect(html).toContain("New on the blog");
+    expect(html).toContain("Hello post");
+    expect(html).toContain("reactjsday 2026");
+    expect(html).toContain("Browse the archive →");
+    // The Akane left border proves PostCard/TalkRow rendered as components.
+    expect(html).toContain("2px solid #C91F37");
+    // Component-prop links are absolutized for email.
+    expect(html).toContain("https://davideimola.dev/blog/hello");
+    expect(html).toContain("https://davideimola.dev/sharing#x");
+    expect(html).not.toContain('href="/blog/hello"');
+    expect(html).not.toContain('href="/sharing#x"');
+  });
 });
 
 describe("draftIssueBroadcast", () => {
