@@ -6,6 +6,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
+import { newsletterMdxComponents } from "../../../../components/newsletter/mdx-components";
 import { Breadcrumb } from "../../../../components/ui/Breadcrumb";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
 import { JsonLd } from "../../../../components/ui/JsonLd";
@@ -93,7 +94,10 @@ export default async function NewsletterIssuePage({ params }: Props) {
                   rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
                 },
               }}
-              components={{ pre: CodeBlock as React.ComponentType<object> }}
+              components={{
+                ...newsletterMdxComponents,
+                pre: CodeBlock as React.ComponentType<object>,
+              }}
             />
           </div>
         </article>
