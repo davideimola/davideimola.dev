@@ -54,6 +54,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Offset in-page anchor jumps (footnotes, heading links) so targets land below
+   the fixed 52px NavBar instead of behind it. scroll-margin lives on the target,
+   so it works regardless of which element is the scroll container (body has
+   overflow-x: hidden, which promotes body to the Y-axis scroller over html). */
+:is(h2, h3, h4, h5, h6)[id],
+[id^="user-content-fn"] {
+  scroll-margin-top: 4.5rem;
+}
+
 /* Visible keyboard focus on the near-black background. Lives in the base
    layer so deliberate `outline-none` utilities (form fields with their own
    border-based focus) still win. */
