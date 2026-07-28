@@ -1,7 +1,7 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a content-os Piece id, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, and records the final copy and assets on the content-os Pipeline Piece through the MCP server. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a content-os Piece id, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the content-os Pipeline Piece through the MCP server. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
