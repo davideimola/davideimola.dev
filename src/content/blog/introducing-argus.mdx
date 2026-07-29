@@ -1,5 +1,5 @@
 ---
-title: "Introducing Argus: The Security Colleague Your Team Doesn't Have"
+title: "Introducing Argus: The Code Security Colleague Your Team Doesn't Have"
 excerpt: "Most AI agents today are a language model with a shell pointed at your repo. For security, I don't think AI on its own is enough. Argus is my open-source bet on a different mix: proven scanners as structured tools, a human kept in the loop, and a model to reason across it all."
 category: "Technical"
 publishDate: "2026-07-30"
@@ -17,7 +17,7 @@ A good model has read more security than most of us ever will: the best practice
 
 Concretely, I already use AI for security review, enough that I'm building a talk around how to do it well: lean on the skills that already exist, write your own, and point them at the real tools you already have. Give a capable model the right context and it quietly does a lot of the work a tired reviewer skips under a deadline. What it doesn't do is stick around. Every session starts from zero, knows nothing about your last review, forgets what you told it yesterday.
 
-Then I started using [OpenClaw](https://github.com/openclaw/openclaw), and it reframed the problem for me. OpenClaw is an always-running agent with a SOUL, a memory, and enough context about you that talking to it feels less like prompting a chatbot and more like messaging a colleague. It remembers. It knows your setup. I used it, I had fun with it, and somewhere in there the idea landed: what if that colleague did security?
+Then I started using [OpenClaw](https://github.com/openclaw/openclaw), and it reframed the problem for me. OpenClaw is an always-running agent with a SOUL, a memory, and enough context about you that talking to it feels less like prompting a chatbot and more like messaging a colleague. It remembers. It knows your setup. I used it for useful things and for completely useless ones, and I had a lot of fun. We've mostly stopped since, if I'm honest, but it worked, and somewhere in there the idea landed: what if that colleague did security?
 
 That's [Argus](https://github.com/argusappsec/argus): an open-source application security agent, written in Go, that I've been building with a few colleagues at [RedCarbon](https://redcarbon.ai). It's the project that quietly took the place of [Worky](/blog/i-built-a-tool-i-dont-use), the tool I built and then never used, except this one has a mission I actually care about, so I'm not going anywhere.
 
@@ -40,6 +40,8 @@ The default way to build a code agent in 2026 is to hand a model a shell and let
 When an agent has a shell, two things are true at once: it can do anything, and you can't be sure what it did. In a security context that's backwards. You want the opposite. A small, known set of capabilities, each one auditable.
 
 So Argus doesn't get a shell. It gets tools. Under the hood there are real, boring, deterministic security scanners: [Semgrep](https://semgrep.dev) for static analysis, [Gitleaks](https://github.com/gitleaks/gitleaks) for secrets, [osv-scanner](https://github.com/google/osv-scanner) for vulnerable dependencies. Each one is wrapped as a structured tool the agent can call, not a command it can type. The scanner runs, returns structured findings, and the model reasons on top of that.
+
+This is also where an agent earns its place, because application security doesn't suffer from a missing tool. It suffers from too many. Nobody has the time to learn them properly, and even once you know them, remembering to run the right one at the right moment is a discipline of its own. You can wire them into a pipeline, of course, and then a slice of your week goes into managing the pipeline. An agent that already holds them, knows which one answers which question, and reaches for them without being asked is a different proposition from a folder full of CLIs you keep meaning to try.
 
 One thing I'm genuinely proud of, and it's the least flashy part: Argus doesn't reinvent any of this. I'm not rewriting Semgrep, I'm not reimplementing a dependency scanner, because why would I. The whole bet is the opposite. Take the tools that already exist and already work, pull good data out of them, and let the agent reason over that data instead of over a hunch. The set Argus ships with today is small on purpose, and the direction is to let you bring your own: the more real tools it can call, the more signal it has to reason with. How far you push that is up to you.
 
@@ -77,17 +79,19 @@ OpenClaw is a general assistant, open-ended by design. Argus is the opposite. It
 
 Enough philosophy. Here is what actually runs.
 
+One thing to set straight first, because the word "security" invites the wrong expectation. Argus doesn't watch your infrastructure, it doesn't sit in front of your traffic, and it is not a SOC. It reads code. That's the job it's built for, and the rest is somebody else's product.
+
 Argus is a daemon, `argusd`, one shared instance per organization. Every way you talk to it (a terminal UI, the MCP endpoint, GitHub webhooks, and Slack soon) is a different door into the same process, sharing one memory, one tool registry, one audit log.
 
 The most visible thing it does is review pull requests. Connect it as a GitHub App and it turns up on the thread like any other reviewer, except this one only cares about security. When it flags something you can push back right there, "Argus, is this finding real?", and it answers in context instead of making you go and dig. That back-and-forth isn't a nicety, it's the design: Argus is meant to be argued with, not obeyed.
 
 ![Argus posts a security review on a GitHub pull request, flagging hardcoded AWS credentials in config.py and a SQL injection in the /users endpoint, with two findings on the changed lines](/images/blog/introducing-argus/pr-review.webp)
 
-Because it's also an MCP server, the AI tools you already use can consult it as a colleague rather than a black box. Ask it whether a pattern is a problem given your company, and it answers for your world instead of for security in the abstract, because it has the SOUL and the memory to do that. And it runs skills, which is how security methodology gets baked in. It ships with a handful: `pr-quick-check` for a fast pass over a diff, `authz-audit` for hunting authorization flaws, `secret-rotation-plan` for finding committed secrets and deciding what to rotate first, and `threat-modeling` for a STRIDE pass. You write your own the same way the built-ins are written, as a Markdown `SKILL.md`.
+Because it's also an MCP server, the AI tools you already use can consult it as a colleague rather than a black box. This is the part I reach for most: I point at something I just wrote and ask whether it's safe. And I want to be fair about the alternative, because the tools you already have are good at this. Claude and friends ship security skills, people write their own, and they work. What none of them has is your company: the other twelve repos, how your services talk to each other, which of your systems actually holds the data worth stealing. Ask Argus whether a pattern is a problem and it answers for your world instead of for security in the abstract, because the SOUL and the memory are right there. And it runs skills, which is how security methodology gets baked in. It ships with a handful: `pr-quick-check` for a fast pass over a diff, `authz-audit` for hunting authorization flaws, `secret-rotation-plan` for finding committed secrets and deciding what to rotate first, and `threat-modeling` for a STRIDE pass. You write your own the same way the built-ins are written, as a Markdown `SKILL.md`.
 
 Getting started is `./argus init` to pick a provider and write your SOUL, `./argus doctor` to check the scanners are wired up, `./argus codehost setup` to connect GitHub, and plain `./argus` to just chat with it. There's a container image on `ghcr.io` with the scanners pre-bundled if you'd rather not install Semgrep and friends by hand.
 
-One honest limitation: today Argus talks to a single model provider. The provider layer is abstracted, and the plan is to support local models through Ollama and the like, which matters a lot for the teams I most want this to reach. The ones who can't send their code to an API and don't have the budget to. That's on the list, not in the box yet.
+A word on which model runs all this, because it's a design choice and not an afterthought. Argus is built to run on the AI you already have and already trust, rather than the one a vendor picks for you. The provider layer sits behind an interface, and `argus init` is where you choose. Today that choice is still narrow, with one provider implemented, and I won't dress that up as a feature. Support for any OpenAI-compatible endpoint is what I'm building right now, so depending on when you read this it may already be in. That's also the change that opens the door to local models, since most local runners speak the same API, and it matters for the teams I most want to reach: the ones who can't send their code to somebody else's API and don't have the budget to.
 
 ## Where it's going
 
