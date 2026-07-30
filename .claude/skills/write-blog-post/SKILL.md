@@ -125,6 +125,7 @@ Davide's authentic writing style (from his manually written posts) sounds like h
 - Em-dash (—) used as a connective
 - Subjectless passive sentences: "Security improves when..." / "It is important to understand..."
 - Bullet lists that just repeat what was said in the paragraph above
+- Schematic, list-heavy structure in general: signpost triads ("it has to be X, Y, and Z"), definitional bullet lists, feature checklists. Prose is the default; reserve bullets for genuine short enumerations (a few features, a handful of commands), the way his manual posts do
 - The words: "delve", "leverage", "seamlessly", "game-changer", "it's worth noting"
 
 ### What the style actually looks like:
@@ -132,6 +133,7 @@ Davide's authentic writing style (from his manually written posts) sounds like h
 - Opinions stated directly: "I don't like ORMs in Go" not "Some developers prefer to avoid ORMs"
 - Real specificity: names, tools, events, mistakes. Not "a team I worked with" but "at RedCarbon, when we were onboarding..."
 - Humor that doesn't try too hard: "No DB were harmed in the making of this article, but a couple were truncated 🤫"
+- Connected prose over lists: ideas flow one sentence into the next instead of being chopped into bullets. When you catch yourself writing a triad or a definitional list, dissolve it into a paragraph. In Davide's words: "più umano, con sentence collegate tra loro"
 - If you read a paragraph back and it could have been written by any AI about any topic, rewrite it
 
 ---
@@ -145,10 +147,12 @@ After writing the post, suggest images for the hero and relevant inline spots.
 - Personal experience or event (e.g., team photo, conference, Japan trip) → ask the user if they have a photo. Only ask when it genuinely makes sense — don't ask about every image.
 - Code or tool screenshot → tell the user to take one and describe exactly what to capture.
 
+**Hero image format — always state it in the prompt.** The hero is rendered wide, at a **2:1 aspect ratio** (`aspect-2/1`), and optimized down to max 1600px wide, so the target is roughly **1600×800**. Any AI-generation prompt you hand over for the *hero* must say it's a **wide blog hero image** and carry that format explicitly — either as an aspect ratio (`--ar 2:1` for Midjourney, "2:1 wide banner / landscape hero" for DALL-E/Flux) or as dimensions (`1600×800`). If you can't express the ratio in the prompt itself, spell the dimensions out for Davide so he can set them by hand. A square or portrait generation gets cropped badly by the 2:1 container, so this is not optional. Inline images have no fixed ratio — this note is hero-only.
+
 **In the MDX**, leave placeholder comments where images should go:
 
 ```mdx
-{/* IMAGE: hero — AI prompt: "abstract visualization of a git commit graph, dark background, nodes and edges in deep red and white, no text, technical aesthetic" */}
+{/* IMAGE: hero (wide blog hero, 2:1 / 1600×800) — AI prompt: "wide blog hero image, 2:1 aspect ratio, abstract visualization of a git commit graph, dark background, nodes and edges in deep red and white, no text, technical aesthetic --ar 2:1" */}
 ![TODO: add alt text here](/images/blog/post-slug/hero.webp)
 ```
 

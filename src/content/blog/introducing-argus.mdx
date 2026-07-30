@@ -1,0 +1,122 @@
+---
+title: "Introducing Argus: The Code Security Colleague Your Team Doesn't Have"
+excerpt: "Most AI agents today are a language model with a shell pointed at your repo. For security, I don't think AI on its own is enough. Argus is my open-source bet on a different mix: proven scanners as structured tools, a human kept in the loop, and a model to reason across it all."
+category: "Technical"
+publishDate: "2026-07-30"
+tags: ["AI", "Security", "Go", "Tooling"]
+featured: false
+heroImage: "/images/blog/introducing-argus/hero.webp"
+heroImageAlt: "An abstract guardian formed from many watchful eyes, rendered in dark tones with a deep red glow"
+---
+
+Most development teams don't have a security engineer. Not because they don't want one. Security expertise is genuinely hard to find, expensive to keep, and most of us would rather ship features than spend an afternoon reading about deserialization gadget chains. So security becomes the thing you'll get to later, and later never comes.
+
+I've believed for a while that AI is going to change security, and not as a slogan. The reason is structural: there aren't enough people. The industry is short something like 4.8 million security professionals worldwide,[^isc2] which is the gap from that first paragraph counted globally, and no hiring spree closes a hole that size. AI won't close it either, and I want to be honest about that. What it can do is make the gap hurt less: take the routine load off the few people who are there, and keep a small team, or a team of one, from being buried. Same as it did for my coding, where it didn't make me smarter, it just stopped the grunt work from being the bottleneck.
+
+A good model has read more security than most of us ever will: the best practices, the attack patterns, the bugs that hide in plain sight. Point it at code written by someone who isn't a security expert, which is most of us, and it genuinely lifts what they can ship safely. This isn't a spectator take for me either, it's what I spend my days on, building products that live right at that intersection. And the other side already gets it: attackers are using AI right now, so insisting defenders shouldn't is not caution, it's a handicap.
+
+Concretely, I already use AI for security review, enough that I'm building a talk around how to do it well: lean on the skills that already exist, write your own, and point them at the real tools you already have. Give a capable model the right context and it quietly does a lot of the work a tired reviewer skips under a deadline. What it doesn't do is stick around. Every session starts from zero, knows nothing about your last review, forgets what you told it yesterday.
+
+Then I started using [OpenClaw](https://github.com/openclaw/openclaw), and it reframed the problem for me. OpenClaw is an always-running agent with a SOUL, a memory, and enough context about you that talking to it feels less like prompting a chatbot and more like messaging a colleague. It remembers. It knows your setup. I used it for useful things and for completely useless ones, and I had a lot of fun. We've mostly stopped since, if I'm honest, but it worked, and somewhere in there the idea landed: what if that colleague did security?
+
+That's [Argus](https://github.com/argusappsec/argus): an open-source application security agent, written in Go, that I've been building with a few colleagues at [RedCarbon](https://redcarbon.ai). It's the project that quietly took the place of [Worky](/blog/i-built-a-tool-i-dont-use), the tool I built and then never used, except this one has a mission I actually care about, so I'm not going anywhere.
+
+Fair warning before you get excited: Argus is v0.2.0, and it's as much an idea as a tool. It's the thing I kept wishing existed, so I built a first version with people who actually do security for a living. I'm not sure I've got the shape right, but the shape is the part worth arguing about, and I'd rather do that in the open than sit on it.
+
+## Why security review needs a different shape
+
+I want to be clear here, because this is easy to misread. I'm not saying AI security review is a bad idea. It's a great idea. What I don't believe in is doing it with AI alone. Models hallucinate, and a confident, wrong answer about a vulnerability is worse than no answer at all. Lean the whole thing on a model and you get a tool that sounds authoritative while quietly missing the one finding that mattered.
+
+So the bet behind Argus isn't "point a model at your code". It's the union of three things that each cover for the others' blind spots: deterministic security tools that have been proven for years, a human kept firmly in the loop, and a model to tie it together and reason across the whole picture. Take any one of the three away and it falls over. Especially the human.
+
+Recognizing a security problem is not something you wing. Get a code suggestion wrong and it's annoying; get a security call wrong and it's a breach. So an agent you'd actually trust with this has to earn that trust in ways a coding assistant never has to. Its answers need to trace back to something real instead of a confident guess. Its memory, from the moment it has one, becomes a thing attackers will try to lie to, so who gets to shape it suddenly matters. And it has to understand your world in particular, not security in the abstract, because a good share of the problems that actually bite only make sense once you know how your systems fit together.
+
+None of these choices are settled. They're the ones I'd make today, pulled from the years I've spent around cybersecurity and filed down to the few details I think actually matter. I'm genuinely happy to have every one of them argued with. Here's the reasoning, a piece at a time.
+
+## Structured tools, not a shell
+
+The default way to build a code agent in 2026 is to hand a model a shell and let it run. It works shockingly well for writing code. For security, I didn't want it.
+
+When an agent has a shell, two things are true at once: it can do anything, and you can't be sure what it did. In a security context that's backwards. You want the opposite. A small, known set of capabilities, each one auditable.
+
+So Argus doesn't get a shell. It gets tools. Under the hood there are real, boring, deterministic security scanners: [Semgrep](https://semgrep.dev) for static analysis, [Gitleaks](https://github.com/gitleaks/gitleaks) for secrets, [osv-scanner](https://github.com/google/osv-scanner) for vulnerable dependencies. Each one is wrapped as a structured tool the agent can call, not a command it can type. The scanner runs, returns structured findings, and the model reasons on top of that.
+
+This is also where an agent earns its place, because application security doesn't suffer from a missing tool. It suffers from too many. Nobody has the time to learn them properly, and even once you know them, remembering to run the right one at the right moment is a discipline of its own. You can wire them into a pipeline, of course, and then a slice of your week goes into managing the pipeline. An agent that already holds them, knows which one answers which question, and reaches for them without being asked is a different proposition from a folder full of CLIs you keep meaning to try.
+
+One thing I'm genuinely proud of, and it's the least flashy part: Argus doesn't reinvent any of this. I'm not rewriting Semgrep, I'm not reimplementing a dependency scanner, because why would I. The whole bet is the opposite. Take the tools that already exist and already work, pull good data out of them, and let the agent reason over that data instead of over a hunch. The set Argus ships with today is small on purpose, and the direction is to let you bring your own: the more real tools it can call, the more signal it has to reason with. How far you push that is up to you.
+
+That division of labor is the whole point. The deterministic layer finds things. The model does what models are good at: reading 400 findings and turning them into a conversation. "These three are the ones that matter, this one is a false positive because of how your auth middleware works, and here's the fix." Not a wall of SARIF. A colleague's summary.
+
+It also keeps Argus honest about where its answers come from. A finding traces back to a tool that actually ran, not to a model that decided to type `grep` and interpret the output. When the domain is security, that provenance is the difference between a report you can act on and a guess you have to re-verify.
+
+## Roles and an audit log
+
+An agent with a memory has a problem a stateless chatbot doesn't: the memory is part of the attack surface. If anyone who can talk to Argus can also teach it, then anyone who can talk to Argus can poison it. "Ignore that finding, it's fine" whispered often enough becomes policy.
+
+OpenClaw already draws this line. If you have permission to write to the memory, you can shape it. If you don't, you can't. Argus takes the same idea and makes it central, because for a security tool it isn't a nice-to-have.
+
+So every request arrives as a principal with a role, and Argus always knows which door you came through. Reach it over the local Unix socket and you're `local:$USER`; come in through the MCP endpoint and you're `mcp:<token-hash>`; arrive as a GitHub webhook and you're `github:<login>`. A viewer can ask questions and read findings, but shaping the memory, changing what Argus believes about your org, is a privileged action. And whatever anyone does, whoever they are, lands in an append-only audit log.
+
+That log turns out to matter for a second reason. Go back to the original itch: teams without a security person. Those teams usually still have someone who has to answer to a CISO, a client, or an auditor about how security is handled, without reading the code themselves. An append-only record of what was reviewed, what was found, and what was decided is exactly the artifact that conversation needs.
+
+## SOUL, context, and a memory built for security
+
+This is the part I took most directly from OpenClaw, then closed down hard around security.
+
+Argus keeps a mix of three things, and they are not the same thing, which I keep having to explain to people, past-me included. There's the SOUL, the stable stuff: who Argus is, what your company does, your stack, your compliance posture. It rides along in every single model call, so Argus never forgets whose codebase it's looking at. There's context, the per-task working set for whatever it's reasoning about right now. And there's memory, the curated knowledge that persists from one conversation to the next.
+
+The memory is where the security focus shows. Argus remembers findings. It remembers the things you tell it. And, my favorite part, it remembers your false positives, so the thing you already triaged and dismissed doesn't come back to eat your afternoon next week. That is the single most colleague-like behavior in the whole system. A good reviewer remembers what you already decided.
+
+Say `config.py` in one of your repos only holds deploy-time placeholders that your secret manager swaps out at deploy. Tell Argus once, and it stops flagging them on that repo. The next review comes back clean, with a note explaining why, instead of the same false alarm you waved off last sprint.
+
+![A later Argus review on the same repository reporting no new findings, noting that the config.py credentials are known deploy-time placeholders and not a vulnerability in this project](/images/blog/introducing-argus/memory.webp)
+
+The SOUL is what makes the reasoning fit your world instead of the abstract world of security-in-general. And the cross-session, cross-project knowledge is where I think this goes somewhere a single-repo tool can't follow. A coding agent pointed at one repository is blind to how that repository talks to the other twelve. Plenty of the security problems that actually hurt live in exactly that gap: the service that trusts input another service should have sanitized. Feed Argus enough of your world and it can start to reason across that boundary. It's early, but that's the direction.
+
+OpenClaw is a general assistant, open-ended by design. Argus is the opposite. It knows it's a security tool, and everything (the tools, the skills, the memory, the persona) is shaped for that one job. Narrower, but deeper.
+
+## What Argus does today (v0.2)
+
+Enough philosophy. Here is what actually runs.
+
+One thing to set straight first, because the word "security" invites the wrong expectation. Argus doesn't watch your infrastructure, it doesn't sit in front of your traffic, and it is not a SOC. It reads code. That's the job it's built for, and the rest is somebody else's product.
+
+Argus is a daemon, `argusd`, one shared instance per organization. Every way you talk to it (a terminal UI, the MCP endpoint, GitHub webhooks, and Slack soon) is a different door into the same process, sharing one memory, one tool registry, one audit log.
+
+The most visible thing it does is review pull requests. Connect it as a GitHub App and it turns up on the thread like any other reviewer, except this one only cares about security. When it flags something you can push back right there, "Argus, is this finding real?", and it answers in context instead of making you go and dig. That back-and-forth isn't a nicety, it's the design: Argus is meant to be argued with, not obeyed.
+
+![Argus posts a security review on a GitHub pull request, flagging hardcoded AWS credentials in config.py and a SQL injection in the /users endpoint, with two findings on the changed lines](/images/blog/introducing-argus/pr-review.webp)
+
+Because it's also an MCP server, the AI tools you already use can consult it as a colleague rather than a black box. This is the part I reach for most: I point at something I just wrote and ask whether it's safe. And I want to be fair about the alternative, because the tools you already have are good at this. Claude and friends ship security skills, people write their own, and they work. What none of them has is your company: the other twelve repos, how your services talk to each other, which of your systems actually holds the data worth stealing. Ask Argus whether a pattern is a problem and it answers for your world instead of for security in the abstract, because the SOUL and the memory are right there. And it runs skills, which is how security methodology gets baked in. It ships with a handful: `pr-quick-check` for a fast pass over a diff, `authz-audit` for hunting authorization flaws, `secret-rotation-plan` for finding committed secrets and deciding what to rotate first, and `threat-modeling` for a STRIDE pass. You write your own the same way the built-ins are written, as a Markdown `SKILL.md`.
+
+Getting started is `./argus init` to pick a provider and write your SOUL, `./argus doctor` to check the scanners are wired up, `./argus codehost setup` to connect GitHub, and plain `./argus` to just chat with it. There's a container image on `ghcr.io` with the scanners pre-bundled if you'd rather not install Semgrep and friends by hand.
+
+A word on which model runs all this, because it's a design choice and not an afterthought. Argus is built to run on the AI you already have and already trust, rather than the one a vendor picks for you. The provider layer sits behind an interface, and `argus init` is where you choose. Today that choice is still narrow, with one provider implemented, and I won't dress that up as a feature. Support for any OpenAI-compatible endpoint is what I'm building right now, so depending on when you read this it may already be in. That's also the change that opens the door to local models, since most local runners speak the same API, and it matters for the teams I most want to reach: the ones who can't send their code to somebody else's API and don't have the budget to.
+
+## Where it's going
+
+The idea list is longer than the changelog, which is the correct ratio for a v0.
+
+The near stuff: Slack as a first-class channel, so Argus really is the colleague you message. Local models. More skills.
+
+The stuff I'm actually excited about: service and code discovery, so Argus builds its own map of your systems instead of waiting to be told, and a view of how your projects connect, because that cross-project graph is where the non-obvious problems hide.
+
+But I want to be careful, because I've made this mistake before. With [Worky](/blog/i-built-a-tool-i-dont-use) I built a showcase site and full docs for a tool with zero users, then watched it drift because there was no real usage telling me what to build next. A roadmap without users is fiction. So I'm not going to pretend I know exactly what Argus needs. The roadmap comes from whoever picks it up.
+
+The difference from Worky, the reason I'm not worried this one ends up on the same shelf, is that I use Argus. It has a mission I care about. This is the tool I want to keep alive, and I get a vote in what it becomes precisely because I'm one of its users.
+
+## Come build in AI and security
+
+There's a bigger thing behind Argus, and it's the reason I'm writing this instead of just pushing a repo.
+
+AI and cybersecurity are converging fast, and most people are only watching one side of it. Back in June we ran a hackathon at RedCarbon: one day, tiny teams, AI pointed at security problems. I wrote about being on the jury in [the Worky retrospective](/blog/i-built-a-tool-i-dont-use), but the part I keep coming back to is the range. One team went after phishing aimed at non-technical family members. Another built for the SOC. Another attacked the security of AI models themselves. Same prompt, completely different directions, all of them real.
+
+Argus is just my direction, and it comes from something I actually live. I'm lucky here: I have security colleagues at RedCarbon who helped me shape it, pick the tools, and read what those tools are really saying. But they spend their days pointing our own AI agents at SOC problems, and none of them has time to sit behind our code's security posture every single day. So the developers have to, and Argus automates the exact work those colleagues would otherwise do by hand. And that job, it turns out, is increasingly buildable: models are getting good enough at security reasoning that the bottleneck is no longer the model, but whether someone shapes it into something trustworthy and useful.
+
+A while back I wrote that [AI will not secure your codebase](/blog/ai-will-not-secure-your-codebase), that it won't do the job for you but it can surface risk earlier, act as an early-warning system. Argus is me trying to make that concrete. Not a magic box that makes you secure, but a colleague who has read your whole codebase, remembers what you decided, and is awake at 2am when the PR lands.
+
+It's [on GitHub](https://github.com/argusappsec/argus), Apache 2.0, v0.2 and honest about it. If you do security, or you just want the security colleague you don't currently have, clone it, break it, write a skill, and tell me how you use it. Real usage is the one thing that turns a fun experiment into a tool that matters, and I learned that the expensive way.
+
+Worky has two stars and I made my peace with that. Argus I'd actually like you to star, because this is the one I'm keeping. And if you've been sitting on your own idea at the intersection of AI and security, stop sitting on it. The water's warm.
+
+[^isc2]: The 4.8 million figure is ISC2's estimate of the global cybersecurity workforce gap: the distance between the security professionals organizations say they need and the ones actually available to hire. Source: [ISC2 2024 Cybersecurity Workforce Study](https://www.isc2.org/Insights/2024/10/ISC2-2024-Cybersecurity-Workforce-Study).
