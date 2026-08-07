@@ -414,7 +414,7 @@ export default function AboutPage() {
                 Università degli Studi di Verona
               </span>
               <span className="font-sans text-[13px] text-text-2">
-                B.Sc. Computer Science · 94/110, 2014–2017
+                B.Sc. Computer Science · 94/110, 2014–2018
               </span>
             </div>
             <div className="flex flex-col gap-1">
