@@ -123,6 +123,7 @@ Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Speaking: `❯ ls ./talks`
 - Now: `❯ cat ./now.md`
 - Uses: `❯ cat ./uses.md`
+- CV: `❯ cat ./cv.md` — dense Rendering of the CV Record (`src/content/cv.json`, read through `src/lib/cv.ts`): typed engagement history in a wide rail, contact/skills/education/open source in an aside sticky from `lg`. Indexable and in `sitemap.ts`, deliberately absent from NavBar and Footer
 - Contact: `❯ ping davideimola.dev`
 - Newsletter: `❯ ls ./newsletter` (archive index + subscribe form); single issue `/newsletter/[slug]` uses `❯ cat` in a Breadcrumb; post-confirmation landing `/newsletter/confirmed` uses `❯ cat ./welcome.md`
 - Links: multi-command terminal session (`❯ whoami`, `❯ ls -t ./blog | head -n 1`, `❯ ls ./talks --upcoming`, `❯ cal --book`, `❯ ls ./schrodinger-hat`) — standalone link-in-bio page living outside the `(site)` route group, so it renders without NavBar/Footer even when reached via rewrite; `links.davideimola.dev` serves this page directly via a host-based rewrite in `next.config.ts` (deep paths on the subdomain redirect to the main site); revalidates daily (ISR) so dynamic blocks stay fresh
@@ -190,6 +191,8 @@ Web analytics use **Umami Cloud** (free Hobby tier), not Vercel Web Analytics �
 - Blog posts: `src/content/blog/` (MDX files)
 - Talks: `src/content/talks/` (MDX or JSON)
 - Projects: `src/content/projects/` (MDX or JSON)
+- CV Record: `src/content/cv.json` — the single source of truth for the professional history. Every Rendering (`/cv` today, the PDF later) derives from it through `src/lib/cv.ts` and holds no facts of its own. Public contact only: no phone number, no home address, no fiscal code, ever
+- JSON content files are read through `readContentJson` in `src/lib/content-json.ts`
 
 ## Blog post categories
 

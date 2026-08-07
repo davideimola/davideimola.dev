@@ -51,6 +51,11 @@ export interface CvIdentity {
   summary: string;
 }
 
+export interface ContactLink {
+  label: string;
+  href: string;
+}
+
 export interface EducationEntry {
   slug: string;
   school: string;
@@ -80,6 +85,20 @@ export function getCvRecord(): CvRecord {
 
 export function getIdentity(): CvIdentity {
   return getCvRecord().identity;
+}
+
+// The identity block stores handles, not URLs. Turning them into links is a
+// derivation, so it belongs here rather than in each Rendering: the same list
+// serves the page today and the PDF later. Mirrors lib/social.ts, which owns
+// the outbound profile links for the rest of the site.
+export function getContactLinks(): ContactLink[] {
+  const { email, site, github, linkedin } = getIdentity();
+  return [
+    { label: email, href: `mailto:${email}` },
+    { label: site, href: `https://${site}` },
+    { label: `github/${github}`, href: `https://github.com/${github}` },
+    { label: `in/${linkedin}`, href: `https://www.linkedin.com/in/${linkedin}/` },
+  ];
 }
 
 export function getEducation(): EducationEntry[] {

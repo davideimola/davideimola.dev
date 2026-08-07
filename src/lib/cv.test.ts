@@ -7,6 +7,7 @@ import {
   type CvRole,
   ENGAGEMENT_TYPES,
   type Engagement,
+  getContactLinks,
   getEducation,
   getEngagements,
   getEngagementsByType,
@@ -209,6 +210,27 @@ describe("identity, education, skills and open source", () => {
     expect(getEducation().map((e) => e.school)).toEqual(["Some University"]);
     expect(getSkills()).toEqual([{ group: "Languages", items: ["Go"] }]);
     expect(getOpenSource()).toEqual(["Kubernetes"]);
+  });
+});
+
+// ── getContactLinks ────────────────────────────────────────────────────────
+
+describe("getContactLinks", () => {
+  it("turns the identity handles into reachable links", () => {
+    setupRecord();
+
+    expect(getContactLinks().map((link) => link.href)).toEqual([
+      "mailto:test@example.com",
+      "https://example.com",
+      "https://github.com/test",
+      "https://www.linkedin.com/in/test/",
+    ]);
+  });
+
+  it("emits only mail and web links, never a tel: link", () => {
+    setupRecord();
+
+    expect(getContactLinks().every((link) => /^(mailto|https):/.test(link.href))).toBe(true);
   });
 });
 

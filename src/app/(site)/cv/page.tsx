@@ -3,7 +3,9 @@ import type { ReactNode } from "react";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { PageHero } from "../../../components/ui/PageHero";
 import {
+  ENGAGEMENT_TYPES,
   type EngagementType,
+  getContactLinks,
   getEducation,
   getEngagementsByType,
   getIdentity,
@@ -37,9 +39,12 @@ const TYPE_LABEL: Record<EngagementType, string> = {
   volunteering: "Community & volunteering",
 };
 
+// The CV is a document, so its sections use the compact section-title scale
+// from docs/design-system.md rather than the `//`-prefixed SectionHeader the
+// narrative pages use.
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-mono text-[11px] tracking-[0.18em] uppercase text-text-1 pb-3 mb-5 border-b border-border">
+    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-text-1 pb-3 mb-5 border-b border-border">
       {children}
     </h2>
   );
@@ -48,7 +53,9 @@ function SectionTitle({ children }: { children: ReactNode }) {
 function AsideBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0">
-      <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-accent">{title}</p>
+      <p className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase text-accent">
+        {title}
+      </p>
       {children}
     </div>
   );
@@ -102,18 +109,15 @@ function EngagementSection({ type }: { type: EngagementType }) {
   );
 }
 
+// Deliberately no ScrollReveal on the body: this is a dense document meant to
+// be scanned in one pass (and printed), so sections that start at opacity 0
+// would work against both.
 export default function CvPage() {
   const identity = getIdentity();
+  const contact = getContactLinks();
   const skills = getSkills();
   const education = getEducation();
   const openSource = getOpenSource();
-
-  const contact = [
-    { label: identity.email, href: `mailto:${identity.email}` },
-    { label: identity.site, href: `https://${identity.site}` },
-    { label: `github/${identity.github}`, href: `https://github.com/${identity.github}` },
-    { label: `in/${identity.linkedin}`, href: `https://www.linkedin.com/in/${identity.linkedin}/` },
-  ];
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
@@ -131,24 +135,28 @@ export default function CvPage() {
             {identity.summary}
           </p>
 
-          <EngagementSection type="employment" />
-          <EngagementSection type="freelance" />
-          <EngagementSection type="volunteering" />
+          {ENGAGEMENT_TYPES.map((type) => (
+            <EngagementSection key={type} type={type} />
+          ))}
         </div>
 
         {/* Aside: the facts, held apart from the history */}
         <aside className="min-w-0 lg:sticky lg:top-20 lg:self-start border border-border rounded-sm p-5 bg-bg-card">
           <AsideBlock title="Contact">
             <div className="flex flex-col gap-1 font-mono text-[12px] text-text-2 break-words">
-              {contact.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="hover:text-accent transition-colors duration-150"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {contact.map((item) => {
+                const external = item.href.startsWith("http");
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="hover:text-accent transition-colors duration-150"
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               <span className="text-text-3">{identity.location}</span>
             </div>
           </AsideBlock>
