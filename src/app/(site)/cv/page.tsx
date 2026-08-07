@@ -223,7 +223,20 @@ export default function CvPage() {
     // In print this is the grid, not just its wrapper: the hero has to be a cell
     // of it so the aside can start at the top of the first sheet. See the comment
     // on the inner wrapper for why that matters.
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_190px] print:gap-x-7 print:items-start">
+    //
+    // `zoom` is the one knob for print density, and it is deliberately one knob:
+    // twenty hand-tuned `print:text-[Npx]` utilities would drift apart the first
+    // time a section is edited, while this keeps paper proportionally identical to
+    // the screen. It affects layout rather than rasterising, so the PDF still
+    // carries real selectable text, at 0.8 of the screen sizes (13px body reads at
+    // about 10.4px). Measured: 1.0 needs three sheets, 0.84 still does, 0.82 fits
+    // two but with only 120pt to spare, so 0.8 is the first value with room for a
+    // new role without spilling onto a third sheet.
+    //
+    // The aside track is stated pre-zoom, hence 238px rather than 190px: zoom
+    // enlarges the layout viewport, so a track has to be divided by the factor to
+    // land at the intended physical width on paper (238 x 0.8 = 190).
+    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_238px] print:gap-x-7 print:items-start print:[zoom:0.8]">
       <PageHero
         command="cat ./cv.md"
         title={identity.name}
