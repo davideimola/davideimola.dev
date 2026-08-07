@@ -28,10 +28,10 @@ describe("normaliseExtractedText", () => {
 // ── findMissingPhrases ─────────────────────────────────────────────────────
 
 describe("findMissingPhrases", () => {
-  const text = "Davide Imola Tech Lead · Speaker RedCarbon SA Milkman Technologies S.p.A.";
+  const text = "Davide Imola Tech Lead · Speaker RedCarbon S.r.l. Milkman Technologies S.p.A.";
 
   it("returns nothing when every phrase is present", () => {
-    expect(findMissingPhrases(text, ["Davide Imola", "RedCarbon SA"])).toEqual([]);
+    expect(findMissingPhrases(text, ["Davide Imola", "RedCarbon S.r.l."])).toEqual([]);
   });
 
   it("returns the phrases the text does not contain", () => {
@@ -128,17 +128,17 @@ describe("requiredPhrases", () => {
   const identity = { name: "Davide Imola", headline: "Tech Lead · Speaker" };
 
   it("asserts the name, the current headline and every employment organisation", () => {
-    expect(requiredPhrases(identity, [{ org: "RedCarbon SA" }, { org: "ASEM S.r.l." }])).toEqual([
-      "Davide Imola",
-      "Tech Lead · Speaker",
-      "RedCarbon SA",
-      "ASEM S.r.l.",
-    ]);
+    expect(
+      requiredPhrases(identity, [{ org: "RedCarbon S.r.l." }, { org: "ASEM S.r.l." }])
+    ).toEqual(["Davide Imola", "Tech Lead · Speaker", "RedCarbon S.r.l.", "ASEM S.r.l."]);
   });
 
   it("grows on its own when a new job joins the Record, so one cannot slip past", () => {
-    const before = requiredPhrases(identity, [{ org: "RedCarbon SA" }]);
-    const after = requiredPhrases(identity, [{ org: "Somewhere New" }, { org: "RedCarbon SA" }]);
+    const before = requiredPhrases(identity, [{ org: "RedCarbon S.r.l." }]);
+    const after = requiredPhrases(identity, [
+      { org: "Somewhere New" },
+      { org: "RedCarbon S.r.l." },
+    ]);
     expect(after).toHaveLength(before.length + 1);
     expect(after).toContain("Somewhere New");
   });

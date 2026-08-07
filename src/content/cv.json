@@ -13,7 +13,7 @@
     {
       "slug": "redcarbon",
       "type": "employment",
-      "org": "RedCarbon SA",
+      "org": "RedCarbon S.r.l.",
       "location": "Remote",
       "period": "Sep 2022 – Present",
       "current": true,
@@ -168,13 +168,6 @@
       "award": "B.Sc. Computer Science",
       "detail": "94/110 · Dissertation: coaching application in Ionic with a NoSQL database",
       "period": "Oct 2014 – Mar 2018"
-    },
-    {
-      "slug": "iti-marconi",
-      "school": "ITI G. Marconi",
-      "award": "Technical high school diploma",
-      "detail": "Computer science",
-      "period": "2009 – 2014"
     }
   ],
   "skills": [
