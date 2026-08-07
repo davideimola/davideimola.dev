@@ -1,0 +1,200 @@
+{
+  "identity": {
+    "name": "Davide Imola",
+    "headline": "Tech Lead · Speaker · Open Source Builder",
+    "location": "Verona, Italy · Remote",
+    "email": "hello@davideimola.dev",
+    "site": "davideimola.dev",
+    "github": "davideimola",
+    "linkedin": "davideimola",
+    "summary": "Tech Lead at RedCarbon, where I own the technical direction across the platform and build the AI agents that run on it. Ten years in DevOps and platform engineering before that: Go, Kubernetes, GitOps, DDD. I work at the intersection of AI that does real security work and security for the code AI writes. Co-founder of Schrodinger Hat and co-organizer of Open Source Day, Italy's largest free-access open source conference."
+  },
+  "engagements": [
+    {
+      "slug": "redcarbon",
+      "type": "employment",
+      "org": "RedCarbon SA",
+      "location": "Remote",
+      "period": "Sep 2022 – Present",
+      "current": true,
+      "roles": [
+        {
+          "role": "Tech Lead",
+          "period": "Jan 2026 – Present",
+          "current": true,
+          "summary": "Technical direction for platform engineering, from frontend to infrastructure, plus the AI agents built on top.",
+          "bullets": [
+            "Own the technical decisions across the whole platform, coordinating with the AI and security teams",
+            "Build AI agents for threat detection and security review on a Go microservices platform",
+            "Still writing code daily: the role is technical direction, not stepping back from engineering"
+          ]
+        },
+        {
+          "role": "Software Engineer",
+          "period": "Sep 2022 – Dec 2025",
+          "summary": "Backend engineering on a multi-tenant AI cybersecurity platform. Grew into the tech lead role from here.",
+          "bullets": [
+            "Designed and maintained Go microservices and the GCP/Kubernetes infrastructure behind them",
+            "gRPC service communication, Next.js product frontend"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "milkman",
+      "type": "employment",
+      "org": "Milkman Technologies S.p.A.",
+      "location": "Remote",
+      "period": "Aug 2020 – Sep 2022",
+      "roles": [
+        {
+          "role": "DevOps Engineer",
+          "period": "Aug 2020 – Sep 2022",
+          "summary": "Last-mile delivery platform. Reliability and observability on AWS.",
+          "bullets": [
+            "Built and scaled high-availability, multi-tenant AWS infrastructure",
+            "Kafka, PostgreSQL, Datadog; improved developer experience with CI/CD and ChatOps"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "asem",
+      "type": "employment",
+      "org": "ASEM S.r.l.",
+      "location": "Verona, Italy",
+      "period": "Dec 2017 – Aug 2020",
+      "roles": [
+        {
+          "role": "DevOps Engineer",
+          "period": "Dec 2017 – Aug 2020",
+          "summary": "Industrial automation software.",
+          "bullets": [
+            "Built the deployment pipelines and containerized legacy systems with Docker",
+            "C# on the product side, Linux distributions on the infrastructure side"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "edalab",
+      "type": "employment",
+      "org": "EDALab Networked Embedded Systems",
+      "location": "Verona, Italy",
+      "period": "Nov 2016 – Sep 2017",
+      "roles": [
+        {
+          "role": "Software Engineer",
+          "period": "Nov 2016 – Sep 2017",
+          "summary": "Internship turned first job. Where engineering got serious.",
+          "bullets": [
+            "Embedded systems in C++ and Qt; ported a Qt application to iOS and shipped it"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "si-fa",
+      "type": "freelance",
+      "org": "Si-Fa Cooperativa Sociale",
+      "location": "Verona, Italy",
+      "period": "Oct 2019 – Dec 2021",
+      "roles": [
+        {
+          "role": "IT Manager",
+          "period": "Oct 2019 – Dec 2021",
+          "summary": "Kept the infrastructure and website of a social cooperative running until it closed, alongside a full-time job."
+        }
+      ]
+    },
+    {
+      "slug": "sport-analytics",
+      "type": "freelance",
+      "org": "Sport Analytics S.r.l.",
+      "location": "Remote",
+      "period": "2022",
+      "roles": [
+        {
+          "role": "Cloud Architect",
+          "period": "2022",
+          "summary": "Moved the FantaCulo platform onto Kubernetes and designed its cloud-native infrastructure. A project I helped because I liked it."
+        }
+      ]
+    },
+    {
+      "slug": "codemotion",
+      "type": "freelance",
+      "org": "Codemotion",
+      "location": "Remote",
+      "period": "Jan 2021 – Apr 2021",
+      "roles": [
+        {
+          "role": "IT Instructor",
+          "period": "Jan 2021 – Apr 2021",
+          "summary": "Wrote and delivered the Infrastructure as Code, DevOps and Cloud Security modules of the Cloud Engineer career path."
+        }
+      ]
+    },
+    {
+      "slug": "schrodinger-hat",
+      "type": "volunteering",
+      "org": "Schrodinger Hat",
+      "location": "Remote",
+      "period": "Feb 2022 – Present",
+      "current": true,
+      "roles": [
+        {
+          "role": "Co-founder",
+          "period": "Feb 2022 – Present",
+          "current": true,
+          "summary": "International open source community, 20k+ people reached across Europe, 100+ speakers hosted."
+        }
+      ]
+    },
+    {
+      "slug": "open-source-day",
+      "type": "volunteering",
+      "org": "Open Source Day",
+      "location": "Florence, Italy",
+      "period": "2022 – Present",
+      "current": true,
+      "roles": [
+        {
+          "role": "Co-organizer",
+          "period": "2022 – Present",
+          "current": true,
+          "summary": "Italy's largest free-access open source conference. 500+ attendees, international speakers, free for everyone."
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "slug": "universita-verona",
+      "school": "Università degli Studi di Verona",
+      "award": "B.Sc. Computer Science",
+      "detail": "94/110 · Dissertation: coaching application in Ionic with a NoSQL database",
+      "period": "Oct 2014 – Mar 2018"
+    },
+    {
+      "slug": "iti-marconi",
+      "school": "ITI G. Marconi",
+      "award": "Technical high school diploma",
+      "detail": "Computer science",
+      "period": "2009 – 2014"
+    }
+  ],
+  "skills": [
+    { "group": "Languages", "items": ["Go", "TypeScript", "C#", "C++"] },
+    {
+      "group": "Platform",
+      "items": ["Kubernetes", "GCP", "AWS", "Flux (GitOps)", "Pulumi", "Docker", "gRPC"]
+    },
+    { "group": "Product", "items": ["Next.js", "React", "PostgreSQL", "Kafka"] },
+    {
+      "group": "Practices",
+      "items": ["DDD", "TDD", "GitOps", "CI/CD", "Technical leadership"]
+    }
+  ],
+  "openSource": ["Kubernetes", "Capsule", "Kannon", "Argus"]
+}
