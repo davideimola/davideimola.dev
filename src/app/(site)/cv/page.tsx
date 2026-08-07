@@ -7,13 +7,15 @@ import { JsonLd } from "../../../components/ui/JsonLd";
 import { PageHero } from "../../../components/ui/PageHero";
 import {
   ENGAGEMENT_TYPES,
+  type Engagement,
   type EngagementType,
   getContactLinks,
   getEducation,
   getEngagementsByType,
   getIdentity,
   getOpenSource,
-  getOrganisedConferences,
+  getOrganisedEvents,
+  getSelectedProjects,
   getSelectedTalks,
   getSkills,
   getTotalTalkCount,
@@ -43,8 +45,13 @@ export const metadata: Metadata = {
 const TYPE_LABEL: Record<EngagementType, string> = {
   employment: "Experience",
   freelance: "Freelance work",
-  volunteering: "Community & volunteering",
+  volunteering: "Community & projects",
 };
+
+// The left rail is the history and nothing else, so only the paid types are
+// looped: volunteering shares its section with the selected projects and is
+// rendered by CommunityAndProjectsSection instead.
+const PAID_TYPES = ENGAGEMENT_TYPES.filter((type) => type !== "volunteering");
 
 // The CV is a document, so its sections use the compact section-title scale
 // from docs/design-system.md rather than the `//`-prefixed SectionHeader the
@@ -85,6 +92,37 @@ function EntryHeader({ name, place }: { name: string; place: string }) {
   );
 }
 
+function EngagementEntry({ engagement }: { engagement: Engagement }) {
+  return (
+    <div className="flex flex-col gap-1 print:break-inside-avoid">
+      <EntryHeader name={engagement.org} place={engagement.location} />
+      {engagement.roles.map((role) => (
+        <div key={role.role} className="mt-2">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <p className="font-mono text-[13px] text-accent">{role.role}</p>
+            <p className="font-mono text-[11px] text-text-2 tabular-nums shrink-0">{role.period}</p>
+          </div>
+          {role.bullets ? (
+            <ul className="mt-1.5 flex flex-col gap-1">
+              {role.bullets.map((bullet) => (
+                <li
+                  key={bullet}
+                  className="font-sans text-[13px] text-text-2 leading-relaxed flex gap-2"
+                >
+                  <span className="text-text-3 shrink-0">·</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-1">{role.summary}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function EngagementSection({ type }: { type: EngagementType }) {
   const engagements = getEngagementsByType(type);
   if (engagements.length === 0) return null;
@@ -94,35 +132,42 @@ function EngagementSection({ type }: { type: EngagementType }) {
       <SectionTitle>{TYPE_LABEL[type]}</SectionTitle>
       <div className="flex flex-col gap-7 print:gap-5">
         {engagements.map((engagement) => (
-          <div key={engagement.slug} className="flex flex-col gap-1 print:break-inside-avoid">
-            <EntryHeader name={engagement.org} place={engagement.location} />
-            {engagement.roles.map((role) => (
-              <div key={role.role} className="mt-2">
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <p className="font-mono text-[13px] text-accent">{role.role}</p>
-                  <p className="font-mono text-[11px] text-text-2 tabular-nums shrink-0">
-                    {role.period}
-                  </p>
-                </div>
-                {role.bullets ? (
-                  <ul className="mt-1.5 flex flex-col gap-1">
-                    {role.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className="font-sans text-[13px] text-text-2 leading-relaxed flex gap-2"
-                      >
-                        <span className="text-text-3 shrink-0">·</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-1">
-                    {role.summary}
-                  </p>
-                )}
-              </div>
-            ))}
+          <EngagementEntry key={engagement.slug} engagement={engagement} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// The community work and the projects Davide builds read as one thing: unpaid work
+// he does because he wants it to exist. They are different shapes in the Record,
+// a Volunteering engagement and a project referenced by slug, so this is the one
+// section that renders two sources.
+function CommunityAndProjectsSection() {
+  const engagements = getEngagementsByType("volunteering");
+  const projects = getSelectedProjects();
+  if (engagements.length === 0 && projects.length === 0) return null;
+
+  return (
+    <section>
+      <SectionTitle>{TYPE_LABEL.volunteering}</SectionTitle>
+      <div className="flex flex-col gap-7 print:gap-5">
+        {engagements.map((engagement) => (
+          <EngagementEntry key={engagement.slug} engagement={engagement} />
+        ))}
+        {projects.map((project) => (
+          <div key={project.slug} className="flex flex-col gap-1 print:break-inside-avoid">
+            {/* A project has no location, so the right-hand slot carries its period:
+                the same row shape as an engagement, one fact swapped. */}
+            <div className="flex items-baseline justify-between gap-3 flex-wrap">
+              <h3 className="font-mono text-[15px] font-semibold text-text-1">{project.title}</h3>
+              <p className="font-mono text-[11px] text-text-2 tabular-nums shrink-0">
+                {project.period}
+              </p>
+            </div>
+            <p className="font-sans text-[13px] text-text-2 leading-relaxed">
+              {project.description}
+            </p>
           </div>
         ))}
       </div>
@@ -163,24 +208,24 @@ function SelectedTalksSection() {
   );
 }
 
-// Open Source Day gets a heading of its own rather than a line inside the
-// volunteering list. The volunteering entry states the role and the period; this
-// section states the thing a conference organiser is actually looking for, which
-// is that Davide has run the conference, four editions of it.
-function OrganisedConferencesSection() {
-  const conferences = getOrganisedConferences();
-  if (conferences.length === 0) return null;
+// The other side of the stage, and the only place Open Source Day is stated: it
+// used to appear here and again as a volunteering entry, saying the same thing
+// twice. The heading carries the verb, so no row has to name a role. A single
+// instance states its year alone, because "1 edition" is a count nobody needs.
+function OrganisedEventsSection() {
+  const events = getOrganisedEvents();
+  if (events.length === 0) return null;
 
   return (
     <section>
-      <SectionTitle>Conferences organised</SectionTitle>
-      <div className="flex flex-col gap-5">
-        {conferences.map((conference) => (
-          <div key={conference.slug} className="flex flex-col gap-1 print:break-inside-avoid">
-            <EntryHeader name={conference.event} place={conference.location} />
+      <SectionTitle>Events organised</SectionTitle>
+      <div className="flex flex-col gap-5 print:gap-4">
+        {events.map((event) => (
+          <div key={event.slug} className="flex flex-col gap-1 print:break-inside-avoid">
+            <EntryHeader name={event.label} place={event.location} />
             <p className="font-mono text-[12px] text-accent tabular-nums">
-              {conference.editions} {conference.editions === 1 ? "edition" : "editions"} ·{" "}
-              {conference.years}
+              {event.count > 1 && `${event.count} ${event.noun}s · `}
+              {event.years}
             </p>
           </div>
         ))}
@@ -284,9 +329,11 @@ export default function CvPage() {
             {identity.summary}
           </p>
 
-          {ENGAGEMENT_TYPES.map((type) => (
+          {PAID_TYPES.map((type) => (
             <EngagementSection key={type} type={type} />
           ))}
+
+          <CommunityAndProjectsSection />
         </div>
 
         {/* The right column: the facts, held apart from the history. It carries the
@@ -357,7 +404,7 @@ export default function CvPage() {
           </aside>
 
           <SelectedTalksSection />
-          <OrganisedConferencesSection />
+          <OrganisedEventsSection />
         </div>
       </div>
 

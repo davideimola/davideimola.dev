@@ -1,4 +1,4 @@
-import { getAllTalks, type Talk } from "./content";
+import { getAllProjects, getAllTalks, type Talk } from "./content";
 import { readContentJson } from "./content-json";
 
 // The CV Record is the single source of truth for Davide's professional
@@ -75,6 +75,8 @@ export interface CvRecord {
   engagements: Engagement[];
   // Talks are named by slug only: talks.json describes them.
   selectedTalks: string[];
+  // Projects are named by slug only: projects.json describes them.
+  selectedProjects: string[];
   education: EducationEntry[];
   skills: SkillGroup[];
   openSource: string[];
@@ -168,14 +170,27 @@ export interface SelectedTalk {
   year: string;
 }
 
-// A conference Davide runs rather than speaks at, folded across its editions.
-export interface OrganisedConference {
-  // The newest edition, so the entry has a stable identity.
+// An event Davide runs rather than speaks at. One row stands for a whole series,
+// because fifteen individual rows would bury the fact they are meant to carry.
+export interface OrganisedEvent {
+  // The newest instance, so the row has a stable identity.
   slug: string;
-  event: string;
+  label: string;
   location: string;
-  editions: number;
+  count: number;
+  // Singular; the Rendering pluralises. A conference has editions, a meetup night
+  // is just itself, and saying "4 editions" of a meetup would be wrong.
+  noun: string;
   years: string;
+}
+
+// A project the CV names in its own right, resolved from projects.json so the
+// project is described in exactly one place, the same way talks are.
+export interface SelectedProject {
+  slug: string;
+  title: string;
+  period: string;
+  description: string;
 }
 
 // The Record's order is the curation, so it survives untouched: leading with
@@ -203,31 +218,92 @@ export function getTotalTalkCount(): number {
   return getAllTalks().length;
 }
 
-// Derived from the archive rather than restated in the Record: a conference is
-// one he organises when the archive says he organised it. Editions are named
-// after the conference ("Open Source Day 2026"), so stripping the trailing year
-// is what turns four editions into one conference.
-export function getOrganisedConferences(): OrganisedConference[] {
-  const conferences = new Map<string, { newest: Talk; years: number[] }>();
+// Which kinds of organised event get a row of their own, and in which order: a
+// conference is the fact a reader is looking for, a meetup programme is the fact
+// that he keeps a community running between conferences.
+const EVENT_KINDS: { type: Talk["type"]; noun: string; fold: "series" | "all" }[] = [
+  // Folded by series, so four editions of Open Source Day are one row.
+  { type: "Conference", noun: "edition", fold: "series" },
+  // Folded together: ten meetup nights have ten different names, and listing them
+  // would cost half the sheet to say one thing.
+  { type: "Meetup", noun: "meetup", fold: "all" },
+  { type: "Hackathon", noun: "hackathon", fold: "series" },
+];
 
-  // getAllTalks is newest first, so the first edition seen is the newest one.
-  for (const talk of getAllTalks()) {
-    if (!talk.organizer || talk.type !== "Conference") continue;
+// Derived from the archive rather than restated in the Record: an event is one he
+// organises when the archive says he organised it, so a new edition appears
+// without the Record being touched and the count can never drift from the
+// archive. Editions are named after the series ("Open Source Day 2026"), so
+// stripping the trailing year is what turns four editions into one row.
+export function getOrganisedEvents(): OrganisedEvent[] {
+  // getAllTalks is newest first, so the first instance seen in a group is its
+  // newest and lends the group its slug.
+  const organised = getAllTalks().filter((talk) => talk.organizer);
+  const rows: OrganisedEvent[] = [];
 
-    const event = talk.event.replace(/\s+\d{4}$/, "");
-    const year = Number(talkYear(talk));
-    const known = conferences.get(event);
-    if (known) known.years.push(year);
-    else conferences.set(event, { newest: talk, years: [year] });
+  for (const { type, noun, fold } of EVENT_KINDS) {
+    const ofKind = organised.filter((talk) => talk.type === type);
+    if (ofKind.length === 0) continue;
+
+    const groups = new Map<string, Talk[]>();
+    for (const talk of ofKind) {
+      const key = fold === "all" ? type : talk.event.replace(/\s+\d{4}$/, "");
+      groups.set(key, [...(groups.get(key) ?? []), talk]);
+    }
+
+    for (const [key, instances] of groups) {
+      const newest = instances[0];
+      rows.push({
+        slug: newest.slug,
+        // A folded-together group is named after what it is, since its instances
+        // share no name to inherit.
+        label: fold === "all" ? `${type}s` : key,
+        location: fold === "all" ? cities(instances) : newest.location,
+        count: instances.length,
+        noun,
+        years: yearSpan(instances.map((talk) => Number(talkYear(talk)))),
+      });
+    }
   }
 
-  return [...conferences].map(([event, { newest, years }]) => ({
-    slug: newest.slug,
-    event,
-    location: newest.location,
-    editions: years.length,
-    years: yearSpan(years),
-  }));
+  return rows;
+}
+
+// "Florence, Italy" is where one meetup was; a row standing for ten of them wants
+// the cities, without the country repeated three times. Sorted rather than left in
+// archive order so the string does not change when a new meetup lands.
+function cities(talks: Talk[]): string {
+  return [...new Set(talks.map((talk) => talk.location.split(",")[0].trim()))].sort().join(", ");
+}
+
+// The Record names projects by slug, so a project is described in exactly one
+// place. Unknown slugs throw for the same reason talk slugs do.
+export function getSelectedProjects(): SelectedProject[] {
+  const all = getAllProjects();
+
+  return getCvRecord().selectedProjects.map((slug) => {
+    const project = all.find((candidate) => candidate.slug === slug);
+    if (!project) {
+      throw new Error(`Unknown selected project slug in the CV Record: "${slug}"`);
+    }
+    return {
+      slug,
+      title: project.title,
+      period: cvPeriod(project.period),
+      description: project.description,
+    };
+  });
+}
+
+// projects.json writes "2026–present" because that is how the projects page reads.
+// The CV writes "Feb 2022 – Present" everywhere, and a row in a different house
+// style looks like a mistake rather than a difference. Normalising here rather than
+// editing projects.json keeps the project described in exactly one place.
+function cvPeriod(period: string): string {
+  return period
+    .split(/\s*[–-]\s*/)
+    .map((part) => part.replace(/^present$/i, "Present"))
+    .join(" – ");
 }
 
 function talkYear(talk: Talk): string {

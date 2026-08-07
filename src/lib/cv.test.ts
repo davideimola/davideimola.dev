@@ -1,8 +1,9 @@
 import fs from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import publishedRecord from "../content/cv.json";
+import publishedProjects from "../content/projects.json";
 import publishedTalks from "../content/talks.json";
-import type { Talk } from "./content";
+import type { Project, Talk } from "./content";
 import {
   type CvIdentity,
   type CvRecord,
@@ -15,7 +16,8 @@ import {
   getEngagementsByType,
   getIdentity,
   getOpenSource,
-  getOrganisedConferences,
+  getOrganisedEvents,
+  getSelectedProjects,
   getSelectedTalks,
   getSkills,
   getTotalTalkCount,
@@ -61,22 +63,30 @@ function engagement(overrides: Partial<Engagement> = {}): Engagement {
   };
 }
 
-function setupRecord(overrides: Partial<CvRecord> = {}, talks: Talk[] = []): void {
+function setupRecord(
+  overrides: Partial<CvRecord> = {},
+  talks: Talk[] = [],
+  projects: Project[] = []
+): void {
   const record: CvRecord = {
     identity: IDENTITY,
     engagements: [],
     selectedTalks: [],
+    selectedProjects: [],
     education: [],
     skills: [],
     openSource: [],
     trajectory: [],
     ...overrides,
   };
-  // Selected talks are resolved against the talk archive, so the two content
-  // files have to answer separately.
-  mockFs.readFileSync.mockImplementation((file: unknown) =>
-    String(file).endsWith("talks.json") ? JSON.stringify(talks) : JSON.stringify(record)
-  );
+  // Selected talks and projects are resolved against their own archives, so each
+  // content file has to answer separately.
+  mockFs.readFileSync.mockImplementation((file: unknown) => {
+    const path = String(file);
+    if (path.endsWith("talks.json")) return JSON.stringify(talks);
+    if (path.endsWith("projects.json")) return JSON.stringify(projects);
+    return JSON.stringify(record);
+  });
 }
 
 // ── getEngagementsByType ───────────────────────────────────────────────────
@@ -288,6 +298,21 @@ function talk(overrides: Partial<Talk> = {}): Talk {
   };
 }
 
+// ── Project fixtures ───────────────────────────────────────────────────────
+
+function project(overrides: Partial<Project> = {}): Project {
+  return {
+    slug: "argus",
+    title: "Argus",
+    status: "active",
+    period: "2026–present",
+    featured: true,
+    tags: [],
+    description: "A thing that was built.",
+    ...overrides,
+  };
+}
+
 // ── Trajectory fixtures ────────────────────────────────────────────────────
 
 function phase(overrides: Partial<TrajectoryPhase> = {}): TrajectoryPhase {
@@ -366,10 +391,10 @@ describe("getTotalTalkCount", () => {
   });
 });
 
-// ── getOrganisedConferences ────────────────────────────────────────────────
+// ── getOrganisedEvents ─────────────────────────────────────────────────────
 
-describe("getOrganisedConferences", () => {
-  it("folds the editions of one conference into a single entry", () => {
+describe("getOrganisedEvents", () => {
+  it("folds the editions of one conference into a single row", () => {
     setupRecord({}, [
       talk({
         slug: "osd-2026",
@@ -393,38 +418,168 @@ describe("getOrganisedConferences", () => {
       }),
     ]);
 
-    expect(getOrganisedConferences()).toEqual([
+    expect(getOrganisedEvents()).toEqual([
       {
         slug: "osd-2026",
-        event: "Open Source Day",
+        label: "Open Source Day",
         location: "Verona, Italy",
-        editions: 3,
+        count: 3,
+        noun: "edition",
         years: "2023 – 2026",
       },
     ]);
   });
 
-  it("states a single year when there is one edition", () => {
+  it("states a single year and no count when there is one instance", () => {
     setupRecord({}, [talk({ organizer: true })]);
 
-    expect(getOrganisedConferences()[0].years).toBe("2024");
+    expect(getOrganisedEvents()[0]).toMatchObject({ count: 1, years: "2024" });
   });
 
-  it("ignores the talks he only spoke at and the meetups he organised", () => {
+  // The meetup nights share no name, so counting them is the only way to say what
+  // they amount to without spending half the sheet on it.
+  it("folds every organised meetup into one counted row, naming its cities", () => {
+    setupRecord({}, [
+      talk({
+        slug: "m1",
+        event: "Some Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2025-11-26",
+        location: "Florence, Italy",
+      }),
+      talk({
+        slug: "m2",
+        event: "Another Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2024-04-10",
+        location: "Verona, Italy",
+      }),
+      talk({
+        slug: "m3",
+        event: "A Third Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2023-09-07",
+        location: "Verona, Italy",
+      }),
+    ]);
+
+    expect(getOrganisedEvents()).toEqual([
+      {
+        slug: "m1",
+        label: "Meetups",
+        location: "Florence, Verona",
+        count: 3,
+        noun: "meetup",
+        years: "2023 – 2025",
+      },
+    ]);
+  });
+
+  it("orders conferences ahead of meetups ahead of hackathons", () => {
+    setupRecord({}, [
+      talk({ slug: "h", event: "A Hackathon 2026", type: "Hackathon", organizer: true }),
+      talk({ slug: "m", event: "A Meetup 2025", type: "Meetup", organizer: true }),
+      talk({ slug: "c", event: "Own Conf 2024", organizer: true }),
+    ]);
+
+    expect(getOrganisedEvents().map((e) => e.label)).toEqual([
+      "Own Conf",
+      "Meetups",
+      "A Hackathon",
+    ]);
+  });
+
+  it("ignores the events he only spoke at", () => {
     setupRecord({}, [
       talk({ slug: "spoke-at", event: "Someone Else Conf 2024" }),
-      talk({ slug: "meetup", event: "A Meetup 2024", type: "Meetup", organizer: true }),
-      talk({ slug: "hackathon", event: "A Hackathon 2024", type: "Hackathon", organizer: true }),
       talk({ slug: "own-conf", event: "Own Conf 2024", organizer: true }),
     ]);
 
-    expect(getOrganisedConferences().map((c) => c.event)).toEqual(["Own Conf"]);
+    expect(getOrganisedEvents().map((e) => e.label)).toEqual(["Own Conf"]);
   });
 
-  it("returns nothing when he has organised no conference", () => {
+  it("returns nothing when he has organised nothing", () => {
     setupRecord({}, [talk()]);
 
-    expect(getOrganisedConferences()).toEqual([]);
+    expect(getOrganisedEvents()).toEqual([]);
+  });
+});
+
+// ── getSelectedProjects ────────────────────────────────────────────────────
+
+describe("getSelectedProjects", () => {
+  it("resolves a slug against the project archive", () => {
+    setupRecord({ selectedProjects: ["argus"] }, [], [project()]);
+
+    expect(getSelectedProjects()).toEqual([
+      {
+        slug: "argus",
+        title: "Argus",
+        period: "2026 – Present",
+        description: "A thing that was built.",
+      },
+    ]);
+  });
+
+  // The projects page writes "2026–present"; the CV writes "Feb 2022 – Present"
+  // everywhere else, and one row in a different house style reads as a mistake.
+  it("restates the project period in the CV's own house style", () => {
+    setupRecord(
+      { selectedProjects: ["a", "b"] },
+      [],
+      [project({ slug: "a", period: "2026–present" }), project({ slug: "b", period: "2022" })]
+    );
+
+    expect(getSelectedProjects().map((p) => p.period)).toEqual(["2026 – Present", "2022"]);
+  });
+
+  it("keeps the Record's order, since the selection is the curation", () => {
+    setupRecord(
+      { selectedProjects: ["second", "first"] },
+      [],
+      [project({ slug: "first", title: "First" }), project({ slug: "second", title: "Second" })]
+    );
+
+    expect(getSelectedProjects().map((p) => p.title)).toEqual(["Second", "First"]);
+  });
+
+  it("throws naming the slug when it is not in the archive", () => {
+    setupRecord({ selectedProjects: ["renamed"] }, [], [project()]);
+
+    expect(() => getSelectedProjects()).toThrow(/renamed/);
+  });
+
+  it("returns nothing when the Record selects no project", () => {
+    setupRecord({}, [], [project()]);
+
+    expect(getSelectedProjects()).toEqual([]);
+  });
+});
+
+// ── The published project selection ────────────────────────────────────────
+
+describe("the published project selection", () => {
+  it("names only projects that exist in the archive", () => {
+    const slugs = publishedProjects.map((p) => p.slug);
+
+    for (const slug of publishedRecord.selectedProjects) {
+      expect(slugs).toContain(slug);
+    }
+  });
+
+  // The reason Open Source Day stopped being a volunteering entry: it was stated
+  // twice, once there and once as an organised event.
+  it("states no organisation both as an engagement and as a selected project", () => {
+    const orgs = publishedRecord.engagements.map((e) => e.org.toLowerCase());
+    const titles = publishedRecord.selectedProjects.map((slug) => {
+      const found = publishedProjects.find((p) => p.slug === slug);
+      return (found?.title ?? "").toLowerCase();
+    });
+
+    expect(titles.filter((title) => orgs.includes(title))).toEqual([]);
   });
 });
 
