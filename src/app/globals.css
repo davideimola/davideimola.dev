@@ -49,6 +49,32 @@
   --font-sans: var(--font-sans);
 }
 
+/* ── Print palette ──
+   Paper inverts the ground and nothing else: the Akane Red accent and both
+   brand fonts are deliberately left alone, so a printed page still reads as
+   this site rather than as an inverted screenshot.
+
+   Redefining these variables re-themes the whole subtree with no second copy of
+   the markup, because the `@theme inline` block above compiles every token
+   utility down to `var(--bg)`, `var(--text-1)` and friends. The hover tokens
+   (`--bg-hover`, `--border-hover`) are absent on purpose: nothing hovers on
+   paper. A print Rendering that ever needs them has to add them here.
+
+   Applied as `print:light-ground` on <body> in src/app/layout.tsx. It has to
+   sit on <body> rather than on <html>: utilities live in Tailwind's `utilities`
+   cascade layer, so the unlayered `:root` block above would win on the same
+   element. On <body> those tokens are only inherited, and a declaration on the
+   element itself always beats an inherited value. */
+@utility light-ground {
+  --bg: #ffffff;
+  --bg-card: #fafaf8;
+  --border: #e4e1dc;
+  --border-mid: #cfcbc5;
+  --text-1: #16150f;
+  --text-2: #4a4640;
+  --text-3: #6f6a63;
+}
+
 /* ── Base ── */
 html {
   scroll-behavior: smooth;
@@ -360,6 +386,48 @@ pre[class*="language-"] {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ── Print Rendering ──
+   Printing is the same markup with the ground flipped: the palette comes from
+   `print:light-ground` on <body>, and the page's own layout collapses to a
+   single column through `print:` utilities. What is left here is what a token
+   or a utility cannot express. */
+@media print {
+  /* Screen texture, not paper: the fixed dot-grid overlay would otherwise be
+     stamped over every sheet. */
+  body::before {
+    display: none;
+  }
+
+  /* `overflow-x: hidden` computes `overflow-y` to `auto`, which Chrome treats
+     as a scroll container and clips to the first sheet. */
+  body {
+    overflow: visible;
+  }
+
+  /* A control does nothing on paper. `button` catches real buttons; everything
+     else screen-only carries `data-print-hide`, which is why the design system's
+     Button and ButtonLink both set it (ButtonLink renders an <a>, so the
+     `button` selector would never reach it) and why the NavBar, the ⌘K
+     affordance inside it and the Footer all vanish. A new control built the
+     repo's way therefore needs no rule of its own. Unlayered, so it beats the
+     `display` utilities in the utilities layer without `!important`. */
+  button,
+  [data-print-hide] {
+    display: none;
+  }
+
+  /* Our own sheet margin, so the document does not depend on a browser default.
+     This site never prints anything into the margin boxes: text in a page header
+     or footer is one of the three parsing failures ATS vendors document,
+     alongside tables and images. The browser's own "Headers and footers"
+     setting, which stamps the URL and page number there, is the reader's and
+     cannot be reached from CSS while the sheet keeps a margin at all. Generated
+     PDFs are unaffected: Chromium adds those only on request. */
+  @page {
+    margin: 14mm 15mm;
   }
 }
 

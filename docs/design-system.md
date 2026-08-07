@@ -25,6 +25,22 @@ The personal mark is `di` + red bar cursor — the hero typing animation's end s
 | Akane hover | `--accent-hover` | `#a8192e` | Accent hover state |
 | Akane glow | `--accent-glow` | `rgba(201,31,55,.12)` | Card hover overlay |
 
+### Print palette
+
+Paper is the one light ground on this site. `@utility light-ground` in `globals.css`, applied as `print:light-ground` on `<body>`, redefines these seven variables for print media and nothing else: the accent and both fonts carry over unchanged, so a printed page still reads as this site.
+
+| Variable | Screen | Paper |
+|----------|--------|-------|
+| `--bg` | `#080807` | `#FFFFFF` |
+| `--bg-card` | `#0F0E0D` | `#FAFAF8` |
+| `--border` | `#1C1A18` | `#E4E1DC` |
+| `--border-mid` | `#252220` | `#CFCBC5` |
+| `--text-1` | `#EAE5DF` | `#16150F` |
+| `--text-2` | `#9A948E` | `#4A4640` |
+| `--text-3` | `#7E7874` | `#6F6A63` |
+
+The hover tokens are deliberately not in the list: nothing hovers on paper.
+
 ### Usage rules
 
 - `--accent` (Akane Red) is an accent only. Never use as a large fill or background.
@@ -46,12 +62,15 @@ The personal mark is `di` + red bar cursor — the hero typing animation's end s
 |----------|------|--------|-------|
 | Hero name | `clamp(42px, 7vw, 72px)` | 700 | `text-[clamp(42px,7vw,72px)] font-bold font-mono` |
 | Section title | 11px | 500 | `text-[11px] font-medium font-mono tracking-[0.12em] uppercase` |
+| Section title, printed | 11px | 500 | as above plus `print:tracking-[0.08em]` (see note) |
 | Card title | 16px | 600 | `text-[16px] font-semibold font-mono` |
 | Nav links | 12px | 400 | `text-[12px] font-mono tracking-[0.04em] lowercase text-text-2` |
 | Body | 15px | 400 | `text-[15px] font-sans` |
 | Small/meta | 11px | 400 | `text-[11px] font-mono` |
 | Badge | 10px | 500 | `text-[10px] font-mono tracking-[0.08em] uppercase` |
 | Button | 12px | 500 | `text-[12px] font-mono font-medium` |
+
+Note on the printed section title: at `0.12em` a PDF text extractor reads the gap between glyphs as word breaks and hands `E X P E R I E N C E` to whatever parses the document. `0.08em` extracts as one word and is indistinguishable at 11px.
 
 ## Spacing scale
 

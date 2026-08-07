@@ -75,6 +75,15 @@ All tokens are CSS custom properties in `src/app/globals.css`. Use them via Tail
 
 Apply with Tailwind: `font-mono`, `font-sans`
 
+## Print Rendering
+
+`/cv` prints straight from the browser, and the printed page is the **same markup** as the screen page: no second layout, no `PrintCv` clone. Only the ground inverts; the Akane Red accent and both brand fonts survive onto paper.
+
+- **Palette:** `print:light-ground` on `<body>` (`src/app/layout.tsx`) redefines the ground tokens for print media. The `@utility light-ground` that holds them lives in `globals.css` next to the dark ones. Because tokens are declared with `@theme inline`, every `bg-bg` / `text-text-1` / `border-border` utility re-themes at once. It has to sit on `<body>`, not `<html>`: utilities are in the `utilities` cascade layer, so the unlayered `:root` block would win on the same element.
+- **Chrome:** anything screen-only carries `data-print-hide`. `Button` and `ButtonLink` both set it, so a control built the repo's way needs no rule of its own; the NavBar and Footer set it too. Raw `<button>` elements are dropped as well. Both rules live in the `@media print` block in `globals.css`.
+- **Layout:** page-level `print:` utilities collapse the two-column grid into single-column flow (`print:flex`, `print:static`, `print:self-stretch`). DOM order is the reading order on paper, which is what makes the generated PDF parseable.
+- **ATS constraints on `/cv`:** no tables, no images, and no text in page headers or footers. Vendor documentation warns about exactly these three, so they are hard constraints rather than preferences.
+
 ## Responsive Design
 
 **Responsiveness is a cardinal requirement.** This is a portfolio/showcase site visited on any device. Every component and section must work correctly at all breakpoints.

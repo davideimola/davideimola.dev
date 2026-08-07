@@ -96,6 +96,6 @@ davideimola.dev/
 ## Key constraints
 
 - `ignoreBuildErrors: false` — TypeScript errors always fail the build
-- Dark-only — no light mode, no `prefers-color-scheme` switching
+- Dark-only on screen: no light mode, no `prefers-color-scheme` switching. Print media is the one exception, and it is not a theme toggle: see the print palette in [design-system.md](./design-system.md)
 - No newsletter, no tRPC
 - pnpm only (enforced via `pnpm-workspace.yaml`)

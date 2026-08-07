@@ -31,6 +31,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
+        // A control does nothing on paper, so every design-system button opts
+        // out of print here rather than at each call site. See the print
+        // Rendering section of globals.css.
+        data-print-hide=""
         className={[
           "font-mono font-medium rounded-[3px] transition-all duration-150",
           "inline-flex items-center gap-2 letter-spacing-[0.02em]",
@@ -64,6 +68,10 @@ export function ButtonLink({
 }: ButtonLinkProps) {
   return (
     <a
+      // Same as Button: a button-shaped control is screen-only. It matters here
+      // too because this one renders an <a>, so the `button` rule in globals.css
+      // would never reach it.
+      data-print-hide=""
       className={[
         "font-mono font-medium rounded-[3px] transition-all duration-150",
         "inline-flex items-center gap-2",

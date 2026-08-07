@@ -46,9 +46,15 @@ const TYPE_LABEL: Record<EngagementType, string> = {
 // The CV is a document, so its sections use the compact section-title scale
 // from docs/design-system.md rather than the `//`-prefixed SectionHeader the
 // narrative pages use.
+//
+// Print tightens the tracking to the 0.08em the aside labels already use: at
+// 0.12em a PDF text extractor reads the advance between glyphs as word gaps and
+// hands "E X P E R I E N C E" to whatever is parsing the document. The
+// difference is invisible at 11px, and it is the section headings a CV parser
+// keys off.
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-text-1 pb-3 mb-5 border-b border-border">
+    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-text-1 pb-3 mb-5 border-b border-border print:tracking-[0.08em] print:break-after-avoid">
       {children}
     </h2>
   );
@@ -56,7 +62,7 @@ function SectionTitle({ children }: { children: ReactNode }) {
 
 function AsideBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0">
+    <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0 print:break-inside-avoid">
       <p className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase text-accent">
         {title}
       </p>
@@ -85,7 +91,7 @@ function EngagementSection({ type }: { type: EngagementType }) {
       <SectionTitle>{TYPE_LABEL[type]}</SectionTitle>
       <div className="flex flex-col gap-7">
         {engagements.map((engagement) => (
-          <div key={engagement.slug} className="flex flex-col gap-1">
+          <div key={engagement.slug} className="flex flex-col gap-1 print:break-inside-avoid">
             <EntryHeader name={engagement.org} place={engagement.location} />
             {engagement.roles.map((role) => (
               <div key={role.role} className="mt-2">
@@ -132,7 +138,7 @@ function SelectedTalksSection() {
       <SectionTitle>Selected talks</SectionTitle>
       <ul className="flex flex-col gap-3">
         {talks.map((talk) => (
-          <li key={talk.slug} className="flex flex-col gap-0.5">
+          <li key={talk.slug} className="flex flex-col gap-0.5 print:break-inside-avoid">
             <p className="font-sans text-[14px] text-text-1 leading-snug">{talk.title}</p>
             <p className="font-mono text-[11px] text-text-3">
               {talk.event} · {talk.year}
@@ -140,11 +146,15 @@ function SelectedTalksSection() {
           </li>
         ))}
       </ul>
+      {/* An arrow points nowhere on paper, so print spells the destination out
+          instead. Same link, two words swapped: not a second Rendering. */}
       <Link
         href="/sharing"
         className="inline-block mt-4 font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
       >
-        Full archive: {getTotalTalkCount()} talks and appearances →
+        Full archive: {getTotalTalkCount()} talks and appearances{" "}
+        <span className="print:hidden">→</span>
+        <span className="hidden print:inline">at davideimola.dev/sharing</span>
       </Link>
     </section>
   );
@@ -163,7 +173,7 @@ function OrganisedConferencesSection() {
       <SectionTitle>Conferences organised</SectionTitle>
       <div className="flex flex-col gap-5">
         {conferences.map((conference) => (
-          <div key={conference.slug} className="flex flex-col gap-1">
+          <div key={conference.slug} className="flex flex-col gap-1 print:break-inside-avoid">
             <EntryHeader name={conference.event} place={conference.location} />
             <p className="font-mono text-[12px] text-accent tabular-nums">
               {conference.editions} {conference.editions === 1 ? "edition" : "editions"} ·{" "}
@@ -179,6 +189,14 @@ function OrganisedConferencesSection() {
 // Deliberately no ScrollReveal on the body: this is a dense document meant to
 // be scanned in one pass (and printed), so sections that start at opacity 0
 // would work against both.
+//
+// Printing this page is the same markup, not a second layout: the tokens flip
+// to the light palette through `print:light-ground` on <body> (globals.css), the
+// chrome drops out on `data-print-hide`, and the `print:` utilities below undo
+// the three screen affordances that make no sense on paper: the padding that
+// clears the fixed NavBar, the two-column grid, and the sticky aside. DOM order
+// is main rail then aside on both media, so the reading order a PDF extracts
+// matches the reading order on screen.
 export default function CvPage() {
   const identity = getIdentity();
   const contact = getContactLinks();
@@ -187,7 +205,9 @@ export default function CvPage() {
   const openSource = getOpenSource();
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    // `pt-24` clears the fixed NavBar, which paper does not have; the sheet
+    // margin comes from `@page` instead of from the page's own padding.
+    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0">
       <PageHero
         command="cat ./cv.md"
         title={identity.name}
@@ -195,7 +215,9 @@ export default function CvPage() {
         description={<span className="font-mono text-[14px] text-accent">{identity.headline}</span>}
       />
 
-      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12">
+      {/* `print:flex` puts the two rails back into the single-column flow the
+          narrow screen already uses, whatever width the sheet is laid out at. */}
+      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12 print:flex">
         {/* Main rail: the history, typed */}
         <div className="min-w-0 flex flex-col gap-10">
           <p className="font-sans text-[15px] text-text-2 leading-relaxed border-l-2 border-accent pl-5">
@@ -211,7 +233,10 @@ export default function CvPage() {
         </div>
 
         {/* Aside: the facts, held apart from the history */}
-        <aside className="min-w-0 lg:sticky lg:top-20 lg:self-start border border-border rounded-sm p-5 bg-bg-card">
+        {/* `print:static print:self-stretch` undoes the sticky desktop rail: on
+            paper the aside is simply the last block of the single column,
+            whatever width the sheet is laid out at. */}
+        <aside className="min-w-0 lg:sticky lg:top-20 lg:self-start border border-border rounded-sm p-5 bg-bg-card print:static print:self-stretch">
           <AsideBlock title="Contact">
             <div className="flex flex-col gap-1 font-mono text-[12px] text-text-2 break-words">
               {contact.map((item) => {
