@@ -95,8 +95,11 @@ const PRIVATE_PATTERNS: PrivatePattern[] = [
     // Not private data, but the same failure: text in a page header is one of
     // the parsing failures ATS vendors document, and it would also pin the PDF
     // to the machine that made it. page.pdf() adds no header unless asked, so a
-    // hit here means something changed. Matched as a URL or a host:port rather
-    // than as the bare word, so a bullet that mentions localhost still passes.
+    // hit here means something changed. The generator runs this over the PDF's
+    // link annotations as well as its text, because a relative href resolves
+    // against the generation server and would otherwise ship as a dead loopback
+    // link that no text-layer check can see. Matched as a URL or a host:port
+    // rather than as the bare word, so a bullet that mentions localhost passes.
     regex: /https?:\/\/(?:localhost|127\.0\.0\.1)|\b(?:localhost|127\.0\.0\.1):\d+/,
   },
 ];

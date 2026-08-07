@@ -182,37 +182,34 @@ jobs:
             exit 0
           fi
 
-          # Two numbers in the rendered PDF belong to the machine that made it
-          # rather than to the document, and both change on every run, so a plain
-          # byte comparison would never match and every run would commit a diff
-          # nobody can read:
+          # /CreationDate and /ModDate in the Info dictionary belong to the run
+          # rather than to the document, and Chromium stamps them on every render,
+          # so a plain byte comparison would never match and every run would
+          # commit a diff nobody can read.
           #
-          #   1. /CreationDate and /ModDate in the Info dictionary, stamped by
-          #      Chromium;
-          #   2. the port in the link annotation that the /cv page's one relative
-          #      href resolves against, because the generator serves the site on
-          #      an OS-assigned port. Known defect in the generator rather than in
-          #      this comparison: that annotation is a dead loopback URL in the
-          #      shipped PDF, and the generator's own generator-host refusal
-          #      cannot see it because it reads the text layer, where annotation
-          #      URIs never appear.
+          # Blanking them leaves a comparison over everything a reader would
+          # actually see. The digit run is overwritten with zeroes in place rather
+          # than removed, so a change in its length cannot shift the rest of the
+          # file and read as a difference.
           #
-          # Blanking both leaves a comparison over everything a reader would
-          # actually see. The digit runs are overwritten with zeroes in place
-          # rather than removed, so a four-digit and a five-digit port cannot
-          # shift the rest of the file and read as a difference.
+          # The generator's own ephemeral port used to be a second volatile number
+          # here, because a relative href on /cv resolved against it and Chromium
+          # wrote that into a link annotation. The generator now repoints
+          # same-origin links at the canonical site before printing, and refuses
+          # the PDF outright if a loopback URL survives into an annotation, so the
+          # port can no longer reach the document at all.
           fingerprint() {
             perl -0777 -pe 'BEGIN { binmode STDOUT }
-              s/(\(D:|(?:localhost|127\.0\.0\.1):)(\d+)/$1 . "0" x length($2)/ge' < "$1" |
+              s/(\(D:)(\d+)/$1 . "0" x length($2)/ge' < "$1" |
               sha256sum | cut -d " " -f 1
           }
 
           if [ "$(fingerprint "$COMMITTED")" = "$(fingerprint public/cv.pdf)" ]; then
-            # Restore the committed bytes, so those two volatile numbers on their
-            # own can never become a commit.
+            # Restore the committed bytes, so a pair of timestamps on their own can
+            # never become a commit.
             git checkout -- public/cv.pdf
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "::notice title=CV PDF unchanged::The regenerated PDF is identical to the committed one once its generation timestamps and the server port are set aside, so nothing was committed."
+            echo "::notice title=CV PDF unchanged::The regenerated PDF is identical to the committed one once its generation timestamps are set aside, so nothing was committed."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi

@@ -36,6 +36,7 @@ import {
   findPrivateData,
   MAX_PDF_BYTES,
 } from "../src/lib/cv-pdf";
+import { SITE_URL } from "../src/lib/llms";
 
 const ROOT = process.cwd();
 const OUTPUT_FILE = path.join(ROOT, "public", CV_PDF_PUBLIC_FILE);
@@ -315,6 +316,31 @@ async function assertSingleColumn(page: Page): Promise<void> {
   }
 }
 
+// The PDF is read long after this server is gone, and on someone else's machine,
+// so a relative href is not just wrong there: Chromium resolves it against the
+// generator's own ephemeral origin and writes that into the PDF's link
+// annotation, which pins the document to the port it happened to be built on.
+// Repointing every same-origin link at the canonical site is what makes the
+// annotations mean the same thing as the text next to them.
+async function absolutiseLinks(page: Page, baseUrl: string): Promise<void> {
+  const repointed = await page.evaluate(
+    ({ from, to }) => {
+      let count = 0;
+      for (const anchor of document.querySelectorAll("a[href]")) {
+        // Reading .href rather than the attribute: the DOM has already resolved
+        // it, so a relative href arrives here wearing the generator's origin.
+        const resolved = (anchor as HTMLAnchorElement).href;
+        if (!resolved.startsWith(from)) continue;
+        (anchor as HTMLAnchorElement).href = to + resolved.slice(from.length);
+        count++;
+      }
+      return count;
+    },
+    { from: baseUrl, to: SITE_URL }
+  );
+  console.log(`→ Repointed ${repointed} same-origin link(s) at ${SITE_URL}.`);
+}
+
 async function renderPdf(baseUrl: string): Promise<{ bytes: Uint8Array; fonts: FontProof }> {
   const browser = await chromium.launch();
   try {
@@ -338,6 +364,7 @@ async function renderPdf(baseUrl: string): Promise<{ bytes: Uint8Array; fonts: F
 
     const fonts = await assertLocalFontsAreUsed(page);
     await assertSingleColumn(page);
+    await absolutiseLinks(page, baseUrl);
 
     const bytes = await page.pdf({
       format: "A4",
@@ -372,6 +399,28 @@ interface Rejection {
 
 const megabytes = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 
+type Pdf = Awaited<ReturnType<typeof getDocumentProxy>>;
+
+// A link annotation carries a URL that never appears in the text layer, so every
+// check reading the extracted text is blind to it. This is the only place those
+// URLs are visible, and the refusal list has to see them: a loopback link is the
+// same failure as a loopback string, just hidden one level down.
+async function annotationUrls(pdf: Pdf): Promise<string[]> {
+  const urls: string[] = [];
+
+  for (let number = 1; number <= pdf.numPages; number++) {
+    const page = await pdf.getPage(number);
+    for (const annotation of await page.getAnnotations()) {
+      // unsafeUrl is the raw authored value; url is pdf.js's vetted one. A
+      // guard wants whichever is present, not the safe subset.
+      const url = annotation.unsafeUrl ?? annotation.url;
+      if (typeof url === "string") urls.push(url);
+    }
+  }
+
+  return urls;
+}
+
 async function checkPdf(bytes: Uint8Array): Promise<{ pages: number; rejections: Rejection[] }> {
   // Never allowed to silently pass: an extractor that throws is a guard that did
   // not run, which is the same risk the guard exists to remove.
@@ -397,6 +446,15 @@ async function checkPdf(bytes: Uint8Array): Promise<{ pages: number; rejections:
     rejections.push({
       reason: "private data reached the PDF",
       details: leaks.map((leak) => `${leak.pattern}: matched "${leak.match}" (${leak.reason})`),
+    });
+  }
+
+  const links = await annotationUrls(pdf);
+  const linkLeaks = findPrivateData(links.join("\n"));
+  if (linkLeaks.length > 0) {
+    rejections.push({
+      reason: "a link in the PDF carries data the text layer never shows",
+      details: linkLeaks.map((leak) => `${leak.pattern}: matched "${leak.match}" (${leak.reason})`),
     });
   }
 

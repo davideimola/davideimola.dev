@@ -97,6 +97,17 @@ describe("findPrivateData", () => {
     expect(findPrivateData("Cut the localhost feedback loop from 40s to 3s")).toEqual([]);
   });
 
+  // The first generated PDF shipped a link annotation pointing at the port it
+  // was built on, because a relative href resolves against whatever origin
+  // Chromium happens to be printing from. The generator now repoints those at
+  // the canonical site and feeds the annotation URLs through here too, since
+  // they never reach the text layer this list otherwise reads.
+  it("flags a loopback link annotation, which the text layer never shows", () => {
+    expect(findPrivateData("http://127.0.0.1:64882/sharing").map((f) => f.pattern)).toEqual([
+      "generator-host",
+    ]);
+  });
+
   it("reports every pattern that matched, not only the first", () => {
     const found = findPrivateData("+39 333 1234567, Via Roma 12, MLIDVD90A01L781K");
     expect(found.map((f) => f.pattern).sort()).toEqual([
