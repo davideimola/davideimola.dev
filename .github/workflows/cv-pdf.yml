@@ -1,0 +1,253 @@
+name: CV PDF
+
+# public/cv.pdf is a Rendering of the /cv page: a real browser drives that page
+# and the result is committed. See docs/adr/0003-cv-pdf-rendered-by-playwright-in-ci.md.
+#
+# This workflow is the CI caller of the one generator, `pnpm cv:pdf`; Davide
+# running the same command locally is the other. Nothing here reimplements any of
+# its checks, including the private-data guard: the command writes public/cv.pdf
+# and exits 0 only when every check passed, so its exit code is the whole verdict.
+#
+# PDF generation is deliberately absent from `pnpm build`, so no Vercel deploy
+# drags a headless browser through it. That is why this job exists at all.
+#
+# Reading a red run: every failure carries an annotation naming which stage
+# broke (dependencies, the browser, the build, the guard, the push) and the job
+# summary repeats it with the tail of the generator's output.
+
+on:
+  push:
+    branches: [main]
+    # Only what actually lands on the sheet, so an ordinary blog post push does
+    # not pull a browser through CI. Anything this list cannot see (a Playwright
+    # bump that changes Chromium, a refactor of a shared component) is covered by
+    # "Run workflow" on the Actions tab.
+    paths:
+      # The CV Record, and the talks it selects by slug.
+      - src/content/cv.json
+      - src/content/talks.json
+      # The seam every Rendering derives from, and the rules the PDF has to pass.
+      - src/lib/cv.ts
+      - src/lib/cv-pdf.ts
+      # The page itself. Written without the (site) route group's parentheses on
+      # purpose: several glob implementations read those as a group rather than as
+      # two literal characters, and this pattern matches under either reading.
+      - src/app/**/cv/**
+      # The name and the headline reach the sheet through PageHero.
+      - src/components/ui/PageHero.tsx
+      # `print:light-ground` on <body> is what flips the page onto paper.
+      - src/app/layout.tsx
+      # The design tokens, the print stylesheet and the @page sheet margin.
+      - src/app/globals.css
+      # The generator.
+      - scripts/cv-pdf.mts
+      # The outlines the PDF embeds.
+      - public/fonts/**
+      # So that a change to this workflow is exercised by the change itself.
+      - .github/workflows/cv-pdf.yml
+  workflow_dispatch:
+
+# The job commits the regenerated PDF back. Nothing else here needs a token, and
+# a GITHUB_TOKEN push does not trigger workflows, so this cannot loop.
+permissions:
+  contents: write
+
+# One run at a time, newest wins: an older run would otherwise push a PDF
+# rendered from an older Record on top of a newer one.
+concurrency:
+  group: cv-pdf
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate public/cv.pdf
+    runs-on: ubuntu-latest
+    # A build plus a browser render is a few minutes; anything near this is stuck.
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+        with:
+          # Full history: the commit at the end may have to be rebased onto a
+          # push that landed while Chromium was rendering, which a shallow clone
+          # cannot do.
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        # No version here on purpose: the action reads packageManager from
+        # package.json, so pnpm's version stays stated in exactly one place.
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          # Must match [tools] node in .mise.toml, which is what Davide runs
+          # `pnpm cv:pdf` on locally.
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile || {
+            echo "::error title=Dependencies could not be installed::pnpm install --frozen-lockfile failed: either pnpm-lock.yaml disagrees with package.json or the registry was unreachable. Nothing was regenerated."
+            exit 1
+          }
+
+      - name: Install Chromium for Playwright
+        run: |
+          # The only system dependency of the whole job. --with-deps adds the
+          # shared libraries Chromium needs on a bare runner; the browser build is
+          # the one pinned by the playwright devDependency, so CI and Davide's
+          # machine render with the same Chromium.
+          pnpm exec playwright install --with-deps chromium || {
+            echo "::error title=Chromium could not be installed::playwright install --with-deps chromium failed, so nothing was rendered. This is the browser download or its apt step, not the CV itself: re-running the job usually clears it."
+            exit 1
+          }
+
+      - name: Regenerate the CV PDF
+        env:
+          LOG: ${{ runner.temp }}/cv-pdf.log
+        run: |
+          # One command builds the site, serves it, drives Chromium over /cv,
+          # checks the result and writes public/cv.pdf. Because it is one command,
+          # the run log has to say which of those stages failed, which is all the
+          # classification below does: every branch reads the generator's own
+          # output, and none of its checks are repeated here.
+          set +e
+          pnpm cv:pdf 2>&1 | tee "$LOG"
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -eq 0 ]; then
+            # `|| true` so that a change to the generator's own summary line can
+            # never turn a successful render into a failed step.
+            summary=$(grep -m 1 -E "^ +[0-9]+ KB, [0-9]+ page" "$LOG" | tr -s " ") || true
+            echo "::notice title=CV PDF rendered and checked::public/cv.pdf:$summary. Every check passed, including the private-data guard."
+            exit 0
+          fi
+
+          if grep -q "private data reached the PDF" "$LOG"; then
+            title="Private data reached the CV PDF"
+            advice="The guard in src/lib/cv-pdf.ts matched, so nothing was written to public/cv.pdf and nothing leaked. The pattern and the text that matched are in this step's log: remove it from src/content/cv.json or from the /cv page."
+          elif grep -q "Refusing to write public/cv.pdf" "$LOG"; then
+            title="The generated CV PDF failed its checks"
+            advice="The PDF rendered but was refused: it is missing facts the CV Record holds, has no real text layer, or is too large to be parsed. The reasons are listed in this step's log. Nothing was written to public/cv.pdf."
+          elif grep -qE "did not render with the repo|never loaded|asks for a bold" "$LOG"; then
+            title="The CV PDF would have embedded the wrong fonts"
+            advice="A text run on /cv no longer resolves to the two brand families the generator loads from public/fonts, or asks for a weight that has no TTF there. Add the missing face or fix the page: see this step's log."
+          elif grep -q "not single column" "$LOG"; then
+            title="The print Rendering is no longer single column"
+            advice="Something on /cv lays content out in more than one column under print media, which is the one layout constraint every ATS vendor documents. The offending elements are in this step's log."
+          elif grep -qE "exited with code|did not serve|/cv returned" "$LOG"; then
+            title="The site never built, or never served /cv"
+            advice="next build or next start failed before Chromium could open /cv, so this is an ordinary build failure rather than a CV one. The compiler output is in this step's log."
+          else
+            title="pnpm cv:pdf failed"
+            advice="Neither the build nor any named check reported the failure, so read the tail of the generator output below."
+          fi
+
+          echo "::error title=$title::$advice"
+          {
+            echo "### CV PDF regeneration failed"
+            echo
+            echo "**$title**"
+            echo
+            echo "$advice"
+            echo
+            echo "<details><summary>Last 40 lines of pnpm cv:pdf</summary>"
+            echo
+            echo '```'
+            tail -n 40 "$LOG"
+            echo '```'
+            echo
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
+      - name: Decide whether the new PDF differs
+        id: compare
+        env:
+          COMMITTED: ${{ runner.temp }}/cv-committed.pdf
+        run: |
+          if ! git show HEAD:public/cv.pdf > "$COMMITTED" 2> /dev/null; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "::notice title=No CV PDF was committed yet::Committing the one just generated."
+            exit 0
+          fi
+
+          # Two numbers in the rendered PDF belong to the machine that made it
+          # rather than to the document, and both change on every run, so a plain
+          # byte comparison would never match and every run would commit a diff
+          # nobody can read:
+          #
+          #   1. /CreationDate and /ModDate in the Info dictionary, stamped by
+          #      Chromium;
+          #   2. the port in the link annotation that the /cv page's one relative
+          #      href resolves against, because the generator serves the site on
+          #      an OS-assigned port. Known defect in the generator rather than in
+          #      this comparison: that annotation is a dead loopback URL in the
+          #      shipped PDF, and the generator's own generator-host refusal
+          #      cannot see it because it reads the text layer, where annotation
+          #      URIs never appear.
+          #
+          # Blanking both leaves a comparison over everything a reader would
+          # actually see. The digit runs are overwritten with zeroes in place
+          # rather than removed, so a four-digit and a five-digit port cannot
+          # shift the rest of the file and read as a difference.
+          fingerprint() {
+            perl -0777 -pe 'BEGIN { binmode STDOUT }
+              s/(\(D:|(?:localhost|127\.0\.0\.1):)(\d+)/$1 . "0" x length($2)/ge' < "$1" |
+              sha256sum | cut -d " " -f 1
+          }
+
+          if [ "$(fingerprint "$COMMITTED")" = "$(fingerprint public/cv.pdf)" ]; then
+            # Restore the committed bytes, so those two volatile numbers on their
+            # own can never become a commit.
+            git checkout -- public/cv.pdf
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=CV PDF unchanged::The regenerated PDF is identical to the committed one once its generation timestamps and the server port are set aside, so nothing was committed."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit the regenerated PDF
+        if: steps.compare.outputs.changed == 'true'
+        env:
+          BRANCH: ${{ github.ref_name }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          # A machine commit gets a machine's name. The regeneration is not
+          # Davide's work and is not anybody's authorship to claim.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Only this one path: whatever else the build left in the working tree
+          # is not this workflow's to commit.
+          git add public/cv.pdf
+          git commit \
+            --message "chore(cv): regenerate cv.pdf from the CV Record" \
+            --message "Rendered from /cv at $SOURCE_SHA by .github/workflows/cv-pdf.yml."
+
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:refs/heads/$BRANCH"; then
+              echo "::notice title=CV PDF updated::The regenerated PDF was committed to $BRANCH."
+              echo "public/cv.pdf was regenerated and committed to \`$BRANCH\`." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            # Something landed on the branch while Chromium was rendering. The
+            # commit touches one binary nobody edits by hand, so replaying it on
+            # the new tip cannot conflict with anything but itself.
+            echo "Push attempt $attempt was rejected; replaying the commit on the tip of $BRANCH."
+            git fetch origin "$BRANCH" || break
+            git rebase --autostash "origin/$BRANCH" || {
+              git rebase --abort || true
+              break
+            }
+          done
+
+          echo "::error title=The regenerated CV PDF could not be pushed::public/cv.pdf was generated and passed every check, but pushing it to $BRANCH failed. The likely causes are a branch protection rule that refuses the GITHUB_TOKEN, or a push that kept landing while this job retried. The PDF itself is fine: re-run the job, or regenerate it locally with pnpm cv:pdf and commit it by hand."
+          exit 1

@@ -16,7 +16,7 @@ The constraint that actually decides it is **layout duplication**. The CV layout
 
 ## Decision
 
-**The PDF is rendered by Playwright's Chromium driving the real `/cv` page, and committed to `public/cv.pdf`.** One script, exposed as `pnpm cv:pdf` (`scripts/cv-pdf.mts`), is the only generator, with two callers: Davide locally, and a GitHub Action on push to main when the CV Record or the CV layout changes. It is deliberately not part of `pnpm build`. **The workflow itself is a follow-up ticket** and does not exist yet; what this decision fixes is that the Action will be a caller of the same command rather than a second pipeline, which is why the script's contract is a single command with a 0/1 exit code and no arguments.
+**The PDF is rendered by Playwright's Chromium driving the real `/cv` page, and committed to `public/cv.pdf`.** One script, exposed as `pnpm cv:pdf` (`scripts/cv-pdf.mts`), is the only generator, with two callers: Davide locally, and a GitHub Action on push to main when the CV Record or the CV layout changes. It is deliberately not part of `pnpm build`. **The workflow is `.github/workflows/cv-pdf.yml`**; what this decision fixes is that the Action is a caller of the same command rather than a second pipeline, which is why the script's contract is a single command with a 0/1 exit code and no arguments.
 
 Specifics settled with the decision:
 
