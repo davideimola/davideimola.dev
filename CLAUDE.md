@@ -117,7 +117,7 @@ Apply with Tailwind: `font-mono`, `font-sans`
 ### Terminal command theme
 Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Home: `❯ whoami`
-- About: `❯ whoami`
+- About: `❯ whoami`. Its "How I got here" section is the narrative Register of the CV Record: the `trajectory` phases in `src/content/cv.json`, resolved by `getTrajectory()` in `src/lib/cv.ts`. A phase references the engagements it covers by slug and derives its period from them, so nothing about the professional history is hardcoded on this page and companies are named inside the prose. The dated list and the education live on `/cv`, linked from here exactly once
 - Blog: `❯ ls ./blog`
 - Projects: `❯ ls ./projects`
 - Speaking: `❯ ls ./talks`

@@ -27,3 +27,11 @@ _Avoid_: consulting, contract work, side gig, moonlighting
 **Volunteering**:
 Unpaid work for a community or non-profit. Sits outside the paid history and is never counted as Employment, however substantial it is. The Community section of `/about` is the narrative Register of the same entries.
 _Avoid_: community work, activism
+
+**Trajectory**:
+The professional history told as a story rather than a list: an ordered set of Phases, held in the CV Record and rendered only on `/about`.
+_Avoid_: timeline, career path, journey
+
+**Phase**:
+One step of the Trajectory: where he was, what it taught him, where it led. It references the engagements it covers instead of restating them, so its period is derived and only its prose is its own. Two Phases can cover the same engagement when a promotion changed the story.
+_Avoid_: chapter, stage, milestone, era

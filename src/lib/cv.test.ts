@@ -19,6 +19,8 @@ import {
   getSelectedTalks,
   getSkills,
   getTotalTalkCount,
+  getTrajectory,
+  type TrajectoryPhase,
 } from "./cv";
 
 vi.mock("node:fs", () => ({
@@ -67,6 +69,7 @@ function setupRecord(overrides: Partial<CvRecord> = {}, talks: Talk[] = []): voi
     education: [],
     skills: [],
     openSource: [],
+    trajectory: [],
     ...overrides,
   };
   // Selected talks are resolved against the talk archive, so the two content
@@ -285,6 +288,18 @@ function talk(overrides: Partial<Talk> = {}): Talk {
   };
 }
 
+// ── Trajectory fixtures ────────────────────────────────────────────────────
+
+function phase(overrides: Partial<TrajectoryPhase> = {}): TrajectoryPhase {
+  return {
+    slug: "a-phase",
+    title: "A phase",
+    covers: [{ engagement: "acme" }],
+    prose: "Where I was, what it taught me, where it led.",
+    ...overrides,
+  };
+}
+
 // ── getSelectedTalks ───────────────────────────────────────────────────────
 
 describe("getSelectedTalks", () => {
@@ -430,5 +445,170 @@ describe("the published talk selection", () => {
 
   it("restates nothing about a talk beyond its slug", () => {
     expect(publishedRecord.selectedTalks.every((slug) => typeof slug === "string")).toBe(true);
+  });
+});
+
+// ── getTrajectory ──────────────────────────────────────────────────────────
+
+describe("getTrajectory", () => {
+  it("resolves a phase to the engagements it references", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "other", period: "2020 – 2022" }),
+        engagement({ slug: "unrelated", period: "2010 – 2012" }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }, { engagement: "other" }] })],
+    });
+
+    expect(getTrajectory()[0].engagements.map((e) => e.slug)).toEqual(["acme", "other"]);
+  });
+
+  it("derives the phase period from the engagements instead of restating it", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "Dec 2017 – Aug 2020" }),
+        engagement({ slug: "other", period: "Aug 2020 – Sep 2022" }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }, { engagement: "other" }] })],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2017 – 2022");
+  });
+
+  it("narrows the period to the role a phase names rather than the whole engagement", () => {
+    setupRecord({
+      engagements: [
+        engagement({
+          slug: "acme",
+          period: "Sep 2022 – Present",
+          current: true,
+          roles: [
+            role({ role: "Tech Lead", period: "Jan 2026 – Present", current: true }),
+            role({ role: "Software Engineer", period: "Sep 2022 – Dec 2025" }),
+          ],
+        }),
+      ],
+      trajectory: [
+        phase({ slug: "before", covers: [{ engagement: "acme", role: "Software Engineer" }] }),
+        phase({ slug: "after", covers: [{ engagement: "acme", role: "Tech Lead" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.period)).toEqual(["2022 – 2025", "2026 – Present"]);
+  });
+
+  it("marks a phase as current only while a period it covers is still open", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "day-job", period: "2022 – Present", current: true }),
+      ],
+      trajectory: [
+        phase({ slug: "past", covers: [{ engagement: "acme" }] }),
+        phase({ slug: "now", covers: [{ engagement: "day-job" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.current)).toEqual([false, true]);
+  });
+
+  it("collapses a phase that starts and ends in the same year to that year", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", period: "2022" })],
+      trajectory: [phase()],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2022");
+  });
+
+  it("reaches back to story-only years that no engagement covers", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", period: "Nov 2016 – Sep 2017" })],
+      trajectory: [phase({ from: "2013" })],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2013 – 2017");
+  });
+
+  it("keeps the phases in Record order", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "day-job", period: "2022 – Present", current: true }),
+      ],
+      trajectory: [
+        phase({ slug: "first", covers: [{ engagement: "acme" }] }),
+        phase({ slug: "second", covers: [{ engagement: "day-job" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.slug)).toEqual(["first", "second"]);
+  });
+
+  it("throws with the offending slug when a phase references an unknown engagement", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase({ slug: "broken", covers: [{ engagement: "ghost" }] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/ghost/);
+    expect(() => getTrajectory()).toThrow(/broken/);
+  });
+
+  it("throws when a phase names a role the engagement does not have", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", roles: [role({ role: "Engineer" })] })],
+      trajectory: [phase({ covers: [{ engagement: "acme", role: "Principal Engineer" }] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/Principal Engineer/);
+  });
+
+  it("throws when a phase covers nothing at all", () => {
+    setupRecord({ trajectory: [phase({ slug: "empty", covers: [] })] });
+
+    expect(() => getTrajectory()).toThrow(/empty/);
+  });
+});
+
+// ── The published trajectory ───────────────────────────────────────────────
+
+// The trajectory is the one part of the Record /cv never renders, so nothing
+// else would catch a phase pointing at an engagement that has been renamed.
+describe("the published trajectory", () => {
+  // The annotation is the check: the published JSON has to satisfy the type.
+  const publishedPhases: TrajectoryPhase[] = publishedRecord.trajectory;
+
+  const firstYear = (period: string) => Number(period.match(/\d{4}/)?.[0] ?? 0);
+
+  it("references only engagements and roles that exist in the Record", () => {
+    for (const publishedPhase of publishedPhases) {
+      for (const ref of publishedPhase.covers) {
+        const target = publishedRecord.engagements.find((e) => e.slug === ref.engagement);
+        expect(target, `phase "${publishedPhase.slug}" covers "${ref.engagement}"`).toBeDefined();
+        if (ref.role) {
+          expect(target?.roles.map((r) => r.role)).toContain(ref.role);
+        }
+      }
+    }
+  });
+
+  it("states no period of its own: every phase derives one", () => {
+    for (const publishedPhase of publishedPhases) {
+      expect(Object.keys(publishedPhase)).not.toContain("period");
+      expect(publishedPhase.prose).not.toBe("");
+    }
+  });
+
+  it("tells the early freelance years as story only, with no engagement behind them", () => {
+    const earliestEngagement = Math.min(
+      ...publishedRecord.engagements.map((e) => firstYear(e.period))
+    );
+    const storyStart = Math.min(
+      ...publishedPhases.flatMap((p) => (p.from ? [Number(p.from)] : []))
+    );
+
+    expect(storyStart).toBeLessThan(earliestEngagement);
   });
 });
