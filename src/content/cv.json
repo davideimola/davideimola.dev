@@ -168,6 +168,14 @@
       ]
     }
   ],
+  "selectedTalks": [
+    "reactjsday-2026",
+    "golab-2026",
+    "wearedevelopers-2024",
+    "golab-2024",
+    "kcd-italy-2024",
+    "devsecops-day-2023"
+  ],
   "education": [
     {
       "slug": "universita-verona",

@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import publishedRecord from "../content/cv.json";
+import publishedTalks from "../content/talks.json";
+import type { Talk } from "./content";
 import {
   type CvIdentity,
   type CvRecord,
@@ -13,7 +15,10 @@ import {
   getEngagementsByType,
   getIdentity,
   getOpenSource,
+  getOrganisedConferences,
+  getSelectedTalks,
   getSkills,
+  getTotalTalkCount,
 } from "./cv";
 
 vi.mock("node:fs", () => ({
@@ -54,16 +59,21 @@ function engagement(overrides: Partial<Engagement> = {}): Engagement {
   };
 }
 
-function setupRecord(overrides: Partial<CvRecord> = {}): void {
+function setupRecord(overrides: Partial<CvRecord> = {}, talks: Talk[] = []): void {
   const record: CvRecord = {
     identity: IDENTITY,
     engagements: [],
+    selectedTalks: [],
     education: [],
     skills: [],
     openSource: [],
     ...overrides,
   };
-  mockFs.readFileSync.mockReturnValue(JSON.stringify(record));
+  // Selected talks are resolved against the talk archive, so the two content
+  // files have to answer separately.
+  mockFs.readFileSync.mockImplementation((file: unknown) =>
+    String(file).endsWith("talks.json") ? JSON.stringify(talks) : JSON.stringify(record)
+  );
 }
 
 // ── getEngagementsByType ───────────────────────────────────────────────────
@@ -257,5 +267,168 @@ describe("the published CV Record", () => {
     const types = publishedRecord.engagements.map((e) => e.type);
 
     expect(types.every((t) => (ENGAGEMENT_TYPES as readonly string[]).includes(t))).toBe(true);
+  });
+});
+
+// ── Speaking fixtures ──────────────────────────────────────────────────────
+
+function talk(overrides: Partial<Talk> = {}): Talk {
+  return {
+    slug: "acme-conf-2024",
+    event: "Acme Conf 2024",
+    type: "Conference",
+    date: "2024-05-01",
+    location: "Verona, Italy",
+    tags: [],
+    session: { title: "A Talk About Things", format: "Talk" },
+    ...overrides,
+  };
+}
+
+// ── getSelectedTalks ───────────────────────────────────────────────────────
+
+describe("getSelectedTalks", () => {
+  it("resolves a slug against the talk archive", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [talk()]);
+
+    expect(getSelectedTalks()).toEqual([
+      {
+        slug: "acme-conf-2024",
+        title: "A Talk About Things",
+        event: "Acme Conf 2024",
+        year: "2024",
+      },
+    ]);
+  });
+
+  it("keeps the Record's order, because the selection is the curation", () => {
+    setupRecord({ selectedTalks: ["older-conf-2019", "acme-conf-2024"] }, [
+      talk(),
+      talk({ slug: "older-conf-2019", event: "Older Conf 2019", date: "2019-03-01" }),
+    ]);
+
+    expect(getSelectedTalks().map((t) => t.slug)).toEqual(["older-conf-2019", "acme-conf-2024"]);
+  });
+
+  it("throws, naming the offending slug, when the archive has no such talk", () => {
+    setupRecord({ selectedTalks: ["renamed-conf-2024"] }, [talk()]);
+
+    expect(() => getSelectedTalks()).toThrow(/renamed-conf-2024/);
+  });
+
+  it("throws, naming the offending slug, when the entry has no session", () => {
+    setupRecord({ selectedTalks: ["organised-only-2024"] }, [
+      talk({ slug: "organised-only-2024", organizer: true, session: undefined }),
+    ]);
+
+    expect(() => getSelectedTalks()).toThrow(/organised-only-2024/);
+  });
+
+  it("returns nothing when the Record selects no talks", () => {
+    setupRecord({}, [talk()]);
+
+    expect(getSelectedTalks()).toEqual([]);
+  });
+});
+
+// ── getTotalTalkCount ──────────────────────────────────────────────────────
+
+describe("getTotalTalkCount", () => {
+  it("counts the whole archive, not the selection", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [
+      talk(),
+      talk({ slug: "b", event: "B 2023", date: "2023-01-01" }),
+      talk({ slug: "c", event: "C 2022", date: "2022-01-01" }),
+    ]);
+
+    expect(getTotalTalkCount()).toBe(3);
+  });
+
+  it("counts nothing when the archive is empty", () => {
+    setupRecord();
+
+    expect(getTotalTalkCount()).toBe(0);
+  });
+});
+
+// ── getOrganisedConferences ────────────────────────────────────────────────
+
+describe("getOrganisedConferences", () => {
+  it("folds the editions of one conference into a single entry", () => {
+    setupRecord({}, [
+      talk({
+        slug: "osd-2026",
+        event: "Open Source Day 2026",
+        organizer: true,
+        date: "2026-04-25",
+      }),
+      talk({
+        slug: "osd-2024",
+        event: "Open Source Day 2024",
+        organizer: true,
+        date: "2024-03-07",
+        location: "Florence, Italy",
+      }),
+      talk({
+        slug: "osd-2023",
+        event: "Open Source Day 2023",
+        organizer: true,
+        date: "2023-03-28",
+        location: "Florence, Italy",
+      }),
+    ]);
+
+    expect(getOrganisedConferences()).toEqual([
+      {
+        slug: "osd-2026",
+        event: "Open Source Day",
+        location: "Verona, Italy",
+        editions: 3,
+        years: "2023 – 2026",
+      },
+    ]);
+  });
+
+  it("states a single year when there is one edition", () => {
+    setupRecord({}, [talk({ organizer: true })]);
+
+    expect(getOrganisedConferences()[0].years).toBe("2024");
+  });
+
+  it("ignores the talks he only spoke at and the meetups he organised", () => {
+    setupRecord({}, [
+      talk({ slug: "spoke-at", event: "Someone Else Conf 2024" }),
+      talk({ slug: "meetup", event: "A Meetup 2024", type: "Meetup", organizer: true }),
+      talk({ slug: "hackathon", event: "A Hackathon 2024", type: "Hackathon", organizer: true }),
+      talk({ slug: "own-conf", event: "Own Conf 2024", organizer: true }),
+    ]);
+
+    expect(getOrganisedConferences().map((c) => c.event)).toEqual(["Own Conf"]);
+  });
+
+  it("returns nothing when he has organised no conference", () => {
+    setupRecord({}, [talk()]);
+
+    expect(getOrganisedConferences()).toEqual([]);
+  });
+});
+
+// ── The published talk selection ───────────────────────────────────────────
+
+// A guard on the content rather than on the module: the throw above only fires
+// at build time, and this fails in the test run instead.
+describe("the published talk selection", () => {
+  it("names only slugs that exist in the archive and carry a session", () => {
+    const archive = new Map(publishedTalks.map((entry) => [entry.slug, entry]));
+
+    for (const slug of publishedRecord.selectedTalks) {
+      const entry = archive.get(slug);
+      expect(entry, `selected talk "${slug}" is missing from talks.json`).toBeDefined();
+      expect(entry && "session" in entry, `selected talk "${slug}" has no session`).toBe(true);
+    }
+  });
+
+  it("restates nothing about a talk beyond its slug", () => {
+    expect(publishedRecord.selectedTalks.every((slug) => typeof slug === "string")).toBe(true);
   });
 });

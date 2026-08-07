@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { PageHero } from "../../../components/ui/PageHero";
@@ -10,7 +11,10 @@ import {
   getEngagementsByType,
   getIdentity,
   getOpenSource,
+  getOrganisedConferences,
+  getSelectedTalks,
   getSkills,
+  getTotalTalkCount,
 } from "../../../lib/cv";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
@@ -61,6 +65,17 @@ function AsideBlock({ title, children }: { title: string; children: ReactNode })
   );
 }
 
+// The row every entry in the main rail opens with: who on the left, where on the
+// right, wrapping rather than colliding on a narrow screen.
+function EntryHeader({ name, place }: { name: string; place: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+      <h3 className="font-mono text-[15px] font-semibold text-text-1">{name}</h3>
+      <p className="font-mono text-[11px] text-text-3 shrink-0">{place}</p>
+    </div>
+  );
+}
+
 function EngagementSection({ type }: { type: EngagementType }) {
   const engagements = getEngagementsByType(type);
   if (engagements.length === 0) return null;
@@ -71,10 +86,7 @@ function EngagementSection({ type }: { type: EngagementType }) {
       <div className="flex flex-col gap-7">
         {engagements.map((engagement) => (
           <div key={engagement.slug} className="flex flex-col gap-1">
-            <div className="flex items-baseline justify-between gap-3 flex-wrap">
-              <h3 className="font-mono text-[15px] font-semibold text-text-1">{engagement.org}</h3>
-              <p className="font-mono text-[11px] text-text-3 shrink-0">{engagement.location}</p>
-            </div>
+            <EntryHeader name={engagement.org} place={engagement.location} />
             {engagement.roles.map((role) => (
               <div key={role.role} className="mt-2">
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
@@ -102,6 +114,61 @@ function EngagementSection({ type }: { type: EngagementType }) {
                 )}
               </div>
             ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// Six talks, then the size of the archive: thirty rows would bury the six that
+// make the point, and the reader who wants more follows the link.
+function SelectedTalksSection() {
+  const talks = getSelectedTalks();
+  if (talks.length === 0) return null;
+
+  return (
+    <section>
+      <SectionTitle>Selected talks</SectionTitle>
+      <ul className="flex flex-col gap-3">
+        {talks.map((talk) => (
+          <li key={talk.slug} className="flex flex-col gap-0.5">
+            <p className="font-sans text-[14px] text-text-1 leading-snug">{talk.title}</p>
+            <p className="font-mono text-[11px] text-text-3">
+              {talk.event} · {talk.year}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <Link
+        href="/sharing"
+        className="inline-block mt-4 font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+      >
+        Full archive: {getTotalTalkCount()} talks and appearances →
+      </Link>
+    </section>
+  );
+}
+
+// Open Source Day gets a heading of its own rather than a line inside the
+// volunteering list. The volunteering entry states the role and the period; this
+// section states the thing a conference organiser is actually looking for, which
+// is that Davide has run the conference, four editions of it.
+function OrganisedConferencesSection() {
+  const conferences = getOrganisedConferences();
+  if (conferences.length === 0) return null;
+
+  return (
+    <section>
+      <SectionTitle>Conferences organised</SectionTitle>
+      <div className="flex flex-col gap-5">
+        {conferences.map((conference) => (
+          <div key={conference.slug} className="flex flex-col gap-1">
+            <EntryHeader name={conference.event} place={conference.location} />
+            <p className="font-mono text-[12px] text-accent tabular-nums">
+              {conference.editions} {conference.editions === 1 ? "edition" : "editions"} ·{" "}
+              {conference.years}
+            </p>
           </div>
         ))}
       </div>
@@ -138,6 +205,9 @@ export default function CvPage() {
           {ENGAGEMENT_TYPES.map((type) => (
             <EngagementSection key={type} type={type} />
           ))}
+
+          <SelectedTalksSection />
+          <OrganisedConferencesSection />
         </div>
 
         {/* Aside: the facts, held apart from the history */}
