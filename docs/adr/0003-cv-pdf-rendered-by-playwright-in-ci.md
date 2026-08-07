@@ -1,0 +1,69 @@
+# ADR-0003: Render the CV PDF with a real browser driving the real `/cv` page
+
+- **Status:** Accepted
+- **Date:** 2026-08-07
+- **Research:** [Generating a CV/résumé PDF from this repo](../research/cv-pdf-generation.md) (every limit and API detail verified against primary sources on 2026-08-07)
+
+## Context
+
+The CV is now a **CV Record** (`src/content/cv.json`) with every view derived from it as a **Rendering**. One of those Renderings has to be a PDF: a page is the link Davide sends, but a job portal wants a file, and the file has to be the same facts as the page.
+
+The old artifact is the reason this is an ADR rather than a task. It was a LaTeX document compiled elsewhere and committed as `public/cv.pdf`, which meant it was never edited: it still called Davide a Software Engineer months after he became Tech Lead, contradicted `/about` on education dates, and carried a home address and a mobile number in a public repo. Any pipeline chosen here has to make the drift impossible and the leak loud.
+
+Four candidates were compared against a hard zero-cost constraint on the Vercel Hobby plan: `@react-pdf/renderer`, headless Chromium in a Vercel function (`puppeteer-core` + `@sparticuz/chromium`), Playwright/Chromium in GitHub Actions, and Typst compiled in CI.
+
+The constraint that actually decides it is **layout duplication**. The CV layout is a design problem that was solved once, on `/cv`, in Tailwind v4 against the design tokens in `src/app/globals.css`. Any renderer that cannot read that CSS forces a second copy of the layout, which is the same failure mode as the two-copies-of-the-history problem the CV Record was created to end. It would drift, and the copy strangers read would again be the wrong one.
+
+## Decision
+
+**The PDF is rendered by Playwright's Chromium driving the real `/cv` page, and committed to `public/cv.pdf`.** One script, exposed as `pnpm cv:pdf` (`scripts/cv-pdf.mts`), is the only generator, with two callers: Davide locally, and a GitHub Action on push to main when the CV Record or the CV layout changes. It is deliberately not part of `pnpm build`. **The workflow itself is a follow-up ticket** and does not exist yet; what this decision fixes is that the Action will be a caller of the same command rather than a second pipeline, which is why the script's contract is a single command with a 0/1 exit code and no arguments.
+
+Specifics settled with the decision:
+
+1. **One command, no prerequisites.** `pnpm cv:pdf` builds the site, starts a production server on an OS-assigned free port, drives Chromium over `/cv`, checks the result, writes `public/cv.pdf`, and stops the server again, including when any step fails. There is no "start the dev server in another terminal first" step. `CV_PDF_BASE_URL` reuses an already running server and `CV_PDF_SKIP_BUILD=1` reuses the existing `.next` output, both only for iterating on the print Rendering.
+2. **Not part of `pnpm build`.** Every Vercel deploy would otherwise download a browser and regenerate a byte-identical file. Nothing in the build pipeline references the script.
+3. **The print Rendering is the same markup.** `page.pdf()` renders with `print` media, so it picks up `print:light-ground` on `<body>`, the `print:` utilities that collapse the two-column grid, the `data-print-hide` rule that drops the chrome, and the `@page { margin: 14mm 15mm }` rule. `preferCSSPageSize: true` means the sheet margin is stated once in `globals.css` and never restated in the script (verified: text sits 15.1mm from the left edge and 14.7mm from the right on every page). `printBackground: true` is required, because Playwright drops backgrounds by default; `print-color-adjust: exact` lives in the print stylesheet too rather than in the generator, so a reader who hits Cmd+P gets the same colours the PDF has.
+4. **Fonts come from repo-local TTFs, not from what the machine happens to have.** The script registers the two brand families from `public/fonts/` under distinct names (`CV IBM Plex Sans`, `CV JetBrains Mono`) and repoints `--font-sans` / `--font-mono` at them, which re-types the whole page for the same reason `print:light-ground` re-themes it: `@theme inline` compiles every token utility down to a `var()`. Distinct names make it provable rather than probable, since nothing can silently fall back to a same-named web font. `IBMPlexSans-Regular.ttf` and `JetBrainsMono-Medium.ttf` were added; the weights were **measured off the page** (mono 400/500/700, sans 400) rather than guessed, so the whole family is not in the repo. The script asserts all three ways the wrong outlines could still end up embedded: no text run may resolve to a family other than those two, every declared face must actually load, and no family may be asked for a bold weight it has no face for (CSS would otherwise synthesise the bold and the PDF would carry a mechanically distorted outline instead of the designed one). This follows the precedent set by `src/app/og/route.tsx`, which already reads local TTFs from `public/fonts/`.
+5. **One PDF, not two.** A separate parse-safe ATS variant was rejected. Vendor documentation warns about images, tables and text in page headers rather than about styling, so ATS-safety is a set of layout constraints on the single PDF: one column, real selectable text, no tables, no images, no header or footer text. `displayHeaderFooter` stays off, and the script asserts single-column-ness generically (no visible element may lay content out in more than one grid or CSS column) rather than by class name.
+6. **`tagged: true` is on.** It is one boolean on a normal Chromium build and it helps a screen-reader user. It is **not** a PDF/UA conformance claim: nothing here validates the structure tree, and the underlying CDP parameter is marked Experimental.
+7. **The guard runs on the extracted text and can never silently pass.** After rendering, the PDF's text layer is extracted and asserted to contain the name, the current headline, and every Employment organisation, derived from the CV Record so a new job cannot slip past unasserted. It is refused if it matches `+39`, `Via `, an Italian fiscal-code shape, or the generator's own host (`localhost` / `127.0.0.1`, which is what a browser print header would stamp into the margin). A refused PDF is written to the temp directory and **never** to `public/`, so `git add public` cannot pick it up, and the command exits non-zero naming the pattern that matched.
+8. **The extractor is a bundled JS library, not `pdftotext`.** See the deviation below.
+
+### Rejected: `@react-pdf/renderer` (4.5.1)
+
+The cheapest option operationally (31 MB across 67 packages, already on Next.js's default `serverExternalPackages` list, local TTF embedding supported, no browser anywhere) and the only one that could run inside `next build`. Rejected on the deciding criterion: it has no CSS at all. `StyleSheet.create()` is a bespoke API over a flexbox-only property allowlist with no cascade, no selectors, no stylesheets and no Tailwind, so `globals.css` and every design token would be hand-ported into a JS style object and the CV layout would exist twice. Its `pdfVersion` also defaults to `1.3`, which predates tagged PDF (introduced in PDF 1.4), with four open issues on structure-tree support since 2021.
+
+### Rejected: headless Chromium in a Vercel Hobby function
+
+The one alternative that also gives full CSS and near-zero layout duplication, and Vercel officially documents it. Rejected on measured Hobby limits:
+
+- `@sparticuz/chromium@149.0.0` plus `puppeteer-core@25.5.0` measure **104,360 KB (about 102 MiB) installed across 43 packages**, of which `bin/chromium.br` alone is **62 MB**. That is roughly **40% of the 250 MB uncompressed function ceiling before a single line of Next.js server code**, which is why Vercel's own guide reaches for `@sparticuz/chromium-min` plus a separately hosted ~66 MB tar, adding a cold-start download to every invocation.
+- Uncompressed, that Chromium is **136,964,856 bytes (130.62 MiB)**, brotli-decompressed into the writable `/tmp` (capped at 500 MB) on first invocation.
+- Its README asks for **1600 MB of RAM or more**; Hobby's ceiling is 2 GB / 1 vCPU, so there is no headroom.
+- The binary is `headless_shell`, compiled **without** `enable_tagged_pdf`, so it cannot produce a tagged PDF without recompiling Chromium.
+- It "does NOT follow semantic versioning. Breaking changes may occur at the 'patch' level", ships x64-only binaries (so local macOS development needs a documented branch), and Hobby keeps runtime logs for **1 hour**, which makes a flaky PDF route unpleasant to debug.
+
+All of that is spent to regenerate, per request, a document whose source is a committed JSON file and therefore cannot change between deploys. It also burns Hobby's 4 CPU-hours/month Active CPU budget for nothing.
+
+### Rejected: Typst compiled in CI (0.15.1)
+
+Technically the best document engine of the four, and the only one that can claim real conformance (it "will always write _Tagged PDF_" by default and takes `--pdf-standard ua-1` for PDF/UA-1), on a 16.7 MB Linux binary at $0 in CI. Rejected because it is a **separate language**: the design tokens would be re-declared as Typst variables and the CV layout would exist a third time, outside this repo's toolchain entirely (no Biome, no TypeScript types, no Vitest). Its HTML export cannot rescue that, since the docs are unambiguous that it is behind a feature flag, emits no CSS, and is not for production use, so `/cv` would stay a Next.js page regardless. Typst becomes the right answer only if PDF/UA-1 or PDF/A conformance ever becomes a hard requirement.
+
+### Deviation: `unpdf` instead of `pdftotext`
+
+The ticket named `pdftotext`. **`pdftotext` is not installed on this machine and would need `brew install poppler`**, which turns "one command regenerates the PDF" into "one command plus a system install", and would add an `apt-get` step to the Action. The extraction is therefore done with **`unpdf` (1.8.0) as a devDependency**: it packages the same pdf.js engine `pdfjs-dist` provides, with none of pdf.js's Node-side setup friction, has no non-optional dependencies and no native modules (its `@napi-rs/canvas` peer is optional and only needed for rasterising, which this guard never does), and works on a clean checkout after `pnpm install` alone.
+
+The important half of the deviation is what was **not** written: there is no "skip the check if the extractor is missing" fallback. An extractor that throws is a guard that did not run, so the failure propagates and the command exits non-zero. The acceptance criterion's intent is unchanged: the extracted text is asserted, and the private patterns fail the command.
+
+One small consequence of choosing a JS extractor: pdf.js reaches for `Math.sumPrecise`, which V8 shipped after the Node 22 pinned in `.mise.toml`, so the script shims it. Without the shim every page logs a `TypeError` and the extractor degrades rather than fails, which is exactly the outcome a guard must never have.
+
+## Consequences
+
+- **The layout exists exactly once.** `/cv` is the only place the CV is laid out, and the PDF is a photograph of it. A change to the page or to the CV Record cannot leave the PDF behind, which is the drift the old LaTeX file institutionalised.
+- **Cost stays $0.** Nothing ships to Vercel: the 250 MB function ceiling, the `/tmp` budget, the cold start and the Active CPU quota are all irrelevant. GitHub Actions is free for public repositories on standard runners.
+- **A binary lives in git.** `public/cv.pdf` is committed (currently 72 KB, 3 pages, well under the 2.5 MB ceiling above which Greenhouse stops parsing resumes), which is the price of a stable public URL served as a static asset from the CDN, reviewable in a PR diff and versioned with the Record it came from. Each regeneration also consumes one of Hobby's 100 deployments/day.
+- **The generation path needs network.** `next build` fetches both brand fonts through `next/font/google` for the screen, so a fully offline `pnpm cv:pdf` is not a property this decision claims. What it does claim is narrower and is the part that matters: the PDF's own glyphs come from TTFs in this repo, so the file is a deterministic function of the checkout and never of what Google served that day.
+- **The leak that started this cannot repeat quietly.** The guard is checked against the PDF's extracted text, which is the last thing downstream of every Rendering, and a refused PDF never reaches `public/`.
+- **Two more binary font assets.** `IBMPlexSans-Regular.ttf` (196 KB) and `JetBrainsMono-Medium.ttf` (264 KB) join the two JetBrains Mono files already there. Both fonts are SIL OFL 1.1, which explicitly permits embedding in a document, in full or as a subset, without changing the document's licence.
+- **The PDF is a Rendering for humans and for upload forms, not for machines.** An LLM handed a PDF pays 1,500 to 3,000 text tokens per page plus image tokens, so the machine-readable answer stays the semantic HTML on `/cv` (and, if it is ever wanted, a `/cv.md` through the existing `llms.ts` machinery). That is explicitly not built here.
+- **Deferred:** PDF/UA validation against a real checker (PAC or veraPDF), an Italian-language variant, and a `.docx` variant, which every ATS vendor lists before PDF and which none of the four candidates produces.

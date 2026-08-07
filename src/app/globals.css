@@ -395,6 +395,15 @@ pre[class*="language-"] {
    single column through `print:` utilities. What is left here is what a token
    or a utility cannot express. */
 @media print {
+  /* Print the palette as declared. Chromium prints "with modified colors" by
+     default, which would mute the Akane Red the print palette deliberately
+     keeps. It belongs here rather than in the PDF generator, so a reader who
+     hits Cmd+P gets the same colours the generated PDF has. */
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   /* Screen texture, not paper: the fixed dot-grid overlay would otherwise be
      stamped over every sheet. */
   body::before {

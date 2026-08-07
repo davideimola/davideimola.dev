@@ -47,6 +47,7 @@ pnpm test:watch    # Vitest in watch mode
 pnpm test:coverage # Vitest with coverage report
 pnpm storybook     # Storybook dev server on port 6006
 pnpm build:storybook # Build Storybook static output
+pnpm cv:pdf        # Regenerate public/cv.pdf from the real /cv page (never part of pnpm build)
 ```
 
 ## Design Tokens

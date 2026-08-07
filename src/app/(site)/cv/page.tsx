@@ -1,6 +1,8 @@
+import { IconDownload } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ButtonLink } from "../../../components/ui/Button";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { PageHero } from "../../../components/ui/PageHero";
 import {
@@ -16,6 +18,7 @@ import {
   getSkills,
   getTotalTalkCount,
 } from "../../../lib/cv";
+import { CV_PDF_URL_PATH, downloadFileName } from "../../../lib/cv-pdf";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
 const DESCRIPTION =
@@ -213,7 +216,25 @@ export default function CvPage() {
         title={identity.name}
         className="mb-10"
         description={<span className="font-mono text-[14px] text-accent">{identity.headline}</span>}
-      />
+      >
+        {/* The page is the link Davide sends; this is the copy a reader keeps.
+            It points at the committed Rendering `pnpm cv:pdf` generates from this
+            same page, and `download` names the saved file after the person so
+            `cv.pdf` never lands anonymously in a stranger's Downloads.
+            ButtonLink carries `data-print-hide`, so it is absent from the PDF it
+            links to without a rule of its own. */}
+        {/* `primary`: on this page downloading the CV is the main CTA, which is
+            what the design system reserves the accent fill for. */}
+        <ButtonLink
+          href={CV_PDF_URL_PATH}
+          download={downloadFileName(identity.name)}
+          variant="primary"
+          className="mt-6"
+        >
+          <IconDownload size={14} stroke={1.5} />
+          Download PDF
+        </ButtonLink>
+      </PageHero>
 
       {/* `print:flex` puts the two rails back into the single-column flow the
           narrow screen already uses, whatever width the sheet is laid out at. */}
