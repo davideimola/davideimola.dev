@@ -82,8 +82,8 @@ Apply with Tailwind: `font-mono`, `font-sans`
 
 - **Palette:** `print:light-ground` on `<body>` (`src/app/layout.tsx`) redefines the ground tokens for print media. The `@utility light-ground` that holds them lives in `globals.css` next to the dark ones. Because tokens are declared with `@theme inline`, every `bg-bg` / `text-text-1` / `border-border` utility re-themes at once. It has to sit on `<body>`, not `<html>`: utilities are in the `utilities` cascade layer, so the unlayered `:root` block would win on the same element.
 - **Chrome:** anything screen-only carries `data-print-hide`. `Button` and `ButtonLink` both set it, so a control built the repo's way needs no rule of its own; the NavBar and Footer set it too. Raw `<button>` elements are dropped as well. Both rules live in the `@media print` block in `globals.css`.
-- **Layout:** page-level `print:` utilities collapse the two-column grid into single-column flow (`print:flex`, `print:static`, `print:self-stretch`). DOM order is the reading order on paper, which is what makes the generated PDF parseable.
-- **ATS constraints on `/cv`:** no tables, no images, and no text in page headers or footers. Vendor documentation warns about exactly these three, so they are hard constraints rather than preferences.
+- **Layout:** paper keeps the two rails. The sheet is narrower than `lg`, so the desktop grid does not reach it and the print variant states its own track (`print:grid print:grid-cols-[1fr_190px]`). The grid sits on the **outer** wrapper with `print:contents` on the inner one, so the hero is a cell of it and the aside starts level with the name: nested under the hero, Chromium pushed the whole row to sheet two and left sheet one holding just the name. DOM order is main rail then aside on both media, so the reading order on paper matches the screen.
+- **ATS constraints on `/cv`:** no tables, no images, and no text in page headers or footers, asserted by `pnpm cv:pdf`. Single column is **not** one of them: ADR-0003 trades it away for a readable sheet, so user story 18 of issue #98 is knowingly unmet.
 
 ## Responsive Design
 

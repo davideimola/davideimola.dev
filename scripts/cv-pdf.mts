@@ -286,33 +286,32 @@ async function assertLocalFontsAreUsed(page: Page): Promise<FontProof> {
   return { embedded: report.embedded.sort(), requested: report.requested.sort() };
 }
 
-// A single-column PDF is the one thing every ATS vendor documents, so it is
-// asserted rather than trusted. Checked generically (no class names): in print
-// media no visible element may lay its content out in more than one column.
-// Flex rows are fine, they put two items on one line, not text in two columns.
-async function assertSingleColumn(page: Page): Promise<void> {
+// This used to assert the print Rendering was single column, which is the shape
+// ATS vendors document as safe. The sheet kept the two rails instead, on purpose
+// (docs/adr/0003), so that assertion is gone and these two remain: they are the
+// ATS constraints the layout decision did not trade away, and vendors document
+// them as parsing failures in their own words rather than as styling advice.
+//
+// Checked generically, never by class name: an <img> or a <table> that reaches
+// paper has to break the command, whatever markup put it there.
+async function assertNoImagesOrTables(page: Page): Promise<void> {
   const offenders = await page.evaluate(() => {
     const found: string[] = [];
-    for (const element of document.querySelectorAll<HTMLElement>("body *")) {
+    for (const element of document.querySelectorAll<HTMLElement>("img, svg, table")) {
       if (!element.checkVisibility()) continue;
-      const style = getComputedStyle(element);
-      const tracks = style.gridTemplateColumns;
-      const gridColumns =
-        style.display.includes("grid") && tracks !== "none" ? tracks.trim().split(/\s+/).length : 1;
-      const textColumns = style.columnCount === "auto" ? 1 : Number(style.columnCount);
-      if (gridColumns > 1 || textColumns > 1) {
-        // getAttribute, not `.className`: on an SVG node that is an
-        // SVGAnimatedString and stringifies to "[object SVGAnimatedString]".
-        found.push(
-          `<${element.tagName.toLowerCase()} class="${element.getAttribute("class") ?? ""}">`
-        );
-      }
+      // getAttribute, not `.className`: on an SVG node that is an
+      // SVGAnimatedString and stringifies to "[object SVGAnimatedString]".
+      found.push(
+        `<${element.tagName.toLowerCase()} class="${element.getAttribute("class") ?? ""}">`
+      );
     }
     return found;
   });
 
   if (offenders.length > 0) {
-    throw new Error(`The print Rendering is not single column: ${offenders.join(", ")}`);
+    throw new Error(
+      `The print Rendering carries images or tables, which ATS vendors document as parsing failures: ${offenders.join(", ")}`
+    );
   }
 }
 
@@ -363,7 +362,7 @@ async function renderPdf(baseUrl: string): Promise<{ bytes: Uint8Array; fonts: F
     );
 
     const fonts = await assertLocalFontsAreUsed(page);
-    await assertSingleColumn(page);
+    await assertNoImagesOrTables(page);
     await absolutiseLinks(page, baseUrl);
 
     const bytes = await page.pdf({
@@ -520,7 +519,7 @@ async function main(): Promise<void> {
   );
   console.log(`  fonts embedded: ${fonts.embedded.join(", ")}`);
   console.log(`  weights asked for: ${fonts.requested.join(", ")}`);
-  console.log("  selectable text layer, single column, no private data, no page headers.");
+  console.log("  selectable text layer, no images or tables, no private data, no page headers.");
 }
 
 try {

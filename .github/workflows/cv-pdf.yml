@@ -142,9 +142,9 @@ jobs:
           elif grep -qE "did not render with the repo|never loaded|asks for a bold" "$LOG"; then
             title="The CV PDF would have embedded the wrong fonts"
             advice="A text run on /cv no longer resolves to the two brand families the generator loads from public/fonts, or asks for a weight that has no TTF there. Add the missing face or fix the page: see this step's log."
-          elif grep -q "not single column" "$LOG"; then
-            title="The print Rendering is no longer single column"
-            advice="Something on /cv lays content out in more than one column under print media, which is the one layout constraint every ATS vendor documents. The offending elements are in this step's log."
+          elif grep -q "images or tables" "$LOG"; then
+            title="The print Rendering carries an image or a table"
+            advice="Something on /cv renders an img, an svg or a table under print media. ATS vendors document those as parsing failures, so the generator refuses them. Single column is deliberately not enforced (ADR-0003); images and tables still are. The offending elements are in this step's log."
           elif grep -qE "exited with code|did not serve|/cv returned" "$LOG"; then
             title="The site never built, or never served /cv"
             advice="next build or next start failed before Chromium could open /cv, so this is an ordinary build failure rather than a CV one. The compiler output is in this step's log."

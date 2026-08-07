@@ -196,10 +196,20 @@ function OrganisedConferencesSection() {
 // Printing this page is the same markup, not a second layout: the tokens flip
 // to the light palette through `print:light-ground` on <body> (globals.css), the
 // chrome drops out on `data-print-hide`, and the `print:` utilities below undo
-// the three screen affordances that make no sense on paper: the padding that
-// clears the fixed NavBar, the two-column grid, and the sticky aside. DOM order
-// is main rail then aside on both media, so the reading order a PDF extracts
-// matches the reading order on screen.
+// the two screen affordances that make no sense on paper: the padding that
+// clears the fixed NavBar, and the sticky aside.
+//
+// Paper keeps the two rails. The sheet is narrower than `lg`, so the desktop
+// grid does not apply there and the print variant has to state it again at a
+// width that fits A4. Single column was the first shape (it is what ATS vendors
+// document as safe) and it read badly: with the full sheet to spread across, the
+// flush-right dates opened gaps wide enough to look like a bug, and the aside
+// landed on a third, half-empty page with the contact details at the very end of
+// the document. Two rails is a deliberate trade of ATS parseability for a sheet
+// a human can actually read, recorded in docs/adr/0003.
+//
+// DOM order is main rail then aside on both media, so the reading order a PDF
+// extracts matches the reading order on screen.
 export default function CvPage() {
   const identity = getIdentity();
   const contact = getContactLinks();
@@ -210,11 +220,14 @@ export default function CvPage() {
   return (
     // `pt-24` clears the fixed NavBar, which paper does not have; the sheet
     // margin comes from `@page` instead of from the page's own padding.
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0">
+    // In print this is the grid, not just its wrapper: the hero has to be a cell
+    // of it so the aside can start at the top of the first sheet. See the comment
+    // on the inner wrapper for why that matters.
+    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_190px] print:gap-x-7 print:items-start">
       <PageHero
         command="cat ./cv.md"
         title={identity.name}
-        className="mb-10"
+        className="mb-10 print:col-start-1 print:row-start-1"
         description={<span className="font-mono text-[14px] text-accent">{identity.headline}</span>}
       >
         {/* The page is the link Davide sends; this is the copy a reader keeps.
@@ -236,11 +249,16 @@ export default function CvPage() {
         </ButtonLink>
       </PageHero>
 
-      {/* `print:flex` puts the two rails back into the single-column flow the
-          narrow screen already uses, whatever width the sheet is laid out at. */}
-      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12 print:flex">
+      {/* `print:contents` dissolves this wrapper on paper, so the two rails become
+          cells of the outer grid alongside the hero rather than of a grid nested
+          under it. That is what lets the aside start level with the name.
+          Nesting it cost a whole sheet: Chromium refuses to split a row that
+          carries a `break-inside: avoid` item taller than the space left under the
+          hero, so it pushed the entire row (main rail included) to sheet two and
+          left sheet one holding nothing but the name. */}
+      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12 print:contents">
         {/* Main rail: the history, typed */}
-        <div className="min-w-0 flex flex-col gap-10">
+        <div className="min-w-0 flex flex-col gap-10 print:col-start-1 print:row-start-2">
           <p className="font-sans text-[15px] text-text-2 leading-relaxed border-l-2 border-accent pl-5">
             {identity.summary}
           </p>
@@ -254,10 +272,11 @@ export default function CvPage() {
         </div>
 
         {/* Aside: the facts, held apart from the history */}
-        {/* `print:static print:self-stretch` undoes the sticky desktop rail: on
-            paper the aside is simply the last block of the single column,
-            whatever width the sheet is laid out at. */}
-        <aside className="min-w-0 lg:sticky lg:top-20 lg:self-start border border-border rounded-sm p-5 bg-bg-card print:static print:self-stretch">
+        {/* `print:static` undoes the sticky desktop rail, which has no meaning on
+            a sheet that cannot scroll. `print:break-inside-avoid` keeps the card
+            whole rather than letting it split across the fold, and the tighter
+            padding buys back width at the narrower print track. */}
+        <aside className="min-w-0 lg:sticky lg:top-20 lg:self-start border border-border rounded-sm p-5 bg-bg-card print:static print:p-4 print:col-start-2 print:row-start-1 print:row-span-2 print:break-inside-avoid">
           <AsideBlock title="Contact">
             <div className="flex flex-col gap-1 font-mono text-[12px] text-text-2 break-words">
               {contact.map((item) => {
