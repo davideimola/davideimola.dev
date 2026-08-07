@@ -11,11 +11,10 @@ import {
 } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import type { ExperienceEntry } from "../../../components/ui/ExperienceTimeline";
-import { ExperienceTimeline } from "../../../components/ui/ExperienceTimeline";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { ScrollReveal } from "../../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { getTrajectory } from "../../../lib/cv";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
 export const metadata: Metadata = {
@@ -82,86 +81,6 @@ const METHODOLOGIES = [
     name: "Technical leadership",
     context:
       "Setting the technical direction across the platform and growing the people around me. If we don't all grow, the company doesn't.",
-  },
-];
-
-const EXPERIENCE: ExperienceEntry[] = [
-  {
-    company: "RedCarbon",
-    period: "Sep 2022 – Present",
-    current: true,
-    roles: [
-      {
-        role: "Tech Lead",
-        period: "Jan 2026 – Present",
-        description:
-          "Tech lead for platform engineering. I own the technical decisions across the whole platform, from frontend to infrastructure, and build the AI agents on top, coordinating with the AI and security teams. I still write code every day: the role is about technical direction, not stepping back from engineering.",
-        current: true,
-      },
-      {
-        role: "Software Engineer",
-        period: "Sep 2022 – Dec 2025",
-        description:
-          "Backend engineering on a Go microservices platform. Kubernetes, GCP, gRPC, Next.js. Grew into the tech lead role from here.",
-        current: false,
-      },
-    ],
-  },
-  {
-    company: "Milkman Technologies",
-    period: "Aug 2020 – Sep 2022",
-    current: false,
-    roles: [
-      {
-        role: "DevOps Engineer",
-        period: "Aug 2020 – Sep 2022",
-        description:
-          "Last-mile delivery platform. AWS, Kafka, PostgreSQL, Datadog. Focus on reliability and observability.",
-        current: false,
-      },
-    ],
-  },
-  {
-    company: "Codemotion",
-    period: "Jan 2021 – Apr 2021",
-    current: false,
-    roles: [
-      {
-        role: "IT Instructor",
-        period: "Jan 2021 – Apr 2021",
-        description:
-          "Freelance instructor. Wrote and delivered courses on IaC, DevOps practices, and Cloud Security.",
-        current: false,
-      },
-    ],
-  },
-  {
-    company: "ASEM S.r.l.",
-    period: "Dec 2017 – Aug 2020",
-    current: false,
-    roles: [
-      {
-        role: "DevOps Engineer",
-        period: "Dec 2017 – Aug 2020",
-        description:
-          "Industrial automation software. Built CI/CD pipelines, containerized legacy systems with Docker, C#.",
-        current: false,
-      },
-    ],
-  },
-  {
-    company: "EDALab",
-    period: "Nov 2016 – Sep 2017",
-    current: false,
-    roles: [
-      {
-        role: "Software Engineer",
-        period: "Nov 2016 – Sep 2017",
-        description:
-          "Internship turned first job. Embedded systems, Qt, iOS, C++. Where engineering got serious.",
-        current: false,
-      },
-    ],
   },
 ];
 
@@ -260,6 +179,8 @@ const HOBBIES = [
 ];
 
 export default function AboutPage() {
+  const trajectory = getTrajectory();
+
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
       <JsonLd data={PERSON_SCHEMA} />
@@ -396,35 +317,40 @@ export default function AboutPage() {
         </ScrollReveal>
       </section>
 
-      {/* Experience */}
+      {/* Trajectory: the narrative Register of the CV Record. The dated list,
+          the education and every engagement live on /cv, which is the one link
+          out of this section. */}
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Experience" />
+          <SectionHeader title="How I got here" seeAllHref="/cv" seeAllLabel="The facts → /cv" />
         </ScrollReveal>
-        <ExperienceTimeline entries={EXPERIENCE} />
-
-        {/* Education */}
-        <ScrollReveal>
-          <div className="mt-4 pt-6 border-t border-border flex flex-col gap-3">
-            <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-2">
-              Education
-            </p>
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[13px] text-text-1">
-                Università degli Studi di Verona
-              </span>
-              <span className="font-sans text-[13px] text-text-2">
-                B.Sc. Computer Science · 94/110, 2014–2018
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[13px] text-text-1">ITI G. Marconi, Verona</span>
-              <span className="font-sans text-[13px] text-text-2">
-                Technical high school · 2009–2014
-              </span>
-            </div>
-          </div>
-        </ScrollReveal>
+        <div className="flex flex-col gap-8 sm:gap-10">
+          {trajectory.map((phase, i) => (
+            <ScrollReveal key={phase.slug} delay={i * 60}>
+              <div className="grid grid-cols-1 sm:grid-cols-[104px_1fr] gap-x-6 md:gap-x-8 gap-y-2">
+                <p className="font-mono text-[11px] text-text-3 tabular-nums sm:text-right sm:pt-1">
+                  {phase.period}
+                </p>
+                <div className="relative min-w-0 sm:border-l sm:border-border-mid sm:pl-6 md:pl-8">
+                  <span
+                    className={`hidden sm:block absolute -left-[3px] top-[7px] w-[5px] h-[5px] rounded-full ${phase.current ? "bg-accent" : "bg-text-3"}`}
+                  />
+                  <h3 className="font-mono text-[14px] sm:text-[15px] font-semibold text-text-1 flex items-baseline gap-2 mb-1.5">
+                    {/* Decorative: the order is already carried by the periods. */}
+                    <span
+                      aria-hidden="true"
+                      className="text-accent text-[11px] tabular-nums shrink-0"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="min-w-0">{phase.title}</span>
+                  </h3>
+                  <p className="font-sans text-[14px] text-text-2 leading-relaxed">{phase.prose}</p>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </section>
 
       {/* Community */}

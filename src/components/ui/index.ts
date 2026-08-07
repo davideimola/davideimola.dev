@@ -6,8 +6,6 @@ export { Button, ButtonLink } from "./Button";
 export { Card } from "./Card";
 export { CodeBlock } from "./CodeBlock";
 export { CopyButton } from "./CopyButton";
-export type { ExperienceEntry, ExperienceRole } from "./ExperienceTimeline";
-export { ExperienceTimeline } from "./ExperienceTimeline";
 export { GiscusComments } from "./GiscusComments";
 export { JsonLd } from "./JsonLd";
 export { LinkTile } from "./LinkTile";

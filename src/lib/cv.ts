@@ -75,6 +75,7 @@ export interface CvRecord {
   education: EducationEntry[];
   skills: SkillGroup[];
   openSource: string[];
+  trajectory: TrajectoryPhase[];
 }
 
 // ── Record ─────────────────────────────────────────────────────────────────
@@ -149,4 +150,106 @@ export function getEngagements(): Engagement[] {
 // freelance work renders that section empty.
 export function getEngagementsByType(type: EngagementType): Engagement[] {
   return getEngagements().filter((engagement) => engagement.type === type);
+}
+
+// ── The /about trajectory ──────────────────────────────────────────────────
+
+// /about tells the trajectory instead of repeating the dated list /cv already
+// does better: where he was, what it taught him, where it led. The phases live
+// in the Record and reference the engagements they cover, so a period is stated
+// once, in the engagement, and derived here. The prose is the phase's own
+// content and the one thing the Record holds that /cv never renders.
+
+// A phase points at an engagement, optionally narrowed to one of its roles: a
+// promotion splits one engagement across two phases of the story.
+export interface EngagementReference {
+  engagement: string;
+  role?: string;
+}
+
+export interface TrajectoryPhase {
+  slug: string;
+  title: string;
+  // The year the story reaches back to before the first engagement it covers.
+  // Only for years the Record deliberately holds no entry for: the websites
+  // built during university are story on /about and never entries on /cv.
+  from?: string;
+  covers: EngagementReference[];
+  prose: string;
+}
+
+export interface ResolvedPhase {
+  slug: string;
+  title: string;
+  prose: string;
+  // Derived, never authored: the span of everything the phase covers.
+  period: string;
+  // True while one of those periods is still open.
+  current: boolean;
+  engagements: Engagement[];
+}
+
+// The last year of a period, or null while it is still running.
+function endYear(period: string): number | null {
+  if (/present|now/i.test(period)) return null;
+  const years = period.match(/\d{4}/g);
+  // Same fallback as startYear: a period holding no year at all reads as 0.
+  return years ? Number(years[years.length - 1]) : 0;
+}
+
+function spanLabel(first: number, last: number | null): string {
+  if (last === null) return `${first} – Present`;
+  return last === first ? `${first}` : `${first} – ${last}`;
+}
+
+// An unknown reference throws rather than being skipped: a renamed slug or a
+// renamed role would otherwise delete a phase of the story in silence.
+function resolveReference(
+  record: CvRecord,
+  phase: TrajectoryPhase,
+  reference: EngagementReference
+): { engagement: Engagement; period: string } {
+  const engagement = record.engagements.find((e) => e.slug === reference.engagement);
+  if (!engagement) {
+    throw new Error(
+      `Trajectory phase "${phase.slug}" references unknown engagement "${reference.engagement}".`
+    );
+  }
+  if (!reference.role) return { engagement, period: engagement.period };
+
+  const role = engagement.roles.find((r) => r.role === reference.role);
+  if (!role) {
+    throw new Error(
+      `Trajectory phase "${phase.slug}" references unknown role "${reference.role}" of engagement "${reference.engagement}".`
+    );
+  }
+  return { engagement, period: role.period };
+}
+
+// The phases of /about, in Record order: the story's order is editorial, so it
+// is not re-sorted here the way the schematic history is.
+export function getTrajectory(): ResolvedPhase[] {
+  const record = getCvRecord();
+
+  return record.trajectory.map((phase) => {
+    if (phase.covers.length === 0) {
+      throw new Error(`Trajectory phase "${phase.slug}" covers no engagement.`);
+    }
+    const covered = phase.covers.map((reference) => resolveReference(record, phase, reference));
+    const periods = covered.map((entry) => entry.period);
+
+    const starts = periods.map(startYear);
+    if (phase.from) starts.push(startYear(phase.from));
+    const closed = periods.map(endYear).filter((year): year is number => year !== null);
+    const current = closed.length !== periods.length;
+
+    return {
+      slug: phase.slug,
+      title: phase.title,
+      prose: phase.prose,
+      period: spanLabel(Math.min(...starts), current ? null : Math.max(...closed)),
+      current,
+      engagements: [...new Set(covered.map((entry) => entry.engagement))],
+    };
+  });
 }

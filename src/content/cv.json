@@ -196,5 +196,42 @@
       "items": ["DDD", "TDD", "GitOps", "CI/CD", "Technical leadership"]
     }
   ],
-  "openSource": ["Kubernetes", "Capsule", "Kannon", "Argus"]
+  "openSource": ["Kubernetes", "Capsule", "Kannon", "Argus"],
+  "trajectory": [
+    {
+      "slug": "where-it-started",
+      "title": "Where it started",
+      "from": "2013",
+      "covers": [{ "engagement": "edalab" }],
+      "prose": "During university I built websites for whoever would pay a student, because I wanted to know how the web actually worked and not just how to make a page load. Then an internship at EDALab turned into my first real job: embedded systems in C++ and Qt, and a Qt application I ported to iOS and shipped. Working inside a team taught me what no side project ever could, that readable code is not a nicety but the difference between a codebase that scales and one that breaks you. Clean Code and Clean Architecture landed at exactly the right moment, and they pushed me towards the part of the job nobody was looking after: how software gets built, tested and deployed."
+    },
+    {
+      "slug": "infrastructure-is-a-product",
+      "title": "Infrastructure is a product",
+      "covers": [{ "engagement": "asem" }, { "engagement": "milkman" }],
+      "prose": "At ASEM I containerized industrial automation software that had never seen a container and built the pipelines that shipped it. At Milkman Technologies I moved to a last-mile delivery platform, where reliability and observability on AWS were not a nice-to-have: when a delivery fails, someone is waiting at a door. Five years of pipelines, clusters and dashboards taught me that infrastructure is a product whose users are developers, and that every pipeline I built either gave the team back a day a week or quietly took one. It also taught me where I did not want to stop: I was moving a domain around for a living without ever getting to model it."
+    },
+    {
+      "slug": "the-work-after-hours",
+      "title": "The work after hours",
+      "covers": [
+        { "engagement": "si-fa" },
+        { "engagement": "codemotion" },
+        { "engagement": "sport-analytics" }
+      ],
+      "prose": "Alongside the day job I kept the infrastructure and the website of Si-Fa, a social cooperative, running until it closed, wrote and delivered the Infrastructure as Code, DevOps and Cloud Security modules of Codemotion's Cloud Engineer path, and moved a fantasy football platform onto Kubernetes for Sport Analytics because the project was fun and they asked. Teaching was the part that changed me: you cannot explain GitOps to a room of forty people without discovering the three things you only thought you understood. It is also where the idea that what you learn you must share stopped being a nice sentence and became the reason I speak at conferences, and then the reason I started organizing them."
+    },
+    {
+      "slug": "going-deeper-not-wider",
+      "title": "Going deeper, not wider",
+      "covers": [{ "engagement": "redcarbon", "role": "Software Engineer" }],
+      "prose": "I joined RedCarbon as a software engineer on a multi-tenant AI cybersecurity platform: Go microservices talking over gRPC, GCP and Kubernetes underneath, Next.js on the product side. This is where Domain-Driven Design landed, and software stopped being a set of instructions and became a language for a domain. Working inside a security company also changed how I read code, mine and everyone else's, because there a bug arrives with an attacker attached to it. By the third year the technical decisions were finding their way to me well before anyone made it official."
+    },
+    {
+      "slug": "where-it-took-me",
+      "title": "Where it took me",
+      "covers": [{ "engagement": "redcarbon", "role": "Tech Lead" }],
+      "prose": "Today I own the technical direction across the platform, from the frontend to the infrastructure, and I build the AI agents that run on top of it, with the AI and security teams alongside me. I still write code every day: the job is technical direction, not stepping back from engineering. The shift changed something I did not expect, though. I care less about my own code and more about the team's trajectory, because if we do not all grow, the company does not either. And the two things I work on now are two sides of one question: AI that does real security work, and security for the code AI writes."
+    }
+  ]
 }
