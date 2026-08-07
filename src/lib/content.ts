@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { CONTENT_DIR, readContentJson } from "./content-json";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -71,7 +72,7 @@ export interface TocItem {
 
 // ── Blog ──────────────────────────────────────────────────────────────────
 
-const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
+const BLOG_DIR = path.join(CONTENT_DIR, "blog");
 
 function slugify(text: string): string {
   return text
@@ -171,8 +172,7 @@ export function getPrevNextPosts(slug: string): { prev: BlogPost | null; next: B
 // ── Talks ─────────────────────────────────────────────────────────────────
 
 function loadTalks(): Talk[] {
-  const raw = fs.readFileSync(path.join(process.cwd(), "src/content/talks.json"), "utf-8");
-  return JSON.parse(raw) as Talk[];
+  return readContentJson<Talk[]>("talks.json");
 }
 
 export function getRecentTalks(count = 3): Talk[] {
@@ -198,8 +198,7 @@ export function getUpcomingTalks(): Talk[] {
 // ── Projects ──────────────────────────────────────────────────────────────
 
 function loadProjects(): Project[] {
-  const raw = fs.readFileSync(path.join(process.cwd(), "src/content/projects.json"), "utf-8");
-  return JSON.parse(raw) as Project[];
+  return readContentJson<Project[]>("projects.json");
 }
 
 export function getAllProjects(): Project[] {
@@ -214,9 +213,5 @@ export function getFeaturedProjects(): Project[] {
 // ── OSS Contributions ─────────────────────────────────────────────────────
 
 export function getOssContributions(): OssContribution[] {
-  const raw = fs.readFileSync(
-    path.join(process.cwd(), "src/content/oss-contributions.json"),
-    "utf-8"
-  );
-  return JSON.parse(raw) as OssContribution[];
+  return readContentJson<OssContribution[]>("oss-contributions.json");
 }
