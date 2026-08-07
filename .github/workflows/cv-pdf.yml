@@ -35,7 +35,10 @@ on:
       - src/app/**/cv/**
       # The name and the headline reach the sheet through PageHero.
       - src/components/ui/PageHero.tsx
-      # `print:light-ground` on <body> is what flips the page onto paper.
+      # `print:light-ground` on <body> is what flips the page onto paper. The
+      # (site) route group's own layout is deliberately absent: everything it
+      # adds is chrome, and chrome carries data-print-hide, so it cannot reach
+      # the sheet.
       - src/app/layout.tsx
       # The design tokens, the print stylesheet and the @page sheet margin.
       - src/app/globals.css
