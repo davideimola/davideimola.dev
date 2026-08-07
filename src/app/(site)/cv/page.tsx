@@ -188,8 +188,11 @@ function SelectedTalksSection() {
         {talks.map((talk) => (
           <li key={talk.slug} className="flex flex-col gap-0.5 print:break-inside-avoid">
             <p className="font-sans text-[14px] text-text-1 leading-snug">{talk.title}</p>
+            {/* The year is null when the event name already carries it, which is
+                most of them, so this line does not say 2026 twice. */}
             <p className="font-mono text-[11px] text-text-3">
-              {talk.event} · {talk.year}
+              {talk.event}
+              {talk.year && ` · ${talk.year}`}
             </p>
           </li>
         ))}
@@ -286,10 +289,25 @@ export default function CvPage() {
     // is to trim what the sheet says, not to shrink the type further. Anything
     // under about 6pt stops being a document a human reads.
     //
-    // The aside track is stated pre-zoom, hence 288px rather than 190px: zoom
-    // enlarges the layout viewport, so a track has to be divided by the factor to
-    // land at the intended physical width on paper (288 x 0.66 = 190).
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_288px] print:gap-x-7 print:items-start print:[zoom:0.66]">
+    // The print track is wider than the screen's proportions would suggest, and the
+    // width is what balances the two columns. With the right column carrying the
+    // card, the talks, the events and the community, a 190px track left it running
+    // a whole block past the fold while the left rail stopped two thirds down the
+    // sheet with nothing in it. Trading the width the left rail was not using is
+    // what fits the document, at full 6.4pt: measured, 190px and 205px and 220px all
+    // spill, 235px lands it on one sheet filled to 798pt of 842.
+    //
+    // The track is stated pre-zoom, hence 364px rather than 240px: zoom enlarges the
+    // layout viewport, so a track has to be divided by the factor to land at the
+    // intended physical width on paper (364 x 0.66 = 240).
+    //
+    // `grid-rows-[auto_1fr]` is load-bearing, not tidiness. The right column spans
+    // both rows, and when a spanning item is taller than the rows it crosses,
+    // Chromium grows every one of them to fit it. With implicit rows that pushed
+    // about 87px into the hero's row and opened a band of blank paper between the
+    // headline and the summary. Sizing row one to its content and letting row two
+    // take the rest sends the whole excess where it belongs, under the history.
+    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_364px] print:grid-rows-[auto_1fr] print:gap-x-7 print:items-start print:[zoom:0.66]">
       <PageHero
         command="cat ./cv.md"
         title={identity.name}
@@ -332,16 +350,15 @@ export default function CvPage() {
           {PAID_TYPES.map((type) => (
             <EngagementSection key={type} type={type} />
           ))}
-
-          <CommunityAndProjectsSection />
         </div>
 
-        {/* The right column: the facts, held apart from the history. It carries the
-            aside card and then the speaking sections, so the left rail is nothing
-            but experience and the dead space under the card is used rather than
-            printed blank. Deliberately not sticky any more: it is a content column
-            now, taller than the viewport, and a sticky element that does not fit
-            scrolls its own bottom out of reach. */}
+        {/* The right column: everything that is not the paid history. The card, then
+            the speaking cluster, then the community and the projects. The left rail
+            is the paid history and nothing else, which is what keeps both columns
+            near the same height and stops the space under the card printing blank.
+            Deliberately not sticky: it is a content column now, taller than the
+            viewport, and a sticky element that does not fit scrolls its own bottom
+            out of reach. */}
         <div className="min-w-0 flex flex-col gap-10 lg:self-start print:gap-6 print:col-start-2 print:row-start-1 print:row-span-2">
           {/* `print:break-inside-avoid` keeps the card whole rather than letting it
               split across the fold, and the tighter padding buys back width at the
@@ -405,6 +422,7 @@ export default function CvPage() {
 
           <SelectedTalksSection />
           <OrganisedEventsSection />
+          <CommunityAndProjectsSection />
         </div>
       </div>
 

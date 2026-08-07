@@ -167,7 +167,11 @@ export interface SelectedTalk {
   slug: string;
   title: string;
   event: string;
-  year: string;
+  // null when the event name already states the year ("GoLab 2026"), which most of
+  // them do. Stating it twice on one line reads as a mistake, and dropping it
+  // outright would leave the 16 events in the archive whose name carries no year
+  // ("The Developers' Bakery", "SH meets Mollie") with no date at all.
+  year: string | null;
 }
 
 // An event Davide runs rather than speaks at. One row stands for a whole series,
@@ -208,7 +212,13 @@ export function getSelectedTalks(): SelectedTalk[] {
     if (!talk.session) {
       throw new Error(`Selected talk "${slug}" has no session: only delivered talks belong here`);
     }
-    return { slug, title: talk.session.title, event: talk.event, year: talkYear(talk) };
+    const year = talkYear(talk);
+    return {
+      slug,
+      title: talk.session.title,
+      event: talk.event,
+      year: talk.event.includes(year) ? null : year,
+    };
   });
 }
 

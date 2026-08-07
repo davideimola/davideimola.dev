@@ -336,9 +336,27 @@ describe("getSelectedTalks", () => {
         slug: "acme-conf-2024",
         title: "A Talk About Things",
         event: "Acme Conf 2024",
-        year: "2024",
+        // Null because "Acme Conf 2024" already says it: see the next two tests.
+        year: null,
       },
     ]);
+  });
+
+  // Most event names carry their year, and a row reading "GoLab 2026 · 2026" looks
+  // like a bug. Sixteen of the archive's events carry no year at all, though, so
+  // dropping it outright would leave those rows undated.
+  it("drops the year when the event name already states it", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [talk({ event: "Acme Conf 2024" })]);
+
+    expect(getSelectedTalks()[0].year).toBeNull();
+  });
+
+  it("keeps the year when the event name does not state it", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [
+      talk({ event: "The Developers' Bakery", date: "2024-05-01" }),
+    ]);
+
+    expect(getSelectedTalks()[0].year).toBe("2024");
   });
 
   it("keeps the Record's order, because the selection is the curation", () => {
