@@ -224,18 +224,23 @@ export default function AboutPage() {
                       <div className="mt-8">
                         <RailHeading>What it left me with</RailHeading>
                         <ToolChips names={phase.tools} />
-                        {phase.current && (
-                          <p className="font-mono text-[11px] text-text-3 mt-4">
-                            <Link
-                              href="/uses"
-                              className="text-text-2 hover:text-accent transition-colors"
-                            >
-                              /uses
-                            </Link>{" "}
-                            for the whole setup
-                          </p>
-                        )}
                       </div>
+                    )}
+
+                    {/* Deliberately not hung off the tools block. It was, and when
+                        "Technical leadership" left the current step's tool list the
+                        link went with it and /uses disappeared from the page. It
+                        belongs to the step that is today, whatever that step lists. */}
+                    {phase.current && (
+                      <p className="font-mono text-[11px] text-text-3 mt-8">
+                        <Link
+                          href="/uses"
+                          className="text-text-2 hover:text-accent transition-colors"
+                        >
+                          /uses
+                        </Link>{" "}
+                        for the hardware and software behind all of it
+                      </p>
                     )}
                   </div>
 
