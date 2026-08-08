@@ -70,8 +70,15 @@ export interface SkillGroup {
   items: string[];
 }
 
+/** The prose /about opens with, and the line the story turns on. */
+export interface AboutNarrative {
+  lead: string;
+  creed: { quote: string; gloss: string; phase: string };
+}
+
 export interface CvRecord {
   identity: CvIdentity;
+  about: AboutNarrative;
   engagements: Engagement[];
   // Talks are named by slug only: talks.json describes them.
   selectedTalks: string[];
@@ -341,6 +348,18 @@ export interface EngagementReference {
   role?: string;
 }
 
+/** An open question of the current step. The story's end, not a section. */
+export interface OpenQuestion {
+  name: string;
+  body: string;
+}
+
+/** A photograph that belongs to a step of the story. */
+export interface PhaseImage {
+  src: string;
+  caption: string;
+}
+
 export interface TrajectoryPhase {
   slug: string;
   title: string;
@@ -350,6 +369,16 @@ export interface TrajectoryPhase {
   from?: string;
   covers: EngagementReference[];
   prose: string;
+  // What the step put in his hands. Names only, deliberately: Docker and
+  // Kubernetes explain themselves, and a note per tool ended up saying what he
+  // did with them, which the prose beside it and /sharing already carry.
+  tools?: string[];
+  // What the step set going, by engagement slug. Deliberately not `covers`:
+  // covers drives the phase's period, and Schrodinger Hat runs to today while
+  // the step that started it ended in 2022.
+  started?: string[];
+  opened?: OpenQuestion[];
+  image?: PhaseImage;
 }
 
 export interface ResolvedPhase {
@@ -361,6 +390,10 @@ export interface ResolvedPhase {
   // True while one of those periods is still open.
   current: boolean;
   engagements: Engagement[];
+  tools: string[];
+  started: Engagement[];
+  opened: OpenQuestion[];
+  image?: PhaseImage;
 }
 
 // The last year of a period, or null while it is still running.
@@ -424,6 +457,29 @@ export function getTrajectory(): ResolvedPhase[] {
       period: spanLabel(Math.min(...starts), current ? null : Math.max(...closed)),
       current,
       engagements: [...new Set(covered.map((entry) => entry.engagement))],
+      tools: phase.tools ?? [],
+      // Resolved loudly, for the same reason `covers` is: a renamed slug would
+      // otherwise delete the community work from the story without a word.
+      started: (phase.started ?? []).map((slug) => {
+        const engagement = record.engagements.find((e) => e.slug === slug);
+        if (!engagement) {
+          throw new Error(
+            `Trajectory phase "${phase.slug}" says it started unknown engagement "${slug}".`
+          );
+        }
+        return engagement;
+      }),
+      opened: phase.opened ?? [],
+      image: phase.image,
     };
   });
+}
+
+/**
+ * The narrative Register's own content: the lead the story opens with, and the one
+ * line it turns on. Both are the same kind of fact as a phase's prose, held in the
+ * Record and rendered only on /about.
+ */
+export function getAboutNarrative(): CvRecord["about"] {
+  return getCvRecord().about;
 }

@@ -10,6 +10,7 @@ import {
   type CvRole,
   ENGAGEMENT_TYPES,
   type Engagement,
+  getAboutNarrative,
   getContactLinks,
   getEducation,
   getEngagements,
@@ -47,6 +48,11 @@ const IDENTITY: CvIdentity = {
   summary: "A test summary.",
 };
 
+const ABOUT = {
+  lead: "A lead paragraph.",
+  creed: { quote: "A creed.", gloss: "Its gloss.", phase: "a-phase" },
+};
+
 function role(overrides: Partial<CvRole> = {}): CvRole {
   return { role: "Engineer", period: "2020 – 2021", summary: "Did the work.", ...overrides };
 }
@@ -70,6 +76,7 @@ function setupRecord(
 ): void {
   const record: CvRecord = {
     identity: IDENTITY,
+    about: ABOUT,
     engagements: [],
     selectedTalks: [],
     selectedProjects: [],
@@ -783,5 +790,127 @@ describe("the published trajectory", () => {
     );
 
     expect(storyStart).toBeLessThan(earliestEngagement);
+  });
+});
+
+// ── The trajectory's own content ───────────────────────────────────────────
+
+// /about absorbed Stack, Community and What I'm exploring into the steps of the
+// story, so each phase now carries what that step left behind, set going and
+// opened. These are the derivations those three sections became.
+describe("a phase's own content", () => {
+  it("exposes the tools a phase left behind, and an empty list when it left none", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [
+        phase({ slug: "with-tools", tools: ["Docker", "Kubernetes"] }),
+        phase({ slug: "without" }),
+      ],
+    });
+
+    const [withTools, without] = getTrajectory();
+    expect(withTools.tools).toEqual(["Docker", "Kubernetes"]);
+    expect(without.tools).toEqual([]);
+  });
+
+  it("resolves what a phase started without letting it move the phase's period", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2019 – 2022" }),
+        engagement({
+          slug: "community",
+          type: "volunteering",
+          period: "2022 – Present",
+          current: true,
+        }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }], started: ["community"] })],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.started.map((e) => e.slug)).toEqual(["community"]);
+    // The community runs to today; the step that started it does not.
+    expect(resolved.period).toBe("2019 – 2022");
+    expect(resolved.current).toBe(false);
+  });
+
+  it("throws, naming the slug, when a phase says it started something absent", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase({ started: ["renamed-community"] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/renamed-community/);
+  });
+
+  it("carries the open questions and the image of the step they belong to", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [
+        phase({
+          opened: [{ name: "A question", body: "Still open." }],
+          image: { src: "/images/x.webp", caption: "A caption." },
+        }),
+      ],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.opened).toEqual([{ name: "A question", body: "Still open." }]);
+    expect(resolved.image?.caption).toBe("A caption.");
+  });
+
+  it("leaves opened empty and image undefined when the phase has neither", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase()],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.opened).toEqual([]);
+    expect(resolved.image).toBeUndefined();
+  });
+});
+
+// ── getAboutNarrative ─────────────────────────────────────────────────────
+
+describe("getAboutNarrative", () => {
+  it("returns the lead and the creed the Record holds for /about", () => {
+    setupRecord();
+
+    const about = getAboutNarrative();
+    expect(about.lead).toBe("A lead paragraph.");
+    expect(about.creed.quote).toBe("A creed.");
+  });
+});
+
+// ── The published narrative ───────────────────────────────────────────────
+
+describe("the published /about narrative", () => {
+  it("pins the creed to a phase that exists", () => {
+    const slugs = publishedRecord.trajectory.map((p) => p.slug);
+
+    expect(slugs).toContain(publishedRecord.about.creed.phase);
+  });
+
+  // The whole point of the port: those three sections are gone from /about and
+  // their content lives inside the steps now.
+  it("gives every phase either tools, something started, or something opened", () => {
+    for (const p of publishedRecord.trajectory as Record<string, unknown>[]) {
+      const carries =
+        (p.tools as string[] | undefined)?.length ||
+        (p.started as string[] | undefined)?.length ||
+        (p.opened as unknown[] | undefined)?.length;
+      expect(carries, `phase "${p.slug}" carries nothing of its own`).toBeTruthy();
+    }
+  });
+
+  it("names only engagements that exist in whatever a phase says it started", () => {
+    const slugs = publishedRecord.engagements.map((e) => e.slug);
+
+    for (const p of publishedRecord.trajectory as Record<string, unknown>[]) {
+      for (const slug of (p.started as string[] | undefined) ?? []) {
+        expect(slugs, `phase "${p.slug}" started "${slug}"`).toContain(slug);
+      }
+    }
   });
 });

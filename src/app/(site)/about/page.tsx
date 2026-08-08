@@ -1,555 +1,363 @@
-import {
-  IconBallFootball,
-  IconDeviceGamepad2,
-  IconDice5,
-  IconGrill,
-  IconKarate,
-  IconMovie,
-  IconMusic,
-  IconPlane,
-  IconPokeball,
-} from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { ScrollReveal } from "../../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../../components/ui/SectionHeader";
-import { getTrajectory } from "../../../lib/cv";
+import {
+  getAboutNarrative,
+  getIdentity,
+  getOrganisedEvents,
+  getTotalTalkCount,
+  getTrajectory,
+} from "../../../lib/cv";
 import { PERSON_SCHEMA } from "../../../lib/schema";
+
+const DESCRIPTION =
+  "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.";
 
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.",
+  description: DESCRIPTION,
   openGraph: {
     title: "About · Davide Imola",
     images: [
-      {
-        url: "https://davideimola.dev/og?title=About&category=whoami",
-        width: 1200,
-        height: 630,
-      },
+      { url: "https://davideimola.dev/og?title=About&category=whoami", width: 1200, height: 630 },
     ],
-    description:
-      "Tech Lead building AI agents for cybersecurity, open source builder. I believe what you learn must be shared.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/about",
   },
 };
 
-const TECHNOLOGIES = [
-  {
-    name: "Go",
-    context: "Primary language. Production microservices, two GoLab talks.",
-  },
-  {
-    name: "Kubernetes",
-    context: "Platform engineering backbone. Multiple conference talks, KCD Italy speaker.",
-  },
-  {
-    name: "Flux",
-    context: "GitOps operator of choice. Dedicated talks at KCD, DevOps Day, Incontro DevOps.",
-  },
-  { name: "gRPC", context: "Microservices communication at RedCarbon." },
-  {
-    name: "TypeScript / Next.js",
-    context: "Product frontend. What this site is built with.",
-  },
-  {
-    name: "Pulumi",
-    context: "Infrastructure as code. Code-first approach over config-heavy alternatives.",
-  },
-];
-
-const METHODOLOGIES = [
-  {
-    name: "DDD",
-    context: "Domain-Driven Design. Modeling complex domains (GoLab 2024 talk on Go + DDD).",
-  },
-  {
-    name: "TDD",
-    context: "Discipline built through Clean Code and Clean Architecture. Non-negotiable.",
-  },
-  {
-    name: "GitOps",
-    context: "Declarative infrastructure. State lives in Git, not in someone's head.",
-  },
-  {
-    name: "DevOps culture",
-    context: "CI/CD, IaC, developer experience as engineering leverage. ~10 years background.",
-  },
-  {
-    name: "Technical leadership",
-    context:
-      "Setting the technical direction across the platform and growing the people around me. If we don't all grow, the company doesn't.",
-  },
-];
-
-const COMMUNITY = [
-  {
-    name: "Open Source Day",
-    role: "Co-organizer",
-    description:
-      "Yearly open source conference in Florence, Italy. 500+ attendees, international speakers, full community effort. The project I'm most proud of.",
-    href: "https://osday.dev",
-  },
-  {
-    name: "Schrodinger Hat",
-    role: "Co-founder",
-    description:
-      "International open source community. 20k+ people across Europe. Built from scratch, still growing.",
-    href: "https://schroedinger-hat.org",
-  },
-  {
-    name: "Sharing",
-    role: "Speaker & Organizer",
-    description:
-      "GoLab, KCD Italy, WeAreDevelopers World Congress, DevSecOps Day, Incontro DevOps Italia and more. Concrete talks, honest about tradeoffs.",
-    href: "/sharing",
-  },
-  {
-    name: "Teaching",
-    role: "Instructor & mentor",
-    description:
-      "Codemotion courses on DevOps, IaC, Cloud Security. Workshops at community events. Knowledge shared is knowledge multiplied.",
-    href: null,
-  },
-];
-
+// The one thing on this page that is not derived from the CV Record. Hobbies are
+// deliberately outside the story: they are what the page closes with, not a step of
+// it, and framing them that way is what stopped them reading as bolted on.
 const HOBBIES = [
+  { label: "Football", context: "I play futsal and follow Hellas Verona, home games included." },
   {
-    label: "Football",
-    icon: IconBallFootball,
-    context: "I play futsal and follow Hellas Verona, home games included.",
-    href: null,
-  },
-  {
-    label: "BBQ & low and slow",
-    icon: IconGrill,
+    label: "BBQ, low and slow",
     context:
-      "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak (diaframma). Cheap, flavourful, unbeatable.",
-    href: null,
+      "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak. Cheap, flavourful, unbeatable.",
   },
   {
     label: "Video games",
-    icon: IconDeviceGamepad2,
     context:
-      "RPGs and action-adventure. Loved: Clair Obscur Expedition 33, Baldur's Gate 3, Zelda BotW & TotK. Also a lifelong Pokémon fan.",
-    href: null,
+      "RPGs and action-adventure. Loved: Clair Obscur Expedition 33, Baldur's Gate 3, Zelda BotW and TotK. Lifelong Pokémon fan.",
   },
   {
     label: "Pokémon cards",
-    icon: IconPokeball,
     context:
-      "Collecting for a couple of years. Building the Pokédex in rare and full-art variants. It's an obsession disguised as a hobby.",
-    href: null,
+      "Building the Pokédex in rare and full-art variants. An obsession disguised as a hobby.",
   },
   {
-    label: "Tabletop & D&D",
-    icon: IconDice5,
-    context: "Board game collector. Currently playing a D&D campaign, and writing one to DM soon.",
-    href: null,
+    label: "Tabletop and D&D",
+    context: "Board game collector. Currently playing a campaign, and writing one to DM soon.",
   },
-  {
-    label: "JuJutsu",
-    icon: IconKarate,
-    context: "Hontai Yōshin-ryū. Yellow belt; orange is the next milestone.",
-    href: null,
-  },
+  { label: "JuJutsu", context: "Hontai Yōshin-ryū. Yellow belt; orange is the next milestone." },
   {
     label: "Music",
-    icon: IconMusic,
     context:
-      "Everything from Linkin Park to De André, Eminem to Hans Zimmer. I go to concerts whenever I can (saw LP live in 2025).",
-    href: "https://open.spotify.com/playlist/1qLEh5nRfgkelDOQqBScxE?si=de08590bfe4f4eee",
+      "Everything from Linkin Park to De André, Eminem to Hans Zimmer. Concerts whenever I can.",
   },
   {
     label: "Travel",
-    icon: IconPlane,
-    context:
-      "I travel to learn. Japan was a dream; I'll go back. Asia draws me most: temples, art, religion, and food I'd never stop to think twice about trying.",
-    href: null,
+    context: "I travel to learn. Japan was a dream; I'll go back. Asia draws me most.",
   },
   {
-    label: "Film & Series",
-    icon: IconMovie,
-    context:
-      "Fantasy and action. Lord of the Rings is untouchable. Grew up with Harry Potter. The occasional anime binge or documentary at midnight.",
-    href: null,
+    label: "Film and series",
+    context: "Fantasy and action. Lord of the Rings is untouchable. The occasional anime binge.",
   },
 ];
 
+function RailHeading({ children }: { children: string }) {
+  return (
+    <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-3">{children}</p>
+  );
+}
+
+function ToolChips({ names }: { names: string[] }) {
+  return (
+    <ul className="flex flex-wrap gap-1.5">
+      {names.map((name) => (
+        <li
+          key={name}
+          className="font-mono text-[11px] text-text-2 border border-border rounded-full px-2.5 py-1"
+        >
+          {name}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function AboutPage() {
-  const trajectory = getTrajectory();
+  const identity = getIdentity();
+  const { lead, creed } = getAboutNarrative();
+  const phases = getTrajectory();
+  // Conference series only, which `noun` identifies: what a step *started* is the
+  // community and the conference, and the meetup nights and the hackathon are what
+  // that community then does. /cv lists all of them; here they would turn a
+  // three-item block into a five-item one that mixes granularity.
+  const organised = getOrganisedEvents().filter((event) => event.noun === "edition");
+  const talkCount = getTotalTalkCount();
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
       <JsonLd data={PERSON_SCHEMA} />
-      {/* Page header */}
+
+      {/* The portrait stretches to the height of the text beside it rather than
+          setting its own: a tall image next to three lines of lead is what used to
+          open a band of blank page under the words. */}
       <ScrollReveal>
         <header className="mb-16">
           <p className="font-mono text-[13px] text-text-3 mb-4">
             <span className="text-accent mr-2">❯</span>whoami
           </p>
-          <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 items-start">
-            {/* Bio text */}
+          <div className="flex flex-col sm:flex-row gap-8 sm:gap-10 sm:items-stretch">
             <div className="flex-1 min-w-0">
-              <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-6">
-                About
+              <h1 className="font-mono text-[32px] sm:text-[44px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-5">
+                {identity.name}
               </h1>
-              <div className="flex flex-col gap-4">
-                <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  I started with curiosity. A CS degree from Verona, a lot of self-taught tools, and
-                  the drive to understand how things actually work, not just how to make them run.
-                  My first real team job taught me that readable code isn't just a nicety: it's the
-                  difference between a codebase that scales and one that breaks you. Clean Code and
-                  Clean Architecture landed at the right moment.
-                </p>
-                <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  I spent about ten years in the DevOps world: building pipelines, containerizing
-                  systems, moving infrastructure into code. Then I moved deeper into backend
-                  engineering, found DDD, and started treating software as a language for domains,
-                  not just a set of instructions. Now I'm a Tech Lead at RedCarbon, where I lead
-                  platform engineering: the technical calls across the whole platform, from frontend
-                  to infrastructure, and the AI agents that run on it. I still write code every day.
-                  AI that does real security work, and security for the code AI writes: that's the
-                  intersection I work in, and the one I write about.
-                </p>
-                <p className="font-sans text-[15px] text-text-2 leading-relaxed">
-                  The shift to leadership changed something: I care less about my own code and more
-                  about the team's trajectory. If we don't all grow, the company doesn't.
-                </p>
-              </div>
+              <p className="font-sans text-[16px] text-text-2 leading-relaxed max-w-xl mb-8">
+                {lead}
+              </p>
+              {/* The command is stated once and the chapters below are its output.
+                  Repeating it per chapter is what made the device wear out. */}
+              <p className="font-mono text-[13px] text-text-3">
+                <span className="text-accent mr-2">❯</span>git log --oneline --reverse
+              </p>
+              <p className="font-mono text-[12px] text-text-3 mt-2 pl-6">
+                {phases.length} commits, {phases[0].period.split(" ")[0]} to today. The dated
+                version is on{" "}
+                <Link href="/cv" className="text-text-2 hover:text-accent transition-colors">
+                  /cv
+                </Link>
+                .
+              </p>
             </div>
-
-            {/* Photo */}
-            <div className="shrink-0 sm:mt-14">
-              <div className="w-[220px] sm:w-[280px] aspect-3/4 overflow-hidden rounded-sm border border-border">
-                <Image
-                  src="/images/davide-about-profile.webp"
-                  alt="Portrait of Davide Imola"
-                  width={280}
-                  height={373}
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
+            <div className="shrink-0 w-[200px] sm:w-[220px] sm:self-stretch min-h-[280px] overflow-hidden rounded-sm border border-border">
+              <Image
+                src="/images/davide-about-profile.webp"
+                alt="Portrait of Davide Imola"
+                width={220}
+                height={420}
+                className="w-full h-full object-cover object-top grayscale"
+              />
             </div>
           </div>
         </header>
       </ScrollReveal>
 
-      {/* Philosophy */}
-      <ScrollReveal>
-        <section className="mb-16 border-t border-border pt-10">
-          <blockquote className="border-l-2 border-accent pl-6 py-1">
-            <p className="font-mono text-[15px] sm:text-[17px] text-text-1 leading-snug">
-              What you learn, you must share.
-              <br />
-              <span className="text-text-2 text-[13px] sm:text-[15px]">
-                Knowledge shared is not knowledge lost: it's knowledge multiplied.
-              </span>
-            </p>
-          </blockquote>
-          <p className="font-sans text-[14px] text-text-3 mt-4 pl-6">
-            This is why I speak at conferences, organize OS Day, write, teach, and try to make open
-            source communities actually work. You learn from others; you owe it back.
-          </p>
-        </section>
-      </ScrollReveal>
+      {/* The trajectory is the page. Stack, Community and What I'm exploring used to
+          be sections underneath it and are now the steps' own content: what each one
+          left behind, set going, and opened. */}
+      <div className="flex flex-col gap-16">
+        {phases.map((phase, i) => {
+          const isCreed = creed.phase === phase.slug;
+          const hasRail = phase.started.length > 0 || phase.opened.length > 0;
 
-      {/* Tech stack */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Stack" />
-        </ScrollReveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Technologies */}
-          <ScrollReveal>
-            <div>
-              <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
-                Technologies
-              </p>
-              <ul className="flex flex-col gap-4">
-                {TECHNOLOGIES.map((tech) => (
-                  <li key={tech.name} className="flex flex-col gap-0.5">
-                    <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                      <span className="text-accent text-[10px]">{`//`}</span>
-                      {tech.name}
-                    </span>
-                    <span className="font-sans text-[13px] text-text-3 pl-5">{tech.context}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
+          return (
+            <ScrollReveal key={phase.slug}>
+              <section className={i === 0 ? "" : "border-t border-border pt-8"}>
+                {/* A photograph belongs to the step it documents, at full width: a
+                    band wants a wide frame, not a portrait with its sides cut off. */}
+                {phase.image && (
+                  <figure className="mb-8">
+                    <div className="h-[200px] sm:h-[260px] overflow-hidden rounded-sm border border-border">
+                      <Image
+                        src={phase.image.src}
+                        alt={phase.image.caption}
+                        width={1024}
+                        height={260}
+                        // The crowd is in the middle of the frame: the room's ceiling
+                        // fills the top and the floor the bottom, so both `top` and
+                        // `bottom` spend the band on an empty surface.
+                        className="w-full h-full object-cover object-[center_45%] grayscale"
+                      />
+                    </div>
+                    <figcaption className="font-mono text-[10px] text-text-3 mt-2">
+                      {phase.image.caption}
+                    </figcaption>
+                  </figure>
+                )}
 
-          {/* Methodologies */}
-          <ScrollReveal>
-            <div>
-              <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
-                Methodologies & approach
-              </p>
-              <ul className="flex flex-col gap-4">
-                {METHODOLOGIES.map((m) => (
-                  <li key={m.name} className="flex flex-col gap-0.5">
-                    <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                      <span className="text-accent text-[10px]">{`//`}</span>
-                      {m.name}
-                    </span>
-                    <span className="font-sans text-[13px] text-text-3 pl-5">{m.context}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-        </div>
-
-        {/* Link to /uses */}
-        <ScrollReveal>
-          <p className="font-mono text-[12px] text-text-3 mt-8">
-            Full hardware + software setup →{" "}
-            <a
-              href="/uses"
-              className="text-text-2 hover:text-accent transition-colors duration-150"
-            >
-              /uses
-            </a>
-          </p>
-        </ScrollReveal>
-      </section>
-
-      {/* Trajectory: the narrative Register of the CV Record. The dated list,
-          the education and every engagement live on /cv, which is the one link
-          out of this section. */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="How I got here" seeAllHref="/cv" seeAllLabel="The facts → /cv" />
-        </ScrollReveal>
-        <div className="flex flex-col gap-8 sm:gap-10">
-          {trajectory.map((phase, i) => (
-            <ScrollReveal key={phase.slug} delay={i * 60}>
-              <div className="grid grid-cols-1 sm:grid-cols-[104px_1fr] gap-x-6 md:gap-x-8 gap-y-2">
-                <p className="font-mono text-[11px] text-text-3 tabular-nums sm:text-right sm:pt-1">
-                  {phase.period}
-                </p>
-                <div className="relative min-w-0 sm:border-l sm:border-border-mid sm:pl-6 md:pl-8">
+                <div className="flex items-baseline gap-4 mb-6">
+                  {/* Decorative: the order is already carried by the periods. */}
                   <span
-                    className={`hidden sm:block absolute -left-[3px] top-[7px] w-[5px] h-[5px] rounded-full ${phase.current ? "bg-accent" : "bg-text-3"}`}
-                  />
-                  <h3 className="font-mono text-[14px] sm:text-[15px] font-semibold text-text-1 flex items-baseline gap-2 mb-1.5">
-                    {/* Decorative: the order is already carried by the periods. */}
-                    <span
-                      aria-hidden="true"
-                      className="text-accent text-[11px] tabular-nums shrink-0"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="min-w-0">{phase.title}</span>
-                  </h3>
-                  <p className="font-sans text-[14px] text-text-2 leading-relaxed">{phase.prose}</p>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Community */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Community" />
-        </ScrollReveal>
-
-        {/* OS Day — featured */}
-        <ScrollReveal>
-          <div className="border border-border-hover bg-accent-glow rounded-sm p-6 flex flex-col gap-3 mb-4">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="font-mono text-[14px] font-semibold text-text-1">
-                Open Source Day
-              </span>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
-                  Co-organizer
-                </span>
-                <span className="font-mono text-[10px] text-text-3 border border-border rounded-[2px] px-1.5 py-0.5">
-                  most proud of
-                </span>
-              </div>
-            </div>
-            <p className="font-sans text-[14px] text-text-2 leading-relaxed">
-              Yearly open source conference in Florence, Italy. 500+ attendees, international
-              speakers, and completely free. Students, early-career developers, anyone without a
-              budget: everyone can come. Knowledge should be open and accessible to all. That's not
-              a tagline, it's the reason this conference exists. There's an enormous amount of
-              invisible work behind every edition, and that's exactly why it matters.
-            </p>
-            <a
-              href="https://osday.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start"
-            >
-              Visit →
-            </a>
-          </div>
-        </ScrollReveal>
-
-        {/* Other community items */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {COMMUNITY.filter((item) => item.name !== "Open Source Day").map((item, i) => (
-            <ScrollReveal key={item.name} delay={i * 60}>
-              <div className="border border-border rounded-sm p-5 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
-                <div className="flex items-center justify-between flex-wrap gap-1">
-                  <span className="font-mono text-[13px] font-medium text-text-1">{item.name}</span>
-                  <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
-                    {item.role}
-                  </span>
-                </div>
-                <p className="font-sans text-[13px] text-text-2 leading-relaxed flex-1">
-                  {item.description}
-                </p>
-                {item.href && (
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start mt-1"
+                    aria-hidden="true"
+                    className="font-mono text-[40px] sm:text-[56px] font-bold leading-none text-border-mid tabular-nums shrink-0"
                   >
-                    {item.href.startsWith("http") ? "Visit →" : "See talks →"}
-                  </a>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* What I'm exploring */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="What I'm exploring" />
-        </ScrollReveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <ScrollReveal>
-            <div className="border-l-2 border-accent pl-5 flex flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[13px] font-medium text-text-1">AI × Security</span>
-                <span className="flex items-center gap-1 font-mono text-[10px] text-accent">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
-                  in progress
-                </span>
-              </div>
-              <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Working inside a cybersecurity company changes how you think about every line of
-                code. My focus is AI agents that do real security work, and the flip side: keeping
-                the code AI writes secure.
-              </p>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={60}>
-            <div className="border-l-2 border-accent pl-5 flex flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[13px] font-medium text-text-1">
-                  AI / LLM infrastructure
-                </span>
-                <span className="flex items-center gap-1 font-mono text-[10px] text-accent">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
-                  in progress
-                </span>
-              </div>
-              <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Model hosting, MLOps, vLLM on Kubernetes. AI is changing how software is built and I
-                want to understand the infrastructure layer, not just use the APIs.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-        <ScrollReveal>
-          <p className="font-mono text-[12px] text-text-3 mt-8">
-            What I'm doing right now →{" "}
-            <a href="/now" className="text-text-2 hover:text-accent transition-colors duration-150">
-              /now
-            </a>
-          </p>
-        </ScrollReveal>
-      </section>
-
-      {/* Beyond the code */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Beyond the code" />
-        </ScrollReveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {HOBBIES.map((hobby, i) => (
-            <ScrollReveal key={hobby.label} delay={i * 40}>
-              <div className="border border-border rounded-sm p-4 flex flex-col gap-2 h-full hover:border-border-hover transition-colors duration-150">
-                <div className="flex items-center gap-2">
-                  <hobby.icon size={18} stroke={1.5} className="text-text-3 shrink-0" />
-                  <span className="font-mono text-[12px] font-medium text-text-1">
-                    {hobby.label}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
+                  <div className="min-w-0">
+                    <p className="font-mono text-[11px] text-text-3 tabular-nums mb-1">
+                      {phase.period}
+                      {phase.current && <span className="text-accent"> · now</span>}
+                    </p>
+                    <h2 className="font-mono text-[19px] sm:text-[24px] font-semibold text-text-1 tracking-[-0.01em]">
+                      {phase.title}
+                    </h2>
+                  </div>
                 </div>
-                <p className="font-sans text-[12px] text-text-2 leading-relaxed flex-1">
-                  {hobby.context}
-                </p>
-                {hobby.href && (
-                  <a
-                    href={hobby.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start mt-1"
-                  >
-                    Playlist →
-                  </a>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
 
-      {/* Companion pages */}
+                {/* Two rails only where there is something for the second one. A step
+                    that carries nothing but its tools runs full width instead of
+                    sitting next to a blank column. */}
+                <div className={hasRail ? "lg:grid lg:grid-cols-[1fr_300px] lg:gap-12" : ""}>
+                  <div className="min-w-0">
+                    <p className="font-sans text-[15px] sm:text-[16px] text-text-2 leading-relaxed">
+                      {phase.prose}
+                    </p>
+
+                    {isCreed && (
+                      <blockquote className="border-l-2 border-accent pl-6 py-1 mt-8">
+                        <p className="font-mono text-[17px] sm:text-[19px] text-text-1 leading-snug">
+                          {creed.quote}
+                        </p>
+                        <p className="font-sans text-[14px] text-text-2 mt-2">{creed.gloss}</p>
+                      </blockquote>
+                    )}
+
+                    {/* Names only: Docker and Kubernetes explain themselves, and a
+                        note per tool ended up saying what he did with them, which the
+                        prose above and /sharing already carry. */}
+                    {phase.tools.length > 0 && (
+                      <div className="mt-8">
+                        <RailHeading>What it left me with</RailHeading>
+                        <ToolChips names={phase.tools} />
+                        {phase.current && (
+                          <p className="font-mono text-[11px] text-text-3 mt-4">
+                            <Link
+                              href="/uses"
+                              className="text-text-2 hover:text-accent transition-colors"
+                            >
+                              /uses
+                            </Link>{" "}
+                            for the whole setup
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {hasRail && (
+                    <aside className="min-w-0 mt-10 lg:mt-0 flex flex-col gap-8">
+                      {phase.started.length > 0 && (
+                        <div>
+                          <RailHeading>What it started</RailHeading>
+                          <ul className="flex flex-col gap-3">
+                            {phase.started.map((item) => (
+                              <li key={item.slug} className="border-l border-border-mid pl-4">
+                                <p className="font-mono text-[12px] font-medium text-text-1">
+                                  {item.org}
+                                  <span className="font-normal text-[10px] text-accent">
+                                    {" "}
+                                    {item.roles[0].role}
+                                  </span>
+                                </p>
+                                <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                  {item.roles[0].summary}
+                                </p>
+                              </li>
+                            ))}
+
+                            {/* Derived, not restated: the conferences come from the
+                                talk archive's organiser flag and the total from its
+                                length, so neither can drift from /sharing. */}
+                            {organised.map((event) => (
+                              <li key={event.slug} className="border-l border-border-mid pl-4">
+                                <p className="font-mono text-[12px] font-medium text-text-1">
+                                  {event.label}
+                                  <span className="font-normal text-[10px] text-accent">
+                                    {" "}
+                                    {event.count > 1 && `${event.count} ${event.noun}s · `}
+                                    {event.years}
+                                  </span>
+                                </p>
+                                <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                  {event.location}
+                                </p>
+                              </li>
+                            ))}
+
+                            <li className="border-l border-border-mid pl-4">
+                              <p className="font-mono text-[12px] font-medium text-text-1">
+                                Speaking
+                                <span className="font-normal text-[10px] text-accent">
+                                  {" "}
+                                  {talkCount} talks and appearances
+                                </span>
+                              </p>
+                              <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                Concrete talks, honest about tradeoffs.{" "}
+                                <Link
+                                  href="/sharing"
+                                  className="text-text-2 hover:text-accent transition-colors"
+                                >
+                                  /sharing
+                                </Link>
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+
+                      {phase.opened.length > 0 && (
+                        <div>
+                          <RailHeading>What it opened</RailHeading>
+                          <ul className="flex flex-col gap-3">
+                            {phase.opened.map((question) => (
+                              <li key={question.name} className="border-l-2 border-accent pl-4">
+                                <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                  <span className="font-mono font-medium text-text-1">
+                                    {question.name}
+                                  </span>
+                                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mx-1.5 align-middle" />
+                                  {question.body}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="font-mono text-[11px] text-text-3 mt-4 pl-4">
+                            <Link
+                              href="/now"
+                              className="text-text-2 hover:text-accent transition-colors"
+                            >
+                              /now
+                            </Link>{" "}
+                            for this month
+                          </p>
+                        </div>
+                      )}
+                    </aside>
+                  )}
+                </div>
+              </section>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+
       <ScrollReveal>
-        <section className="mb-12 border-t border-border pt-10">
-          <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
-            Go deeper
+        <section className="mt-16 border-t border-border pt-8">
+          <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-2">
+            Off the clock
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <a
-              href="/now"
-              className="group border border-border rounded-sm p-5 flex flex-col gap-2 hover:border-border-hover transition-colors duration-150"
-            >
-              <span className="font-mono text-[13px] font-medium text-text-1 group-hover:text-accent transition-colors duration-150">
-                /now
-              </span>
-              <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                What I'm working on, reading, and thinking about right now. Updated when something
-                changes.
-              </p>
-              <span className="font-mono text-[11px] text-text-3 group-hover:text-accent transition-colors duration-150 mt-1">
-                View →
-              </span>
-            </a>
-            <a
-              href="/uses"
-              className="group border border-border rounded-sm p-5 flex flex-col gap-2 hover:border-border-hover transition-colors duration-150"
-            >
-              <span className="font-mono text-[13px] font-medium text-text-1 group-hover:text-accent transition-colors duration-150">
-                /uses
-              </span>
-              <p className="font-sans text-[13px] text-text-2 leading-relaxed">
-                Hardware, software, tools, and setup. Everything I use daily to build and think.
-              </p>
-              <span className="font-mono text-[11px] text-text-3 group-hover:text-accent transition-colors duration-150 mt-1">
-                View →
-              </span>
-            </a>
-          </div>
+          <p className="font-sans text-[14px] text-text-3 mb-6 max-w-2xl">
+            None of this is part of the story above, which is the point of putting it after it.
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
+            {HOBBIES.map((hobby) => (
+              <li key={hobby.label} className="font-sans text-[13px] text-text-2">
+                <span className="font-mono text-[13px] text-text-1">{hobby.label}</span>
+                <span className="text-text-3"> · {hobby.context}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       </ScrollReveal>
 
-      {/* CTA */}
       <ScrollReveal>
-        <div className="pt-8 border-t border-border">
+        <section className="mt-16 border-t border-border pt-8">
           <p className="font-sans text-[14px] text-text-2">
             Want to talk engineering, community, or collaboration?{" "}
             <a
@@ -561,7 +369,7 @@ export default function AboutPage() {
               Get in touch →
             </a>
           </p>
-        </div>
+        </section>
       </ScrollReveal>
     </div>
   );
