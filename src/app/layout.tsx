@@ -62,7 +62,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">
+      {/* `print:light-ground` flips the design tokens for paper. It has to sit on
+          <body> rather than on <html>; the print palette in globals.css says
+          why. */}
+      <body className="min-h-full flex flex-col antialiased print:light-ground">
         {children}
         <UmamiAnalytics />
         <SpeedInsights />

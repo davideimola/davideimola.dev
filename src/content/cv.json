@@ -1,0 +1,275 @@
+{
+  "identity": {
+    "name": "Davide Imola",
+    "headline": "Tech Lead · Speaker · Open Source Builder",
+    "location": "Verona, Italy · Remote",
+    "email": "hello@davideimola.dev",
+    "site": "davideimola.dev",
+    "github": "davideimola",
+    "linkedin": "davideimola",
+    "summary": "Tech Lead at RedCarbon: technical direction across the platform, and the AI agents that run on it. Ten years of DevOps and platform engineering behind that (Go, Kubernetes, GitOps, DDD). I work where AI does real security work, and where the code AI writes has to be secured. Co-founder of Schrodinger Hat, co-organizer of Open Source Day."
+  },
+  "about": {
+    "lead": "I'm a Tech Lead at RedCarbon, where I own the technical direction across the platform and build the AI agents that run on it. Before that, ten years of DevOps and platform engineering. What follows is how one turned into the other.",
+    "creed": {
+      "quote": "What you learn, you must share.",
+      "gloss": "Knowledge shared is not knowledge lost: it's knowledge multiplied.",
+      "phase": "the-work-after-hours"
+    }
+  },
+  "engagements": [
+    {
+      "slug": "redcarbon",
+      "type": "employment",
+      "org": "RedCarbon S.r.l.",
+      "location": "Remote",
+      "period": "Sep 2022 – Present",
+      "current": true,
+      "roles": [
+        {
+          "role": "Tech Lead",
+          "period": "Jan 2026 – Present",
+          "current": true,
+          "summary": "Technical direction for platform engineering, from frontend to infrastructure, plus the AI agents built on top.",
+          "bullets": [
+            "Own the technical decisions across the whole platform, coordinating with the AI and security teams",
+            "Build AI agents for threat detection and security review on a Go microservices platform",
+            "Still writing code daily: the role is technical direction, not stepping back from engineering"
+          ]
+        },
+        {
+          "role": "Software Engineer",
+          "period": "Sep 2022 – Dec 2025",
+          "summary": "Backend engineering on a multi-tenant AI cybersecurity platform. Grew into the tech lead role from here.",
+          "bullets": [
+            "Designed and maintained Go microservices and the GCP/Kubernetes infrastructure behind them",
+            "gRPC service communication, Next.js product frontend"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "milkman",
+      "type": "employment",
+      "org": "Milkman Technologies S.p.A.",
+      "location": "Remote",
+      "period": "Aug 2020 – Sep 2022",
+      "roles": [
+        {
+          "role": "DevOps Engineer",
+          "period": "Aug 2020 – Sep 2022",
+          "summary": "Last-mile delivery platform. Reliability and observability on AWS.",
+          "bullets": [
+            "Built and scaled high-availability, multi-tenant AWS infrastructure",
+            "Kafka, PostgreSQL, Datadog; improved developer experience with CI/CD and ChatOps"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "asem",
+      "type": "employment",
+      "org": "ASEM S.r.l.",
+      "location": "Verona, Italy",
+      "period": "Dec 2017 – Aug 2020",
+      "roles": [
+        {
+          "role": "DevOps Engineer",
+          "period": "Dec 2017 – Aug 2020",
+          "summary": "Industrial automation software.",
+          "bullets": [
+            "Built the deployment pipelines and containerized legacy systems with Docker",
+            "C# on the product side, Linux distributions on the infrastructure side"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "edalab",
+      "type": "employment",
+      "org": "EDALab Networked Embedded Systems",
+      "location": "Verona, Italy",
+      "period": "Nov 2016 – Sep 2017",
+      "roles": [
+        {
+          "role": "Software Engineer",
+          "period": "Nov 2016 – Sep 2017",
+          "summary": "Internship turned first job. Where engineering got serious.",
+          "bullets": [
+            "Embedded systems in C++ and Qt; ported a Qt application to iOS and shipped it"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "si-fa",
+      "type": "freelance",
+      "org": "Si-Fa Cooperativa Sociale",
+      "location": "Verona, Italy",
+      "period": "Oct 2019 – Dec 2021",
+      "roles": [
+        {
+          "role": "IT Manager",
+          "period": "Oct 2019 – Dec 2021",
+          "summary": "Kept the infrastructure and website of a social cooperative running until it closed, alongside a full-time job."
+        }
+      ]
+    },
+    {
+      "slug": "sport-analytics",
+      "type": "freelance",
+      "org": "Sport Analytics S.r.l.",
+      "location": "Remote",
+      "period": "2022",
+      "roles": [
+        {
+          "role": "Cloud Architect",
+          "period": "2022",
+          "summary": "Moved the FantaCulo platform onto Kubernetes and designed its cloud-native infrastructure. A project I helped because I liked it."
+        }
+      ]
+    },
+    {
+      "slug": "codemotion",
+      "type": "freelance",
+      "org": "Codemotion",
+      "location": "Remote",
+      "period": "Jan 2021 – Apr 2021",
+      "roles": [
+        {
+          "role": "IT Instructor",
+          "period": "Jan 2021 – Apr 2021",
+          "summary": "Wrote and delivered the Infrastructure as Code, DevOps and Cloud Security modules of the Cloud Engineer career path."
+        }
+      ]
+    },
+    {
+      "slug": "schrodinger-hat",
+      "type": "volunteering",
+      "org": "Schrodinger Hat",
+      "location": "Remote",
+      "period": "Feb 2022 – Present",
+      "current": true,
+      "roles": [
+        {
+          "role": "Co-founder",
+          "period": "Feb 2022 – Present",
+          "current": true,
+          "summary": "International open source community, 20k+ people reached across Europe, 100+ speakers hosted."
+        }
+      ]
+    }
+  ],
+  "selectedTalks": ["reactjsday-2026", "golab-2026", "wearedevelopers-2024", "golab-2024"],
+  "selectedProjects": ["argus"],
+  "education": [
+    {
+      "slug": "universita-verona",
+      "school": "Università degli Studi di Verona",
+      "award": "B.Sc. Computer Science",
+      "detail": "94/110 · Dissertation: coaching application in Ionic with a NoSQL database",
+      "period": "Oct 2014 – Mar 2018"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Languages",
+      "items": ["Go", "TypeScript", "C#", "C++"]
+    },
+    {
+      "group": "Platform",
+      "items": ["Kubernetes", "GCP", "AWS", "Flux (GitOps)", "Pulumi", "Docker", "gRPC"]
+    },
+    {
+      "group": "Product",
+      "items": ["Next.js", "React", "PostgreSQL", "Kafka"]
+    },
+    {
+      "group": "Practices",
+      "items": ["DDD", "TDD", "GitOps", "CI/CD", "Technical leadership"]
+    }
+  ],
+  "openSource": ["Kubernetes", "Capsule", "Kannon"],
+  "trajectory": [
+    {
+      "slug": "where-it-started",
+      "title": "Where it started",
+      "from": "2013",
+      "covers": [
+        {
+          "engagement": "edalab"
+        }
+      ],
+      "prose": "During university I built websites for whoever would pay a student, because I wanted to know how the web actually worked and not just how to make a page load. Then an internship at EDALab turned into my first real job: embedded systems in C++ and Qt, and a Qt application I ported to iOS and shipped. Working inside a team taught me what no side project ever could, that readable code is not a nicety but the difference between a codebase that scales and one that breaks you. Clean Code and Clean Architecture landed at exactly the right moment, and they pushed me towards the part of the job nobody was looking after: how software gets built, tested and deployed.",
+      "tools": ["C++ / Qt", "Clean Code", "Clean Architecture"]
+    },
+    {
+      "slug": "infrastructure-is-a-product",
+      "title": "Infrastructure is a product",
+      "covers": [
+        {
+          "engagement": "asem"
+        },
+        {
+          "engagement": "milkman"
+        }
+      ],
+      "prose": "At ASEM I containerized industrial automation software that had never seen a container and built the pipelines that shipped it. At Milkman Technologies I moved to a last-mile delivery platform, where reliability and observability on AWS were not a nice-to-have: when a delivery fails, someone is waiting at a door. Five years of pipelines, clusters and dashboards taught me that infrastructure is a product whose users are developers, and that every pipeline I built either gave the team back a day a week or quietly took one. It also taught me where I did not want to stop: I was moving a domain around for a living without ever getting to model it.",
+      "tools": ["Docker", "Kubernetes", "Flux", "Pulumi", "GitOps", "CI/CD"]
+    },
+    {
+      "slug": "the-work-after-hours",
+      "title": "The work after hours",
+      "covers": [
+        {
+          "engagement": "si-fa"
+        },
+        {
+          "engagement": "codemotion"
+        },
+        {
+          "engagement": "sport-analytics"
+        }
+      ],
+      "prose": "Alongside the day job I kept the infrastructure and the website of Si-Fa, a social cooperative, running until it closed, wrote and delivered the Infrastructure as Code, DevOps and Cloud Security modules of Codemotion's Cloud Engineer path, and moved a fantasy football platform onto Kubernetes for Sport Analytics because the project was fun and they asked. Teaching was the part that changed me: you cannot explain GitOps to a room of forty people without discovering the three things you only thought you understood. It is also where the idea that what you learn you must share stopped being a nice sentence and became the reason I speak at conferences, and then the reason I started organizing them.",
+      "started": ["schrodinger-hat"],
+      "image": {
+        "src": "/images/osday-audience.webp",
+        "caption": "Open Source Day, Florence. This is what 500+ looks like."
+      }
+    },
+    {
+      "slug": "going-deeper-not-wider",
+      "title": "Going deeper, not wider",
+      "covers": [
+        {
+          "engagement": "redcarbon",
+          "role": "Software Engineer"
+        }
+      ],
+      "prose": "I joined RedCarbon as a software engineer on a multi-tenant AI cybersecurity platform: Go microservices talking over gRPC, GCP and Kubernetes underneath, Next.js on the product side. This is where Domain-Driven Design landed, and software stopped being a set of instructions and became a language for a domain. Working inside a security company also changed how I read code, mine and everyone else's, because there a bug arrives with an attacker attached to it. By the third year the technical decisions were finding their way to me well before anyone made it official.",
+      "tools": ["Go", "gRPC", "DDD", "TDD", "TypeScript / Next.js"]
+    },
+    {
+      "slug": "where-it-took-me",
+      "title": "Where it took me",
+      "covers": [
+        {
+          "engagement": "redcarbon",
+          "role": "Tech Lead"
+        }
+      ],
+      "prose": "Today I own the technical direction across the platform, from the frontend to the infrastructure, and I build the AI agents that run on top of it, with the AI and security teams alongside me. I still write code every day: the job is technical direction, not stepping back from engineering. The shift changed something I did not expect, though. I care less about my own code and more about the team's trajectory, because if we do not all grow, the company does not either. And the two things I work on now are two sides of one question: AI that does real security work, and security for the code AI writes.",
+      "opened": [
+        {
+          "name": "AI × Security",
+          "body": "AI agents that do real security work, and the flip side: keeping the code AI writes secure. Argus is where that lives."
+        },
+        {
+          "name": "AI / LLM infrastructure",
+          "body": "Model hosting, MLOps, vLLM on Kubernetes. Understanding the infrastructure layer, not just calling the APIs."
+        }
+      ]
+    }
+  ]
+}

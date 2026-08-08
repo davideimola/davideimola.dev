@@ -28,7 +28,8 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border py-6">
+    // data-print-hide: site chrome is screen-only, so it never reaches paper.
+    <footer data-print-hide="" className="border-t border-border py-6">
       <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-0">
         <div className="flex items-center gap-4">
           <p className="font-mono text-[11px] text-text-3">

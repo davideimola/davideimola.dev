@@ -23,7 +23,11 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border-mid bg-[rgba(8,8,7,0.85)] backdrop-blur-md">
+    // data-print-hide: site chrome is screen-only, so it never reaches paper.
+    <nav
+      data-print-hide=""
+      className="fixed top-0 left-0 right-0 z-50 border-b border-border-mid bg-[rgba(8,8,7,0.85)] backdrop-blur-md"
+    >
       <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex items-center justify-between h-[52px]">
         {/* Logo */}
         <a

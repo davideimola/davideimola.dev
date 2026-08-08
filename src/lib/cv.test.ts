@@ -1,0 +1,916 @@
+import fs from "node:fs";
+import { describe, expect, it, vi } from "vitest";
+import publishedRecord from "../content/cv.json";
+import publishedProjects from "../content/projects.json";
+import publishedTalks from "../content/talks.json";
+import type { Project, Talk } from "./content";
+import {
+  type CvIdentity,
+  type CvRecord,
+  type CvRole,
+  ENGAGEMENT_TYPES,
+  type Engagement,
+  getAboutNarrative,
+  getContactLinks,
+  getEducation,
+  getEngagements,
+  getEngagementsByType,
+  getIdentity,
+  getOpenSource,
+  getOrganisedEvents,
+  getSelectedProjects,
+  getSelectedTalks,
+  getSkills,
+  getTotalTalkCount,
+  getTrajectory,
+  type TrajectoryPhase,
+} from "./cv";
+
+vi.mock("node:fs", () => ({
+  default: {
+    readFileSync: vi.fn(),
+  },
+  readFileSync: vi.fn(),
+}));
+
+const mockFs = vi.mocked(fs);
+
+// ── Fixtures ───────────────────────────────────────────────────────────────
+
+const IDENTITY: CvIdentity = {
+  name: "Test Person",
+  headline: "Tester",
+  location: "Nowhere",
+  email: "test@example.com",
+  site: "example.com",
+  github: "test",
+  linkedin: "test",
+  summary: "A test summary.",
+};
+
+const ABOUT = {
+  lead: "A lead paragraph.",
+  creed: { quote: "A creed.", gloss: "Its gloss.", phase: "a-phase" },
+};
+
+function role(overrides: Partial<CvRole> = {}): CvRole {
+  return { role: "Engineer", period: "2020 – 2021", summary: "Did the work.", ...overrides };
+}
+
+function engagement(overrides: Partial<Engagement> = {}): Engagement {
+  return {
+    slug: "acme",
+    type: "employment",
+    org: "Acme",
+    location: "Remote",
+    period: "2020 – 2021",
+    roles: [role()],
+    ...overrides,
+  };
+}
+
+function setupRecord(
+  overrides: Partial<CvRecord> = {},
+  talks: Talk[] = [],
+  projects: Project[] = []
+): void {
+  const record: CvRecord = {
+    identity: IDENTITY,
+    about: ABOUT,
+    engagements: [],
+    selectedTalks: [],
+    selectedProjects: [],
+    education: [],
+    skills: [],
+    openSource: [],
+    trajectory: [],
+    ...overrides,
+  };
+  // Selected talks and projects are resolved against their own archives, so each
+  // content file has to answer separately.
+  mockFs.readFileSync.mockImplementation((file: unknown) => {
+    const path = String(file);
+    if (path.endsWith("talks.json")) return JSON.stringify(talks);
+    if (path.endsWith("projects.json")) return JSON.stringify(projects);
+    return JSON.stringify(record);
+  });
+}
+
+// ── getEngagementsByType ───────────────────────────────────────────────────
+
+describe("getEngagementsByType", () => {
+  it("returns only the engagements of the requested type", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "day-job", type: "employment" }),
+        engagement({ slug: "evening-gig", type: "freelance" }),
+        engagement({ slug: "community", type: "volunteering" }),
+      ],
+    });
+
+    expect(getEngagementsByType("freelance").map((e) => e.slug)).toEqual(["evening-gig"]);
+  });
+
+  it("returns an empty array when the type is absent from the Record", () => {
+    setupRecord({ engagements: [engagement({ type: "employment" })] });
+
+    expect(getEngagementsByType("volunteering")).toEqual([]);
+    expect(getEngagementsByType("freelance")).toEqual([]);
+  });
+
+  it("keeps the roles of one organisation grouped and in Record order", () => {
+    setupRecord({
+      engagements: [
+        engagement({
+          slug: "acme",
+          period: "2022 – Present",
+          current: true,
+          roles: [
+            role({ role: "Tech Lead", period: "2026 – Present", current: true }),
+            role({ role: "Software Engineer", period: "2022 – 2025" }),
+          ],
+        }),
+        engagement({ slug: "other", period: "2018 – 2022" }),
+      ],
+    });
+
+    const employment = getEngagementsByType("employment");
+    expect(employment.map((e) => e.slug)).toEqual(["acme", "other"]);
+    expect(employment[0].roles.map((r) => r.role)).toEqual(["Tech Lead", "Software Engineer"]);
+  });
+});
+
+// ── getEngagements ─────────────────────────────────────────────────────────
+
+describe("getEngagements", () => {
+  it("puts the current employment first even when a volunteering entry starts in a later year", () => {
+    setupRecord({
+      engagements: [
+        engagement({
+          slug: "community",
+          type: "volunteering",
+          period: "2024 – Present",
+          current: true,
+        }),
+        engagement({
+          slug: "day-job",
+          type: "employment",
+          period: "2022 – Present",
+          current: true,
+        }),
+      ],
+    });
+
+    expect(getEngagements()[0].slug).toBe("day-job");
+  });
+
+  it("orders the remaining engagements newest first", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "oldest", period: "2016 – 2017" }),
+        engagement({ slug: "newest", period: "2020 – 2022" }),
+        engagement({ slug: "middle", period: "2018 – 2020" }),
+      ],
+    });
+
+    expect(getEngagements().map((e) => e.slug)).toEqual(["newest", "middle", "oldest"]);
+  });
+
+  it("puts employment ahead of freelance and volunteering that started the same year", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "community", type: "volunteering", period: "2022 – Present" }),
+        engagement({ slug: "evening-gig", type: "freelance", period: "2022" }),
+        engagement({ slug: "day-job", type: "employment", period: "2022 – Present" }),
+      ],
+    });
+
+    expect(getEngagements().map((e) => e.slug)).toEqual(["day-job", "evening-gig", "community"]);
+  });
+
+  it("does not reorder the Record itself", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "oldest", period: "2016 – 2017" }),
+        engagement({ slug: "newest", period: "2020 – 2022" }),
+      ],
+    });
+
+    getEngagements();
+    expect(getEngagements().map((e) => e.slug)).toEqual(["newest", "oldest"]);
+  });
+});
+
+// ── Two Registers on the same facts ────────────────────────────────────────
+
+describe("registers", () => {
+  it("carries both the schematic bullets and the prose form of a role", () => {
+    setupRecord({
+      engagements: [
+        engagement({
+          roles: [
+            role({
+              bullets: ["Shipped the thing"],
+              prose: "I shipped the thing, and it taught me how to ship the next one.",
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const [first] = getEngagements()[0].roles;
+    expect(first.bullets).toEqual(["Shipped the thing"]);
+    expect(first.prose).toContain("taught me");
+  });
+});
+
+// ── Aside accessors ────────────────────────────────────────────────────────
+
+describe("identity, education, skills and open source", () => {
+  it("exposes the Record's aside content unchanged", () => {
+    setupRecord({
+      education: [
+        { slug: "uni", school: "Some University", award: "B.Sc.", period: "2014 – 2018" },
+      ],
+      skills: [{ group: "Languages", items: ["Go"] }],
+      openSource: ["Kubernetes"],
+    });
+
+    expect(getIdentity().email).toBe("test@example.com");
+    expect(getEducation().map((e) => e.school)).toEqual(["Some University"]);
+    expect(getSkills()).toEqual([{ group: "Languages", items: ["Go"] }]);
+    expect(getOpenSource()).toEqual(["Kubernetes"]);
+  });
+});
+
+// ── getContactLinks ────────────────────────────────────────────────────────
+
+describe("getContactLinks", () => {
+  it("turns the identity handles into reachable links", () => {
+    setupRecord();
+
+    expect(getContactLinks().map((link) => link.href)).toEqual([
+      "mailto:test@example.com",
+      "https://example.com",
+      "https://github.com/test",
+      "https://www.linkedin.com/in/test/",
+    ]);
+  });
+
+  it("emits only mail and web links, never a tel: link", () => {
+    setupRecord();
+
+    expect(getContactLinks().every((link) => /^(mailto|https):/.test(link.href))).toBe(true);
+  });
+});
+
+// ── The published Record ───────────────────────────────────────────────────
+
+// These guard the content itself rather than the module: the CV is public by
+// definition, so private contact data must never reach the Record.
+describe("the published CV Record", () => {
+  it("carries no phone number, street address or fiscal code", () => {
+    const serialized = JSON.stringify(publishedRecord);
+
+    expect(serialized).not.toMatch(/\+39/);
+    expect(serialized).not.toMatch(/\bVia\s/);
+    expect(serialized).not.toMatch(/[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]/);
+  });
+
+  it("holds public contact fields only in the identity block", () => {
+    const privateLooking = /phone|mobile|address|fiscal|tax|birth/i;
+
+    expect(Object.keys(publishedRecord.identity).filter((k) => privateLooking.test(k))).toEqual([]);
+  });
+
+  it("declares every engagement type from the closed set", () => {
+    const types = publishedRecord.engagements.map((e) => e.type);
+
+    expect(types.every((t) => (ENGAGEMENT_TYPES as readonly string[]).includes(t))).toBe(true);
+  });
+});
+
+// ── Speaking fixtures ──────────────────────────────────────────────────────
+
+function talk(overrides: Partial<Talk> = {}): Talk {
+  return {
+    slug: "acme-conf-2024",
+    event: "Acme Conf 2024",
+    type: "Conference",
+    date: "2024-05-01",
+    location: "Verona, Italy",
+    tags: [],
+    session: { title: "A Talk About Things", format: "Talk" },
+    ...overrides,
+  };
+}
+
+// ── Project fixtures ───────────────────────────────────────────────────────
+
+function project(overrides: Partial<Project> = {}): Project {
+  return {
+    slug: "argus",
+    title: "Argus",
+    status: "active",
+    period: "2026–present",
+    featured: true,
+    tags: [],
+    description: "A thing that was built.",
+    ...overrides,
+  };
+}
+
+// ── Trajectory fixtures ────────────────────────────────────────────────────
+
+function phase(overrides: Partial<TrajectoryPhase> = {}): TrajectoryPhase {
+  return {
+    slug: "a-phase",
+    title: "A phase",
+    covers: [{ engagement: "acme" }],
+    prose: "Where I was, what it taught me, where it led.",
+    ...overrides,
+  };
+}
+
+// ── getSelectedTalks ───────────────────────────────────────────────────────
+
+describe("getSelectedTalks", () => {
+  it("resolves a slug against the talk archive", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [talk()]);
+
+    expect(getSelectedTalks()).toEqual([
+      {
+        slug: "acme-conf-2024",
+        title: "A Talk About Things",
+        event: "Acme Conf 2024",
+        // Null because "Acme Conf 2024" already says it: see the next two tests.
+        year: null,
+      },
+    ]);
+  });
+
+  // Most event names carry their year, and a row reading "GoLab 2026 · 2026" looks
+  // like a bug. Sixteen of the archive's events carry no year at all, though, so
+  // dropping it outright would leave those rows undated.
+  it("drops the year when the event name already states it", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [talk({ event: "Acme Conf 2024" })]);
+
+    expect(getSelectedTalks()[0].year).toBeNull();
+  });
+
+  it("keeps the year when the event name does not state it", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [
+      talk({ event: "The Developers' Bakery", date: "2024-05-01" }),
+    ]);
+
+    expect(getSelectedTalks()[0].year).toBe("2024");
+  });
+
+  it("keeps the Record's order, because the selection is the curation", () => {
+    setupRecord({ selectedTalks: ["older-conf-2019", "acme-conf-2024"] }, [
+      talk(),
+      talk({ slug: "older-conf-2019", event: "Older Conf 2019", date: "2019-03-01" }),
+    ]);
+
+    expect(getSelectedTalks().map((t) => t.slug)).toEqual(["older-conf-2019", "acme-conf-2024"]);
+  });
+
+  it("throws, naming the offending slug, when the archive has no such talk", () => {
+    setupRecord({ selectedTalks: ["renamed-conf-2024"] }, [talk()]);
+
+    expect(() => getSelectedTalks()).toThrow(/renamed-conf-2024/);
+  });
+
+  it("throws, naming the offending slug, when the entry has no session", () => {
+    setupRecord({ selectedTalks: ["organised-only-2024"] }, [
+      talk({ slug: "organised-only-2024", organizer: true, session: undefined }),
+    ]);
+
+    expect(() => getSelectedTalks()).toThrow(/organised-only-2024/);
+  });
+
+  it("returns nothing when the Record selects no talks", () => {
+    setupRecord({}, [talk()]);
+
+    expect(getSelectedTalks()).toEqual([]);
+  });
+});
+
+// ── getTotalTalkCount ──────────────────────────────────────────────────────
+
+describe("getTotalTalkCount", () => {
+  it("counts the whole archive, not the selection", () => {
+    setupRecord({ selectedTalks: ["acme-conf-2024"] }, [
+      talk(),
+      talk({ slug: "b", event: "B 2023", date: "2023-01-01" }),
+      talk({ slug: "c", event: "C 2022", date: "2022-01-01" }),
+    ]);
+
+    expect(getTotalTalkCount()).toBe(3);
+  });
+
+  it("counts nothing when the archive is empty", () => {
+    setupRecord();
+
+    expect(getTotalTalkCount()).toBe(0);
+  });
+});
+
+// ── getOrganisedEvents ─────────────────────────────────────────────────────
+
+describe("getOrganisedEvents", () => {
+  it("folds the editions of one conference into a single row", () => {
+    setupRecord({}, [
+      talk({
+        slug: "osd-2026",
+        event: "Open Source Day 2026",
+        organizer: true,
+        date: "2026-04-25",
+      }),
+      talk({
+        slug: "osd-2024",
+        event: "Open Source Day 2024",
+        organizer: true,
+        date: "2024-03-07",
+        location: "Florence, Italy",
+      }),
+      talk({
+        slug: "osd-2023",
+        event: "Open Source Day 2023",
+        organizer: true,
+        date: "2023-03-28",
+        location: "Florence, Italy",
+      }),
+    ]);
+
+    expect(getOrganisedEvents()).toEqual([
+      {
+        slug: "osd-2026",
+        label: "Open Source Day",
+        location: "Verona, Italy",
+        count: 3,
+        noun: "edition",
+        years: "2023 – 2026",
+      },
+    ]);
+  });
+
+  it("states a single year and no count when there is one instance", () => {
+    setupRecord({}, [talk({ organizer: true })]);
+
+    expect(getOrganisedEvents()[0]).toMatchObject({ count: 1, years: "2024" });
+  });
+
+  // The meetup nights share no name, so counting them is the only way to say what
+  // they amount to without spending half the sheet on it.
+  it("folds every organised meetup into one counted row, naming its cities", () => {
+    setupRecord({}, [
+      talk({
+        slug: "m1",
+        event: "Some Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2025-11-26",
+        location: "Florence, Italy",
+      }),
+      talk({
+        slug: "m2",
+        event: "Another Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2024-04-10",
+        location: "Verona, Italy",
+      }),
+      talk({
+        slug: "m3",
+        event: "A Third Meetup",
+        type: "Meetup",
+        organizer: true,
+        date: "2023-09-07",
+        location: "Verona, Italy",
+      }),
+    ]);
+
+    expect(getOrganisedEvents()).toEqual([
+      {
+        slug: "m1",
+        label: "Meetups",
+        location: "Florence, Verona",
+        count: 3,
+        noun: "meetup",
+        years: "2023 – 2025",
+      },
+    ]);
+  });
+
+  it("orders conferences ahead of meetups ahead of hackathons", () => {
+    setupRecord({}, [
+      talk({ slug: "h", event: "A Hackathon 2026", type: "Hackathon", organizer: true }),
+      talk({ slug: "m", event: "A Meetup 2025", type: "Meetup", organizer: true }),
+      talk({ slug: "c", event: "Own Conf 2024", organizer: true }),
+    ]);
+
+    expect(getOrganisedEvents().map((e) => e.label)).toEqual([
+      "Own Conf",
+      "Meetups",
+      "A Hackathon",
+    ]);
+  });
+
+  it("ignores the events he only spoke at", () => {
+    setupRecord({}, [
+      talk({ slug: "spoke-at", event: "Someone Else Conf 2024" }),
+      talk({ slug: "own-conf", event: "Own Conf 2024", organizer: true }),
+    ]);
+
+    expect(getOrganisedEvents().map((e) => e.label)).toEqual(["Own Conf"]);
+  });
+
+  it("returns nothing when he has organised nothing", () => {
+    setupRecord({}, [talk()]);
+
+    expect(getOrganisedEvents()).toEqual([]);
+  });
+});
+
+// ── getSelectedProjects ────────────────────────────────────────────────────
+
+describe("getSelectedProjects", () => {
+  it("resolves a slug against the project archive", () => {
+    setupRecord({ selectedProjects: ["argus"] }, [], [project()]);
+
+    expect(getSelectedProjects()).toEqual([
+      {
+        slug: "argus",
+        title: "Argus",
+        period: "2026 – Present",
+        description: "A thing that was built.",
+      },
+    ]);
+  });
+
+  // The projects page writes "2026–present"; the CV writes "Feb 2022 – Present"
+  // everywhere else, and one row in a different house style reads as a mistake.
+  it("restates the project period in the CV's own house style", () => {
+    setupRecord(
+      { selectedProjects: ["a", "b"] },
+      [],
+      [project({ slug: "a", period: "2026–present" }), project({ slug: "b", period: "2022" })]
+    );
+
+    expect(getSelectedProjects().map((p) => p.period)).toEqual(["2026 – Present", "2022"]);
+  });
+
+  it("keeps the Record's order, since the selection is the curation", () => {
+    setupRecord(
+      { selectedProjects: ["second", "first"] },
+      [],
+      [project({ slug: "first", title: "First" }), project({ slug: "second", title: "Second" })]
+    );
+
+    expect(getSelectedProjects().map((p) => p.title)).toEqual(["Second", "First"]);
+  });
+
+  it("throws naming the slug when it is not in the archive", () => {
+    setupRecord({ selectedProjects: ["renamed"] }, [], [project()]);
+
+    expect(() => getSelectedProjects()).toThrow(/renamed/);
+  });
+
+  it("returns nothing when the Record selects no project", () => {
+    setupRecord({}, [], [project()]);
+
+    expect(getSelectedProjects()).toEqual([]);
+  });
+});
+
+// ── The published project selection ────────────────────────────────────────
+
+describe("the published project selection", () => {
+  it("names only projects that exist in the archive", () => {
+    const slugs = publishedProjects.map((p) => p.slug);
+
+    for (const slug of publishedRecord.selectedProjects) {
+      expect(slugs).toContain(slug);
+    }
+  });
+
+  // The reason Open Source Day stopped being a volunteering entry: it was stated
+  // twice, once there and once as an organised event.
+  it("states no organisation both as an engagement and as a selected project", () => {
+    const orgs = publishedRecord.engagements.map((e) => e.org.toLowerCase());
+    const titles = publishedRecord.selectedProjects.map((slug) => {
+      const found = publishedProjects.find((p) => p.slug === slug);
+      return (found?.title ?? "").toLowerCase();
+    });
+
+    expect(titles.filter((title) => orgs.includes(title))).toEqual([]);
+  });
+});
+
+// ── The published talk selection ───────────────────────────────────────────
+
+// A guard on the content rather than on the module: the throw above only fires
+// at build time, and this fails in the test run instead.
+describe("the published talk selection", () => {
+  it("names only slugs that exist in the archive and carry a session", () => {
+    const archive = new Map(publishedTalks.map((entry) => [entry.slug, entry]));
+
+    for (const slug of publishedRecord.selectedTalks) {
+      const entry = archive.get(slug);
+      expect(entry, `selected talk "${slug}" is missing from talks.json`).toBeDefined();
+      expect(entry && "session" in entry, `selected talk "${slug}" has no session`).toBe(true);
+    }
+  });
+
+  it("restates nothing about a talk beyond its slug", () => {
+    expect(publishedRecord.selectedTalks.every((slug) => typeof slug === "string")).toBe(true);
+  });
+});
+
+// ── getTrajectory ──────────────────────────────────────────────────────────
+
+describe("getTrajectory", () => {
+  it("resolves a phase to the engagements it references", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "other", period: "2020 – 2022" }),
+        engagement({ slug: "unrelated", period: "2010 – 2012" }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }, { engagement: "other" }] })],
+    });
+
+    expect(getTrajectory()[0].engagements.map((e) => e.slug)).toEqual(["acme", "other"]);
+  });
+
+  it("derives the phase period from the engagements instead of restating it", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "Dec 2017 – Aug 2020" }),
+        engagement({ slug: "other", period: "Aug 2020 – Sep 2022" }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }, { engagement: "other" }] })],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2017 – 2022");
+  });
+
+  it("narrows the period to the role a phase names rather than the whole engagement", () => {
+    setupRecord({
+      engagements: [
+        engagement({
+          slug: "acme",
+          period: "Sep 2022 – Present",
+          current: true,
+          roles: [
+            role({ role: "Tech Lead", period: "Jan 2026 – Present", current: true }),
+            role({ role: "Software Engineer", period: "Sep 2022 – Dec 2025" }),
+          ],
+        }),
+      ],
+      trajectory: [
+        phase({ slug: "before", covers: [{ engagement: "acme", role: "Software Engineer" }] }),
+        phase({ slug: "after", covers: [{ engagement: "acme", role: "Tech Lead" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.period)).toEqual(["2022 – 2025", "2026 – Present"]);
+  });
+
+  it("marks a phase as current only while a period it covers is still open", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "day-job", period: "2022 – Present", current: true }),
+      ],
+      trajectory: [
+        phase({ slug: "past", covers: [{ engagement: "acme" }] }),
+        phase({ slug: "now", covers: [{ engagement: "day-job" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.current)).toEqual([false, true]);
+  });
+
+  it("collapses a phase that starts and ends in the same year to that year", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", period: "2022" })],
+      trajectory: [phase()],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2022");
+  });
+
+  it("reaches back to story-only years that no engagement covers", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", period: "Nov 2016 – Sep 2017" })],
+      trajectory: [phase({ from: "2013" })],
+    });
+
+    expect(getTrajectory()[0].period).toBe("2013 – 2017");
+  });
+
+  it("keeps the phases in Record order", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2018 – 2020" }),
+        engagement({ slug: "day-job", period: "2022 – Present", current: true }),
+      ],
+      trajectory: [
+        phase({ slug: "first", covers: [{ engagement: "acme" }] }),
+        phase({ slug: "second", covers: [{ engagement: "day-job" }] }),
+      ],
+    });
+
+    expect(getTrajectory().map((p) => p.slug)).toEqual(["first", "second"]);
+  });
+
+  it("throws with the offending slug when a phase references an unknown engagement", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase({ slug: "broken", covers: [{ engagement: "ghost" }] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/ghost/);
+    expect(() => getTrajectory()).toThrow(/broken/);
+  });
+
+  it("throws when a phase names a role the engagement does not have", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme", roles: [role({ role: "Engineer" })] })],
+      trajectory: [phase({ covers: [{ engagement: "acme", role: "Principal Engineer" }] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/Principal Engineer/);
+  });
+
+  it("throws when a phase covers nothing at all", () => {
+    setupRecord({ trajectory: [phase({ slug: "empty", covers: [] })] });
+
+    expect(() => getTrajectory()).toThrow(/empty/);
+  });
+});
+
+// ── The published trajectory ───────────────────────────────────────────────
+
+// The trajectory is the one part of the Record /cv never renders, so nothing
+// else would catch a phase pointing at an engagement that has been renamed.
+describe("the published trajectory", () => {
+  // The annotation is the check: the published JSON has to satisfy the type.
+  const publishedPhases: TrajectoryPhase[] = publishedRecord.trajectory;
+
+  const firstYear = (period: string) => Number(period.match(/\d{4}/)?.[0] ?? 0);
+
+  it("references only engagements and roles that exist in the Record", () => {
+    for (const publishedPhase of publishedPhases) {
+      for (const ref of publishedPhase.covers) {
+        const target = publishedRecord.engagements.find((e) => e.slug === ref.engagement);
+        expect(target, `phase "${publishedPhase.slug}" covers "${ref.engagement}"`).toBeDefined();
+        if (ref.role) {
+          expect(target?.roles.map((r) => r.role)).toContain(ref.role);
+        }
+      }
+    }
+  });
+
+  it("states no period of its own: every phase derives one", () => {
+    for (const publishedPhase of publishedPhases) {
+      expect(Object.keys(publishedPhase)).not.toContain("period");
+      expect(publishedPhase.prose).not.toBe("");
+    }
+  });
+
+  it("tells the early freelance years as story only, with no engagement behind them", () => {
+    const earliestEngagement = Math.min(
+      ...publishedRecord.engagements.map((e) => firstYear(e.period))
+    );
+    const storyStart = Math.min(
+      ...publishedPhases.flatMap((p) => (p.from ? [Number(p.from)] : []))
+    );
+
+    expect(storyStart).toBeLessThan(earliestEngagement);
+  });
+});
+
+// ── The trajectory's own content ───────────────────────────────────────────
+
+// /about absorbed Stack, Community and What I'm exploring into the steps of the
+// story, so each phase now carries what that step left behind, set going and
+// opened. These are the derivations those three sections became.
+describe("a phase's own content", () => {
+  it("exposes the tools a phase left behind, and an empty list when it left none", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [
+        phase({ slug: "with-tools", tools: ["Docker", "Kubernetes"] }),
+        phase({ slug: "without" }),
+      ],
+    });
+
+    const [withTools, without] = getTrajectory();
+    expect(withTools.tools).toEqual(["Docker", "Kubernetes"]);
+    expect(without.tools).toEqual([]);
+  });
+
+  it("resolves what a phase started without letting it move the phase's period", () => {
+    setupRecord({
+      engagements: [
+        engagement({ slug: "acme", period: "2019 – 2022" }),
+        engagement({
+          slug: "community",
+          type: "volunteering",
+          period: "2022 – Present",
+          current: true,
+        }),
+      ],
+      trajectory: [phase({ covers: [{ engagement: "acme" }], started: ["community"] })],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.started.map((e) => e.slug)).toEqual(["community"]);
+    // The community runs to today; the step that started it does not.
+    expect(resolved.period).toBe("2019 – 2022");
+    expect(resolved.current).toBe(false);
+  });
+
+  it("throws, naming the slug, when a phase says it started something absent", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase({ started: ["renamed-community"] })],
+    });
+
+    expect(() => getTrajectory()).toThrow(/renamed-community/);
+  });
+
+  it("carries the open questions and the image of the step they belong to", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [
+        phase({
+          opened: [{ name: "A question", body: "Still open." }],
+          image: { src: "/images/x.webp", caption: "A caption." },
+        }),
+      ],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.opened).toEqual([{ name: "A question", body: "Still open." }]);
+    expect(resolved.image?.caption).toBe("A caption.");
+  });
+
+  it("leaves opened empty and image undefined when the phase has neither", () => {
+    setupRecord({
+      engagements: [engagement({ slug: "acme" })],
+      trajectory: [phase()],
+    });
+
+    const [resolved] = getTrajectory();
+    expect(resolved.opened).toEqual([]);
+    expect(resolved.image).toBeUndefined();
+  });
+});
+
+// ── getAboutNarrative ─────────────────────────────────────────────────────
+
+describe("getAboutNarrative", () => {
+  it("returns the lead and the creed the Record holds for /about", () => {
+    setupRecord();
+
+    const about = getAboutNarrative();
+    expect(about.lead).toBe("A lead paragraph.");
+    expect(about.creed.quote).toBe("A creed.");
+  });
+});
+
+// ── The published narrative ───────────────────────────────────────────────
+
+describe("the published /about narrative", () => {
+  it("pins the creed to a phase that exists", () => {
+    const slugs = publishedRecord.trajectory.map((p) => p.slug);
+
+    expect(slugs).toContain(publishedRecord.about.creed.phase);
+  });
+
+  // The whole point of the port: those three sections are gone from /about and
+  // their content lives inside the steps now.
+  it("gives every phase either tools, something started, or something opened", () => {
+    for (const p of publishedRecord.trajectory as Record<string, unknown>[]) {
+      const carries =
+        (p.tools as string[] | undefined)?.length ||
+        (p.started as string[] | undefined)?.length ||
+        (p.opened as unknown[] | undefined)?.length;
+      expect(carries, `phase "${p.slug}" carries nothing of its own`).toBeTruthy();
+    }
+  });
+
+  it("names only engagements that exist in whatever a phase says it started", () => {
+    const slugs = publishedRecord.engagements.map((e) => e.slug);
+
+    for (const p of publishedRecord.trajectory as Record<string, unknown>[]) {
+      for (const slug of (p.started as string[] | undefined) ?? []) {
+        expect(slugs, `phase "${p.slug}" started "${slug}"`).toContain(slug);
+      }
+    }
+  });
+});

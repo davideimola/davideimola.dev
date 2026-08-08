@@ -47,6 +47,7 @@ pnpm test:watch    # Vitest in watch mode
 pnpm test:coverage # Vitest with coverage report
 pnpm storybook     # Storybook dev server on port 6006
 pnpm build:storybook # Build Storybook static output
+pnpm cv:pdf        # Regenerate public/cv.pdf from the real /cv page (never part of pnpm build)
 ```
 
 ## Design Tokens
@@ -74,6 +75,19 @@ All tokens are CSS custom properties in `src/app/globals.css`. Use them via Tail
 - **`font-sans`** → IBM Plex Sans — use for body text, descriptions
 
 Apply with Tailwind: `font-mono`, `font-sans`
+
+## Print Rendering
+
+`/cv` prints straight from the browser, and the printed page is the **same markup** as the screen page: no second layout, no `PrintCv` clone. Only the ground inverts; the Akane Red accent and both brand fonts survive onto paper.
+
+- **Palette:** `print:light-ground` on `<body>` (`src/app/layout.tsx`) redefines the ground tokens for print media. The `@utility light-ground` that holds them lives in `globals.css` next to the dark ones. Because tokens are declared with `@theme inline`, every `bg-bg` / `text-text-1` / `border-border` utility re-themes at once. It has to sit on `<body>`, not `<html>`: utilities are in the `utilities` cascade layer, so the unlayered `:root` block would win on the same element.
+- **Chrome:** anything screen-only carries `data-print-hide`. `Button` and `ButtonLink` both set it, so a control built the repo's way needs no rule of its own; the NavBar and Footer set it too. Raw `<button>` elements are dropped as well. Both rules live in the `@media print` block in `globals.css`.
+- **Layout:** paper keeps the two rails. The sheet is narrower than `lg`, so the desktop grid does not reach it and the print variant states its own track (`print:grid print:grid-cols-[1fr_288px]`). The grid sits on the **outer** wrapper with `print:contents` on the inner one, so the hero is a cell of it and the aside starts level with the name: nested under the hero, Chromium pushed the whole row to sheet two and left sheet one holding just the name.
+- **Column split:** the left rail is the **paid** history and nothing else (Experience, Freelance work). Everything else lives in the **right** column, in this order: the aside card, Selected talks, Events organised, Community & projects. One structure for both media on purpose: moving a section for print only would mean coordinating grid rows by hand, and that breaks as soon as an engagement type empties out and its section renders nothing.
+- **The print track width is what balances the columns**, not the type size. The right column carries four blocks, so at the screen's proportions it ran past the fold while the left rail stopped two thirds down the sheet with nothing in it. Trading the width the left rail was not using is what fits the sheet at full 6.4pt: measured, 190px, 205px and 220px of aside all spill, 240px lands it.
+- **`print:grid-rows-[auto_1fr]` is load-bearing.** The right column spans both rows, and Chromium grows *every* row a spanning item crosses when the item is taller than they are. With implicit rows that pushed ~87px into the hero's row and opened a band of blank paper between the headline and the summary. Sizing row one to its content sends the excess under the history where it belongs.
+- **`/cv` fits one A4 sheet, and it is at the boundary.** Density is one knob, `print:[zoom:0.66]` on the grid, which puts the body at 6.4pt; 0.68 spills onto a second sheet. `zoom` affects layout rather than rasterising, so the text stays selectable, and an aside track has to be stated pre-zoom (288 x 0.66 = 190px on paper). When the Record outgrows the sheet, trim what the sheet says rather than shrinking the type: under about 6pt it stops being readable. `pnpm cv:pdf` prints the page count, so measure rather than guess.
+- **ATS constraints on `/cv`:** no tables, no images, and no text in page headers or footers, asserted by `pnpm cv:pdf`. Single column is **not** one of them: ADR-0003 trades it away for a readable sheet, so user story 18 of issue #98 is knowingly unmet.
 
 ## Responsive Design
 
@@ -117,12 +131,17 @@ Apply with Tailwind: `font-mono`, `font-sans`
 ### Terminal command theme
 Every page uses a terminal-style command as its hero label. Follow this pattern:
 - Home: `❯ whoami`
-- About: `❯ whoami`
+- About: `❯ whoami`. **The trajectory is the whole page.** The `trajectory` phases in `src/content/cv.json`, resolved by `getTrajectory()`, are the narrative Register of the CV Record: a phase references the engagements it covers by slug and derives its period from them, so nothing about the professional history is hardcoded here and companies are named inside the prose. The dated list and the education live on `/cv`, linked from here exactly once.
+  - **Stack, Community and What I'm exploring are gone as sections.** Their content is now each step's own: `tools` (names only, rendered as chips under the prose), `started` (engagement slugs the step set going, resolved loudly and deliberately *not* `covers`, which would drag the phase's period to today), `opened` (the current step's open questions), and `image`. The Record's `about` block holds the lead and the creed, which is the narrative Register's own content the way phase prose is.
+  - **Two rails only where the second one has something.** A step carrying nothing but tools runs full width rather than sitting beside a blank column. Where the rail exists it holds what the step started or opened, never a photo as well: a place holds a photo or content, not both, and a photo is a full-width band belonging to its step.
+  - Open Source Day and the talk total in "What it started" are **derived** (`getOrganisedEvents()` filtered to conference series, `getTotalTalkCount()`), so they cannot drift from `/sharing`. The meetups and the hackathon are deliberately left to `/cv`: here they would mix granularity in a three-item block.
+  - Hobbies are the one thing not from the Record, and they close the page **outside** the story on purpose, which is what stopped them reading as bolted on. `/cv`, `/uses` and `/now` are each linked exactly once, where the reader is already thinking about that thing.
 - Blog: `❯ ls ./blog`
 - Projects: `❯ ls ./projects`
 - Speaking: `❯ ls ./talks`
 - Now: `❯ cat ./now.md`
 - Uses: `❯ cat ./uses.md`
+- CV: `❯ cat ./cv.md` — dense Rendering of the CV Record (`src/content/cv.json`, read through `src/lib/cv.ts`). Wide left rail: Experience, Freelance work, then Community & projects (the Volunteering engagements plus the projects the Record names by slug). Narrow right column: the contact/skills/education/open-source card, then Selected talks and Events organised. Every talk, project and organised event is referenced by slug and resolved from `talks.json` / `projects.json`, so nothing about them is restated here and an unknown slug throws at build time. Indexable and in `sitemap.ts`, deliberately absent from NavBar and Footer
 - Contact: `❯ ping davideimola.dev`
 - Newsletter: `❯ ls ./newsletter` (archive index + subscribe form); single issue `/newsletter/[slug]` uses `❯ cat` in a Breadcrumb; post-confirmation landing `/newsletter/confirmed` uses `❯ cat ./welcome.md`
 - Links: multi-command terminal session (`❯ whoami`, `❯ ls -t ./blog | head -n 1`, `❯ ls ./talks --upcoming`, `❯ cal --book`, `❯ ls ./schrodinger-hat`) — standalone link-in-bio page living outside the `(site)` route group, so it renders without NavBar/Footer even when reached via rewrite; `links.davideimola.dev` serves this page directly via a host-based rewrite in `next.config.ts` (deep paths on the subdomain redirect to the main site); revalidates daily (ISR) so dynamic blocks stay fresh
@@ -190,6 +209,8 @@ Web analytics use **Umami Cloud** (free Hobby tier), not Vercel Web Analytics �
 - Blog posts: `src/content/blog/` (MDX files)
 - Talks: `src/content/talks/` (MDX or JSON)
 - Projects: `src/content/projects/` (MDX or JSON)
+- CV Record: `src/content/cv.json` — the single source of truth for the professional history. Every Rendering (`/cv` today, the PDF later) derives from it through `src/lib/cv.ts` and holds no facts of its own. Public contact only: no phone number, no home address, no fiscal code, ever. `selectedTalks` holds slugs only: a talk is described once, in `talks.json`, and `getSelectedTalks()` throws on an unknown slug so a rename breaks the build instead of quietly emptying the section
+- JSON content files are read through `readContentJson` in `src/lib/content-json.ts`
 
 ## Blog post categories
 

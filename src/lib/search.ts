@@ -19,6 +19,13 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/about",
   },
   {
+    id: "page-cv",
+    type: "page",
+    title: "CV",
+    description: "The full professional history: employment, freelance work, and community work.",
+    href: "/cv",
+  },
+  {
     id: "page-now",
     type: "page",
     title: "Now",
