@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ShelfNow } from "../../../components/sections/ShelfNow";
 import { PageHero } from "../../../components/ui/PageHero";
 import { ScrollReveal } from "../../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../../components/ui/SectionHeader";
@@ -17,6 +18,10 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATED = "July 2026";
+
+// The prose here is updated by hand, but the shelf block under it is read out of
+// the library on every revalidation, so the page follows /shelf's cadence.
+export const revalidate = 3600;
 
 export default function NowPage() {
   return (
@@ -133,13 +138,12 @@ export default function NowPage() {
               <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
                 <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
                   <span className="text-accent text-[10px]">{"//"}</span>
-                  Reading
+                  Tools I run for myself
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
-                  Fournier's <span className="text-text-2">The Manager's Path</span> and Larson's{" "}
-                  <span className="text-text-2">An Elegant Puzzle</span>, in parallel. Career map
-                  plus systems thinking, testing what holds against the Tech Lead transition I'm
-                  actually living.
+                  tsundoku for the library, bindex for the Pokémon collection, content-os for what I
+                  write. Single-owner systems that answer what I used to keep in my head, and that
+                  an assistant can query.
                 </p>
               </div>
             </ScrollReveal>
@@ -235,6 +239,9 @@ export default function NowPage() {
           ))}
         </div>
       </section>
+
+      {/* What the library says is open. Renders nothing when it has nothing. */}
+      <ShelfNow />
 
       {/* Footer */}
       <ScrollReveal>

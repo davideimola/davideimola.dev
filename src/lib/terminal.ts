@@ -25,10 +25,35 @@ export interface TerminalProject {
   href: string;
 }
 
+/**
+ * One open pass out of the personal library. `verbBase` is the Type's bare verb
+ * ("read", "play"), the only thing a block may be grouped by: Manga and Novel
+ * are both read, and the slug would split them.
+ */
+export interface TerminalShelfPass {
+  title: string;
+  type: string;
+  medium: string;
+  verbBase: string;
+}
+
+export interface TerminalShelf {
+  now: TerminalShelfPass[];
+  pile: number;
+  volumes: number;
+}
+
 export interface TerminalData {
   posts: TerminalPost[];
   talks: TerminalTalk[];
   projects: TerminalProject[];
+  /**
+   * Absent when the library could not be read. The shelf commands are then not
+   * registered at all: `help` does not list them, `ls` does not show the
+   * directory, and typing one lands on "command not found". A shell that
+   * answers with an apology is worse than one that never had the command.
+   */
+  shelf?: TerminalShelf;
 }
 
 export interface TerminalToken {
@@ -70,12 +95,13 @@ const WHOAMI_LINES: TerminalLine[] = [
 const HELP_COMMANDS: { name: string; args: string; description: string }[] = [
   { name: "help", args: "", description: "show this help" },
   { name: "whoami", args: "", description: "who is Davide" },
-  { name: "ls", args: "[dir]", description: "list contents (try ./blog, ./talks, ./projects)" },
+  { name: "ls", args: "[dir]", description: "list contents (try ./blog, ./talks, ./shelf)" },
   { name: "cat", args: "<file>", description: "read a file (try now.md or blog/<slug>.md)" },
   { name: "open", args: "<path>", description: "go to a page" },
   { name: "echo", args: "<text>", description: "print text" },
   { name: "date", args: "", description: "current date" },
   { name: "history", args: "", description: "command history" },
+  { name: "shelf", args: "", description: "what I'm reading and playing" },
   { name: "clear", args: "", description: "clear the terminal" },
   { name: "exit", args: "", description: "close the session" },
 ];
@@ -83,6 +109,11 @@ const HELP_COMMANDS: { name: string; args: string; description: string }[] = [
 // Static "files" living in the home directory. Directories resolve from data.
 const ROOT_FILES = ["about.md", "llms.txt", "now.md", "uses.md"];
 const ROOT_DIRS = ["blog", "projects", "talks"];
+
+/** The directories that exist for this session. "shelf" needs the library. */
+function rootDirs(data: TerminalData): string[] {
+  return data.shelf ? [...ROOT_DIRS, "shelf"] : ROOT_DIRS;
+}
 
 const OPEN_ROUTES: Record<string, string> = {
   "~": "/",
@@ -97,6 +128,7 @@ const OPEN_ROUTES: Record<string, string> = {
   "now.md": "/now",
   projects: "/projects",
   sharing: "/sharing",
+  shelf: "/shelf",
   talks: "/sharing",
   uses: "/uses",
   "uses.md": "/uses",
@@ -115,9 +147,10 @@ function notFound(cmd: string, path: string): CommandResult {
 
 // ── Command implementations ────────────────────────────────────────────────
 
-function cmdHelp(): CommandResult {
+function cmdHelp(data: TerminalData): CommandResult {
   const lines: TerminalLine[] = [[muted("Available commands:")], []];
-  for (const c of HELP_COMMANDS) {
+  const commands = data.shelf ? HELP_COMMANDS : HELP_COMMANDS.filter((c) => c.name !== "shelf");
+  for (const c of commands) {
     lines.push([accent(c.name.padEnd(9)), muted(c.args.padEnd(9)), t(c.description)]);
   }
   lines.push([]);
@@ -128,7 +161,7 @@ function cmdHelp(): CommandResult {
 function cmdLs(arg: string | undefined, data: TerminalData): CommandResult {
   if (!arg) {
     const entries: TerminalLine = [];
-    for (const dir of ROOT_DIRS) {
+    for (const dir of rootDirs(data)) {
       entries.push({ text: `${dir}/`, href: OPEN_ROUTES[dir], variant: "accent" });
       entries.push(t("  "));
     }
@@ -160,6 +193,9 @@ function cmdLs(arg: string | undefined, data: TerminalData): CommandResult {
     lines.push([]);
     lines.push([muted("full archive at "), link("/sharing", "/sharing")]);
     return { lines };
+  }
+  if (path === "shelf" && data.shelf) {
+    return cmdShelfPasses(data.shelf, null);
   }
   if (path === "projects") {
     const lines: TerminalLine[] = data.projects.map((p) => [
@@ -246,6 +282,93 @@ function cmdHistory(ctx: CommandContext): CommandResult {
   };
 }
 
+// ── The library ────────────────────────────────────────────────────────────
+
+// The headings the shell has copy for, keyed by the Type's bare verb. The
+// library speaks in past participles ("read", "played"), and no heading can be
+// bent out of those, so the pairing is stated here the way /shelf states it.
+const SHELF_VERB_LABELS: Record<string, string> = {
+  read: "Reading",
+  play: "Playing",
+};
+
+const SHELF_VERB_ORDER = ["read", "play"];
+
+function shelfVerbLabel(verbBase: string): string {
+  return SHELF_VERB_LABELS[verbBase] ?? verbBase;
+}
+
+function passLine(pass: TerminalShelfPass): TerminalLine {
+  return [
+    muted(`${shelfVerbLabel(pass.verbBase).padEnd(9)}`),
+    link(pass.title, "/shelf"),
+    muted(`  · ${pass.type} · ${pass.medium}`),
+  ];
+}
+
+/** Reading before playing, and a verb this shell has no copy for goes last. */
+function orderedPasses(passes: TerminalShelfPass[]): TerminalShelfPass[] {
+  return [...passes].sort((a, b) => {
+    const ia = SHELF_VERB_ORDER.indexOf(a.verbBase);
+    const ib = SHELF_VERB_ORDER.indexOf(b.verbBase);
+    if (ia === ib) return 0;
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+}
+
+/**
+ * The open passes, either all of them or only those of one bare verb. A verb
+ * with nothing open says so in one line rather than printing an empty block:
+ * there are months with no game running, and that is not an error.
+ */
+function passLines(passes: TerminalShelfPass[], what: string): TerminalLine[] {
+  if (passes.length === 0) return [[muted(`nothing ${what} right now.`)]];
+  return orderedPasses(passes).map(passLine);
+}
+
+function cmdShelfPasses(shelf: TerminalShelf, verbBase: string | null): CommandResult {
+  const passes = verbBase ? shelf.now.filter((p) => p.verbBase === verbBase) : shelf.now;
+  const what = verbBase ? shelfVerbLabel(verbBase).toLowerCase() : "open";
+  return {
+    lines: [
+      ...passLines(passes, what),
+      [],
+      [muted("verdicts and the pile at "), link("/shelf", "/shelf")],
+    ],
+  };
+}
+
+function cmdShelf(shelf: TerminalShelf): CommandResult {
+  return {
+    lines: [
+      [accent("~/shelf"), muted(" - the library I run at home")],
+      [],
+      ...passLines(shelf.now, "open"),
+      [],
+      [
+        muted("pile: "),
+        t(`${shelf.pile} next up`),
+        muted("  ·  shelf: "),
+        t(`${shelf.volumes} volumes`),
+      ],
+      [muted("all of it at "), link("/shelf", "/shelf")],
+    ],
+  };
+}
+
+function cmdPile(shelf: TerminalShelf): CommandResult {
+  return {
+    lines: [
+      [accent(`${shelf.pile}`), t(" things to read or play next.")],
+      [muted("tsundoku: the pile that keeps growing. what comes next, not what sits unread.")],
+      [muted("some of it I pinned, the rest the library lines up for me.")],
+      [muted("the whole pile lives at "), link("/shelf", "/shelf")],
+    ],
+  };
+}
+
 // ── Easter eggs ────────────────────────────────────────────────────────────
 
 function cmdSudo(): CommandResult {
@@ -325,6 +448,12 @@ function cmdEditor(name: string): CommandResult {
 
 // ── Entry point ────────────────────────────────────────────────────────────
 
+function unknownCommand(cmd: string): CommandResult {
+  return {
+    lines: [[error(`command not found: ${cmd}`)], [muted("Type 'help' for available commands.")]],
+  };
+}
+
 export function runCommand(
   input: string,
   data: TerminalData,
@@ -336,7 +465,7 @@ export function runCommand(
 
   switch (cmd) {
     case "help":
-      return cmdHelp();
+      return cmdHelp(data);
     case "whoami":
       return { lines: WHOAMI_LINES };
     case "pwd":
@@ -363,6 +492,17 @@ export function runCommand(
         lines: [[muted("logout")], [muted("Connection to davideimola.dev closed.")]],
         navigate: "/",
       };
+    // The library commands exist only while the library answers: with no data
+    // they fall through to "command not found", like any command this shell
+    // never had.
+    case "shelf":
+      return data.shelf ? cmdShelf(data.shelf) : unknownCommand(cmd);
+    case "reading":
+      return data.shelf ? cmdShelfPasses(data.shelf, "read") : unknownCommand(cmd);
+    case "playing":
+      return data.shelf ? cmdShelfPasses(data.shelf, "play") : unknownCommand(cmd);
+    case "pile":
+      return data.shelf ? cmdPile(data.shelf) : unknownCommand(cmd);
     case "sudo":
       return cmdSudo();
     case "rm":
@@ -381,12 +521,7 @@ export function runCommand(
     case "emacs":
       return cmdEditor(cmd);
     default:
-      return {
-        lines: [
-          [error(`command not found: ${cmd}`)],
-          [muted("Type 'help' for available commands.")],
-        ],
-      };
+      return unknownCommand(cmd);
   }
 }
 
@@ -406,10 +541,15 @@ const COMPLETABLE_COMMANDS = [
   "whoami",
 ];
 
+/** The command names that can be completed in this session. */
+function completableCommands(data: TerminalData): string[] {
+  return data.shelf ? [...COMPLETABLE_COMMANDS, "shelf"].sort() : COMPLETABLE_COMMANDS;
+}
+
 function pathCandidates(cmd: string, data: TerminalData): string[] {
   switch (cmd) {
     case "ls":
-      return ROOT_DIRS.map((d) => `./${d}`);
+      return rootDirs(data).map((d) => `./${d}`);
     case "cat":
       return [...ROOT_FILES, ...data.posts.map((p) => `blog/${p.slug}.md`)];
     case "open":
@@ -426,7 +566,9 @@ export function completeInput(input: string, data: TerminalData): string[] {
   if (parts.length <= 1) {
     const prefix = parts[0] ?? "";
     if (!prefix) return [];
-    return COMPLETABLE_COMMANDS.filter((c) => c.startsWith(prefix)).map((c) => `${c} `);
+    return completableCommands(data)
+      .filter((c) => c.startsWith(prefix))
+      .map((c) => `${c} `);
   }
   const last = parts[parts.length - 1];
   return pathCandidates(parts[0], data)

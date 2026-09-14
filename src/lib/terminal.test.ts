@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { completeInput, runCommand, type TerminalData } from "./terminal";
+import { completeInput, runCommand, type TerminalData, type TerminalShelfPass } from "./terminal";
+
+const OPEN_PASSES: TerminalShelfPass[] = [
+  { title: "Crimson Desert", type: "Videogame", medium: "PlayStation 5", verbBase: "play" },
+  { title: "The Manager's Path", type: "Non-fiction", medium: "Paper", verbBase: "read" },
+];
 
 const DATA: TerminalData = {
   posts: [
@@ -40,7 +45,11 @@ const DATA: TerminalData = {
       href: "https://github.com/argusappsec/argus",
     },
   ],
+  shelf: { now: OPEN_PASSES, pile: 40, volumes: 102 },
 };
+
+/** The same session with the library unreadable: no shelf, no shelf commands. */
+const NO_SHELF: TerminalData = { ...DATA, shelf: undefined };
 
 function flatten(result: ReturnType<typeof runCommand>): string {
   return result.lines.map((line) => line.map((token) => token.text).join("")).join("\n");
@@ -59,9 +68,13 @@ describe("runCommand", () => {
 
   it("help lists every documented command", () => {
     const out = flatten(runCommand("help", DATA));
-    for (const cmd of ["whoami", "ls", "cat", "open", "clear", "exit"]) {
+    for (const cmd of ["whoami", "ls", "cat", "open", "clear", "exit", "shelf"]) {
       expect(out).toContain(cmd);
     }
+  });
+
+  it("help drops shelf when the library is unreadable", () => {
+    expect(flatten(runCommand("help", NO_SHELF))).not.toContain("what I'm reading and playing");
   });
 
   it("whoami prints the bio with a link to /about", () => {
@@ -73,9 +86,13 @@ describe("runCommand", () => {
 
   it("ls lists the home directory", () => {
     const out = flatten(runCommand("ls", DATA));
-    for (const entry of ["blog/", "projects/", "talks/", "now.md", "llms.txt"]) {
+    for (const entry of ["blog/", "projects/", "talks/", "shelf/", "now.md", "llms.txt"]) {
       expect(out).toContain(entry);
     }
+  });
+
+  it("ls hides shelf/ when the library is unreadable", () => {
+    expect(flatten(runCommand("ls", NO_SHELF))).not.toContain("shelf/");
   });
 
   it("ls ./blog lists posts with links, newest metadata intact", () => {
@@ -153,6 +170,64 @@ describe("runCommand", () => {
     expect(flatten(runCommand("rm -rf /", DATA))).toContain("permission denied");
   });
 
+  it("shelf prints the open passes, the pile and the shelf total", () => {
+    const result = runCommand("shelf", DATA);
+    const out = flatten(result);
+    expect(out).toContain("The Manager's Path");
+    expect(out).toContain("Crimson Desert");
+    expect(out).toContain("40 next up");
+    expect(out).toContain("102 volumes");
+    const hrefs = result.lines.flat().map((token) => token.href);
+    expect(hrefs).toContain("/shelf");
+  });
+
+  it("shelf groups by the Type verb, reading before playing", () => {
+    const lines = runCommand("shelf", DATA).lines.filter((line) =>
+      line.some((token) => token.text === "Reading  " || token.text === "Playing  ")
+    );
+    expect(lines[0][0].text.trim()).toBe("Reading");
+    expect(lines[1][0].text.trim()).toBe("Playing");
+  });
+
+  it("ls ./shelf lists the open passes", () => {
+    const out = flatten(runCommand("ls ./shelf", DATA));
+    expect(out).toContain("The Manager's Path");
+    expect(out).toContain("Non-fiction");
+  });
+
+  it("reading and playing filter by the Type verb", () => {
+    expect(flatten(runCommand("reading", DATA))).not.toContain("Crimson Desert");
+    expect(flatten(runCommand("playing", DATA))).not.toContain("The Manager's Path");
+  });
+
+  it("a verb with nothing open says so instead of printing an empty block", () => {
+    const noGames: TerminalData = {
+      ...DATA,
+      shelf: { now: OPEN_PASSES.filter((p) => p.verbBase === "read"), pile: 40, volumes: 102 },
+    };
+    const out = flatten(runCommand("playing", noGames));
+    expect(out).toContain("nothing playing right now");
+    expect(out).not.toContain("Crimson Desert");
+  });
+
+  it("pile prints a queue, and counts things rather than volumes", () => {
+    const out = flatten(runCommand("pile", DATA));
+    expect(out).toContain("40");
+    // The pile holds a videogame as readily as a manga, so nothing here may
+    // call it a stack of volumes.
+    expect(out).toContain("things to read or play next");
+    expect(out).not.toMatch(/volumes/);
+    // It is a queue of what comes next, and it holds things the owner does not
+    // own and things already started, so no copy may claim a purchase.
+    expect(out).not.toMatch(/bought/);
+  });
+
+  it("the shelf commands do not exist when the library is unreadable", () => {
+    for (const cmd of ["shelf", "reading", "playing", "pile"]) {
+      expect(flatten(runCommand(cmd, NO_SHELF))).toContain(`command not found: ${cmd}`);
+    }
+  });
+
   it("nmap runs the fake scan and plugs argus", () => {
     const out = flatten(runCommand("nmap davideimola.dev", DATA));
     expect(out).toContain("443/tcp");
@@ -167,6 +242,13 @@ describe("completeInput", () => {
 
   it("completes ls directories", () => {
     expect(completeInput("ls ./b", DATA)).toEqual(["ls ./blog"]);
+    expect(completeInput("ls ./s", DATA)).toEqual(["ls ./shelf"]);
+    expect(completeInput("ls ./s", NO_SHELF)).toEqual([]);
+  });
+
+  it("completes shelf only while the library answers", () => {
+    expect(completeInput("she", DATA)).toEqual(["shelf "]);
+    expect(completeInput("she", NO_SHELF)).toEqual([]);
   });
 
   it("completes blog slugs for cat", () => {

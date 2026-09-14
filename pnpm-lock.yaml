@@ -71,6 +71,9 @@ importers:
       resend:
         specifier: ^6.16.0
         version: 6.16.0(@react-email/render@2.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
+      zod:
+        specifier: ^4.6.2
+        version: 4.6.2
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.5.3
@@ -4149,6 +4152,9 @@ packages:
     resolution: {integrity: sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==}
     engines: {node: '>=18'}
 
+  zod@4.6.2:
+    resolution: {integrity: sha512-lh5RCAGFa1Cm2hjtNwLQhSs/AsqdWnTQaBER9fEwN/88pSh7KOtJavtBx/0VlkN/uFd61SwYmljLMDAsHlvzBQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -8112,5 +8118,7 @@ snapshots:
   yaml@2.8.3: {}
 
   yoctocolors@2.1.2: {}
+
+  zod@4.6.2: {}
 
   zwitch@2.0.4: {}

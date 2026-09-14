@@ -358,6 +358,12 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+          <p className="font-mono text-[11px] text-text-3 mt-6">
+            <Link href="/shelf" className="text-text-2 hover:text-accent transition-colors">
+              /shelf
+            </Link>{" "}
+            for what I am reading and playing right now
+          </p>
         </section>
       </ScrollReveal>
 

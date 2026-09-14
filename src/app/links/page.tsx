@@ -12,10 +12,16 @@ import { LinkTile } from "../../components/ui/LinkTile";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SubscribeForm } from "../../components/ui/SubscribeForm";
 import { getAllPosts, getUpcomingTalks } from "../../lib/content";
+import { getShowcase, groupPassesByVerb } from "../../lib/shelf";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 
 // Regenerate daily so time-based blocks (upcoming talks) expire without a deploy.
 export const revalidate = 86400;
+
+// How many open passes the link-in-bio shows per verb. This is a calling card,
+// not the shelf, and the cap is per block rather than over the whole list so
+// that a long reading run cannot push the games off the page entirely.
+const SHELF_LIMIT_PER_VERB = 3;
 
 const DESCRIPTION =
   "Profiles, latest writing, and upcoming talks: every place you can find me, in one page.";
@@ -82,10 +88,18 @@ function CommandLine({ command, className = "" }: { command: string; className?:
   );
 }
 
-export default function LinksPage() {
+export default async function LinksPage() {
   const year = new Date().getFullYear();
   const latestPost = getAllPosts()[0];
   const upcomingTalks = getUpcomingTalks().slice(0, 2);
+  // The same seam /shelf and /now read. With nothing open, the block is absent
+  // rather than an empty card: getShowcase never throws, so there is no error
+  // state to render here.
+  const { document: showcase } = await getShowcase();
+  const openGroups = groupPassesByVerb(showcase.now).map((group) => ({
+    ...group,
+    passes: group.passes.slice(0, SHELF_LIMIT_PER_VERB),
+  }));
 
   return (
     <div className="max-w-[520px] mx-auto px-4 sm:px-6 pt-14 sm:pt-20 pb-12">
@@ -241,6 +255,38 @@ export default function LinksPage() {
           </div>
         </section>
       </ScrollReveal>
+
+      {/* ❯ what's open on the shelf right now */}
+      {openGroups.length > 0 && (
+        <ScrollReveal>
+          <section className="mb-12">
+            <CommandLine command="ls ./shelf --now" className="mb-5" />
+            <Card href="/shelf">
+              <div className="flex flex-col gap-4">
+                {openGroups.map((group) => (
+                  <div key={group.verbBase}>
+                    <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-2">
+                      {group.label}
+                    </p>
+                    <ul className="flex flex-col gap-1">
+                      {group.passes.map((pass) => (
+                        <li
+                          key={pass.id}
+                          className="font-mono text-[13px] text-text-1 leading-snug"
+                        >
+                          {pass.title}
+                          <span className="text-text-3"> · {pass.type.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <p className="font-mono text-[11px] text-text-3 mt-4">the verdicts and the pile →</p>
+            </Card>
+          </section>
+        </ScrollReveal>
+      )}
 
       {/* Idle prompt — the session stays open */}
       <p className="font-mono text-[13px] text-text-3 mb-10" aria-hidden="true">

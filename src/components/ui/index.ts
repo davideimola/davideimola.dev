@@ -6,6 +6,7 @@ export { Button, ButtonLink } from "./Button";
 export { Card } from "./Card";
 export { CodeBlock } from "./CodeBlock";
 export { CopyButton } from "./CopyButton";
+export { CoverTile } from "./CoverTile";
 export { GiscusComments } from "./GiscusComments";
 export { JsonLd } from "./JsonLd";
 export { LinkTile } from "./LinkTile";

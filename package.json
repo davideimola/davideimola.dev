@@ -20,7 +20,8 @@
     "brand:png": "node scripts/generate-brand-pngs.mjs",
     "cv:pdf": "tsx scripts/cv-pdf.mts",
     "email:dev": "email dev --dir src/emails/previews --port 3001",
-    "newsletter:draft": "tsx --env-file=.env.local scripts/newsletter-draft.mts"
+    "newsletter:draft": "tsx --env-file=.env.local scripts/newsletter-draft.mts",
+    "shelf:snapshot": "tsx --env-file=.env.local scripts/shelf-snapshot.mts"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
@@ -42,7 +43,8 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-github-alerts": "^0.1.1",
-    "resend": "^6.16.0"
+    "resend": "^6.16.0",
+    "zod": "^4.6.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.3",

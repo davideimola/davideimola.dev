@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { InteractiveTerminal } from "../../../components/sections";
 import { PageHero } from "../../../components/ui/PageHero";
 import { getAllPosts, getAllProjects, getAllTalks } from "../../../lib/content";
+import { getShowcase } from "../../../lib/shelf";
 import type { TerminalData } from "../../../lib/terminal";
 
 export const metadata: Metadata = {
@@ -19,10 +20,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate daily so the upcoming/past split of talks stays fresh.
-export const revalidate = 86400;
+// Revalidate hourly: the talks only need a daily split, but the library moves
+// faster than that and the shell reads it through the same seam /shelf does.
+export const revalidate = 3600;
 
-function buildTerminalData(): TerminalData {
+async function buildTerminalData(): Promise<TerminalData> {
   const posts = getAllPosts().map(({ slug, title, date, category }) => ({
     slug,
     title,
@@ -53,11 +55,29 @@ function buildTerminalData(): TerminalData {
     href: p.caseStudy ?? p.url ?? p.github ?? "/projects",
   }));
 
-  return { posts, talks, projects };
+  // One seam over the library, the same one /shelf and /now read. The document
+  // always arrives (getShowcase degrades to the committed snapshot), so the
+  // shell only drops the shelf commands if there is nothing behind them at all.
+  const { document: showcase } = await getShowcase();
+  const hasLibrary = showcase.now.length > 0 || showcase.shelf.total > 0;
+  const shelf = hasLibrary
+    ? {
+        now: showcase.now.map((pass) => ({
+          title: pass.title,
+          type: pass.type.label,
+          medium: pass.medium.label,
+          verbBase: pass.type.verbBase,
+        })),
+        pile: showcase.pile.count,
+        volumes: showcase.shelf.total,
+      }
+    : undefined;
+
+  return { posts, talks, projects, shelf };
 }
 
-export default function TerminalPage() {
-  const data = buildTerminalData();
+export default async function TerminalPage() {
+  const data = await buildTerminalData();
 
   return (
     <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
