@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Talk } from "../../lib/content";
 import { formatRelative, formatShortDate } from "../../lib/dates";
+import { isFeedbackOpen } from "../../lib/talk-feedback";
 import { Badge } from "../ui/Badge";
 import { BookingPrompt } from "../ui/BookingPrompt";
 import { ScrollReveal } from "../ui/ScrollReveal";
@@ -90,7 +91,8 @@ function TalkCard({
   timeline?: Timeline;
 }) {
   const { session } = talk;
-  const hasMedia = !!(session?.slides || session?.video);
+  const ratingOpen = isFeedbackOpen(talk);
+  const hasLinks = !!(session?.slides || session?.video || ratingOpen);
   const displayDate = talk.eventDateRange ?? formatShortDate(talk.date);
 
   return (
@@ -178,8 +180,18 @@ function TalkCard({
                 </Link>
               ))}
             </div>
-            {hasMedia && (
+            {hasLinks && (
               <div className="flex items-center gap-4">
+                {ratingOpen && talk.feedback && (
+                  <a
+                    href={talk.feedback.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-[11px] text-accent hover:text-accent-hover transition-colors duration-150"
+                  >
+                    Rate this talk →
+                  </a>
+                )}
                 {session?.slides && (
                   <a
                     href={session.slides}

@@ -265,3 +265,42 @@ describe("completeInput", () => {
     expect(completeInput("", DATA)).toEqual([]);
   });
 });
+
+// A session during a conference: the page resolved an open rating window and
+// handed the shell a live link. Every other test runs without one, which is
+// the normal state of the site.
+const RATING_DATA: TerminalData = {
+  ...DATA,
+  ratings: [
+    {
+      event: "reactjsday 2026",
+      title: "AI Won't Design Your System. You Have To.",
+      url: "https://emblema.live/t/abc",
+      host: "emblema.live",
+    },
+  ],
+};
+
+describe("rate", () => {
+  it("prints the talk and its rating link while the window is open", () => {
+    const result = runCommand("rate", RATING_DATA);
+    const out = flatten(result);
+    expect(out).toContain("AI Won't Design Your System. You Have To.");
+    expect(out).toContain("emblema.live");
+    expect(result.lines.flat().map((token) => token.href)).toContain("https://emblema.live/t/abc");
+  });
+
+  it("is listed in help only while the window is open", () => {
+    expect(flatten(runCommand("help", RATING_DATA))).toContain("rate the talk you just saw");
+    expect(flatten(runCommand("help", DATA))).not.toContain("rate the talk you just saw");
+  });
+
+  it("does not exist outside the window", () => {
+    expect(flatten(runCommand("rate", DATA))).toContain("command not found: rate");
+  });
+
+  it("completes only while the window is open", () => {
+    expect(completeInput("ra", RATING_DATA)).toEqual(["rate "]);
+    expect(completeInput("ra", DATA)).toEqual([]);
+  });
+});

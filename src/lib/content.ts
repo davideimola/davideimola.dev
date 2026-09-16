@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 import { CONTENT_DIR, readContentJson } from "./content-json";
+import { isFeedbackOpen, type TalkFeedback } from "./talk-feedback";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -39,6 +40,11 @@ export interface Talk {
   organizer?: boolean;
   mc?: boolean;
   session?: TalkSession;
+  /**
+   * Where the audience rates this session, and for how long. Set it once when
+   * the talk is added: the rating blocks appear and disappear on their own.
+   */
+  feedback?: TalkFeedback;
   tags: string[];
 }
 
@@ -192,6 +198,14 @@ export function getUpcomingTalks(): Talk[] {
   today.setHours(0, 0, 0, 0);
   return loadTalks()
     .filter((t) => new Date(t.date) >= today)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+}
+
+// Talks whose rating link is live today, soonest first. Drives every "rate
+// this talk" surface, so none of them has a date rule of its own.
+export function getFeedbackOpenTalks(now: Date = new Date()): Talk[] {
+  return loadTalks()
+    .filter((t) => isFeedbackOpen(t, now))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 

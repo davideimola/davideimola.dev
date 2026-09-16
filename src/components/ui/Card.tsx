@@ -21,8 +21,15 @@ export function Card({ children, className = "", href, hoverable = true }: CardP
   const classes = [baseClasses, hoverable ? hoverClasses : "", className].join(" ");
 
   if (href) {
+    // An off-site card opens in a new tab on its own: the callers pass a URL,
+    // not a flag, and none of them has to remember the rel attributes.
+    const external = href.startsWith("http");
     return (
-      <a href={href} className={`block no-underline ${classes}`}>
+      <a
+        href={href}
+        className={`block no-underline ${classes}`}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
         <div className="relative z-10 h-full">{children}</div>
       </a>
     );

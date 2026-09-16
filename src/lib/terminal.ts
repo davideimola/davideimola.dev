@@ -18,6 +18,17 @@ export interface TerminalTalk {
   upcoming: boolean;
 }
 
+/**
+ * A talk whose rating window is open right now. The page resolves the window,
+ * so the shell holds a live link and no date rule of its own.
+ */
+export interface TerminalRating {
+  event: string;
+  title: string;
+  url: string;
+  host: string;
+}
+
 export interface TerminalProject {
   title: string;
   description: string;
@@ -54,6 +65,12 @@ export interface TerminalData {
    * answers with an apology is worse than one that never had the command.
    */
   shelf?: TerminalShelf;
+  /**
+   * Absent outside a talk's rating window, which is nearly always. `rate` is
+   * then not a command at all: it leaves `help`, tab completion and the
+   * not-found path exactly as they were, the way the shelf commands do.
+   */
+  ratings?: TerminalRating[];
 }
 
 export interface TerminalToken {
@@ -102,6 +119,7 @@ const HELP_COMMANDS: { name: string; args: string; description: string }[] = [
   { name: "date", args: "", description: "current date" },
   { name: "history", args: "", description: "command history" },
   { name: "shelf", args: "", description: "what I'm reading and playing" },
+  { name: "rate", args: "", description: "rate the talk you just saw" },
   { name: "clear", args: "", description: "clear the terminal" },
   { name: "exit", args: "", description: "close the session" },
 ];
@@ -149,7 +167,9 @@ function notFound(cmd: string, path: string): CommandResult {
 
 function cmdHelp(data: TerminalData): CommandResult {
   const lines: TerminalLine[] = [[muted("Available commands:")], []];
-  const commands = data.shelf ? HELP_COMMANDS : HELP_COMMANDS.filter((c) => c.name !== "shelf");
+  const commands = HELP_COMMANDS.filter(
+    (c) => (c.name !== "shelf" ? true : !!data.shelf) && (c.name !== "rate" ? true : !!data.ratings)
+  );
   for (const c of commands) {
     lines.push([accent(c.name.padEnd(9)), muted(c.args.padEnd(9)), t(c.description)]);
   }
@@ -280,6 +300,17 @@ function cmdHistory(ctx: CommandContext): CommandResult {
   return {
     lines: history.map((entry, i) => [muted(`${String(i + 1).padStart(4)}  `), t(entry)]),
   };
+}
+
+// ── The room ───────────────────────────────────────────────────────────────
+
+function cmdRate(ratings: TerminalRating[]): CommandResult {
+  const lines: TerminalLine[] = [[muted("Just saw me speak? Tell me how it went.")], []];
+  for (const rating of ratings) {
+    lines.push([accent(rating.title)]);
+    lines.push([muted(`  ${rating.event} · `), link(rating.host, rating.url)]);
+  }
+  return { lines };
 }
 
 // ── The library ────────────────────────────────────────────────────────────
@@ -503,6 +534,8 @@ export function runCommand(
       return data.shelf ? cmdShelfPasses(data.shelf, "play") : unknownCommand(cmd);
     case "pile":
       return data.shelf ? cmdPile(data.shelf) : unknownCommand(cmd);
+    case "rate":
+      return data.ratings ? cmdRate(data.ratings) : unknownCommand(cmd);
     case "sudo":
       return cmdSudo();
     case "rm":
@@ -543,7 +576,8 @@ const COMPLETABLE_COMMANDS = [
 
 /** The command names that can be completed in this session. */
 function completableCommands(data: TerminalData): string[] {
-  return data.shelf ? [...COMPLETABLE_COMMANDS, "shelf"].sort() : COMPLETABLE_COMMANDS;
+  const extra = [...(data.shelf ? ["shelf"] : []), ...(data.ratings ? ["rate"] : [])];
+  return extra.length > 0 ? [...COMPLETABLE_COMMANDS, ...extra].sort() : COMPLETABLE_COMMANDS;
 }
 
 function pathCandidates(cmd: string, data: TerminalData): string[] {

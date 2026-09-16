@@ -11,12 +11,15 @@ import { JsonLd } from "../../components/ui/JsonLd";
 import { LinkTile } from "../../components/ui/LinkTile";
 import { ScrollReveal } from "../../components/ui/ScrollReveal";
 import { SubscribeForm } from "../../components/ui/SubscribeForm";
-import { getAllPosts, getUpcomingTalks } from "../../lib/content";
+import { getAllPosts, getFeedbackOpenTalks, getUpcomingTalks } from "../../lib/content";
 import { getShowcase, groupPassesByVerb } from "../../lib/shelf";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
+import { feedbackHost } from "../../lib/talk-feedback";
 
-// Regenerate daily so time-based blocks (upcoming talks) expire without a deploy.
-export const revalidate = 86400;
+// Regenerate hourly so the time-based blocks turn over without a deploy. Daily
+// was enough for the upcoming talks, but the rating block has to light up on
+// the conference morning: this page is what the closing slide's QR points at.
+export const revalidate = 3600;
 
 // How many open passes the link-in-bio shows per verb. This is a calling card,
 // not the shelf, and the cap is per block rather than over the whole list so
@@ -92,6 +95,9 @@ export default async function LinksPage() {
   const year = new Date().getFullYear();
   const latestPost = getAllPosts()[0];
   const upcomingTalks = getUpcomingTalks().slice(0, 2);
+  // Live only during a talk's rating window, which the entry in talks.json
+  // carries. Nothing here is edited on the day.
+  const ratingTalks = getFeedbackOpenTalks();
   // The same seam /shelf and /now read. With nothing open, the block is absent
   // rather than an empty card: getShowcase never throws, so there is no error
   // state to render here.
@@ -150,6 +156,37 @@ export default async function LinksPage() {
           </div>
         </header>
       </ScrollReveal>
+
+      {/* ❯ rate --talk — live only during a talk's rating window, and first on
+          the page while it is: in the room nobody scrolls. */}
+      {ratingTalks.length > 0 && (
+        <ScrollReveal>
+          <section className="mb-12">
+            <CommandLine command="rate --talk" className="mb-5" />
+            <div className="flex flex-col gap-3">
+              {ratingTalks.map((talk) => {
+                const host = feedbackHost(talk.feedback?.url ?? "");
+                return (
+                  <Card key={talk.slug} href={talk.feedback?.url} className="border-border-hover">
+                    <p className="font-mono text-[11px] text-accent tracking-[0.15em] uppercase mb-2">
+                      Just saw me speak?
+                    </p>
+                    <p className="font-mono text-[15px] font-semibold text-text-1 leading-snug">
+                      {talk.session?.title ?? talk.event}
+                    </p>
+                    <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-2">
+                      {talk.event} · {talk.location}
+                    </p>
+                    <p className="font-mono text-[11px] text-text-3 mt-4">
+                      Rate the talk →{host && <span> {host}</span>}
+                    </p>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+        </ScrollReveal>
+      )}
 
       {/* ❯ latest post */}
       {latestPost && (

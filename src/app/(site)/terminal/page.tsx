@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { InteractiveTerminal } from "../../../components/sections";
 import { PageHero } from "../../../components/ui/PageHero";
-import { getAllPosts, getAllProjects, getAllTalks } from "../../../lib/content";
+import {
+  getAllPosts,
+  getAllProjects,
+  getAllTalks,
+  getFeedbackOpenTalks,
+} from "../../../lib/content";
 import { getShowcase } from "../../../lib/shelf";
+import { feedbackHost } from "../../../lib/talk-feedback";
 import type { TerminalData } from "../../../lib/terminal";
 
 export const metadata: Metadata = {
@@ -73,7 +79,20 @@ async function buildTerminalData(): Promise<TerminalData> {
       }
     : undefined;
 
-  return { posts, talks, projects, shelf };
+  // `rate` only exists while a talk's rating window is open. Hourly ISR is
+  // what makes it appear on the conference morning without a deploy.
+  const open = getFeedbackOpenTalks();
+  const ratings =
+    open.length > 0
+      ? open.map((talk) => ({
+          event: talk.event,
+          title: talk.session?.title ?? talk.event,
+          url: talk.feedback?.url ?? "",
+          host: feedbackHost(talk.feedback?.url ?? ""),
+        }))
+      : undefined;
+
+  return { posts, talks, projects, shelf, ratings };
 }
 
 export default async function TerminalPage() {
