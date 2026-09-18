@@ -25,10 +25,10 @@
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
-    "@marsidev/react-turnstile": "^1.5.3",
+    "@marsidev/react-turnstile": "^1.6.1",
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
-    "@tabler/icons-react": "^3.44.0",
+    "@tabler/icons-react": "^3.46.0",
     "@tailwindcss/typography": "^0.5.20",
     "@vercel/speed-insights": "^2.0.0",
     "cmdk": "^1.1.1",
@@ -36,15 +36,15 @@
     "motion": "^12.42.2",
     "next": "16.3.5",
     "next-mdx-remote": "^6.0.0",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "reading-time": "^1.5.0",
     "rehype-prism-plus": "^2.0.2",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-github-alerts": "^0.1.1",
-    "resend": "^6.16.0",
-    "zod": "^4.6.2"
+    "resend": "^6.28.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.3",
