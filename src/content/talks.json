@@ -37,7 +37,8 @@
     "session": {
       "title": "Il security engineer che già AI",
       "format": "Talk",
-      "abstract": "Security engineering with mainstream AI tools and no enterprise budget: finding and fixing broken access control, auditing dependencies, and growing your own structured security agents."
+      "abstract": "Security engineering with mainstream AI tools and no enterprise budget: finding and fixing broken access control, auditing dependencies, and growing your own structured security agents.",
+      "slides": "https://slides.davideimola.dev/ai-defense/1"
     },
     "feedback": {
       "url": "https://emblema.live/feedback/talk/TduZFjzkFOatnAYZ5cUTjZsQjQI2/6aaa6dfb44e70ce47871fb33/6aaa6ec544e70ce47871fb34"

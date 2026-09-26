@@ -166,21 +166,29 @@ export default async function LinksPage() {
             <div className="flex flex-col gap-3">
               {ratingTalks.map((talk) => {
                 const host = feedbackHost(talk.feedback?.url ?? "");
+                const slides = talk.session?.slides;
                 return (
-                  <Card key={talk.slug} href={talk.feedback?.url} className="border-border-hover">
-                    <p className="font-mono text-[11px] text-accent tracking-[0.15em] uppercase mb-2">
-                      Just saw me speak?
-                    </p>
-                    <p className="font-mono text-[15px] font-semibold text-text-1 leading-snug">
-                      {talk.session?.title ?? talk.event}
-                    </p>
-                    <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-2">
-                      {talk.event} · {talk.location}
-                    </p>
-                    <p className="font-mono text-[11px] text-text-3 mt-4">
-                      Rate the talk →{host && <span> {host}</span>}
-                    </p>
-                  </Card>
+                  <div key={talk.slug} className="flex flex-col gap-3">
+                    <Card href={talk.feedback?.url} className="border-border-hover">
+                      <p className="font-mono text-[11px] text-accent tracking-[0.15em] uppercase mb-2">
+                        Just saw me speak?
+                      </p>
+                      <p className="font-mono text-[15px] font-semibold text-text-1 leading-snug">
+                        {talk.session?.title ?? talk.event}
+                      </p>
+                      <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-2">
+                        {talk.event} · {talk.location}
+                      </p>
+                      <p className="font-mono text-[11px] text-text-3 mt-4">
+                        Rate the talk →{host && <span> {host}</span>}
+                      </p>
+                    </Card>
+                    {/* A sibling tile, not a second link inside the card: an
+                      anchor cannot nest in the card's own anchor. */}
+                    {slides && (
+                      <LinkTile label="Slides" hint={feedbackHost(slides)} href={slides} />
+                    )}
+                  </div>
                 );
               })}
             </div>
