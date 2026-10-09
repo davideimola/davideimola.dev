@@ -2,15 +2,22 @@
 
 AI context for Claude Code and other AI assistants working on this codebase.
 
-## Editorial home: content-os
+## Editorial home: the Obsidian vault
 
-Editorial planning (ideas, the Pipeline, channel decisions, lifecycle) lives on **[`davideimola/content-os`](https://github.com/davideimola/content-os)**, not here. This repo is the **blog Factory**: it holds **artifacts** (the posts in `src/content/blog/`, the blog PRs) that reference the owning **content-os Pipeline Piece** — a Supabase record reached through the **`content-os-capture` MCP server**, no longer a GitHub issue (ADR-0014). An accepted Idea spawns one **Piece** per channel (ADR-0011); this repo produces the blog Piece's artifact, and the content-os Pipeline Piece stays the single source of truth every editorial-lifecycle skill reads context from and writes outcomes to (ADR-0012, ADR-0015). The writing skills here (`write-blog-post`, `social-post`) read and write those Pipeline Pieces through the MCP server (never `gh` against content-os); a blog PR lives here but carries its content-os Piece id and is handed back with `set_piece_artifact`. **Do not open editorial or content-planning issues on this repo**: capture them on content-os with the `/idea` skill (or the `capture_idea` MCP tool).
+Editorial planning (ideas, pieces, talks, channel decisions, lifecycle) lives in Davide's **Obsidian vault**, under the `[[Content]]` area hub, not here. It moved there from content-os (Supabase + MCP server) on 2026-10-09; content-os is deprecated and its MCP server must not be used.
+
+- **Vault root:** `/Users/davideimola/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/` (called `<vault>` below). Read and write its notes as plain Markdown files.
+- **Hub:** `<vault>/Notes/Content.md` explains the system (Flag/Side, cadence floor) and holds the Bases views. The vault's own `<vault>/CLAUDE.md` holds the schema.
+- **Idea** (`type: idea`, `status: live | archived`, body = the spark verbatim): captured into `<vault>/Inbox/` by the `/idea` skill.
+- **Piece** (`type: piece`): one blog article or LinkedIn post, a note in `<vault>/Notes/` named `<title> (Blog)` or `<title> (LinkedIn)`, frontmatter `channel` (`blog` | `linkedin`), `flag_side` (`flag` | `side`), `state` (`proposed → slotted → ready → published`, or `declined`), `publish_date`, `ideas` (wikilinks to the source Ideas), `artifact` (where the work lives, e.g. the PR URL), `url` (the published URL). Template: `<vault>/Templates/Piece.md`.
+
+This repo is the **blog Factory**: it holds the **artifacts** (posts in `src/content/blog/`, the blog PRs, the `.carousel/` social copy) and the owning Piece note links to them through `artifact`. The writing skills (`write-blog-post`, `social-post`, `newsletter-digest`) read the Piece and its Ideas for context and hand the artifact back by editing the Piece's frontmatter. **Do not open editorial or content-planning issues on this repo**: capture them in the vault with the `/idea` skill.
 
 ## Agent skills
 
 ### Issue tracker
 
-Engineering issues (site code, bugs, features) live on GitHub Issues at `davideimola/davideimola.dev` via the `gh` CLI. Editorial / content-planning issues go to `content-os`, not here. See `docs/agents/issue-tracker.md`.
+Engineering issues (site code, bugs, features) live on GitHub Issues at `davideimola/davideimola.dev` via the `gh` CLI. Editorial / content-planning work goes to the Obsidian vault (see above), not here. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

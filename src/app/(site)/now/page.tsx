@@ -141,9 +141,9 @@ export default function NowPage() {
                   Tools I run for myself
                 </span>
                 <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
-                  tsundoku for the library, bindex for the Pokémon collection, content-os for what I
-                  write. Single-owner systems that answer what I used to keep in my head, and that
-                  an assistant can query.
+                  tsundoku for the library, bindex for the Pokémon collection, an Obsidian vault for
+                  what I write. Single-owner systems that answer what I used to keep in my head, and
+                  that an assistant can query.
                 </p>
               </div>
             </ScrollReveal>

@@ -1,22 +1,24 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a content-os Piece id, blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the content-os Pipeline Piece through the MCP server. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a LinkedIn Piece note from Davide's Obsidian vault, a blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the Piece note in the vault. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
 
-When you amplify a blog (or any Factory artifact with a canonical home), you produce a **sneak-peek amplifier**: a social **Piece** that teases the piece and points home, deliberately **not** a duplicate of it. A social Piece that reproduces the blog's full content depresses the blog's own reach, so the amplifier gives a real taste and sends the reader home for the rest. The artifact you produce references its social Piece on content-os (a separate Piece blocked by the blog Piece, ADR-0011). For a talk, project, or event with no canonical page to point to, the post stays self-contained instead.
+When you amplify a blog (or any Factory artifact with a canonical home), you produce a **sneak-peek amplifier**: a social **Piece** that teases the piece and points home, deliberately **not** a duplicate of it. A social Piece that reproduces the blog's full content depresses the blog's own reach, so the amplifier gives a real taste and sends the reader home for the rest. The artifact you produce references its own LinkedIn Piece, a note in Davide's Obsidian vault separate from the blog's Piece. For a talk, project, or event with no canonical page to point to, the post stays self-contained instead.
+
+The vault root is `/Users/davideimola/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/` (`<vault>` below); schema in "Editorial home" in the repo `CLAUDE.md`. LinkedIn Pieces are `<vault>/Notes/<title> (LinkedIn).md` with `type: piece`, `channel: linkedin`. Content-os and its MCP server are deprecated; never use them.
 
 ## Arguments
 
 ```
-/social-post [Piece id or blog-slug or URL or free text]
+/social-post [Piece note name or blog-slug or URL or free text]
 ```
 
 Examples:
 ```
-/social-post piece_a1b2c3
+/social-post "Three Talks After a Year Off (LinkedIn)"
 /social-post i-rebuilt-my-site-twice
 /social-post https://davideimola.dev/blog/i-rebuilt-my-site-twice
 /social-post I gave a talk at GoLab about Kubernetes security
@@ -29,11 +31,11 @@ Examples:
 
 Depending on the input:
 
-- **Piece id** → find it through the MCP server: call `list_calendar` and `list_proposals`, locate the item with that id, and read its channel, Flag/Side, and linked source Ideas (`list_ideas`) for context
+- **Piece note** → read `<vault>/Notes/<name>.md`: `flag_side`, `publish_date`, `tags`, the body, and each Idea linked in `ideas` (resolve `[[Title]]` to `Title.md` anywhere in the vault) for context
 - **Blog slug** → read `src/content/blog/<slug>.mdx`
 - **URL** → fetch the page or derive the slug and read the MDX
 - **Free text** → use it directly as the source
-- **No input** → ask: "Cosa vuoi promuovere? Dammi un id di Piece content-os, uno slug di post, o descrivimelo."
+- **No input** → list the LinkedIn Pieces in `proposed` or `slotted` state (soonest `publish_date` first) and ask: "Cosa vuoi promuovere? Una di queste Piece, uno slug di post, o descrivimelo."
 
 When both a Piece and its blog post exist, read both — the Piece carries the editorial framing, the post carries the final content.
 
@@ -212,13 +214,9 @@ The "link in first comment" trick doesn't measurably help (verified on Davide's 
 
 The final copy has a durable home in this repo: save it as `.carousel/<slug>/social-post.md`, committed next to the visual assets (existing convention). LinkedIn is published by hand, so also present the copy to Davide ready to paste.
 
-Then hand the artifact back to the Pipeline. When a **social Piece** exists on content-os (the amplifier's own `linkedin` Piece, blocked by the blog per ADR-0011 — its id is the one Davide gave you, or the one `/desk` spawned), point it at the committed assets:
+Then hand the artifact back to the vault. When a LinkedIn Piece note exists for this post (the one Davide named, or one you find whose title or `ideas` clearly match), set in its frontmatter `artifact: "https://github.com/davideimola/davideimola.dev/blob/main/.carousel/<slug>/social-post.md"` and `state: ready`. Touch nothing else. After Davide publishes and gives you the LinkedIn link, set `url` to it, `state: published`, and `publish_date` to the real date.
 
-```
-set_piece_artifact(<social-piece-id>, <url of the committed .carousel/<slug>/ assets or the PR>)
-```
-
-For a talk, project, or free-text promo with no social Piece on the Pipeline, there is nothing to point at — the copy committed in the repo plus what you showed Davide is the deliverable.
+If no Piece exists, ask in one line whether to create one. If yes, create `<vault>/Notes/<Title> (LinkedIn).md` from `<vault>/Templates/Piece.md` (`channel: linkedin`, ask `flag` or `side`, `created: <today>`, the `# <Title>` heading) and fill it as above. Never overwrite an existing note. If no, the copy committed in the repo plus what you showed Davide is the deliverable.
 
 ---
 
