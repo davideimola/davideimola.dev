@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ShelfNow } from "../../../components/sections/ShelfNow";
-import { PageHero } from "../../../components/ui/PageHero";
-import { ScrollReveal } from "../../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { Marker } from "../../../components/ui/Marker";
+import { Tape } from "../../../components/ui/Tape";
 
 export const metadata: Metadata = {
   title: "Now",
@@ -12,269 +12,189 @@ export const metadata: Metadata = {
     description: "What I'm working on, learning, and thinking about right now.",
     url: "https://davideimola.dev/now",
     images: [
-      { url: "https://davideimola.dev/og?title=Now&category=status", width: 1200, height: 630 },
+      { url: "https://davideimola.dev/og?title=Now&category=now", width: 1200, height: 630 },
     ],
   },
 };
 
+// Hand-written: change it with the prose below.
 const LAST_UPDATED = "July 2026";
 
-// The prose here is updated by hand, but the shelf block under it is read out of
-// the library on every revalidation, so the page follows /shelf's cadence.
+// The prose here is updated by hand, but the shelf strip is read out of the
+// library on every revalidation, so the page follows /shelf's cadence.
 export const revalidate = 3600;
+
+const LEARNING = [
+  {
+    kicker: "Learning",
+    title: "Working with AI",
+    body: 'Until recently the answer was "write more code". Now it is knowing when and how to use AI: agents, tools, prompting patterns.',
+  },
+  {
+    kicker: "Learning",
+    title: "Security, daily practice",
+    body: "SOC teams, threat models, secure architectures. Outbox pattern, event integrity, secure-by-design API boundaries. Less course, more practice.",
+  },
+  {
+    kicker: "Building for myself",
+    title: "A second brain",
+    body: "tsundoku for the library, bindex for the Pokémon collection, an Obsidian vault for what I write. Systems an assistant can query.",
+  },
+];
+
+const PERSONAL = [
+  {
+    title: "D&D, playing and building",
+    body: "Playing Krug the Touchy, a half-orc barbarian who rages if you don't finish his food. Writing my own campaign to DM.",
+  },
+  { title: "Pokémon cards", body: "Building the Pokédex in rare and full-art. A long game." },
+  { title: "JuJutsu", body: "Hontai Yōshin-ryū. Yellow belt; training for orange next year." },
+  {
+    title: "Gaming",
+    body: "Lost in Crimson Desert, with Pokémon Pokopia as the cozy palate cleanser.",
+  },
+];
+
+const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
+
+function Band({
+  tape,
+  tilt,
+  first = false,
+  children,
+}: {
+  tape: string;
+  tilt: 0 | 1 | 2;
+  first?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      className={`grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14 ${
+        first ? "pt-12 md:pt-[52px]" : "mt-12 md:mt-[52px] pt-10 md:pt-11 border-t border-fg"
+      }`}
+    >
+      <Tape tilt={tilt} className="self-start">
+        {tape}
+      </Tape>
+      <div className="min-w-0">{children}</div>
+    </section>
+  );
+}
 
 export default function NowPage() {
   return (
-    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
-      <PageHero
-        label="Now"
-        title="Now"
-        description="A snapshot of what I'm focused on right now, updated when something changes."
-      >
-        <p className="font-mono text-[12px] text-fg-subtle mt-4">
-          Last updated: <span className="text-fg-muted">{LAST_UPDATED}</span>
-          {" · "}
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-12">
+      <header className="flex flex-col gap-[22px] max-w-[900px]">
+        <Tape tilt={0}>Now</Tape>
+        <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.045em]">
+          What I'm focused on <Marker>right now.</Marker>
+        </h1>
+        <p className="m-0 font-sans text-[18px] sm:text-[21px] leading-[1.55] text-fg-muted max-w-[720px]">
+          I'm a Tech Lead at RedCarbon, working from Verona, Italy. I'm open to talks and workshops,
+          and I'm not looking for a new role.
+        </p>
+        <p className="m-0 font-mono text-[14px] text-fg-subtle">
+          Updated {LAST_UPDATED} · a{" "}
           <a
             href="https://nownownow.com/about"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-accent transition-colors duration-150"
+            className={inlineLink}
           >
-            what is this?
+            /now page
           </a>
+          , rewritten when something changes
         </p>
-      </PageHero>
+      </header>
 
-      {/* Status card */}
-      <ScrollReveal>
-        <div className="mb-14 border border-border overflow-hidden">
-          <div className="bg-surface border-b border-border px-4 py-2">
-            <span className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase">
-              ~/status
-            </span>
-          </div>
-          <ul className="px-4 py-4 flex flex-col gap-3">
-            {[
-              { key: "Role", value: "Tech Lead @ RedCarbon", last: false },
-              { key: "Location", value: "Verona, Italy", last: false },
-              { key: "Speaking", value: "Open to talks and workshops", last: false },
-              { key: "Status", value: "Not looking for new roles", last: true },
-            ].map((item) => (
-              <li key={item.key} className="flex items-baseline gap-3 font-mono text-[13px]">
-                <span className="text-border select-none">{item.last ? "└──" : "├──"}</span>
-                <span className="text-fg-subtle w-20 shrink-0">{item.key}</span>
-                <span className="text-fg">{item.value}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </ScrollReveal>
-
-      {/* At work */}
-      <section className="mb-14 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="At work" />
-        </ScrollReveal>
-
-        <div className="flex flex-col gap-8">
-          <ScrollReveal>
+      <Band tape="At work" tilt={1} first>
+        <div className="flex flex-col gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             <div className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
-                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
-                Tech Lead at RedCarbon
-              </span>
-              <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
-                I'm navigating the hardest part of the Tech Lead transition: the duality between
-                deep product work and people work. When I'm building, I go full focus, and that
-                makes it hard to context-switch into mentoring mode. I haven't found the right
-                balance yet. I'm working on it.
+              <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
+                The Tech Lead transition
+              </h2>
+              <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
+                I'm navigating the hardest part of it: the duality between deep product work and
+                people work. When I'm building, I go full focus, and that makes it hard to
+                context-switch into mentoring mode. I haven't found the right balance yet. I'm
+                working on it.
               </p>
             </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={60}>
             <div className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
-                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
-                Building Argus
-              </span>
-              <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
+              <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
+                <Link href="/projects" className="no-underline text-fg hover:text-accent">
+                  Argus
+                </Link>
+              </h2>
+              <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
                 Open-source AI agent for security code reviews, written in Go. It runs real scanners
                 (Semgrep, Gitleaks, OSV-Scanner), reads the findings, and reasons about them like an
                 analyst would. Early days, moving fast.
               </p>
             </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <ScrollReveal delay={120}>
-              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                  />
-                  Learning to work with AI
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-border">
+            {LEARNING.map((item, i) => (
+              <div
+                key={item.title}
+                className={`flex flex-col gap-1.5 pt-5 ${
+                  i === 0
+                    ? "md:pr-6"
+                    : `border-t md:border-t-0 md:border-l border-border mt-5 md:mt-0 ${
+                        i === LEARNING.length - 1 ? "md:pl-6" : "md:px-6"
+                      }`
+                }`}
+              >
+                <span className="font-mono text-[12px] text-fg-subtle">{item.kicker}</span>
+                <span className="font-sans font-bold text-[18px] text-fg">{item.title}</span>
+                <span className="font-sans text-[15px] leading-[1.5] text-fg-muted">
+                  {item.body}
                 </span>
-                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
-                  Until recently, the answer was "write more code." Now I'm building the meta-skill
-                  of knowing when and how to use AI: agents, tools, prompting patterns. A new way of
-                  thinking about work.
-                </p>
               </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={180}>
-              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                  />
-                  Security: daily practice
-                </span>
-                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
-                  SOC teams, threat models, secure architectures. Outbox pattern, event integrity,
-                  secure-by-design API boundaries. Less course, more daily practice.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={240}>
-              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                  />
-                  Tools I run for myself
-                </span>
-                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
-                  tsundoku for the library, bindex for the Pokémon collection, an Obsidian vault for
-                  what I write. Single-owner systems that answer what I used to keep in my head, and
-                  that an assistant can query.
-                </p>
-              </div>
-            </ScrollReveal>
+            ))}
           </div>
         </div>
-      </section>
+      </Band>
 
-      {/* SH Branches — standalone, no section header overhead */}
-      <ScrollReveal>
-        <div className="mb-14 border-t border-border pt-10">
-          <div className="border-l-2 border-fg pl-6 flex flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-[13px] font-medium text-fg">
-                Schrodinger Hat Branches
-              </span>
-              <span className="font-mono text-[10px] text-fg tracking-[0.06em]">co-organizer</span>
-            </div>
-            <p className="font-sans text-[14px] text-fg-muted leading-relaxed">
-              Schrodinger Hat's distributed arm: free local meetups, each run by people on the
-              ground. I lead the program: spinning up new chapters and keeping the active ones
-              moving. Rome, Verona, Milan, Florence launching now. Looking abroad next.
-            </p>
-            <a
-              href="https://schroedinger-hat.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150 self-start"
-            >
-              schroedinger-hat.org →
-            </a>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Personal */}
-      <section className="mb-14 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Personal" />
-        </ScrollReveal>
-
-        {/* D&D — full entry, worth the space */}
-        <ScrollReveal>
-          <div className="flex flex-col gap-2 mb-8">
-            <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
-              <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
-              D&D: playing and building
-            </span>
-            <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
-              Currently playing <span className="text-fg">Krug the Touchy</span>, a half-orc
-              barbarian folk hero who ran an inn and rages if you don't finish his food. The DM
-              reset the character sheets mid-campaign so I'm technically human now, but I miss Krug.
-            </p>
-            <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
-              The longer campaign on hold features <span className="text-fg">Thalion Melora</span>,
-              a half-elf bard who wields a violin as a psychic weapon and heals through sound waves.
-              Favourite character I've ever played. Meanwhile I'm writing my own campaign to DM:
-              world, NPCs, encounters. Surprisingly addictive.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Compact grid for shorter items */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[
-            {
-              label: "Pokémon cards",
-              context: "Building the Pokédex in rare and full-art. A long game. Emphasis on long.",
-            },
-            {
-              label: "JuJutsu",
-              context: "Hontai Yōshin-ryū. Yellow belt earned; now training for orange next year.",
-            },
-            {
-              label: "Gaming",
-              context:
-                "Lost in Crimson Desert's open world, with Pokémon Pokopia as the cozy palate cleanser.",
-            },
-          ].map((item, i) => (
-            <ScrollReveal key={item.label} delay={i * 60}>
-              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                  />
-                  {item.label}
-                </span>
-                <p className="font-sans text-[12px] text-fg-subtle leading-relaxed pl-5">
-                  {item.context}
-                </p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* What the library says is open. Renders nothing when it has nothing. */}
-      <ShelfNow />
-
-      {/* Footer */}
-      <ScrollReveal>
-        <div className="pt-8 border-t border-border">
-          <p className="font-sans text-[13px] text-fg-subtle">
-            This page is inspired by the{" "}
-            <a
-              href="https://nownownow.com/about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-fg-muted hover:text-accent transition-colors duration-150"
-            >
-              /now movement
-            </a>
-            . Want to know more about me?{" "}
-            <a
-              href="/about"
-              className="text-fg-muted hover:text-accent transition-colors duration-150"
-            >
-              /about →
-            </a>
+      <Band tape="Community" tilt={2}>
+        <div className="flex flex-col gap-2 max-w-[760px]">
+          <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
+            Schrodinger Hat Branches
+          </h2>
+          <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
+            Schrodinger Hat's distributed arm: free local meetups, each run by people on the ground.
+            I lead the program, spinning up new chapters and keeping the active ones moving. Rome,
+            Verona, Milan, Florence launching now. Looking abroad next.
           </p>
+          <a
+            href="https://schroedinger-hat.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`self-start font-mono text-[14px] ${inlineLink}`}
+          >
+            schroedinger-hat.org
+          </a>
         </div>
-      </ScrollReveal>
+      </Band>
+
+      <Band tape="Off the clock" tilt={0}>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-10 lg:gap-12">
+          {/* What the library says is open. Renders nothing when it has nothing. */}
+          <ShelfNow />
+          <ul className="m-0 p-0 list-none flex flex-col gap-3.5">
+            {PERSONAL.map((item) => (
+              <li key={item.title} className="flex flex-col gap-[3px]">
+                <span className="font-sans font-bold text-[17px] text-fg">{item.title}</span>
+                <span className="font-sans text-[14px] leading-[1.5] text-fg-muted">
+                  {item.body}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Band>
     </div>
   );
 }

@@ -1,70 +1,44 @@
 import Link from "next/link";
 import { getShowcase, groupPassesByVerb } from "../../lib/shelf";
-import { ScrollReveal } from "../ui/ScrollReveal";
-import { SectionHeader } from "../ui/SectionHeader";
+import { CoverTile } from "../ui/CoverTile";
 
 /**
- * The open passes out of the personal library, as a supporting block on /now.
+ * The open passes out of the personal library, as the reading strip on /now.
  * It reads the same seam /shelf reads, so the two can never disagree, and it is
- * deliberately not a second /shelf: no covers, no verdicts, no pile.
+ * deliberately not a second /shelf: covers and titles only, no verdicts, no pile.
  *
- * Two things it must survive. The library going quiet: getShowcase degrades to
- * the committed snapshot and, with nothing open in it either, this renders
- * nothing at all rather than an empty shell. And a half that does not exist:
- * grouping is by the Type's bare verb, and a verb with no pass gets no block, so
- * a month with five books and no game reads as deliberate instead of broken.
+ * Grouped by the Type's bare verb, never the slug; a verb with nothing open gets
+ * no strip, and with nothing open anywhere this renders nothing at all.
  */
-export async function ShelfNow() {
+export async function ShelfNow({ limit = 4 }: { limit?: number }) {
   const { document: showcase } = await getShowcase();
   const groups = groupPassesByVerb(showcase.now);
 
   if (groups.length === 0) return null;
 
   return (
-    <section className="mb-14 border-t border-border pt-10">
-      <ScrollReveal>
-        <SectionHeader title="On the shelf" className="mb-3" />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <p className="font-sans text-[14px] text-fg-subtle mb-6 max-w-2xl">
-          Not written by hand: this is whatever my library says I have open today.
-        </p>
-      </ScrollReveal>
-
-      <div className="flex flex-col gap-6">
-        {groups.map((group, i) => (
-          <ScrollReveal key={group.verbBase} delay={i * 60}>
-            <div>
-              <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
-                {group.label}
-              </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2">
-                {group.passes.map((pass) => (
-                  <li key={pass.id} className="font-sans text-[13px] text-fg-muted">
-                    <span className="font-mono text-[13px] text-fg">{pass.title}</span>
-                    {/* The Medium arrives as a label tsundoku chose: printing the
-                        slug back would give us "Playstation 5". */}
-                    <span className="text-fg-subtle">
-                      {" "}
-                      · {pass.type.label} · {pass.medium.label}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-        ))}
-      </div>
-
-      <ScrollReveal>
-        <p className="font-mono text-[11px] text-fg-subtle mt-6">
-          <Link href="/shelf" className="text-fg-muted hover:text-accent transition-colors">
-            /shelf
-          </Link>{" "}
-          for what I finished, what I put down, and what I take on next
-        </p>
-      </ScrollReveal>
-    </section>
+    <div className="flex flex-col gap-3.5">
+      {groups.map((group) => (
+        <div key={group.verbBase} className="flex flex-col gap-3.5">
+          <span className="font-mono text-[12px] text-fg-subtle">{group.label}</span>
+          <ul className="m-0 p-0 list-none grid grid-cols-3 sm:grid-cols-4 gap-3.5 max-w-[440px]">
+            {group.passes.slice(0, limit).map((pass) => (
+              <li key={pass.id} className="flex flex-col gap-1.5">
+                <CoverTile title={pass.title} cover={pass.cover} series={pass.series} />
+                <span className="font-sans text-[13px] font-semibold leading-[1.3] text-fg">
+                  {pass.title}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <Link
+        href="/shelf"
+        className="self-start font-mono text-[14px] text-fg border-b border-fg no-underline hover:text-accent hover:border-accent"
+      >
+        The whole shelf
+      </Link>
+    </div>
   );
 }

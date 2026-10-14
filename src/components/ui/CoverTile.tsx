@@ -41,7 +41,7 @@ export function CoverTile({ title, cover, series, className = "" }: CoverTilePro
         decoding="async"
         width={128}
         height={192}
-        className="h-full w-full object-cover grayscale-[0.4] transition-[filter] duration-500 hover:grayscale-0"
+        className="h-full w-full object-cover"
       />
     );
 
@@ -66,10 +66,12 @@ export function CoverTile({ title, cover, series, className = "" }: CoverTilePro
     <div className={classes} title={title}>
       {/* The tint is data from the API, a ready-to-use colour string, so it
           cannot be a Tailwind class. */}
-      <div className="absolute inset-0" style={{ backgroundColor: series?.tint ?? "#141311" }} />
-      <div className="absolute inset-0 bg-[rgba(8,8,7,0.5)]" />
-      <div className="relative z-10 flex h-full w-full items-center justify-center p-2">
-        <span className="font-mono text-[9px] leading-tight text-fg text-center line-clamp-4">
+      <div
+        className="absolute inset-0 bg-surface-inline"
+        style={series?.tint ? { backgroundColor: series.tint } : undefined}
+      />
+      <div className="absolute inset-x-0 bottom-0 z-10 bg-bg/90 p-1.5">
+        <span className="block font-mono text-[10px] leading-tight text-fg line-clamp-3">
           {title}
         </span>
       </div>
