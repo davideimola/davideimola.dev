@@ -64,12 +64,15 @@ function startYear(period: string): number {
 }
 
 /**
- * The BUILDING card: the active project Davide most recently started building.
+ * The BUILDING card: the active flagship project if there is one, otherwise the
+ * active project Davide most recently started building.
  * A project with a `role` is a workplace rather than something he builds, so it
  * only stands in when nothing else is active. Ties keep the content file's order.
  */
 export function pickBuildingProject(projects: Project[]): Project | null {
   const active = projects.filter((p) => p.status === "active");
+  const flagship = active.find((p) => p.flagship);
+  if (flagship) return flagship;
   const pool = active.some((p) => !p.role) ? active.filter((p) => !p.role) : active;
   let best: Project | null = null;
   for (const project of pool) {

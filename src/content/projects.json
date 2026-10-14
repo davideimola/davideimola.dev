@@ -9,7 +9,9 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["AI", "Security", "Startup"],
-    "description": "AI-powered threat detection platform. I lead platform engineering, making the technical calls across the whole stack and building the AI agents on top, as the company grows from seed to Series A."
+    "description": "AI-powered threat detection platform. I lead platform engineering, making the technical calls across the whole stack and building the AI agents on top, as the company grows from seed to Series A.",
+    "group": "work",
+    "note": "Tech Lead"
   },
   {
     "slug": "schrodinger-hat",
@@ -20,17 +22,21 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["Community", "Open Source"],
-    "description": "International open source community I co-founded. 20k+ people reached, 100+ speakers at events across Europe."
+    "description": "International open source community I co-founded. 20k+ people reached, 100+ speakers at events across Europe.",
+    "group": "community",
+    "note": "co-founder"
   },
   {
     "slug": "os-day",
-    "title": "OS Day",
+    "title": "Open Source Day",
     "status": "active",
     "url": "https://osday.dev",
     "period": "2022–present",
     "featured": true,
     "tags": ["Conference", "Open Source"],
-    "description": "The open source conference I co-organise in Florence. A full day of talks, workshops and community."
+    "description": "The open source conference I co-organise in Florence. A full day of talks, workshops and community.",
+    "group": "community",
+    "note": "co-organiser"
   },
   {
     "slug": "argus",
@@ -40,7 +46,35 @@
     "period": "2026–present",
     "featured": true,
     "tags": ["AI", "Security", "Go"],
-    "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner), reads their findings, and reasons about them like an analyst would."
+    "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner), reads their findings, and reasons about them like an analyst would.",
+    "group": "open",
+    "flagship": true,
+    "quickstart": "docker run -it -v argus-data:/data -p 8080:8080 ghcr.io/argusappsec/argus",
+    "post": "introducing-argus"
+  },
+  {
+    "slug": "tsundoku",
+    "title": "tsundoku",
+    "status": "active",
+    "github": "https://github.com/davideimola/tsundoku",
+    "period": "2026–present",
+    "featured": false,
+    "group": "personal",
+    "note": "live",
+    "tags": ["Next.js", "PostgreSQL", "MCP"],
+    "description": "A single-owner library of what I have read, what I thought of it and what comes next, readable by Claude and ChatGPT over MCP. It also feeds the Shelf on this site."
+  },
+  {
+    "slug": "kanpai",
+    "title": "kanpai",
+    "status": "active",
+    "github": "https://github.com/davideimola/kanpai",
+    "period": "2026–present",
+    "featured": false,
+    "group": "personal",
+    "note": "in progress",
+    "tags": ["Next.js", "PostgreSQL", "MCP"],
+    "description": "The same idea for wine and spirits: what I tasted, what is in the house and what is worth trying, for a sommelier that reads it over MCP."
   },
   {
     "slug": "worky",
@@ -51,6 +85,8 @@
     "period": "2026",
     "featured": false,
     "tags": ["Tool", "Workshops"],
-    "description": "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience."
+    "description": "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience.",
+    "group": "personal",
+    "note": "coming soon"
   }
 ]

@@ -60,6 +60,16 @@ export interface Project {
   caseStudy?: string; // internal path to case study page, e.g. "/projects/redcarbon"
   period: string;
   featured: boolean;
+  /** Why it exists, the grouping on /projects. */
+  group?: "open" | "work" | "personal" | "community";
+  /** The one project /projects leads with, and the home BUILDING card prefers. */
+  flagship?: boolean;
+  /** The short mono label at the end of a /projects row ("live", "co-founder"). */
+  note?: string;
+  /** A one-line way to try it, shown under the flagship. */
+  quickstart?: string;
+  /** Slug of the post that introduces it. */
+  post?: string;
   tags: string[];
   description: string;
 }

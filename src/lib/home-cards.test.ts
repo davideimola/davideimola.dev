@@ -116,6 +116,14 @@ describe("pickBuildingProject", () => {
     expect(pickBuildingProject(projects)?.slug).toBe("argus");
   });
 
+  it("prefers the active flagship", () => {
+    const projects: Project[] = [
+      { ...base, slug: "newer", title: "Newer", period: "2027–present" },
+      { ...base, slug: "flag", title: "Flag", period: "2020–present", flagship: true },
+    ];
+    expect(pickBuildingProject(projects)?.slug).toBe("flag");
+  });
+
   it("keeps file order on a tie", () => {
     const projects: Project[] = [
       { ...base, slug: "first", title: "First", period: "2024–present" },
