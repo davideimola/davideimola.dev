@@ -92,7 +92,7 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
             );
           })}
         </div>
-        <div className="flex flex-wrap gap-[18px] font-sans text-[15px] whitespace-nowrap">
+        <div className="flex flex-wrap lg:flex-nowrap gap-[18px] font-sans text-[15px] whitespace-nowrap lg:shrink-0">
           {categoryLink(`All`, posts.length, "/blog", !hasFilter)}
           {categories.map((c) =>
             categoryLink(

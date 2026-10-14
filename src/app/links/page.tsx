@@ -85,7 +85,11 @@ function Row({
       <span className="font-sans font-semibold text-[18px] leading-[1.3] text-fg group-hover:text-accent transition-colors duration-150">
         {title}
       </span>
-      {hint && <span className="font-sans text-[14px] text-fg-subtle text-right">{hint}</span>}
+      {hint && (
+        <span className={`font-sans text-[14px] text-fg-subtle ${stacked ? "" : "text-right"}`}>
+          {hint}
+        </span>
+      )}
     </a>
   );
 }
