@@ -6,10 +6,6 @@ const meta: Meta<typeof SubscribeForm> = {
   component: SubscribeForm,
   parameters: {
     layout: "centered",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
   argTypes: {

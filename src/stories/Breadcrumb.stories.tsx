@@ -6,37 +6,25 @@ const meta: Meta<typeof Breadcrumb> = {
   component: Breadcrumb,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
-  argTypes: {
-    command: { control: "text" },
-  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Breadcrumb>;
 
-export const BlogPost: Story = {
+export const NewsletterIssue: Story = {
   args: {
-    command: "cat",
-    items: [{ label: "blog", href: "/blog" }, { label: "securing-secrets-in-the-gitops-era.mdx" }],
+    items: [{ label: "Newsletter", href: "/newsletter" }, { label: "July 2026" }],
   },
 };
 
 export const DeepPath: Story = {
   args: {
-    command: "cat",
-    items: [{ label: "blog", href: "/blog" }, { label: "ai-will-not-secure-your-codebase.mdx" }],
-  },
-};
-
-export const CustomCommand: Story = {
-  args: {
-    command: "open",
-    items: [{ label: "projects", href: "/projects" }, { label: "schrodinger-hat" }],
+    items: [
+      { label: "Projects", href: "/projects" },
+      { label: "Schrodinger Hat", href: "/projects/schrodinger-hat" },
+      { label: "Events" },
+    ],
   },
 };

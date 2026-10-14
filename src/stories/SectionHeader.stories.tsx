@@ -6,10 +6,6 @@ const meta: Meta<typeof SectionHeader> = {
   component: SectionHeader,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -61,4 +57,20 @@ export const SubsectionWithLink: Story = {
     seeAllHref: "#",
     seeAllLabel: "See all →",
   },
+};
+
+/** Neighbouring sections alternate the tape's tilt. */
+export const AlternatingTilt: Story = {
+  render: () => (
+    <div className="flex flex-col gap-10">
+      <SectionHeader title="Latest writing" seeAllHref="/blog" seeAllLabel="All posts →" tilt={0} />
+      <SectionHeader title="Talks" seeAllHref="/sharing" seeAllLabel="All talks →" tilt={1} />
+      <SectionHeader
+        title="Projects"
+        seeAllHref="/projects"
+        seeAllLabel="All projects →"
+        tilt={2}
+      />
+    </div>
+  ),
 };

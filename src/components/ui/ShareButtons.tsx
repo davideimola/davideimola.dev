@@ -30,12 +30,12 @@ export function ShareButtons({ slug, title }: ShareButtonsProps) {
 
   return (
     <div className="mt-8 flex flex-wrap items-center gap-3">
-      <span className="font-mono text-[11px] text-text-3 tracking-[0.06em]">SHARE</span>
+      <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">SHARE</span>
       <a
         href={`https://bsky.app/intent/compose?text=${encodedTitle}%20${encoded}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-mono text-[11px] text-text-2 border border-border hover:border-border-hover hover:text-accent px-3 py-1.5 rounded-sm transition-colors duration-150"
+        className="font-mono text-[13px] text-fg border border-border hover:border-fg hover:text-accent px-3 py-1.5 transition-colors duration-150"
       >
         BlueSky
       </a>
@@ -43,14 +43,14 @@ export function ShareButtons({ slug, title }: ShareButtonsProps) {
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-mono text-[11px] text-text-2 border border-border hover:border-border-hover hover:text-accent px-3 py-1.5 rounded-sm transition-colors duration-150"
+        className="font-mono text-[13px] text-fg border border-border hover:border-fg hover:text-accent px-3 py-1.5 transition-colors duration-150"
       >
         LinkedIn
       </a>
       <button
         type="button"
         onClick={handleShare}
-        className="font-mono text-[11px] text-text-2 border border-border hover:border-border-hover hover:text-accent px-3 py-1.5 rounded-sm transition-colors duration-150 cursor-pointer"
+        className="font-mono text-[13px] text-fg border border-border hover:border-fg hover:text-accent px-3 py-1.5 transition-colors duration-150 cursor-pointer"
       >
         {copied ? "Copied!" : "Copy link"}
       </button>

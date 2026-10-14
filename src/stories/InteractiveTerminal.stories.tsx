@@ -60,10 +60,6 @@ const meta: Meta<typeof InteractiveTerminal> = {
   component: InteractiveTerminal,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
     nextjs: { appDirectory: true },
   },
   tags: ["autodocs"],

@@ -4,21 +4,26 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState } from "react";
 import { subscribe } from "../../app/actions/subscribe";
 import { StdoutPanel } from "./StdoutPanel";
+import { useResolvedTheme } from "./ThemeToggle";
 
 const initialState = { status: "idle" as const };
 
 interface SubscribeFormProps {
   /**
    * `full`: the standalone form for the /newsletter page (label + widget + button).
-   * `compact`: a tight inline CTA for the home, sharing, and end-of-post placements.
+   * `compact`: a tight CTA for the home, sharing, and end-of-post placements.
+   * `inline`: the footer's one-line form, field and button joined; the security
+   * check only shows itself when Cloudflare needs an interaction.
    */
-  mode?: "full" | "compact";
+  mode?: "full" | "compact" | "inline";
   className?: string;
 }
 
 export function SubscribeForm({ mode = "full", className = "" }: SubscribeFormProps) {
   const [state, action, pending] = useActionState(subscribe, initialState);
-  const compact = mode === "compact";
+  const theme = useResolvedTheme();
+  const compact = mode !== "full";
+  const inline = mode === "inline";
 
   // Double opt-in: submitting only queues the confirmation email; the subscriber is
   // not done until they click it. The success copy says so; it never claims "subscribed".
@@ -26,11 +31,8 @@ export function SubscribeForm({ mode = "full", className = "" }: SubscribeFormPr
     return (
       <StdoutPanel className={className}>
         <div className="px-4 py-6 flex flex-col gap-2">
-          <p className="font-mono text-[13px]">
-            <span className="text-accent">✓</span>{" "}
-            <span className="text-text-1">Almost there.</span>
-          </p>
-          <p className="font-sans text-[13px] text-text-3">
+          <p className="font-sans font-semibold text-[16px] text-fg">Almost there.</p>
+          <p className="font-sans text-[15px] text-fg-muted">
             Check your inbox and click the confirmation link to finish subscribing.
           </p>
         </div>
@@ -50,51 +52,77 @@ export function SubscribeForm({ mode = "full", className = "" }: SubscribeFormPr
         <input id={`website-${mode}`} name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>
 
-      {/* Email */}
-      <div className="flex flex-col gap-1.5">
-        {!compact && (
-          <label
-            htmlFor={`email-${mode}`}
-            className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+      {inline ? (
+        <div className="flex w-full max-w-[400px]">
+          <input
+            id={`email-${mode}`}
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="you@domain.dev"
+            aria-label="Email address"
+            className="min-w-0 flex-1 h-11 bg-surface border border-fg border-r-0 px-3.5 font-sans text-[15px] text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          />
+          <button
+            type="submit"
+            disabled={pending}
+            className="h-11 shrink-0 bg-fg text-bg px-[18px] font-sans font-semibold text-[15px] cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Email
-          </label>
-        )}
-        <input
-          id={`email-${mode}`}
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="your@email.com"
-          aria-label={compact ? "Email address" : undefined}
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150"
-        />
-      </div>
+            {pending ? "Subscribing..." : "Subscribe"}
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-1.5">
+          {!compact && (
+            <label
+              htmlFor={`email-${mode}`}
+              className="font-mono text-[12px] text-fg-subtle tracking-[0.06em] uppercase"
+            >
+              Email
+            </label>
+          )}
+          <input
+            id={`email-${mode}`}
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="you@domain.dev"
+            aria-label={compact ? "Email address" : undefined}
+            className="h-11 bg-surface border border-fg px-3.5 font-sans text-[15px] text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          />
+        </div>
+      )}
 
-      {/* Turnstile */}
+      {/* Turnstile. The theme follows the site's, not only the system's. */}
       <Turnstile
+        key={theme ?? "pending"}
         siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-        options={{ theme: "dark", size: compact ? "flexible" : "normal" }}
+        options={{
+          theme: theme ?? "auto",
+          size: compact ? "flexible" : "normal",
+          appearance: inline ? "interaction-only" : "always",
+        }}
       />
 
       {/* Error */}
       {state.status === "error" && (
-        <p className="font-mono text-[12px] text-accent">
-          <span className="mr-2">✗</span>
+        <p role="alert" className="font-sans text-[14px] text-fg">
           {state.message}
         </p>
       )}
 
       {/* Submit */}
-      <button
-        type="submit"
-        disabled={pending}
-        className="self-start font-mono text-[12px] text-text-1 bg-bg-card border border-border rounded-sm px-4 py-2.5 cursor-pointer hover:border-border-hover hover:text-accent transition-[border-color,color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-      >
-        <span className="text-accent">❯</span>
-        {pending ? "subscribing..." : "subscribe"}
-      </button>
+      {!inline && (
+        <button
+          type="submit"
+          disabled={pending}
+          className="self-start h-11 bg-fg text-bg px-[18px] font-sans font-semibold text-[15px] cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {pending ? "Subscribing..." : "Subscribe"}
+        </button>
+      )}
     </form>
   );
 }

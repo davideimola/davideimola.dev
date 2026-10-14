@@ -6,10 +6,6 @@ const meta: Meta<typeof CoverTile> = {
   component: CoverTile,
   parameters: {
     layout: "centered",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
   decorators: [

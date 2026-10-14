@@ -33,8 +33,8 @@ const PROMPT = "$ ";
 
 /**
  * A ```console fence: a shell session where lines starting with `$ ` are
- * commands and everything else is their output. Rendered as a terminal window
- * rather than as code, and the copy button copies the commands only.
+ * commands and everything else is their output. Rendered as a session (a muted
+ * `$` before each command, output in a quieter ink) rather than as code, and the copy button copies the commands only.
  */
 function TerminalBlock({ text, title }: { text: string; title?: string }) {
   const lines = text.replace(/\n$/, "").split("\n");
@@ -44,33 +44,28 @@ function TerminalBlock({ text, title }: { text: string; title?: string }) {
     .join("\n");
 
   return (
-    <div className="my-6 rounded-sm border border-border overflow-hidden">
-      <div className="flex items-center gap-3 bg-bg-hover border-b border-border px-4 py-2">
-        <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-          <span className="size-2 rounded-full bg-border-mid" />
-          <span className="size-2 rounded-full bg-border-mid" />
-          <span className="size-2 rounded-full bg-border-mid" />
-        </span>
-        <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-text-3 tracking-[0.06em]">
+    <div className="my-6 border border-border overflow-hidden">
+      <div className="flex items-center gap-3 bg-surface border-b border-border px-5 py-2.5">
+        <span className="min-w-0 flex-1 truncate font-mono text-[12px] text-fg-subtle">
           {title ?? "terminal"}
         </span>
         {commands && <CopyButton code={commands} label="commands" />}
       </div>
-      <pre className="m-0 overflow-x-auto px-4 py-4 bg-bg-card text-[13px] leading-relaxed rounded-none border-0">
+      <pre className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0">
         <code>
           {lines.map((line, i) => {
             const key = `${i}-${line}`;
             if (!line.startsWith(PROMPT)) {
               return (
-                <span key={key} className="block text-text-2">
+                <span key={key} className="block text-fg-muted">
                   {line || " "}
                 </span>
               );
             }
             return (
-              <span key={key} className="block text-text-1">
-                <span aria-hidden="true" className="text-accent select-none">
-                  ❯{" "}
+              <span key={key} className="block text-fg">
+                <span aria-hidden="true" className="text-fg-subtle select-none">
+                  ${" "}
                 </span>
                 {line.slice(PROMPT.length)}
               </span>
@@ -91,14 +86,14 @@ export function CodeBlock({ children }: CodeBlockProps) {
   }
 
   return (
-    <div className="my-6 rounded-sm border border-border overflow-hidden">
+    <div className="my-6 border border-border overflow-hidden">
       {/* Toolbar */}
-      <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-        <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">{language}</span>
+      <div className="flex items-center justify-between bg-surface border-b border-border px-5 py-2.5">
+        <span className="font-mono text-[12px] text-fg-subtle">{language}</span>
         <CopyButton code={code} />
       </div>
       {/* Code */}
-      <pre className="m-0 overflow-x-auto px-4 py-4 bg-bg-card text-[13px] leading-relaxed rounded-none border-0">
+      <pre className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0">
         {children}
       </pre>
     </div>

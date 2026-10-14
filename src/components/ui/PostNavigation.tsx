@@ -13,10 +13,10 @@ export function PostNavigation({ prev, next }: PostNavigationProps) {
       {prev ? (
         <a
           href={`/blog/${prev.slug}`}
-          className="group flex flex-col gap-1 p-4 border border-border rounded-sm hover:border-border-hover hover:bg-bg-hover transition-colors duration-150 no-underline"
+          className="group flex flex-col gap-1 p-4 border border-border bg-surface hover:border-fg transition-colors duration-150 no-underline"
         >
-          <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">← OLDER</span>
-          <span className="font-mono text-[13px] text-text-1 group-hover:text-accent transition-colors duration-150 line-clamp-2">
+          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">← OLDER</span>
+          <span className="font-sans text-[17px] font-semibold tracking-[-0.01em] text-fg group-hover:text-accent transition-colors duration-150 line-clamp-2">
             {prev.title}
           </span>
         </a>
@@ -26,10 +26,10 @@ export function PostNavigation({ prev, next }: PostNavigationProps) {
       {next ? (
         <a
           href={`/blog/${next.slug}`}
-          className="group flex flex-col gap-1 p-4 border border-border rounded-sm hover:border-border-hover hover:bg-bg-hover transition-colors duration-150 no-underline sm:text-right"
+          className="group flex flex-col gap-1 p-4 border border-border bg-surface hover:border-fg transition-colors duration-150 no-underline sm:text-right"
         >
-          <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">NEWER →</span>
-          <span className="font-mono text-[13px] text-text-1 group-hover:text-accent transition-colors duration-150 line-clamp-2">
+          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">NEWER →</span>
+          <span className="font-sans text-[17px] font-semibold tracking-[-0.01em] text-fg group-hover:text-accent transition-colors duration-150 line-clamp-2">
             {next.title}
           </span>
         </a>

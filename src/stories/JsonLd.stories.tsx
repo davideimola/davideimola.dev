@@ -6,10 +6,6 @@ const meta: Meta<typeof JsonLd> = {
   component: JsonLd,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -45,10 +41,10 @@ function JsonLdPreview({ data }: { data: Record<string, unknown> }) {
   return (
     <div className="max-w-[640px]">
       <JsonLd data={data} />
-      <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-3">
+      <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
         {"// "} injected &lt;script type=&quot;application/ld+json&quot;&gt; payload
       </p>
-      <pre className="border border-border rounded-sm bg-bg-card px-4 py-3 font-mono text-[12px] text-text-2 overflow-x-auto">
+      <pre className="border border-border bg-surface px-4 py-3 font-mono text-[12px] text-fg-muted overflow-x-auto">
         {JSON.stringify(data, null, 2)}
       </pre>
     </div>

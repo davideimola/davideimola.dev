@@ -26,7 +26,7 @@ export function CoverTile({ title, cover, series, className = "" }: CoverTilePro
   // is data in `standsAt`, never something this site glues onto a string.
   const classes = [
     "relative aspect-[2/3] w-full overflow-hidden rounded-[2px]",
-    "border border-border bg-bg-card",
+    "border border-border bg-surface",
     className,
   ].join(" ");
 
@@ -52,7 +52,7 @@ export function CoverTile({ title, cover, series, className = "" }: CoverTilePro
           target="_blank"
           rel="noopener noreferrer"
           title={`${title} on the source that provided this cover`}
-          className={`${classes} block transition-[border-color] duration-200 hover:border-border-hover`}
+          className={`${classes} block transition-[border-color] duration-200 hover:border-fg`}
         >
           {image}
         </a>
@@ -69,7 +69,7 @@ export function CoverTile({ title, cover, series, className = "" }: CoverTilePro
       <div className="absolute inset-0" style={{ backgroundColor: series?.tint ?? "#141311" }} />
       <div className="absolute inset-0 bg-[rgba(8,8,7,0.5)]" />
       <div className="relative z-10 flex h-full w-full items-center justify-center p-2">
-        <span className="font-mono text-[9px] leading-tight text-text-1 text-center line-clamp-4">
+        <span className="font-mono text-[9px] leading-tight text-fg text-center line-clamp-4">
           {title}
         </span>
       </div>

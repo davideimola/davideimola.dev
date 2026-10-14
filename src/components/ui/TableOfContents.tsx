@@ -36,18 +36,24 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <nav aria-label="Table of contents">
-      <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
-        {"// "} on this page
+      <p className="font-mono text-[12px] text-fg-subtle tracking-[0.06em] uppercase mb-3.5">
+        On this page
       </p>
-      <ul className="flex flex-col gap-1">
+      <ul className="flex flex-col gap-2.5 list-none m-0 p-0">
         {items.map((item) => (
-          <li key={item.id} className={item.level === 3 ? "pl-3" : ""}>
+          <li key={item.id} className={item.level === 3 ? "pl-3.5" : ""}>
             <a
               href={`#${item.id}`}
-              className={`block font-mono text-[12px] no-underline leading-relaxed py-0.5 transition-colors duration-150 ${
-                activeId === item.id ? "text-accent" : "text-text-3 hover:text-text-2"
+              className={`flex items-baseline gap-2 font-sans text-[15px] leading-[1.45] no-underline transition-colors duration-150 ${
+                activeId === item.id ? "text-fg font-semibold" : "text-fg-subtle hover:text-fg"
               }`}
             >
+              {activeId === item.id && (
+                <span
+                  aria-hidden="true"
+                  className="inline-block w-[7px] h-[7px] bg-fg rounded-[1.5px] shrink-0 -translate-y-px"
+                />
+              )}
               {item.text}
             </a>
           </li>

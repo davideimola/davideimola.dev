@@ -3,37 +3,29 @@ import { describe, expect, it } from "vitest";
 import { Breadcrumb } from "./Breadcrumb";
 
 describe("Breadcrumb", () => {
-  it("renders the command and prompt", () => {
-    render(
-      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
-    );
-    expect(screen.getByText("❯")).toBeInTheDocument();
-    expect(screen.getByText(/cat ~\//)).toBeInTheDocument();
-  });
-
   it("renders linked items as anchors", () => {
     render(
-      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
+      <Breadcrumb items={[{ label: "Newsletter", href: "/newsletter" }, { label: "July" }]} />
     );
-    const link = screen.getByRole("link", { name: "blog" });
-    expect(link).toHaveAttribute("href", "/blog");
+    const link = screen.getByRole("link", { name: "Newsletter" });
+    expect(link).toHaveAttribute("href", "/newsletter");
   });
 
-  it("renders the last item as plain text, not a link", () => {
+  it("renders the last item as the current page, not a link", () => {
     render(
-      <Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }, { label: "post.mdx" }]} />
+      <Breadcrumb items={[{ label: "Newsletter", href: "/newsletter" }, { label: "July" }]} />
     );
-    expect(screen.queryByRole("link", { name: "post.mdx" })).toBeNull();
-    expect(screen.getByText("post.mdx")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "July" })).toBeNull();
+    expect(screen.getByText("July")).toHaveAttribute("aria-current", "page");
   });
 
   it("has accessible nav landmark with label", () => {
-    render(<Breadcrumb command="cat" items={[{ label: "blog", href: "/blog" }]} />);
+    render(<Breadcrumb items={[{ label: "Newsletter", href: "/newsletter" }]} />);
     expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toBeInTheDocument();
   });
 
-  it("defaults command to 'cat' when not provided", () => {
-    render(<Breadcrumb items={[{ label: "blog", href: "/blog" }]} />);
-    expect(screen.getByText(/cat ~\//)).toBeInTheDocument();
+  it("draws no terminal prompt", () => {
+    const { container } = render(<Breadcrumb items={[{ label: "Blog", href: "/blog" }]} />);
+    expect(container.textContent).not.toContain("❯");
   });
 });

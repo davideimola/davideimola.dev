@@ -6,16 +6,12 @@ const meta: Meta<typeof Button> = {
   component: Button,
   parameters: {
     layout: "centered",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "ghost"],
+      options: ["primary", "ghost", "link"],
     },
     size: {
       control: "select",
@@ -31,7 +27,7 @@ export const Primary: Story = {
   args: {
     variant: "primary",
     size: "md",
-    children: "Read the blog →",
+    children: "Read the writing",
   },
 };
 
@@ -41,6 +37,28 @@ export const Ghost: Story = {
     size: "md",
     children: "View talks →",
   },
+};
+
+export const TextLink: Story = {
+  args: {
+    variant: "link",
+    size: "lg",
+    children: "More about me",
+  },
+};
+
+/** The home hero pair: one filled ink button plus one text link. */
+export const HeroPair: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-6 p-6">
+      <ButtonLink variant="primary" size="lg" href="#">
+        Read the writing
+      </ButtonLink>
+      <ButtonLink variant="link" size="lg" href="#">
+        More about me
+      </ButtonLink>
+    </div>
+  ),
 };
 
 export const Small: Story = {
@@ -90,6 +108,9 @@ export const AllVariants: Story = {
         </ButtonLink>
         <ButtonLink variant="ghost" href="#">
           Link Ghost
+        </ButtonLink>
+        <ButtonLink variant="link" href="#">
+          Text link
         </ButtonLink>
       </div>
     </div>

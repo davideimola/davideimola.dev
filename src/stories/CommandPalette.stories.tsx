@@ -8,10 +8,6 @@ const meta: Meta<typeof CommandPalette> = {
   component: CommandPalette,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
     // CommandPalette calls useRouter from next/navigation (App Router)
     nextjs: { appDirectory: true },
   },
@@ -80,7 +76,7 @@ function CommandPaletteDemo({ items }: { items: SearchItem[] }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="font-mono text-[13px] text-text-2 border border-border rounded-sm px-4 py-2 hover:text-text-1 hover:bg-bg-hover transition-colors duration-150"
+        className="font-mono text-[13px] text-fg-muted border border-border px-4 py-2 hover:text-fg hover:bg-surface-inline transition-colors duration-150"
       >
         Open command palette (⌘K)
       </button>

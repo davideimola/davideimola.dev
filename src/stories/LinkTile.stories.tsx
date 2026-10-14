@@ -6,10 +6,6 @@ const meta: Meta<typeof LinkTile> = {
   component: LinkTile,
   parameters: {
     layout: "centered",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };

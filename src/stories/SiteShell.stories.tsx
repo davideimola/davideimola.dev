@@ -7,10 +7,6 @@ const meta: Meta<typeof SiteShell> = {
   component: SiteShell,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
     // SiteShell renders CommandPalette, which calls useRouter from next/navigation
     nextjs: { appDirectory: true },
   },
@@ -55,9 +51,9 @@ export const Default: Story = {
     children: (
       <main className="bg-bg min-h-screen pt-24 px-4 sm:px-8">
         <div className="max-w-[640px] mx-auto">
-          <p className="font-mono text-[13px] text-accent mb-3">❯ whoami</p>
-          <h1 className="font-mono text-[24px] text-text-1 mb-4">Page content goes here</h1>
-          <p className="font-sans text-[14px] leading-relaxed text-text-2">
+          <p className="font-mono text-[13px] text-fg mb-3">❯ whoami</p>
+          <h1 className="font-mono text-[24px] text-fg mb-4">Page content goes here</h1>
+          <p className="font-sans text-[14px] leading-relaxed text-fg-muted">
             This is the children slot of SiteShell. Press ⌘K (or Ctrl+K) to toggle the command
             palette, or click the search control in the navbar.
           </p>

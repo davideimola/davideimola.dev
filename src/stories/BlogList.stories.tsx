@@ -7,10 +7,6 @@ const meta: Meta<typeof BlogList> = {
   parameters: {
     layout: "padded",
     nextjs: { appDirectory: true },
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };

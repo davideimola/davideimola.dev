@@ -6,10 +6,6 @@ const meta: Meta<typeof NavBar> = {
   component: NavBar,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -27,7 +23,7 @@ export const WithPageContent: Story = {
   render: () => (
     <div className="bg-bg min-h-[200px]">
       <NavBar onSearchOpen={() => {}} />
-      <div className="pt-20 px-8 font-sans text-text-2 text-[13px]">
+      <div className="pt-20 px-8 font-sans text-fg-muted text-[13px]">
         Page content below the fixed navbar…
       </div>
     </div>

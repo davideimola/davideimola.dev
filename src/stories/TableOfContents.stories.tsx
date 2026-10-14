@@ -7,10 +7,6 @@ const meta: Meta<typeof TableOfContents> = {
   component: TableOfContents,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -45,15 +41,15 @@ export const WithArticleContent: Story = {
         <article>
           {sampleItems.map((item) => (
             <section key={item.id}>
-              <h2 id={item.id} className="font-mono text-[18px] text-text-1 mt-12 mb-4">
+              <h2 id={item.id} className="font-mono text-[18px] text-fg mt-12 mb-4">
                 {item.text}
               </h2>
-              <p className="font-sans text-[14px] leading-relaxed text-text-2 mb-4">
+              <p className="font-sans text-[14px] leading-relaxed text-fg-muted mb-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
-              <p className="font-sans text-[14px] leading-relaxed text-text-2 mb-4">
+              <p className="font-sans text-[14px] leading-relaxed text-fg-muted mb-4">
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
               </p>

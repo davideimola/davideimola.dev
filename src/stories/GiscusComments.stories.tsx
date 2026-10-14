@@ -4,10 +4,6 @@ const meta: Meta = {
   title: "UI/GiscusComments",
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -21,7 +17,7 @@ type Story = StoryObj;
 export const NotConfigured: Story = {
   render: () => (
     <div className="mt-16 pt-10 border-t border-border">
-      <p className="font-mono text-[11px] text-text-3">
+      <p className="font-mono text-[11px] text-fg-subtle">
         {"//"} GiscusComments — renders when NEXT_PUBLIC_GISCUS_REPO_ID and
         NEXT_PUBLIC_GISCUS_CATEGORY_ID are set
       </p>

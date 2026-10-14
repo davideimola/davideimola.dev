@@ -8,10 +8,6 @@ const meta: Meta<typeof TalksList> = {
   parameters: {
     layout: "padded",
     nextjs: { appDirectory: true },
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };

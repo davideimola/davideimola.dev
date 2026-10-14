@@ -27,7 +27,7 @@ export function CopyButton({
     <button
       type="button"
       onClick={handleCopy}
-      className={`font-mono text-[10px] text-text-3 transition-colors duration-150 hover:text-text-2 ${className}`}
+      className={`font-mono text-[12px] text-fg-subtle transition-colors duration-150 hover:text-fg-muted ${className}`}
       aria-label={`Copy ${label}`}
     >
       {copied ? copiedLabel : label}

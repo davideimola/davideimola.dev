@@ -19,3 +19,4 @@ export { SectionHeader } from "./SectionHeader";
 export { ShareButtons } from "./ShareButtons";
 export { SubscribeCTA } from "./SubscribeCTA";
 export { TableOfContents } from "./TableOfContents";
+export { Tape } from "./Tape";

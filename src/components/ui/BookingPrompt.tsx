@@ -1,3 +1,5 @@
+import { CAL_COM_URL } from "../../lib/social";
+
 interface BookingPromptProps {
   /** The lead-in line shown before the CTA. */
   message: string;
@@ -11,18 +13,15 @@ interface BookingPromptProps {
  */
 export function BookingPrompt({ message, className = "" }: BookingPromptProps) {
   return (
-    <div className={`flex flex-wrap items-center gap-x-4 gap-y-3 ${className}`}>
-      <p className="font-mono text-[13px] text-text-2">
-        <span className="text-accent mr-2">❯</span>
-        {message}
-      </p>
+    <div className={`flex flex-wrap items-center gap-x-5 gap-y-3 ${className}`}>
+      <p className="font-sans text-[16px] text-fg-muted m-0">{message}</p>
       <a
-        href="https://cal.com/davideimola"
+        href={CAL_COM_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 font-mono text-[12px] text-text-2 border border-border rounded-sm px-3 py-2 hover:border-border-hover hover:text-accent transition-[border-color,color] duration-150"
+        className="font-sans font-semibold text-[15px] text-fg border-b border-fg pb-0.5 no-underline hover:text-accent hover:border-accent transition-colors duration-150"
       >
-        book a call →
+        Book a call
       </a>
     </div>
   );

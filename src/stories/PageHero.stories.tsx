@@ -6,10 +6,6 @@ const meta: Meta<typeof PageHero> = {
   component: PageHero,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
@@ -19,7 +15,7 @@ type Story = StoryObj<typeof PageHero>;
 
 export const Default: Story = {
   args: {
-    command: "ls ./projects",
+    label: "Built by me",
     title: "Projects",
     description: "Open source tools, communities, and things I build in public.",
   },
@@ -27,30 +23,23 @@ export const Default: Story = {
 
 export const WithLongDescription: Story = {
   args: {
-    command: "ls ./speaking",
+    label: "Talks",
     title: "Speaking",
     description:
-      "I speak about the engineering problems I face day to day — Go, platform engineering, GitOps, security, and building open source communities. I like talks that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day.",
+      "I speak about the engineering problems I face day to day: Go, platform engineering, GitOps, security, and building open source communities. I like talks that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day.",
   },
 };
 
 export const WithChildren: Story = {
   args: {
-    command: "cat ./now.md",
+    label: "Now",
     title: "Now",
-    description: "A snapshot of what I'm focused on right now — updated when something changes.",
+    description: "A snapshot of what I'm focused on right now, updated when something changes.",
     children: (
-      <p
-        style={{
-          fontFamily: "monospace",
-          fontSize: "12px",
-          color: "#7E7874",
-          marginTop: "16px",
-        }}
-      >
-        Last updated: <span style={{ color: "#9A948E" }}>March 2026</span>
+      <p className="font-mono text-meta text-fg-subtle mt-4">
+        Last updated: <span className="text-fg-muted">March 2026</span>
         {" · "}
-        <a href="/about" style={{ color: "inherit" }}>
+        <a href="/about" className="text-inherit hover:text-accent">
           what is this?
         </a>
       </p>
@@ -58,9 +47,9 @@ export const WithChildren: Story = {
   },
 };
 
-export const CatCommand: Story = {
+export const About: Story = {
   args: {
-    command: "cat ./about.md",
+    label: "About",
     title: "About",
     description:
       "Tech Lead, platform engineer, open source builder. I believe what you learn must be shared.",

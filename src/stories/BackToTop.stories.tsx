@@ -6,10 +6,6 @@ const meta: Meta<typeof BackToTop> = {
   component: BackToTop,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };

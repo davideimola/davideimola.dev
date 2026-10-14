@@ -6,10 +6,6 @@ const meta: Meta<typeof Footer> = {
   component: Footer,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [{ name: "dark", value: "#080807" }],
-    },
   },
   tags: ["autodocs"],
 };
