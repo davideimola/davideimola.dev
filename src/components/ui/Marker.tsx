@@ -55,7 +55,7 @@ export function Marker({ children, className = "" }: MarkerProps) {
         focusable="false"
         viewBox="0 0 380 34"
         preserveAspectRatio="none"
-        className="pointer-events-none absolute z-0 left-[-0.08em] bottom-[-0.1em] h-[0.42em] w-[calc(100%+0.16em)] overflow-visible"
+        className="pointer-events-none absolute z-0 left-[-0.08em] bottom-[-0.2em] h-[0.42em] w-[calc(100%+0.16em)] overflow-visible"
       >
         <defs>
           <filter id={filterId} x="-10%" y="-60%" width="120%" height="220%">
