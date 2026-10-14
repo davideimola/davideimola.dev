@@ -1,4 +1,4 @@
-import { Body, Container, Head, Html, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Html, Img, Section, Text } from "@react-email/components";
 import type { NewsletterIssue } from "../../lib/newsletter";
 import { CtaButton } from "../components/CtaButton";
 import { PostCard } from "../components/PostCard";
@@ -14,6 +14,9 @@ import { emailColors as c, emailFonts as f } from "../theme";
 // issue's compiled MDX (renderIssueEmail); here it is hand-authored JSX so the preview stays
 // synchronous. Preview-only; not shipped.
 
+// The same hosted lockup the Kit wrapper uses (public/brand/lockup-1200.png).
+const LOCKUP_URL = "https://www.davideimola.dev/brand/lockup-1200.png";
+
 const SAMPLE: NewsletterIssue = {
   slug: "2026-07",
   issue: 1,
@@ -25,7 +28,7 @@ const SAMPLE: NewsletterIssue = {
 
 const prose = {
   fontFamily: f.sans,
-  fontSize: "15px",
+  fontSize: "16px",
   lineHeight: 1.65,
   color: c.text2,
 };
@@ -34,8 +37,8 @@ function SampleBody() {
   return (
     <>
       <Text style={{ ...prose, margin: "0 0 14px" }}>
-        Welcome to the issue. Once a month, a short digest of what I published: new posts, upcoming
-        talks, and the occasional project. No filler.
+        Welcome to the issue. Once a month, what actually happened: what I found, tried, built and
+        killed.
       </Text>
 
       <SectionHeader title="New on the blog" />
@@ -75,10 +78,10 @@ function SampleBody() {
         want more of.
       </Text>
       <CtaButton href="/newsletter" variant="primary">
-        Browse the archive →
+        Browse the archive
       </CtaButton>
       <CtaButton href="mailto:davide@davideimola.dev" variant="ghost">
-        Reply to this issue →
+        Reply to this issue
       </CtaButton>
     </>
   );
@@ -88,9 +91,9 @@ export default function NewsletterIssuePreview() {
   return (
     <Html lang="en">
       <Head />
-      <Body style={{ margin: 0, padding: 0, backgroundColor: "#EDE8E1", fontFamily: f.sans }}>
-        <Container style={{ maxWidth: "600px", margin: "0 auto", backgroundColor: "#EDE8E1" }}>
-          {/* Mock Kit wrapper header */}
+      <Body style={{ margin: 0, padding: 0, backgroundColor: c.bg, fontFamily: f.sans }}>
+        <Container style={{ maxWidth: "600px", margin: "0 auto", backgroundColor: c.bg }}>
+          {/* Mock Kit wrapper header: the hosted lockup, as in kit-email-template.html */}
           <Section
             style={{
               padding: "40px 20px 30px",
@@ -98,28 +101,13 @@ export default function NewsletterIssuePreview() {
               borderBottom: `1px solid ${c.border}`,
             }}
           >
-            <Text
-              style={{
-                fontFamily: f.mono,
-                fontSize: "20px",
-                fontWeight: 700,
-                letterSpacing: "-0.03em",
-                color: c.text1,
-                margin: 0,
-              }}
-            >
-              davideimola
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "3px",
-                  height: "16px",
-                  backgroundColor: c.accent,
-                  marginLeft: "3px",
-                  verticalAlign: "middle",
-                }}
-              />
-            </Text>
+            <Img
+              src={LOCKUP_URL}
+              width="180"
+              height="35"
+              alt="Davide Imola"
+              style={{ margin: "0 auto" }}
+            />
           </Section>
 
           {/* The actual content-only body ({{ message_content }}) */}
@@ -139,7 +127,7 @@ export default function NewsletterIssuePreview() {
               textAlign: "center",
             }}
           >
-            <Text style={{ fontFamily: f.sans, fontSize: "12px", color: c.text3, margin: 0 }}>
+            <Text style={{ fontFamily: f.sans, fontSize: "12px", color: c.text1, margin: 0 }}>
               GitHub · LinkedIn · Website · Unsubscribe · Privacy
             </Text>
           </Section>

@@ -14,8 +14,9 @@ import { emailColors as c, emailFonts as f } from "./theme";
 // the email component map (mdx-components.tsx) and passed in as `body` - same authored
 // .mdx that the on-site archive renders, so prose + <PostCard/>/<TalkRow/>/<Cta/> match.
 //
-// Light palette to match the (light) Kit wrapper. Email clients strip custom fonts, so
-// headings fall back to monospace and body to a system sans.
+// The brand's light palette, like the Kit wrapper (src/emails/theme.ts). The subject is a
+// sans bold title like an article h1 on the site; the issue meta is mono. Email clients
+// often strip custom fonts, so both fall back to a system face.
 
 interface NewsletterIssueBodyProps {
   issue: NewsletterIssue;
@@ -31,32 +32,39 @@ export function NewsletterIssueBody({ issue, webUrl, body }: NewsletterIssueBody
       <Section>
         <Link
           href={webUrl}
-          style={{ fontFamily: f.mono, fontSize: "11px", color: c.text3, textDecoration: "none" }}
+          style={{
+            fontFamily: f.mono,
+            fontSize: "12px",
+            color: c.text3,
+            textDecoration: "underline",
+            textUnderlineOffset: "3px",
+          }}
         >
-          Read this issue on the web →
+          Read this issue on the web
         </Link>
       </Section>
 
       <Section style={{ paddingTop: "14px" }}>
-        <Text style={{ fontFamily: f.mono, fontSize: "11px", color: c.text3, margin: "0 0 8px" }}>
+        <Text style={{ fontFamily: f.mono, fontSize: "12px", color: c.text3, margin: "0 0 10px" }}>
           Issue #{issue.issue} · {formatDate(issue.date)}
         </Text>
         <Heading
           as="h1"
           style={{
-            fontFamily: f.mono,
-            fontSize: "22px",
+            fontFamily: f.sans,
+            fontSize: "30px",
             fontWeight: 700,
+            letterSpacing: "-0.04em",
             color: c.text1,
             margin: 0,
-            lineHeight: 1.25,
+            lineHeight: 1.1,
           }}
         >
           {issue.subject}
         </Heading>
       </Section>
 
-      <Hr style={{ borderColor: c.border, margin: "22px 0" }} />
+      <Hr style={{ borderColor: c.text1, margin: "22px 0" }} />
 
       <Section>{body}</Section>
     </>

@@ -1,21 +1,35 @@
-// Shared design tokens for the newsletter email components. Email is a SEPARATE, light
-// design language from the (dark) site: no hover, no motion, custom fonts get stripped
-// (mono falls back to system mono, sans to system sans), images are often blocked. These
-// values echo the brand's light-surface lockup and match the Kit wrapper template
-// (docs/newsletter/kit-email-template.html). Keep in sync with the inline palette in
-// emails/newsletter-issue.tsx.
+import tokens from "@davideimola/brand/tokens.json";
+
+// Shared design tokens for the newsletter email components, read from the brand's light
+// palette (ADR-0004) so the inbox never drifts from the site. Email is always light: a
+// dark body does not survive mail clients (iCloud strips it and auto-inverts). No hover,
+// no motion, and custom fonts are often stripped, so every stack falls back to a system
+// face. The red rule holds here too: nothing is red at rest. The Kit wrapper template
+// (docs/newsletter/kit-email-template.html) repeats these values as literals.
+const light = tokens.color.light;
+
 export const emailColors = {
-  border: "#E1DBD3",
-  // Light-surface equivalent of the site's --border-mid: a touch darker than `border`,
-  // used for the ghost button outline so it reads as clickable on the #EDE8E1 wrapper.
-  borderMid: "#CDC5B9",
-  text1: "#1A1816",
-  text2: "#48423C",
-  text3: "#6E6862",
-  accent: "#C91F37",
+  /** Paper: the page ground, set by the Kit wrapper. */
+  bg: light.bg,
+  /** White: buttons' text on ink, chips. */
+  surface: light.surface,
+  /** Hairlines and rules. */
+  border: light.border,
+  /** Ink: titles, links, the primary button, tapes. */
+  text1: light.fg,
+  /** Long-form body text. */
+  text2: light["fg-body"],
+  /** Meta, captions, mono labels. */
+  text3: light["fg-subtle"],
+  /** Inline code ground. */
+  inline: light["surface-inline"],
+  /** Tape colours. */
+  tapeBg: light["tape-bg"],
+  tapeFg: light["tape-fg"],
 } as const;
 
 export const emailFonts = {
-  mono: "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace",
-  sans: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  sans: "'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+  mono: "'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+  label: "'Barlow Condensed', 'Arial Narrow', sans-serif",
 } as const;

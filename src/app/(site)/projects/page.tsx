@@ -91,7 +91,7 @@ export default function ProjectsPage() {
       </header>
 
       {flagship && (
-        <section className="mt-14 md:mt-[72px] pt-8 border-t border-fg grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 lg:gap-16">
+        <section className="mt-14 md:mt-[72px] pt-8 border-t border-rule grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 lg:gap-16">
           <div className="flex flex-col gap-[18px]">
             <span className="font-mono text-[13px] text-fg-subtle">
               In the open · {startYear(flagship.period)} to present

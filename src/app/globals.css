@@ -173,24 +173,24 @@ body {
   --tw-prose-td-borders: var(--di-border);
 }
 
-.prose :where(h1, h2, h3, h4) {
+.prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--di-font-family-sans);
   font-weight: 700;
 }
 
-.prose :where(h2) {
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-size: 32px;
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
 
-.prose :where(h3) {
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-size: 24px;
   line-height: 1.2;
   letter-spacing: -0.025em;
 }
 
-.prose :where(a) {
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: var(--di-fg);
   text-decoration-color: var(--di-fg);
   text-underline-offset: 0.18em;
@@ -200,7 +200,7 @@ body {
     text-decoration-color 150ms;
 }
 
-.prose :where(a):hover {
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
   color: var(--di-accent);
   text-decoration-color: var(--di-accent);
 }
@@ -219,13 +219,13 @@ body {
   content: none;
 }
 
-.prose :where(pre) {
+.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--di-font-family-mono);
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.prose :where(blockquote) {
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   position: relative;
   border: 0;
   margin: 1.6em 0;
@@ -385,12 +385,15 @@ pre[class*="language-"] {
    This block outranks both and pins the light palette on paper. */
 @media print {
   :root:not([data-theme="print"]):not(.print) {
-    --di-bg: var(--di-color-paper);
+    /* The sheet is the paper: printing the paper tint on top of it would put a
+       second background on a white page, so the ground prints as white. */
+    --di-bg: var(--di-color-white);
     --di-fg: var(--di-color-ink);
     --di-fg-body: var(--di-color-ink-body);
     --di-fg-muted: var(--di-color-graphite);
     --di-fg-subtle: var(--di-color-slate);
     --di-border: var(--di-color-rule);
+    --di-rule: var(--di-color-pencil);
     --di-surface: var(--di-color-white);
     --di-surface-inline: var(--di-color-linen);
     --di-accent: var(--di-color-akane);

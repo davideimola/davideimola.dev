@@ -5,94 +5,22 @@ import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { SearchItem } from "../../lib/search";
+import { searchScore } from "../../lib/search-score";
+import { Tape } from "../ui/Tape";
 
+// Group names follow the NavBar, so a result is filed where the visitor
+// would look for it on the site.
 const TYPE_LABELS: Record<SearchItem["type"], string> = {
   page: "Pages",
-  post: "Blog",
+  post: "Writing",
+  project: "Built",
   talk: "Talks",
-  project: "Projects",
 };
 
 const TYPE_ORDER: SearchItem["type"][] = ["page", "post", "project", "talk"];
 
-interface EasterEgg {
-  output: string;
-  action?: "contact" | "projects" | "close";
-}
-
-const EASTER_EGGS: Record<string, EasterEgg> = {
-  "sudo rm -rf /": {
-    output: "Command accepted. Deleting all files on your computer... just kidding.",
-  },
-  "sudo rm -rf /*": {
-    output: "Command accepted. Deleting all files on your computer... just kidding.",
-  },
-  "git push --force": {
-    output: "⚠  Force push to main? Deploy is already running... good luck.",
-  },
-  "git push -f": {
-    output: "⚠  Force push to main? Deploy is already running... good luck.",
-  },
-  "hire me": {
-    output: "✓ Application accepted. Get in touch for details.",
-    action: "contact",
-  },
-  "assumi davide": {
-    output: "✓ Application accepted. Get in touch for details.",
-    action: "contact",
-  },
-  hack: {
-    output: "Hacking in progress......... access denied. (Points for trying.)",
-  },
-  whoami: {
-    output: "davideimola - Tech Lead, OSS contributor, Speaker.",
-  },
-  "ls -la": {
-    output: "drwxr-xr-x  blog/  projects/  talks/  about/  contact/",
-  },
-  "cat /etc/passwd": {
-    output: "root:x:0:0:root:/root:/bin/zsh - nice try.",
-  },
-  "exit 1": {
-    output: "Cannot exit. You are already here.",
-    action: "close",
-  },
-  vim: {
-    output: "Type :q! to exit. Or don't. You're stuck here forever.",
-  },
-  "ping localhost": {
-    output: "64 bytes from davideimola.dev: icmp_seq=1 ttl=64 time=0.001ms",
-  },
-  "curl ifconfig.me": {
-    output: "I know where you live. (just kidding, GDPR applies here)",
-  },
-  "docker ps": {
-    output: "CONTAINER ID: you   STATUS: browsing portfolios   UP 2 hours",
-  },
-  "open source": {
-    output: "→ Navigating to open source projects...",
-    action: "projects",
-  },
-  "git log": {
-    output:
-      "a1b2c3d fix: finally fixed that bug   b2c3d4e feat: added dark mode (it was already dark)   c3d4e5f chore: removed console.log (added 3 more)",
-  },
-  "npm install": {
-    output: "Please use pnpm.",
-  },
-  "yarn install": {
-    output: "Please use pnpm.",
-  },
-  "42": {
-    output: "The answer to life, the universe, and everything.",
-  },
-  please: {
-    output: "Finally someone with manners. Unfortunately I still can't help you.",
-  },
-  "hello world": {
-    output: "Hello, World!",
-  },
-};
+const groupClasses =
+  "[&_[cmdk-group-heading]]:px-5 [&_[cmdk-group-heading]]:pt-4 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:text-fg-subtle";
 
 interface CommandPaletteProps {
   open: boolean;
@@ -100,18 +28,27 @@ interface CommandPaletteProps {
   items: SearchItem[];
 }
 
+// The ⌘K search: a straight paper block framed in ink with its tape on the
+// edge, results grouped like the NavBar. Search only, no commands.
 export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
 
-  // Group items by type
   const grouped = TYPE_ORDER.reduce<Record<string, SearchItem[]>>((acc, type) => {
     acc[type] = items.filter((item) => item.type === type);
     return acc;
   }, {});
 
-  const activeEasterEgg = EASTER_EGGS[inputValue.trim().toLowerCase()] ?? null;
+  // With a query, the group holding the best match comes first: a post with
+  // "Go" in its title beats a page that only mentions it in passing. The
+  // palette sorts items inside a group, not the groups themselves.
+  const best = (type: SearchItem["type"]) =>
+    Math.max(
+      0,
+      ...grouped[type].map((i) => searchScore(inputValue, i.title, i.description, i.meta ?? ""))
+    );
+  const order = inputValue.trim() ? [...TYPE_ORDER].sort((a, b) => best(b) - best(a)) : TYPE_ORDER;
 
   function navigate(href: string) {
     onClose();
@@ -122,24 +59,12 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
     }
   }
 
-  function handleEasterEggSelect(egg: EasterEgg) {
-    if (egg.action === "contact") {
-      navigate("/contact");
-    } else if (egg.action === "projects") {
-      navigate("/projects");
-    } else if (egg.action === "close") {
-      onClose();
-    }
-  }
-
-  // Focus input when opened
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 0);
     }
   }, [open]);
 
-  // Reset input when closed
   useEffect(() => {
     if (!open) setInputValue("");
   }, [open]);
@@ -147,86 +72,79 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] px-4">
-      {/* Backdrop — a real button so click-to-close is keyboard-accessible too */}
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[12vh] sm:pt-[18vh] px-4">
+      {/* Backdrop: a real button so click-to-close is keyboard-accessible too */}
       <button
         type="button"
         tabIndex={-1}
         aria-label="Close search"
         onClick={onClose}
-        className="absolute inset-0 bg-fg/40 backdrop-blur-sm cursor-default"
+        className="absolute inset-0 bg-fg/30 cursor-default"
       />
 
-      {/* Palette */}
-      <div className="relative w-full max-w-[600px] border border-fg overflow-hidden shadow-2xl">
-        <Command className="bg-surface font-sans" loop>
-          {/* Input */}
-          <div className="flex items-center gap-3 px-4 border-b border-border">
+      <div className="relative w-full max-w-[640px]">
+        <Tape tilt={0} className="absolute -left-2 -top-3.5 z-10">
+          Search
+        </Tape>
+
+        <Command
+          className="bg-bg border border-fg font-sans"
+          loop
+          label="Search the site"
+          filter={(_value, search, keywords = []) =>
+            searchScore(search, keywords[0] ?? "", keywords[1], keywords[2])
+          }
+        >
+          <div className="flex items-center gap-3 px-5 pt-3 border-b border-border">
             <IconSearch
-              size={16}
+              size={18}
               stroke={1.75}
               className="text-fg-subtle shrink-0"
               aria-hidden="true"
             />
             <Command.Input
               ref={inputRef}
-              placeholder="Search posts, talks, projects..."
+              placeholder="Posts, talks, projects, pages"
               value={inputValue}
               onValueChange={setInputValue}
-              className="flex-1 bg-transparent py-3.5 text-[16px] text-fg placeholder:text-fg-subtle outline-none"
+              className="flex-1 min-w-0 bg-transparent py-4 text-[18px] text-fg placeholder:text-fg-subtle outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Escape") onClose();
               }}
             />
-            <kbd className="font-mono text-[11px] text-fg-subtle border border-border px-1.5 py-0.5 shrink-0">
+            <kbd className="hidden sm:inline font-mono text-[12px] text-fg-subtle border border-border px-1.5 py-0.5 shrink-0">
               esc
             </kbd>
           </div>
 
-          {/* Results */}
-          <Command.List className="max-h-[360px] overflow-y-auto py-2">
-            <Command.Empty className="px-4 py-8 text-[12px] text-fg-subtle text-center">
-              No results for this query.
+          <Command.List className="max-h-[min(420px,55vh)] overflow-y-auto pb-2">
+            <Command.Empty className="px-5 py-10 font-sans text-[16px] text-fg-muted">
+              Nothing matches "{inputValue.trim()}".
             </Command.Empty>
 
-            {activeEasterEgg && (
-              <Command.Group
-                heading="System"
-                className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:text-fg [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:font-mono"
-              >
-                <Command.Item
-                  value={`__easter_egg__${inputValue}`}
-                  onSelect={() => handleEasterEggSelect(activeEasterEgg)}
-                  className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[15px] text-fg-muted data-[selected=true]:bg-surface-inline data-[selected=true]:text-fg transition-colors duration-75 group"
-                >
-                  <span className="text-fg text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
-                    →
-                  </span>
-                  <span className="flex-1 font-mono">{activeEasterEgg.output}</span>
-                </Command.Item>
-              </Command.Group>
-            )}
-
-            {TYPE_ORDER.map((type) => {
+            {order.map((type) => {
               const group = grouped[type];
               if (!group?.length) return null;
               return (
-                <Command.Group
-                  key={type}
-                  heading={TYPE_LABELS[type]}
-                  className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:text-fg-subtle [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:font-mono"
-                >
+                <Command.Group key={type} heading={TYPE_LABELS[type]} className={groupClasses}>
                   {group.map((item) => (
                     <Command.Item
                       key={item.id}
-                      value={`${item.title} ${item.description} ${item.meta ?? ""}`}
+                      // The id keeps two talks with the same title apart; the
+                      // keywords are what searchScore matches against.
+                      value={item.id}
+                      keywords={[item.title, item.description, item.meta ?? ""]}
                       onSelect={() => navigate(item.href)}
-                      className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[15px] text-fg-muted data-[selected=true]:bg-surface-inline data-[selected=true]:text-fg transition-colors duration-75 group"
+                      className="flex items-baseline gap-4 px-5 py-2.5 cursor-pointer border-l-2 border-transparent data-[selected=true]:bg-surface data-[selected=true]:border-fg transition-colors duration-75"
                     >
-                      <span className="text-fg text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
-                        →
+                      <span className="flex-1 min-w-0 flex flex-col gap-0.5">
+                        <span className="truncate text-[16px] font-semibold text-fg">
+                          {item.title}
+                        </span>
+                        <span className="truncate text-[14px] text-fg-subtle">
+                          {item.description}
+                        </span>
                       </span>
-                      <span className="flex-1 truncate">{item.title}</span>
                       {item.meta && (
                         <span className="font-mono text-[12px] text-fg-subtle shrink-0">
                           {item.meta}
@@ -239,18 +157,17 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
             })}
           </Command.List>
 
-          {/* Footer */}
-          <div className="border-t border-border px-4 py-2 flex items-center gap-4">
-            <span className="font-mono text-[11px] text-fg-subtle">
-              <kbd className="border border-border px-1 py-0.5 mr-1">↑↓</kbd>
-              navigate
+          <div className="hidden sm:flex border-t border-border px-5 py-2.5 items-center gap-5 font-mono text-[12px] text-fg-subtle">
+            <span>
+              <kbd className="border border-border px-1 py-0.5 mr-1.5">↑↓</kbd>
+              move
             </span>
-            <span className="font-mono text-[11px] text-fg-subtle">
-              <kbd className="border border-border px-1 py-0.5 mr-1">↵</kbd>
+            <span>
+              <kbd className="border border-border px-1 py-0.5 mr-1.5">↵</kbd>
               open
             </span>
-            <span className="font-mono text-[11px] text-fg-subtle">
-              <kbd className="border border-border px-1 py-0.5 mr-1">esc</kbd>
+            <span>
+              <kbd className="border border-border px-1 py-0.5 mr-1.5">esc</kbd>
               close
             </span>
           </div>

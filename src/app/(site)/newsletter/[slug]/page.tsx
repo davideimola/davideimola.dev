@@ -10,7 +10,8 @@ import { newsletterMdxComponents } from "../../../../components/newsletter/mdx-c
 import { Breadcrumb } from "../../../../components/ui/Breadcrumb";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
 import { JsonLd } from "../../../../components/ui/JsonLd";
-import { SubscribeForm } from "../../../../components/ui/SubscribeForm";
+import { SubscribeCTA } from "../../../../components/ui/SubscribeCTA";
+import { Tape } from "../../../../components/ui/Tape";
 import { formatDate } from "../../../../lib/dates";
 import { getAllIssues, getIssueBySlug } from "../../../../lib/newsletter";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
@@ -76,14 +77,18 @@ export default async function NewsletterIssuePage({ params }: Props) {
         />
 
         <article>
-          <header className="mb-10">
-            <p className="font-mono text-meta text-fg-subtle mb-4">
-              Issue #{issue.issue} · {formatDate(issue.date)}
-            </p>
-            <h1 className="font-sans text-[36px] sm:text-[48px] font-bold text-fg tracking-[-0.045em] leading-[1.05]">
+          <header className="flex flex-col gap-5 pb-10">
+            <Tape tilt={0}>Issue {String(issue.issue).padStart(2, "0")}</Tape>
+            <h1 className="m-0 font-sans font-bold text-fg text-[34px] sm:text-[48px] leading-[1.05] tracking-[-0.045em]">
               {issue.subject}
             </h1>
+            <p className="m-0 font-sans text-[19px] sm:text-[21px] leading-[1.5] text-fg-muted">
+              {issue.previewText}
+            </p>
+            <p className="m-0 font-mono text-meta text-fg-subtle">{formatDate(issue.date)}</p>
           </header>
+
+          <div className="h-px bg-rule mb-10" />
 
           <div className="prose max-w-none">
             <MDXRemote
@@ -106,15 +111,7 @@ export default async function NewsletterIssuePage({ params }: Props) {
           </div>
         </article>
 
-        {/* Subscribe CTA */}
-        <div className="mt-14 pt-10 border-t border-border">
-          <p className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase mb-4">
-            Get the next issue
-          </p>
-          <div className="max-w-md">
-            <SubscribeForm mode="compact" />
-          </div>
-        </div>
+        <SubscribeCTA heading="Get the next issue" className="mt-16" />
       </div>
     </>
   );

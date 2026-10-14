@@ -16,7 +16,7 @@ const SITE_SUMMARY =
 const PAGES: { title: string; path: string; description: string }[] = [
   { title: "About", path: "/about", description: "Who Davide is, career timeline, and values" },
   { title: "Now", path: "/now", description: "What Davide is focused on right now" },
-  { title: "Sharing", path: "/sharing", description: "Talks, workshops, and speaker bios" },
+  { title: "Talks", path: "/sharing", description: "Talks, workshops, and speaker bios" },
   { title: "Projects", path: "/projects", description: "Work and side projects" },
   { title: "Uses", path: "/uses", description: "Hardware, software, and tools Davide uses" },
   { title: "Contact", path: "/contact", description: "How to get in touch" },

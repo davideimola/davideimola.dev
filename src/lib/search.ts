@@ -68,6 +68,13 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/projects",
   },
   {
+    id: "page-newsletter",
+    type: "page",
+    title: "Newsletter",
+    description: "Once a month, what actually happened: what I found, tried, built and killed.",
+    href: "/newsletter",
+  },
+  {
     id: "page-contact",
     type: "page",
     title: "Contact",
@@ -80,13 +87,6 @@ const STATIC_PAGES: SearchItem[] = [
     title: "Links",
     description: "Profiles, projects, and communities, all in one page.",
     href: "/links",
-  },
-  {
-    id: "page-terminal",
-    type: "page",
-    title: "Terminal",
-    description: "An interactive shell for this site. Some commands are undocumented.",
-    href: "/terminal",
   },
   {
     id: "page-privacy",
@@ -121,7 +121,8 @@ export function buildSearchIndex(): SearchItem[] {
       type: "talk",
       title: t.session?.title as string,
       description: t.event,
-      href: `/sharing`,
+      // Rows on /sharing carry id={slug}, so the result lands on the talk.
+      href: `/sharing#${t.slug}`,
       meta: new Date(t.date).getFullYear().toString(),
     }));
 

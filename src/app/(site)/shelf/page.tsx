@@ -99,7 +99,7 @@ export default async function ShelfPage() {
       {openGroups.map((group, gi) => (
         <section
           key={group.verbBase}
-          className="mt-11 pt-7 border-t border-fg flex flex-col gap-[22px]"
+          className="mt-11 pt-7 border-t border-rule flex flex-col gap-[22px]"
         >
           <div className="flex items-baseline justify-between gap-4">
             <Tape as="h2" tilt={gi % 2 === 0 ? 1 : 2}>
@@ -122,7 +122,7 @@ export default async function ShelfPage() {
           capped at twelve, with `count` holding every verdict behind them.
           Nothing is filtered or sliced here. */}
       {showcase.finished.recent.length > 0 && (
-        <section className="mt-14 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+        <section className="mt-14 pt-7 border-t border-rule grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
           <div className="flex flex-col items-start gap-3">
             <Tape as="h2" tilt={2}>
               Verdicts
@@ -153,7 +153,7 @@ export default async function ShelfPage() {
       {/* 3. The pile: what to take on next, a queue and not a heap of unread
           purchases. It holds videogames as readily as manga, and things not
           owned yet, so the copy never calls it volumes or purchases. */}
-      <section className="mt-14 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+      <section className="mt-14 pt-7 border-t border-rule grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
         <div className="flex flex-col items-start gap-2">
           <Tape as="h2" tilt={0}>
             Up next

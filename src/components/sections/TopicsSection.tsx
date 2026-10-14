@@ -13,7 +13,7 @@ export function TopicsSection({ groups }: TopicsSectionProps) {
   if (groups.length === 0) return null;
   return (
     <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-14 md:mt-[120px]">
-      <div className="border-t border-fg pt-7 md:pt-12 flex flex-col gap-6 md:gap-9">
+      <div className="border-t border-rule pt-7 md:pt-12 flex flex-col gap-6 md:gap-9">
         <div className="flex items-end justify-between gap-8">
           <div className="flex flex-col items-start gap-3.5 md:gap-5">
             <Tape tilt={1}>By topic</Tape>

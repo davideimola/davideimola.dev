@@ -33,16 +33,18 @@ export function formatRelative(dateStr: string, today: Date): string {
   return months === 1 ? "next month" : `in ${months} months`;
 }
 
+// The short month every label on the site uses: "Sep", never the British
+// "Sept" that en-GB prints for September alone.
+const shortMonth = (date: Date) => date.toLocaleDateString("en-US", { month: "short" });
+
 // Day-first label for cards and archives: "14 Oct 2026"
 export function formatDayMonthYear(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  const date = new Date(dateStr);
+  return `${date.getDate()} ${shortMonth(date)} ${date.getFullYear()}`;
 }
 
 // Day-first label inside a year group: "14 Oct"
 export function formatDayMonth(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  const date = new Date(dateStr);
+  return `${date.getDate()} ${shortMonth(date)}`;
 }

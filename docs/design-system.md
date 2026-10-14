@@ -4,7 +4,7 @@ The visual language comes from the brand repo ([davideimola/brand](https://githu
 
 ## Philosophy
 
-Light, human, precise. Two inks on a paper ground, plenty of white space, a hairline as the only divider. Three graphic elements and nothing else: **the marker** (one rough red stroke per page), **the tape** (label-maker tape for sections and content types) and **the rule** (an ink hairline). No terminal dressing.
+Light, human, precise. Two inks on a paper ground, plenty of white space, a hairline as the only divider. Three graphic elements and nothing else: **the marker** (one rough red stroke per page), **the tape** (label-maker tape for sections and content types) and **the rule** (a pencil hairline, `rule`, darker than the row hairlines). No terminal dressing.
 
 ## Themes
 
@@ -21,7 +21,8 @@ All values come from `@davideimola/brand/tailwind.css`. Use the utilities, never
 | `fg-body` | `#2A3042` | `#D6D3CC` | `text-fg-body` (long-form text) |
 | `fg-muted` | `#3B4152` | `#B4B2AC` | `text-fg-muted` (secondary) |
 | `fg-subtle` | `#5B6070` | `#8E8C86` | `text-fg-subtle` (meta) |
-| `border` | `#DEDCD5` | `#2C3040` | `border-border` (hairlines) |
+| `border` | `#DEDCD5` | `#2C3040` | `border-border` (hairlines between rows) |
+| `rule` | pencil `#94969B` | `#757475` | `border-rule`, `bg-rule` (the rule: opens a section, heads a table, closes a header) |
 | `surface` | `#FFFFFF` | `#1B1E27` | `bg-surface` (cards, code) |
 | `surface-inline` | `#EDEAE3` | `#262A35` | `bg-surface-inline` (inline code, pills) |
 | `accent` | akane `#C91F37` | `#E0475C` | knot and marker only; `hover:text-accent` on links |
@@ -52,7 +53,10 @@ Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `te
 - **NavBar** — sticky, S mark plus bold wordmark, four sans links (Writing, Built, Talks, About), current page in ink with a 2px underline, search, theme toggle, mobile menu behind a 44px ink-framed button.
 - **Footer** — ink hairline, S mark with name and place, the personal pages (Now, Uses, Shelf, CV, Contact) and the profiles in mono, a quieter row of site links. No newsletter form.
 - **PostCover** — a post's cover at 16:9 in a hairline frame, unfiltered; SVG covers skip the optimiser.
-- **SubscribeForm** — `full` (the /newsletter hero), `inline` (joined field and button), `compact` (stacked).
+- **SubscribeForm** — `full` (the /newsletter hero), `inline` (joined field and button), `compact` (stacked). Its success state is a `Card` with an "Almost there" tape.
+- **SubscribeCTA** — the newsletter block at the end of a post or an issue: the home block's white card and edge tape, stacked to fit a reading column.
+- **CommandPalette** — the ⌘K search: a paper block framed in ink with a "Search" tape, results grouped as the NavBar names them, the selected row on `surface` with an ink edge. Search only, no commands (ADR-0005). Matching is `searchScore` (`src/lib/search-score.ts`): every query word must start a word of the result, a title hit outweighs a description hit, and the group holding the best match comes first.
+- **Success states** (contact sent, subscribe pending) are a `Card` with a tape naming the state, never a mono "stdout" bar.
 
 ## Article
 

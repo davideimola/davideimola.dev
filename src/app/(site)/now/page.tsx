@@ -71,7 +71,7 @@ function Band({
   return (
     <section
       className={`grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14 ${
-        first ? "pt-12 md:pt-[52px]" : "mt-12 md:mt-[52px] pt-10 md:pt-11 border-t border-fg"
+        first ? "pt-12 md:pt-[52px]" : "mt-12 md:mt-[52px] pt-10 md:pt-11 border-t border-rule"
       }`}
     >
       <Tape tilt={tilt} className="self-start">

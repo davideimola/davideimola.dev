@@ -27,7 +27,7 @@ export const emailMdxComponents = {
     <Text
       style={{
         fontFamily: f.sans,
-        fontSize: "15px",
+        fontSize: "16px",
         lineHeight: 1.65,
         color: c.text2,
         margin: "0 0 14px",
@@ -39,7 +39,15 @@ export const emailMdxComponents = {
   h2: ({ children }: MdxProps) => (
     <Heading
       as="h2"
-      style={{ fontFamily: f.mono, fontSize: "18px", color: c.text1, margin: "28px 0 0" }}
+      style={{
+        fontFamily: f.sans,
+        fontSize: "22px",
+        fontWeight: 700,
+        letterSpacing: "-0.03em",
+        lineHeight: 1.2,
+        color: c.text1,
+        margin: "28px 0 10px",
+      }}
     >
       {children}
     </Heading>
@@ -47,13 +55,24 @@ export const emailMdxComponents = {
   h3: ({ children }: MdxProps) => (
     <Heading
       as="h3"
-      style={{ fontFamily: f.mono, fontSize: "15px", color: c.text1, margin: "22px 0 0" }}
+      style={{
+        fontFamily: f.sans,
+        fontSize: "18px",
+        fontWeight: 700,
+        letterSpacing: "-0.02em",
+        lineHeight: 1.25,
+        color: c.text1,
+        margin: "22px 0 8px",
+      }}
     >
       {children}
     </Heading>
   ),
   a: ({ href, children }: MdxProps) => (
-    <Link href={absoluteUrl(href ?? "")} style={{ color: c.accent }}>
+    <Link
+      href={absoluteUrl(href ?? "")}
+      style={{ color: c.text1, textDecoration: "underline", textUnderlineOffset: "3px" }}
+    >
       {children}
     </Link>
   ),
@@ -65,7 +84,7 @@ export const emailMdxComponents = {
         margin: "0 0 14px",
         paddingLeft: "20px",
         fontFamily: f.sans,
-        fontSize: "15px",
+        fontSize: "16px",
         lineHeight: 1.65,
         color: c.text2,
       }}
@@ -79,7 +98,7 @@ export const emailMdxComponents = {
         margin: "0 0 14px",
         paddingLeft: "20px",
         fontFamily: f.sans,
-        fontSize: "15px",
+        fontSize: "16px",
         lineHeight: 1.65,
         color: c.text2,
       }}
@@ -90,16 +109,27 @@ export const emailMdxComponents = {
   li: ({ children }: MdxProps) => (
     <li style={{ marginBottom: "6px", color: c.text2 }}>{children}</li>
   ),
+  // The brand sets quotes large with a small ink square instead of a side bar.
   blockquote: ({ children }: MdxProps) => (
     <blockquote
       style={{
-        borderLeft: `2px solid ${c.border}`,
-        paddingLeft: "14px",
         margin: "0 0 14px",
-        color: c.text3,
-        fontStyle: "italic",
+        padding: 0,
+        fontFamily: f.sans,
+        fontSize: "18px",
+        lineHeight: 1.5,
+        color: c.text1,
       }}
     >
+      <span
+        style={{
+          display: "inline-block",
+          width: "8px",
+          height: "8px",
+          backgroundColor: c.text1,
+          marginBottom: "8px",
+        }}
+      />
       {children}
     </blockquote>
   ),
@@ -108,8 +138,8 @@ export const emailMdxComponents = {
       style={{
         fontFamily: f.mono,
         fontSize: "13px",
-        backgroundColor: c.border,
-        borderRadius: "2px",
+        backgroundColor: c.inline,
+        borderRadius: "3px",
         padding: "1px 5px",
         color: c.text1,
       }}

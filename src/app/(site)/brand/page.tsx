@@ -290,7 +290,7 @@ export default function BrandPage() {
         </ScrollReveal>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {TYPE.map((t) => (
-            <div key={t.role} className="border-t border-fg pt-4 flex flex-col gap-2">
+            <div key={t.role} className="border-t border-rule pt-4 flex flex-col gap-2">
               <span className={`text-[28px] text-fg leading-tight ${t.className}`}>{t.family}</span>
               <span className="font-mono text-meta text-fg-subtle">
                 {t.role} · {t.use}

@@ -1,7 +1,7 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a LinkedIn Piece note from Davide's Obsidian vault, a blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the Piece note in the vault. Use when the user wants to promote a blog post, talk, project, event, or any content — even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a LinkedIn Piece note from Davide's Obsidian vault, a blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the Piece note in the vault. Use when the user wants to promote a blog post, talk, project, event, or any content, even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
@@ -27,7 +27,7 @@ Examples:
 
 ---
 
-## Step 1 — Gather content
+## Step 1: Gather content
 
 Depending on the input:
 
@@ -37,27 +37,27 @@ Depending on the input:
 - **Free text** → use it directly as the source
 - **No input** → list the LinkedIn Pieces in `proposed` or `slotted` state (soonest `publish_date` first) and ask: "Cosa vuoi promuovere? Una di queste Piece, uno slug di post, o descrivimelo."
 
-When both a Piece and its blog post exist, read both — the Piece carries the editorial framing, the post carries the final content.
+When both a Piece and its blog post exist, read both: the Piece carries the editorial framing, the post carries the final content.
 
 ---
 
-## Step 2 — Generate content
+## Step 2: Generate content
 
 LinkedIn only. BlueSky was dropped (2026-07): Davide no longer follows it.
 
 **Write the sneak-peek amplifier defined above.** One craft fact from Davide's own analytics (2026-07) governs the feed half: a bare promo ("new post, go read it") gets 5-20x fewer impressions than a post that carries real value. So pay out a genuine taste (the hook, one real specific, the shape of the idea), then stop at the threshold and point home for the payoff. Native craft, deliberate hold-back. The link sits at the bottom of the post body as the home for the rest, never as the point of the post.
 
 ### LinkedIn long-form
-1. **Hook** — first line stops the scroll. Counterintuitive statement, specific problem, or blunt opinion. Never "I'm excited to share..."
-2. **Body** — 3-6 paragraphs, first person, conversational. Write flowing prose, not staccato one-liners: full sentences that connect and let the story breathe. Give a real, specific taste of the content: one concrete detail or turn worth reading. Leave the full argument or payoff at the blog.
-3. **CTA** — point home. One line naming what the reader gets by clicking through (the rest of the story, the how, the numbers), plus the link. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped.
+1. **Hook**: first line stops the scroll. Counterintuitive statement, specific problem, or blunt opinion. Never "I'm excited to share..."
+2. **Body**: 3-6 paragraphs, first person, conversational. Write flowing prose, not staccato one-liners: full sentences that connect and let the story breathe. Give a real, specific taste of the content: one concrete detail or turn worth reading. Leave the full argument or payoff at the blog.
+3. **CTA**: point home. One line naming what the reader gets by clicking through (the rest of the story, the how, the numbers), plus the link. A closing question only if it's genuinely interesting on its own; formulaic engagement questions ("How do you structure your X?") read as bait and get skipped.
 
 Use line breaks generously between paragraphs (they perform better in the feed), but keep the sentences inside each paragraph conversational and connected. The `reactjsday-2026-speaker` post is the tone benchmark: warm, discursive, first person, never telegraphic.
 
 ### Visual: single image by default, carousel as exception
-Default to a single branded image card in portrait 4:5 (1080×1350 — takes more feed space on mobile than square; same design language as the carousel slides below, no pagination, no giant ❯) or no image at all for pure storytelling. Carousel reach has been declining (observed 2026-07) — only propose one for genuinely step-by-step content: processes, numbered lessons, before/after sequences. They don't add value for narrative or personal reflection content.
+Default to a single branded image card in portrait 4:5 (1080×1350: takes more feed space on mobile than square; same design language as the carousel slides below, without the slide counter) or no image at all for pure storytelling. Carousel reach has been declining (observed 2026-07): only propose one for genuinely step-by-step content: processes, numbered lessons, before/after sequences. They don't add value for narrative or personal reflection content.
 
-**State your assessment first**: "I think a carousel works here because X" or "I'd skip the carousel here — the story doesn't break into clean slides." Then either propose the structure or explain why you're skipping it.
+**State your assessment first**: "I think a carousel works here because X" or "I'd skip the carousel here: the story doesn't break into clean slides." Then either propose the structure or explain why you're skipping it.
 
 If proceeding with a carousel, propose:
 - Number of slides (6-10 is ideal)
@@ -66,17 +66,17 @@ If proceeding with a carousel, propose:
 
 ---
 
-## Step 3 — Show and validate
+## Step 3: Show and validate
 
 Present all content clearly. Give your own opinion on what works and what doesn't. Point out if something sounds generic or off-brand.
 
 Ask for feedback: "Cosa cambieresti? Il tono, il hook, qualche slide?"
 
-Iterate until approved. This is bidirectional — push back if a suggestion weakens the post.
+Iterate until approved. This is bidirectional: push back if a suggestion weakens the post.
 
 ---
 
-## Step 4 — Build carousel (if approved)
+## Step 4: Build carousel (if approved)
 
 Once the slide structure is approved, build it with mkcr.
 
@@ -103,62 +103,61 @@ Always commit `carousel.json` to `.carousel/<slug>/` together with the HTML slid
 Load Google Fonts at the top of each slide:
 ```html
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Barlow+Condensed:wght@700&display=swap');
 </style>
 ```
 
-### Brand colors
+### Before building: can the site draw it?
 
-> **Outdated since the 2026-10 rebrand (ADR-0004).** The dark, JetBrains Mono, terminal-styled spec below predates the new brand. New images should follow the brand repo's "Social cards" rules instead: light ground, a flat ink tape with the content type, the title large in Schibsted Grotesk, the wordmark and URL at the bottom, red only for the knot and one marker stroke. Rewriting this section is an open follow-up.
+The site already renders on-brand social images, and reusing them beats a bespoke slide:
+- **Link card for a post, talk or page (1200x630):** `https://davideimola.dev/og?title=<title>&category=<content type>&path=<path>` (`src/app/og/route.tsx`). It is the light card with the tape, the title, the wordmark, the URL and the tone-on-tone mark. LinkedIn shows this card anyway as the link preview, so a post with a link often needs no image at all.
+- **Profile banners:** `/api/linkedin-cover` and `/api/bluesky-cover` (`src/lib/og-cover.tsx`).
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| Background | `#080807` | Slide background |
-| Card | `#0F0E0D` | Quote/callout boxes |
-| Accent red | `#C91F37` | `~` in brand, labels, borders, accents |
-| Primary text | `#EAE5DF` | Headlines, bold callouts |
-| Secondary text | `#9A948E` | Body copy, brand `/davideimola` part |
-| Muted | `#7E7874` | Footer labels, section tags |
-| Border | `#1C1A18` | Card borders |
+Build with mkcr only for the 4:5 single image or a carousel, which the routes do not cover.
+
+### Brand
+
+The brand lives in the brand repo (github.com/davideimola/brand, `docs/brand.md`, section "Social cards"); `docs/design-system.md` says how this site applies it. Social images are **always light**: "Light ground, tape with the content type, the title large, wordmark and URL at the bottom." Use the token names below; mkcr slides are plain HTML and need literal values, so take them from `node_modules/@davideimola/brand/dist/tokens.json` (`color.palette`), never from memory or an old slide.
+
+| Token (palette name) | Usage |
+|-------|-------|
+| `paper` | Slide ground |
+| `white` | Surface: callout and quote cards |
+| `ink` | Titles, the tape, emphasis |
+| `ink-body` | Body copy |
+| `slate` | Meta: URL, slide counter, source lines |
+| `rule` | Hairlines between items, card borders |
+| `pencil` | The rule: one line opening a block or closing the header |
+| `akane` | The knot (already inside the mark and wordmark files) and at most one marker stroke per slide. Nothing else |
 
 ### Fonts
-- **JetBrains Mono** — brand label, section tags, footer, code-like elements, quote boxes
-- **IBM Plex Sans** — all headlines and body copy
+- **Schibsted Grotesk**: titles and all running text (700 for titles, 400 for body, 600 for emphasis)
+- **IBM Plex Mono**: meta only (URL, date, slide counter). Never for titles, quotes or body
+- **Barlow Condensed 700**: tape labels only, always uppercase
 
 ### Slide anatomy (every slide)
 
-Every slide uses the same three-zone layout:
+Every slide uses the same three zones: the tape on top, the content in the middle, the wordmark and URL at the bottom.
 ```html
-<div class="w-full h-full relative overflow-hidden" style="background:#080807">
-  <!-- optional: radial glow, positioned differently per slide for variety -->
-  <div class="absolute" style="...;background:radial-gradient(circle,rgba(201,31,55,0.08-0.12),transparent 55-60%);"></div>
+<div class="w-full h-full relative overflow-hidden" style="background:<paper>;color:<ink>">
+  <!-- optional, cover and closing slide only: the L mark as a tone-on-tone watermark,
+       drawn in <rule> with the knot included, so the title stays the loudest thing -->
 
-  <!-- decorative ❯ — bottom-right, all slides except the last -->
-  <div class="absolute" style="bottom:-80px;right:-40px;font-size:500px;color:rgba(201,31,55,0.06);line-height:1;font-weight:700;font-family:'JetBrains Mono',monospace">❯</div>
-
-  <div class="relative z-10 w-full h-full flex flex-col justify-between p-14">
-    <!-- TOP: brand (domain lockup) + section tag -->
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <p style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700">
-        <span style="color:#9A948E">davideimola</span><span style="color:#C91F37">.dev</span>
-      </p>
-      <!-- section tag: uppercase, #7E7874, letter-spacing 0.12em, font-size 13px -->
-      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7E7874;text-transform:uppercase;letter-spacing:0.12em">Section Name</p>
-    </div>
+  <div class="relative z-10 w-full h-full flex flex-col justify-between p-16">
+    <!-- TOP: one tape naming the content type (Writing, Talk, Project, Lesson 2...) -->
+    <span style="display:inline-block;align-self:flex-start;background:<ink>;color:<paper>;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;font-size:26px;line-height:1;padding:0.27em 0.67em;border-radius:3px;transform:rotate(-1deg)">Writing</span>
 
     <!-- MIDDLE: headline + body -->
-    <div style="display:flex;flex-direction:column;gap:20-24px">
-      <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:72-90px;font-weight:700;color:#EAE5DF;line-height:0.95-1.0">Title</h2>
-      <p style="font-family:'IBM Plex Sans',sans-serif;font-size:24-26px;color:#9A948E;line-height:1.5">Body copy.</p>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-size:80-96px;font-weight:700;letter-spacing:-0.045em;line-height:1.0;margin:0">Title</h2>
+      <p style="font-family:'Schibsted Grotesk',sans-serif;font-size:28-30px;color:<ink-body>;line-height:1.5;margin:0">Body copy.</p>
     </div>
 
-    <!-- BOTTOM: content path + pagination (brand is already top-left, don't repeat the domain) -->
-    <div style="display:flex;justify-content:space-between">
-      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">./blog/post-slug</p>
-      <!-- all slides except last: muted with → -->
-      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7E7874">NN/total &nbsp;→</p>
-      <!-- last slide: number in accent red, no → -->
-      <p style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#C91F37">total/total</p>
+    <!-- BOTTOM: a <pencil> rule, then the wordmark left and URL or counter right -->
+    <div style="border-top:1px solid <pencil>;padding-top:24px;display:flex;justify-content:space-between;align-items:center">
+      <img src="https://www.davideimola.dev/brand/wordmark.svg" alt="davide imola" style="height:40px">
+      <!-- single image or last slide: the URL; other slides: NN/total -->
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:20px;color:<slate>;margin:0">davideimola.dev/blog/post-slug</p>
     </div>
   </div>
 </div>
@@ -166,23 +165,25 @@ Every slide uses the same three-zone layout:
 
 ### Design rules
 
-- **`davideimola.dev` brand (domain lockup)**: name always in `#9A948E`, `.dev` always in `#C91F37`. Only `.dev` is red. The old `~/davideimola` form is retired — never use it.
-- **Brand assets**: the mark, wordmark and lockups live in `public/brand/` (copied from the brand repo by `pnpm brand:sync`): `mark-l.svg` / `mark-l-dark.svg`, `wordmark.svg`, `lockup.svg`. The brand repo (github.com/davideimola/brand, `docs/brand.md`) is the source of truth; see `docs/brand.md` here for how the site uses it. Use the lockup or the L mark when a slide needs a logo block (e.g. the final CTA slide). The wordmark is never typeset in a font.
-- **Decorative `❯`**: present on all slides except the last. It signals "keep scrolling". Bottom-right, 500px, `rgba(201,31,55,0.06)`.
-- **`./` prefix**: use only for actual URL-like paths (`./davideimola.dev`, `./blog/post-slug`). Not as a decoration on every title.
-- **Titles**: IBM Plex Sans, 72-90px bold, `#EAE5DF`, line-height 0.95-1.0. Wrapping across 2 lines is fine; never break mid-word.
-- **Body copy**: 24-26px, `#9A948E` for regular, `#EAE5DF` bold for emphasis. 1-2 impactful sentences — not telegraphic, not verbose.
-- **Quote/callout box**: dark card `#0F0E0D`, border `1px solid #252220`, border-left `3px solid #C91F37`, border-radius 4px, padding `2rem 2.5rem`, `width:100%`. JetBrains Mono for quote text — makes it look like an AI/terminal response.
-- **Pivot slides** (for "start over" moments): centered layout — `align-items:center;text-align:center`. Visually distinct from the rest.
-- **Radial glow**: vary position (top-right, bottom-left, center) across slides for visual rhythm. Opacity 0.08-0.12.
-- **All text in English** — no Italian in slides, ever.
+- **The wordmark is a file, never typeset.** Use `wordmark.svg` (or `lockup.svg` / `mark-l.svg` for a logo block on the closing slide) from `public/brand/`, copied from the brand repo by `pnpm brand:sync`; reference them by absolute URL (`https://www.davideimola.dev/brand/<file>`) so mkcr can load them. The `davideimola.dev` domain lockup with a red `.dev` is retired.
+- **The red rule.** Red is the knot (inside the mark and wordmark files) and at most one marker stroke under the one word that matters on the slide. No red text, tapes, borders, labels, glows or backgrounds.
+- **Tapes.** Ink, flat, never red, one per slide, never stacked. Alternate the tilt between neighbouring slides: `rotate(-1deg)`, `rotate(1deg)`, `rotate(-0.5deg)`. The slide itself never rotates.
+- **No terminal dressing.** No `❯`, no `//` prefixes, no `./path` labels, no window chrome or traffic lights, no dot grids, no glow. A URL is printed plainly in mono at the bottom.
+- **Titles**: Schibsted Grotesk 80-96px bold, `ink`, letter-spacing -0.045em, line-height 1.0. Wrapping across 2-3 lines is fine; never break mid-word.
+- **Body copy**: 28-30px, `ink-body`; `ink` at 600 for emphasis. 1-2 impactful sentences: not telegraphic, not verbose.
+- **Quote/callout card**: `white` surface with a 1px `rule` border, square corners, padding `2.5rem 3rem`, `width:100%`. The quote is Schibsted Grotesk, large, in `ink`, with a small ink square before it (the site's blockquote mark) instead of a side bar.
+- **Lists and steps**: items separated by 1px `rule` hairlines, the block opened by one `pencil` rule; numbers in IBM Plex Mono `slate` (`01`, `02`).
+- **Pivot slides** (for "start over" moments): centered layout, `align-items:center;text-align:center`, the tape centered above. Visually distinct from the rest.
+- **Photos** of people are black and white (`filter:grayscale(1)`); a tape may sit on the photo's edge, the mark never sits on a photo.
+- **All text in English**: no Italian in slides, ever.
 - **No em-dashes** anywhere in slides.
 - **No dots at end of titles** unless the period is intentional as a stylistic beat (e.g., "Manual." "An accident." as standalone statements).
 
 ### Quote box example
 ```html
-<div style="background:#0F0E0D;border:1px solid #252220;border-left:3px solid #C91F37;border-radius:4px;padding:2rem 2.5rem;width:100%">
-  <p style="font-family:'JetBrains Mono',monospace;font-size:28-32px;font-weight:700;color:#EAE5DF;line-height:1.4">Quote text here.</p>
+<div style="background:<white>;border:1px solid <rule>;padding:2.5rem 3rem;width:100%;display:flex;gap:20px;align-items:flex-start">
+  <span style="flex:none;width:14px;height:14px;background:<ink>;margin-top:18px"></span>
+  <p style="font-family:'Schibsted Grotesk',sans-serif;font-size:38-44px;font-weight:600;letter-spacing:-0.02em;color:<ink>;line-height:1.3;margin:0">Quote text here.</p>
 </div>
 ```
 
@@ -192,7 +193,7 @@ After `mkcr preview`, ask for feedback on layout and visual balance. Iterate unt
 CAROUSEL=/Users/davideimola/Development/davideimola/davideimola.dev/.carousel
 cd "$CAROUSEL"
 /Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
-# outputs .carousel/<slug>/<slug>.pdf — ready to upload to LinkedIn as a document post
+# outputs .carousel/<slug>/<slug>.pdf, ready to upload to LinkedIn as a document post
 ```
 
 **After render**: commit the HTML slides and `carousel.json` to `.carousel/<slug>/` in the davideimola.dev repo. The PDF stays local (`.gitignore`) and regenerates in seconds from the committed sources.
@@ -208,12 +209,12 @@ cd /Users/davideimola/Development/davideimola/davideimola.dev/.carousel
 /Users/davideimola/.local/share/mise/installs/go/1.26.1/bin/mkcr render <slug>
 ```
 
-### LinkedIn links — note
+### LinkedIn links: note
 The "link in first comment" trick doesn't measurably help (verified on Davide's own posts, 2026-07). Put the link at the bottom of the post body, after the closing line. The failure mode to avoid is the **empty** teaser: a post that withholds all value and just says the real content is elsewhere. The sneak-peek amplifier is the opposite: value in the feed plus a concrete reason to click is what carries reach.
 
 ---
 
-## Step 5 — Record the artifact on the social Piece
+## Step 5: Record the artifact on the social Piece
 
 The final copy has a durable home in this repo: save it as `.carousel/<slug>/social-post.md`, committed next to the visual assets (existing convention). LinkedIn is published by hand, so also present the copy to Davide ready to paste.
 
@@ -231,7 +232,7 @@ If no Piece exists, ask in one line whether to create one. If yes, create `<vaul
 - "In this article, we explore..."
 - "Let's dive into..."
 - "It's worth noting that..."
-- Em-dash (—) as a connective — use a period or a new sentence instead
+- Em-dash (—) as a connective: use a period or a new sentence instead
 - "Game-changer", "leverage", "seamlessly", "delve", "it's worth noting"
 - Subjectless passive sentences: "Security improves when..." / "It is important to understand..."
 - Bullet lists that summarize what was just said
@@ -242,5 +243,5 @@ If no Piece exists, ask in one line whether to create one. If yes, create `<vaul
 - Specific details (names, tools, numbers, events) over generic statements
 - Conversational, flowing prose. Break paragraphs with line breaks, but never chop every sentence into its own fragment: telegraphic staccato reads as try-hard. (Davide's explicit preference, 2026-07.)
 - Hook that works even without reading the rest
-- Self-deprecating humor when it fits naturally — don't force it
+- Self-deprecating humor when it fits naturally: don't force it
 - If you read a sentence back and it sounds like a press release, rewrite it

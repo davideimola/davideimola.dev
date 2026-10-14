@@ -225,14 +225,14 @@ export default function AboutPage() {
         </figure>
       </header>
 
-      <div className="h-px bg-fg mt-12 md:mt-14" />
+      <div className="h-px bg-rule mt-12 md:mt-14" />
 
       {/* The trajectory is the page: each step's prose, what it left behind,
           set going and opened, all from the CV Record. */}
       <section className="pt-2 flex flex-col">{renderPhases(before, 0)}</section>
 
       {creedIndex >= 0 && (
-        <section className="mt-2 py-10 border-t border-b border-fg grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 lg:gap-14 items-center">
+        <section className="mt-2 py-10 border-t border-b border-rule grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 lg:gap-14 items-center">
           <div className="flex flex-col gap-3.5">
             <p className="m-0 font-sans font-bold text-fg text-[36px] sm:text-[52px] leading-[1.02] tracking-[-0.045em]">
               {creedHead}
@@ -265,7 +265,7 @@ export default function AboutPage() {
         <section className="flex flex-col">{renderPhases(after, before.length)}</section>
       )}
 
-      <section className="py-10 md:pb-12 border-t border-fg grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)] gap-6 md:gap-14">
+      <section className="py-10 md:pb-12 border-t border-rule grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)] gap-6 md:gap-14">
         <div className="flex flex-col items-start gap-3.5">
           <Tape tilt={1}>Off the clock</Tape>
           <p className="m-0 font-sans text-[15px] leading-[1.55] text-fg-muted">

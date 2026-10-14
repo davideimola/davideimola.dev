@@ -58,8 +58,10 @@ describe("renderIssueEmail", () => {
     expect(html).toContain("Hello post");
     expect(html).toContain("reactjsday 2026");
     expect(html).toContain("Browse the archive →");
-    // The Akane left border proves PostCard/TalkRow rendered as components.
-    expect(html).toContain("2px solid #C91F37");
+    // The ruled hairline proves PostCard/TalkRow rendered as components, and the red
+    // rule holds: nothing in the email is Akane at rest.
+    expect(html).toContain("1px solid #DEDCD5");
+    expect(html).not.toMatch(/#C91F37/i);
     // Component-prop links are absolutized for email.
     expect(html).toContain("https://davideimola.dev/blog/hello");
     expect(html).toContain("https://davideimola.dev/sharing#x");

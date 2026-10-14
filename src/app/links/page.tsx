@@ -73,7 +73,7 @@ function Row({
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`group no-underline border-t ${first ? "border-fg" : "border-border"} ${
+      className={`group no-underline border-t ${first ? "border-rule" : "border-border"} ${
         last ? "border-b border-b-border" : ""
       } ${
         stacked
@@ -122,7 +122,7 @@ export default async function LinksPage() {
           <Wordmark weight="bold" width={180} title="davide imola" />
         </h1>
         <p className="m-0 font-sans text-[16px] leading-[1.45] text-fg-muted max-w-[300px]">
-          Builder. AI agents for security, mostly in Go. Learning in public.
+          I build AI agents for security, mostly in Go. Everything I learn, I share.
         </p>
       </header>
 

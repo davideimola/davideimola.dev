@@ -58,7 +58,7 @@ export default function NewsletterPage() {
               <li
                 key={item}
                 className={`grid grid-cols-[40px_minmax(0,1fr)] py-3.5 border-t ${
-                  i === 0 ? "border-fg" : "border-border"
+                  i === 0 ? "border-rule" : "border-border"
                 } ${i === IN_EVERY_ISSUE.length - 1 ? "border-b border-b-border" : ""}`}
               >
                 <span className="font-mono text-[13px] text-fg-subtle pt-[3px]">{pad(i + 1)}</span>
@@ -81,7 +81,7 @@ export default function NewsletterPage() {
             key={issue.slug}
             href={`/newsletter/${issue.slug}`}
             className={`group grid grid-cols-[64px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_160px] gap-x-5 md:gap-x-8 gap-y-2 items-start py-7 border-b border-border no-underline ${
-              i === 0 ? "border-t border-t-fg" : ""
+              i === 0 ? "border-t border-t-rule" : ""
             }`}
           >
             <span className="font-sans font-bold text-[40px] md:text-[56px] leading-[0.9] tracking-[-0.05em] text-fg">
@@ -104,7 +104,7 @@ export default function NewsletterPage() {
         ))}
         <div
           className={`grid grid-cols-[64px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_160px] gap-x-5 md:gap-x-8 items-start py-6 border-b border-border ${
-            issues.length === 0 ? "border-t border-t-fg" : ""
+            issues.length === 0 ? "border-t border-t-rule" : ""
           }`}
         >
           <span className="font-sans font-bold text-[40px] md:text-[56px] leading-[0.9] tracking-[-0.05em] text-border">

@@ -33,7 +33,7 @@ export function ProfileCover({ width, height }: { width: number; height: number 
             letterSpacing: "-0.01em",
           }}
         >
-          Builder. AI agents for security, mostly in Go. Learning in public.
+          I build AI agents for security, mostly in Go. Everything I learn, I share.
         </div>
         <div
           style={{

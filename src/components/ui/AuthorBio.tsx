@@ -5,7 +5,7 @@ import { Mark } from "./BrandMark";
 // short line. An ink hairline opens it, like the footer.
 export function AuthorBio() {
   return (
-    <div className="mt-14 pt-8 border-t border-fg flex flex-col sm:flex-row items-start sm:items-center gap-5">
+    <div className="mt-14 pt-8 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center gap-5">
       <div className="w-[72px] h-[72px] rounded-full bg-fg text-bg flex items-center justify-center shrink-0">
         <Mark cut="m" size={52} title="Davide Imola" />
       </div>
@@ -14,7 +14,7 @@ export function AuthorBio() {
           Everything I learn, I share.
         </p>
         <p className="font-sans text-[16px] text-fg-muted leading-relaxed m-0">
-          Davide Imola, Tech Lead at RedCarbon. Builder of AI agents for security, mostly in Go.
+          Davide Imola, Tech Lead at RedCarbon. I build AI agents for security, mostly in Go.
         </p>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2">
           {SOCIAL_PROFILES.map((social) => (

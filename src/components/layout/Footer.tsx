@@ -24,7 +24,6 @@ const SOCIAL_LINKS = [
 
 const SITE_LINKS = [
   { label: "Newsletter", href: "/newsletter" },
-  { label: "Terminal", href: "/terminal" },
   { label: "Brand", href: "/brand" },
   { label: "Privacy", href: "/privacy" },
   { label: "Source", href: "https://github.com/davideimola/davideimola.dev" },
@@ -64,7 +63,7 @@ export function Footer() {
     // data-print-hide: site chrome is screen-only, so it never reaches paper.
     <footer data-print-hide="" className="mt-auto pt-16 md:pt-24">
       <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
-        <div className="border-t border-fg pt-6 sm:pt-8 pb-7 sm:pb-12 flex flex-col gap-5">
+        <div className="border-t border-rule pt-6 sm:pt-8 pb-7 sm:pb-12 flex flex-col gap-5">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-10">
             <div className="flex items-center gap-2.5 sm:gap-3">
               <Mark cut="s" size={26} className="text-fg" />

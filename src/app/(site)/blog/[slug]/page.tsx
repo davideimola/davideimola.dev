@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </header>
 
-        <div className="h-px bg-fg" />
+        <div className="h-px bg-rule" />
 
         <div className="pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,700px)_240px] lg:justify-between gap-12">
           {/* Article: the 700px reading column (docs/brand.md, "Site") */}

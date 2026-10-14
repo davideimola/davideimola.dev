@@ -67,7 +67,7 @@ davideimola.dev/
 
 ### Dynamic features
 - Contact form → Next.js Server Action → Resend API
-- Command palette (`⌘K`) → client-side component, navigates to pages
+- Command palette (`⌘K`) → client-side search over pages, posts, projects and talks; navigates on select
 - OG images → `app/og/route.tsx` using `@vercel/og`
 
 ## Naming conventions

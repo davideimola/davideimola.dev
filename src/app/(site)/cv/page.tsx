@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ButtonLink } from "../../../components/ui/Button";
 import { JsonLd } from "../../../components/ui/JsonLd";
-import { PageHero } from "../../../components/ui/PageHero";
+import { Tape, type TapeTilt } from "../../../components/ui/Tape";
 import {
   ENGAGEMENT_TYPES,
   type Engagement,
@@ -51,29 +51,37 @@ const TYPE_LABEL: Record<EngagementType, string> = {
 // rendered by CommunityAndProjectsSection instead.
 const PAID_TYPES = ENGAGEMENT_TYPES.filter((type) => type !== "volunteering");
 
-// The CV is a document, so its sections use the compact section-title scale
-// from docs/design-system.md rather than the `//`-prefixed SectionHeader the
-// narrative pages use.
+// Every section is labelled the way the rest of the site labels a block: an ink
+// tape as the heading, the entries under it on hairline rules, the first rule in
+// ink. Neighbouring tapes pass different tilts, as the brand asks.
 //
-// Print tightens the tracking to the 0.08em the aside labels already use: at
-// 0.12em a PDF text extractor reads the advance between glyphs as word gaps and
-// hands "E X P E R I E N C E" to whatever is parsing the document. The
-// difference is invisible at 11px, and it is the section headings a CV parser
-// keys off.
-function SectionTitle({ children }: { children: ReactNode }) {
+// Paper drops the tilt (a rotated box can clip at the sheet edge and buys nothing
+// on a document) and tightens the tracking: at the tape's 0.12em a PDF text
+// extractor reads the advance between glyphs as word gaps and hands
+// "E X P E R I E N C E" to whatever is parsing the document, and the section
+// headings are what a CV parser keys off.
+function SectionTitle({ children, tilt }: { children: ReactNode; tilt: TapeTilt }) {
   return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-fg pb-3 mb-5 border-b border-border print:tracking-[0.08em] print:break-after-avoid">
+    <Tape
+      as="h2"
+      tilt={tilt}
+      size="sm"
+      className="mb-4 print:mb-2 print:rotate-0 print:tracking-[0.06em] print:break-after-avoid"
+    >
       {children}
-    </h2>
+    </Tape>
   );
 }
 
+// The ruled list a section's entries sit on, the rule the indexes on /sharing
+// and /newsletter use: ink on top, hairlines between.
+const RULED =
+  "flex flex-col border-t border-rule [&>*]:border-b [&>*]:border-border [&>*:last-child]:border-b-0";
+
 function AsideBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0 print:break-inside-avoid">
-      <p className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase text-fg">
-        {title}
-      </p>
+    <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0 print:pb-3 print:mb-3 print:break-inside-avoid">
+      <p className="font-mono text-[12px] text-fg-subtle">{title}</p>
       {children}
     </div>
   );
@@ -84,7 +92,7 @@ function AsideBlock({ title, children }: { title: string; children: ReactNode })
 function EntryHeader({ name, place }: { name: string; place: string }) {
   return (
     <div className="flex items-baseline justify-between gap-3 flex-wrap">
-      <h3 className="font-sans text-[15px] font-bold text-fg tracking-[-0.02em]">{name}</h3>
+      <h3 className="font-sans text-[16px] font-bold text-fg tracking-[-0.02em]">{name}</h3>
       <p className="font-mono text-[11px] text-fg-subtle shrink-0">{place}</p>
     </div>
   );
@@ -92,13 +100,13 @@ function EntryHeader({ name, place }: { name: string; place: string }) {
 
 function EngagementEntry({ engagement }: { engagement: Engagement }) {
   return (
-    <div className="flex flex-col gap-1 print:break-inside-avoid">
+    <div className="flex flex-col gap-1 py-4 print:py-2.5 print:break-inside-avoid">
       <EntryHeader name={engagement.org} place={engagement.location} />
       {engagement.roles.map((role) => (
         <div key={role.role} className="mt-2">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <p className="font-mono text-[13px] text-fg">{role.role}</p>
-            <p className="font-mono text-[11px] text-fg-muted tabular-nums shrink-0">
+            <p className="font-sans text-[14px] font-semibold text-fg">{role.role}</p>
+            <p className="font-mono text-[11px] text-fg-subtle tabular-nums shrink-0">
               {role.period}
             </p>
           </div>
@@ -107,7 +115,7 @@ function EngagementEntry({ engagement }: { engagement: Engagement }) {
               {role.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className="font-sans text-[13px] text-fg-muted leading-relaxed flex gap-2"
+                  className="font-sans text-[13px] text-fg-body leading-relaxed flex gap-2"
                 >
                   <span className="text-fg-subtle shrink-0">·</span>
                   <span>{bullet}</span>
@@ -115,7 +123,7 @@ function EngagementEntry({ engagement }: { engagement: Engagement }) {
               ))}
             </ul>
           ) : (
-            <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-1">
+            <p className="font-sans text-[13px] text-fg-body leading-relaxed mt-1">
               {role.summary}
             </p>
           )}
@@ -125,14 +133,14 @@ function EngagementEntry({ engagement }: { engagement: Engagement }) {
   );
 }
 
-function EngagementSection({ type }: { type: EngagementType }) {
+function EngagementSection({ type, tilt }: { type: EngagementType; tilt: TapeTilt }) {
   const engagements = getEngagementsByType(type);
   if (engagements.length === 0) return null;
 
   return (
     <section>
-      <SectionTitle>{TYPE_LABEL[type]}</SectionTitle>
-      <div className="flex flex-col gap-7 print:gap-5">
+      <SectionTitle tilt={tilt}>{TYPE_LABEL[type]}</SectionTitle>
+      <div className={RULED}>
         {engagements.map((engagement) => (
           <EngagementEntry key={engagement.slug} engagement={engagement} />
         ))}
@@ -152,24 +160,27 @@ function CommunityAndProjectsSection() {
 
   return (
     <section>
-      <SectionTitle>{TYPE_LABEL.volunteering}</SectionTitle>
-      <div className="flex flex-col gap-7 print:gap-5">
+      <SectionTitle tilt={1}>{TYPE_LABEL.volunteering}</SectionTitle>
+      <div className={RULED}>
         {engagements.map((engagement) => (
           <EngagementEntry key={engagement.slug} engagement={engagement} />
         ))}
         {projects.map((project) => (
-          <div key={project.slug} className="flex flex-col gap-1 print:break-inside-avoid">
+          <div
+            key={project.slug}
+            className="flex flex-col gap-1 py-4 print:py-2.5 print:break-inside-avoid"
+          >
             {/* A project has no location, so the right-hand slot carries its period:
                 the same row shape as an engagement, one fact swapped. */}
             <div className="flex items-baseline justify-between gap-3 flex-wrap">
-              <h3 className="font-sans text-[15px] font-bold text-fg tracking-[-0.02em]">
+              <h3 className="font-sans text-[16px] font-bold text-fg tracking-[-0.02em]">
                 {project.title}
               </h3>
-              <p className="font-mono text-[11px] text-fg-muted tabular-nums shrink-0">
+              <p className="font-mono text-[11px] text-fg-subtle tabular-nums shrink-0">
                 {project.period}
               </p>
             </div>
-            <p className="font-sans text-[13px] text-fg-muted leading-relaxed">
+            <p className="font-sans text-[13px] text-fg-body leading-relaxed">
               {project.description}
             </p>
           </div>
@@ -187,11 +198,14 @@ function SelectedTalksSection() {
 
   return (
     <section>
-      <SectionTitle>Selected talks</SectionTitle>
-      <ul className="flex flex-col gap-3">
+      <SectionTitle tilt={2}>Selected talks</SectionTitle>
+      <ul className={`m-0 p-0 list-none ${RULED}`}>
         {talks.map((talk) => (
-          <li key={talk.slug} className="flex flex-col gap-0.5 print:break-inside-avoid">
-            <p className="font-sans text-[14px] text-fg leading-snug">{talk.title}</p>
+          <li
+            key={talk.slug}
+            className="flex flex-col gap-0.5 py-2.5 print:py-1.5 print:break-inside-avoid"
+          >
+            <p className="font-sans text-[14px] font-semibold text-fg leading-snug">{talk.title}</p>
             {/* The year is null when the event name already carries it, which is
                 most of them, so this line does not say 2026 twice. */}
             <p className="font-mono text-[11px] text-fg-subtle">
@@ -205,7 +219,7 @@ function SelectedTalksSection() {
           instead. Same link, two words swapped: not a second Rendering. */}
       <Link
         href="/sharing"
-        className="inline-block mt-4 font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
+        className="inline-block mt-3 font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
       >
         Full archive: {getTotalTalkCount()} talks and appearances{" "}
         <span className="print:hidden">→</span>
@@ -225,12 +239,15 @@ function OrganisedEventsSection() {
 
   return (
     <section>
-      <SectionTitle>Events organised</SectionTitle>
-      <div className="flex flex-col gap-5 print:gap-4">
+      <SectionTitle tilt={0}>Events organised</SectionTitle>
+      <div className={RULED}>
         {events.map((event) => (
-          <div key={event.slug} className="flex flex-col gap-1 print:break-inside-avoid">
+          <div
+            key={event.slug}
+            className="flex flex-col gap-1 py-2.5 print:py-1.5 print:break-inside-avoid"
+          >
             <EntryHeader name={event.label} place={event.location} />
-            <p className="font-mono text-[12px] text-fg tabular-nums">
+            <p className="font-mono text-[12px] text-fg-muted tabular-nums">
               {event.count > 1 && `${event.count} ${event.noun}s · `}
               {event.years}
             </p>
@@ -288,9 +305,9 @@ export default function CvPage() {
     // below and the speaking sections moved into the right column, it lands the
     // whole document on one sheet.
     //
-    // It is deliberately at the boundary: 0.68 spills onto a second sheet, and one
-    // sheet is filled to 793pt of 842. When the Record grows past that, the answer
-    // is to trim what the sheet says, not to shrink the type further. Anything
+    // It is deliberately near the boundary: with the tapes and ruled lists of the
+    // brand restyle, 0.67 still fits and 0.68 spills onto a second sheet. When the
+    // Record grows past that, the answer is to trim what the sheet says, not to shrink the type further. Anything
     // under about 6pt stops being a document a human reads.
     //
     // The print track is wider than the screen's proportions would suggest, and the
@@ -299,7 +316,8 @@ export default function CvPage() {
     // a whole block past the fold while the left rail stopped two thirds down the
     // sheet with nothing in it. Trading the width the left rail was not using is
     // what fits the document, at full 6.4pt: measured, 190px and 205px and 220px all
-    // spill, 235px lands it on one sheet filled to 798pt of 842.
+    // spill, 235px landed it. The brand restyle keeps that track and pays for its
+    // tapes with tighter print padding in the aside and the right-column rows.
     //
     // The track is stated pre-zoom, hence 364px rather than 240px: zoom enlarges the
     // layout viewport, so a track has to be divided by the factor to land at the
@@ -312,30 +330,34 @@ export default function CvPage() {
     // headline and the summary. Sizing row one to its content and letting row two
     // take the rest sends the whole excess where it belongs, under the history.
     <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_364px] print:grid-rows-[auto_1fr] print:gap-x-7 print:items-start print:[zoom:0.66]">
-      <PageHero
-        label="CV"
-        title={identity.name}
-        className="mb-10 print:mb-5 print:col-start-1 print:row-start-1"
-        description={<span className="font-mono text-[14px] text-fg">{identity.headline}</span>}
-      >
+      <header className="flex flex-col items-start gap-5 mb-12 print:gap-2 print:mb-5 print:col-start-1 print:row-start-1">
+        <Tape tilt={0} className="print:hidden">
+          CV
+        </Tape>
+        <h1 className="m-0 font-sans font-bold text-fg text-[44px] sm:text-[56px] lg:text-[68px] leading-[1] tracking-[-0.045em] print:text-[48px]">
+          {identity.name}
+        </h1>
+        <p className="m-0 font-sans text-[19px] sm:text-[21px] leading-[1.5] text-fg-muted print:text-[17px]">
+          {identity.headline}
+        </p>
         {/* The page is the link Davide sends; this is the copy a reader keeps.
             It points at the committed Rendering `pnpm cv:pdf` generates from this
             same page, and `download` names the saved file after the person so
             `cv.pdf` never lands anonymously in a stranger's Downloads.
             ButtonLink carries `data-print-hide`, so it is absent from the PDF it
-            links to without a rule of its own. */}
-        {/* `primary`: on this page downloading the CV is the main CTA, which is
-            what the design system reserves the filled ink button for. */}
+            links to without a rule of its own. `primary`: on this page
+            downloading the CV is the main CTA, which is what the design system
+            reserves the filled ink button for. */}
         <ButtonLink
           href={CV_PDF_URL_PATH}
           download={downloadFileName(identity.name)}
           variant="primary"
-          className="mt-6"
+          className="mt-2"
         >
           <IconDownload size={14} stroke={1.5} />
           Download PDF
         </ButtonLink>
-      </PageHero>
+      </header>
 
       {/* `print:contents` dissolves this wrapper on paper, so the two rails become
           cells of the outer grid alongside the hero rather than of a grid nested
@@ -347,12 +369,12 @@ export default function CvPage() {
       <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12 print:contents">
         {/* Main rail: the history, typed */}
         <div className="min-w-0 flex flex-col gap-10 print:gap-6 print:col-start-1 print:row-start-2">
-          <p className="font-sans text-[15px] text-fg-muted leading-relaxed border-l-2 border-fg pl-5">
+          <p className="m-0 font-sans text-[16px] text-fg-body leading-relaxed">
             {identity.summary}
           </p>
 
-          {PAID_TYPES.map((type) => (
-            <EngagementSection key={type} type={type} />
+          {PAID_TYPES.map((type, i) => (
+            <EngagementSection key={type} type={type} tilt={i % 2 === 0 ? 1 : 2} />
           ))}
         </div>
 
@@ -369,7 +391,7 @@ export default function CvPage() {
               narrower print track. */}
           <aside className="border border-border p-5 bg-surface print:p-4 print:break-inside-avoid">
             <AsideBlock title="Contact">
-              <div className="flex flex-col gap-1 font-mono text-[12px] text-fg-muted break-words">
+              <div className="flex flex-col gap-1 font-mono text-[12px] text-fg break-words">
                 {contact.map((item) => {
                   const external = item.href.startsWith("http");
                   return (
@@ -391,9 +413,7 @@ export default function CvPage() {
               <div className="flex flex-col gap-3">
                 {skills.map((group) => (
                   <div key={group.group}>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-fg-subtle mb-0.5">
-                      {group.group}
-                    </p>
+                    <p className="font-mono text-[11px] text-fg-subtle mb-0.5">{group.group}</p>
                     <p className="font-sans text-[12px] text-fg leading-snug">
                       {group.items.join(", ")}
                     </p>
@@ -406,7 +426,9 @@ export default function CvPage() {
               <div className="flex flex-col gap-3">
                 {education.map((entry) => (
                   <div key={entry.slug}>
-                    <p className="font-mono text-[12px] text-fg leading-snug">{entry.school}</p>
+                    <p className="font-sans text-[12px] font-semibold text-fg leading-snug">
+                      {entry.school}
+                    </p>
                     <p className="font-sans text-[12px] text-fg-muted">{entry.award}</p>
                     {entry.detail && (
                       <p className="font-sans text-[11px] text-fg-subtle leading-snug">

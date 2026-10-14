@@ -3,7 +3,7 @@ import { ButtonLink } from "../ui/Button";
 
 interface CtaProps {
   href: string;
-  /** "primary" = Akane fill, "ghost" = subtle outline. Default "primary". */
+  /** "primary" = ink fill, "ghost" = ink outline. Default "primary". */
   variant?: "primary" | "ghost";
   children: ReactNode;
 }

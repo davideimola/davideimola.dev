@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const SUGGESTIONS = [
   { label: "Writing", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Sharing", href: "/sharing" },
+  { label: "Talks", href: "/sharing" },
   { label: "Now", href: "/now" },
 ];
 
@@ -37,12 +37,9 @@ export default function NotFound() {
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap items-center gap-6 mt-2">
+        <div className="mt-2">
           <ButtonLink variant="primary" href="/">
             Back to the home page
-          </ButtonLink>
-          <ButtonLink variant="link" href="/terminal">
-            Or open a shell
           </ButtonLink>
         </div>
       </div>

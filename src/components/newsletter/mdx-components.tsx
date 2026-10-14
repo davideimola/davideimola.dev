@@ -5,7 +5,7 @@ import { TalkRow } from "./TalkRow";
 
 // Shared MDX component map for newsletter issues (web side). The component NAMES here match
 // the email map (src/emails/...), so one authored .mdx body renders on both surfaces:
-// these dark-theme site components on the web, the light email components in the inbox.
+// these site components on the web, the email components in the inbox.
 export const newsletterMdxComponents = {
   SectionHeader: ({ title }: { title: string }) => (
     <div className="not-prose mt-10 mb-5">

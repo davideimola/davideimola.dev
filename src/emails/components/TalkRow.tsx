@@ -7,76 +7,62 @@ interface TalkRowProps {
   /** Preformatted date, e.g. "Nov 14, 2026". */
   date: string;
   location: string;
-  /** Talk type, e.g. "Conference" | "Meetup". Rendered as a neutral chip. Optional. */
+  /** Talk type, e.g. "Conference" | "Meetup". Printed in the mono meta line. Optional. */
   type?: string;
-  /** Session title, shown after the event path. Optional. */
+  /** Session title, shown under the event. Optional. */
   sessionTitle?: string;
   /** Link to the engagement (e.g. /sharing#slug or the event page). Optional. */
   url?: string;
 }
 
-// Email echo of the on-site talk card (src/components/sections/TalksList.tsx): a meta row
-// (date · location + type chip) above the terminal "./event / session" path. Uses the same
-// 2px Akane left border as PostCard so "New on the blog" and "Where to catch me" read as
-// one system. Email-safe: tables (Section), inline styles, no hover/flex/grid.
+// Email echo of a row in the ruled talk index on /sharing: a hairline on top, the event
+// in sans bold, the session under it, then date, place and type in mono. Same ruled shape
+// as PostCard, so "New on the blog" and "Where to catch me" read as one system.
+// Email-safe: tables (Section), inline styles, no hover/flex/grid.
 export function TalkRow({ event, date, location, type, sessionTitle, url }: TalkRowProps) {
-  const eventPath = (
-    <>
-      <span style={{ color: c.accent }}>./</span>
-      <span style={{ color: c.text2 }}>{event}</span>
-      {sessionTitle ? (
-        <>
-          <span style={{ color: c.text3 }}> / </span>
-          <span style={{ color: c.text1, fontWeight: 600 }}>{sessionTitle}</span>
-        </>
-      ) : null}
-    </>
-  );
+  const eventStyle = {
+    fontFamily: f.sans,
+    fontSize: "19px",
+    fontWeight: 700,
+    lineHeight: 1.25,
+    letterSpacing: "-0.02em",
+    color: c.text1,
+    textDecoration: "none",
+    display: "block",
+  } as const;
 
   return (
     <Section
       style={{
-        borderLeft: `2px solid ${c.accent}`,
-        paddingLeft: "18px",
-        paddingTop: "6px",
+        borderTop: `1px solid ${c.border}`,
+        paddingTop: "16px",
         marginBottom: "20px",
       }}
     >
-      {/* Meta row: date · location + type chip */}
-      <Text style={{ fontFamily: f.mono, fontSize: "11px", color: c.text3, margin: "0 0 8px" }}>
-        {date}
-        <span style={{ color: c.text3 }}> · </span>
-        {location}
-        {type ? (
-          <span
-            style={{
-              fontFamily: f.mono,
-              fontSize: "10px",
-              fontWeight: 500,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: c.text3,
-              backgroundColor: c.border,
-              borderRadius: "2px",
-              padding: "3px 7px",
-              marginLeft: "10px",
-              display: "inline-block",
-            }}
-          >
-            {type}
-          </span>
-        ) : null}
-      </Text>
+      {url ? (
+        <Link href={absoluteUrl(url)} style={eventStyle}>
+          {event}
+        </Link>
+      ) : (
+        <Text style={{ ...eventStyle, margin: 0 }}>{event}</Text>
+      )}
 
-      {/* Event path */}
-      <Text style={{ fontFamily: f.mono, fontSize: "16px", lineHeight: 1.35, margin: 0 }}>
-        {url ? (
-          <Link href={absoluteUrl(url)} style={{ color: c.text2, textDecoration: "none" }}>
-            {eventPath}
-          </Link>
-        ) : (
-          eventPath
-        )}
+      {sessionTitle ? (
+        <Text
+          style={{
+            fontFamily: f.sans,
+            fontSize: "16px",
+            lineHeight: 1.5,
+            color: c.text2,
+            margin: "6px 0 0",
+          }}
+        >
+          {sessionTitle}
+        </Text>
+      ) : null}
+
+      <Text style={{ fontFamily: f.mono, fontSize: "12px", color: c.text3, margin: "10px 0 0" }}>
+        {[date, location, type].filter(Boolean).join(" · ")}
       </Text>
     </Section>
   );

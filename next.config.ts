@@ -31,6 +31,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // The interactive shell was retired with the terminal aesthetic
+      // (ADR-0005); old links land on the home page.
+      {
+        source: "/terminal",
+        destination: "/",
+        permanent: true,
+      },
       // Legacy security.txt location (RFC 9116 fallback) points to the
       // canonical /.well-known/ path.
       {

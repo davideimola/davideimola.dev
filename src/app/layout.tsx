@@ -32,8 +32,8 @@ const barlowCondensed = Barlow_Condensed({
 
 export const metadata: Metadata = {
   title: {
-    default: "Davide Imola · Software Engineer & Speaker",
-    template: "%s | Davide Imola",
+    default: "Davide Imola · Tech Lead, AI agents for security",
+    template: "%s · Davide Imola",
   },
   description:
     "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go. Co-founder of Schrödinger Hat.",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
         url: "https://davideimola.dev/og?title=Davide+Imola",
         width: 1200,
         height: 630,
-        alt: "Davide Imola · Software Engineer & Speaker",
+        alt: "Davide Imola · Tech Lead, AI agents for security",
       },
     ],
   },

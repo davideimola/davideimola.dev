@@ -94,7 +94,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
             I build AI agents for <Marker>security</Marker>, and the tools I need along the way.
           </h1>
           <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
-            Tech Lead at RedCarbon, mostly in Go. Everything I learn, I share.
+            Tech Lead at RedCarbon. I write mostly Go, and I share everything I learn.
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink variant="primary" size="lg" href="/blog">

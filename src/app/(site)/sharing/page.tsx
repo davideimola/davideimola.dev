@@ -8,11 +8,12 @@ import { getAllProjects, getAllTalks, type Talk } from "../../../lib/content";
 import { formatDayMonth, formatMonthYear } from "../../../lib/dates";
 import {
   city,
+  describeKind,
   eventName,
   interviews,
   isUpcoming,
-  listJoin,
-  organisingSummary,
+  organisedByKind,
+  organisedByYear,
   sessionDetail,
   sessionsByYear,
   sharingStats,
@@ -53,7 +54,7 @@ const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent ho
 
 function Material({ talk, today }: { talk: Talk; today: Date }) {
   if (isUpcoming(talk, today)) {
-    return <span className="text-fg">{formatDayMonth(talk.date)} · upcoming</span>;
+    return <span className="text-fg">upcoming</span>;
   }
   const links: { label: string; href: string }[] = [];
   if (talk.feedback && isFeedbackOpen(talk, today)) {
@@ -76,6 +77,20 @@ function Material({ talk, today }: { talk: Talk; today: Date }) {
           {link.label}
         </a>
       ))}
+    </span>
+  );
+}
+
+// The first column of both ruled indexes: the year once per group, and the
+// day on every row, so a long year still says when each thing happened.
+// Inline on phones ("2024 · 14 Oct"), stacked from md up.
+function When({ year, date }: { year: string | null; date: string }) {
+  return (
+    <span className="flex md:flex-col items-baseline md:items-start gap-x-2.5 gap-y-0.5">
+      {year && (
+        <span className="font-sans font-bold text-[22px] tracking-[-0.03em] text-fg">{year}</span>
+      )}
+      <span className="font-mono text-[13px] text-fg-subtle">{formatDayMonth(date)}</span>
     </span>
   );
 }
@@ -105,16 +120,16 @@ export default function SharingPage() {
   const stats = sharingStats(allTalks);
   const years = sessionsByYear(allTalks);
   const chats = interviews(allTalks);
-  const organising = organisingSummary(allTalks);
+  const organised = organisedByYear(allTalks);
+  const kinds = organisedByKind(allTalks);
   const projects = getAllProjects();
   const osday = projects.find((p) => p.slug === "os-day");
   const sh = projects.find((p) => p.slug === "schrodinger-hat");
-  const thisYear = String(today.getFullYear());
 
   const talksSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Sharing · Davide Imola",
+    name: "Talks · Davide Imola",
     itemListElement: allTalks.map((talk, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -158,7 +173,7 @@ export default function SharingPage() {
       <header className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-[72px] items-end">
         <div className="flex flex-col gap-6">
           <Tape tilt={0} size="lg">
-            Sharing
+            Talks
           </Tape>
           <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[1] tracking-[-0.045em]">
             What I learn, I say <Marker>out loud</Marker>.
@@ -169,9 +184,9 @@ export default function SharingPage() {
             day.
           </p>
         </div>
-        <dl className="m-0 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-fg pt-[22px]">
+        <dl className="m-0 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-rule pt-[22px]">
           {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col-reverse gap-0.5">
+            <div key={stat.label} className="flex flex-col-reverse justify-end gap-0.5">
               <dt className="font-mono text-[13px] text-fg-subtle">{stat.label}</dt>
               <dd className="m-0 font-sans font-bold text-[40px] lg:text-[44px] leading-none tracking-[-0.04em] text-fg">
                 {stat.value}
@@ -187,23 +202,21 @@ export default function SharingPage() {
           Talks and workshops, newest first. Slides and recordings where they exist.
         </Side>
         <div className="flex flex-col min-w-0">
-          <div className="hidden md:grid grid-cols-[96px_minmax(0,1fr)_220px_150px] lg:grid-cols-[96px_minmax(0,1fr)_260px_150px] gap-6 pb-3 border-b border-fg font-mono text-[13px] text-fg-subtle">
-            <span>Year</span>
+          <div className="hidden md:grid grid-cols-[96px_minmax(0,1fr)_220px_150px] lg:grid-cols-[96px_minmax(0,1fr)_260px_150px] gap-6 pb-3 border-b border-rule font-mono text-[13px] text-fg-subtle">
+            <span>When</span>
             <span>Session</span>
             <span>Where</span>
             <span>Material</span>
           </div>
           {years.map((group) => (
-            <div key={group.year} className="border-t md:border-t-0 border-fg">
+            <div key={group.year} className="border-t md:border-t-0 border-rule">
               {group.talks.map((talk, i) => (
                 <div
                   key={talk.slug}
                   id={talk.slug}
                   className="scroll-mt-28 grid grid-cols-1 md:grid-cols-[96px_minmax(0,1fr)_220px_150px] lg:grid-cols-[96px_minmax(0,1fr)_260px_150px] gap-x-6 gap-y-1.5 py-5 border-b border-border items-baseline"
                 >
-                  <span className="font-sans font-bold text-[22px] tracking-[-0.03em] text-fg">
-                    {i === 0 ? group.year : ""}
-                  </span>
+                  <When year={i === 0 ? group.year : null} date={talk.date} />
                   <span className="flex flex-col gap-1">
                     <span className="font-sans font-semibold text-[18px] md:text-[20px] leading-[1.3] tracking-[-0.015em] text-fg">
                       {talk.session?.title}
@@ -261,92 +274,125 @@ export default function SharingPage() {
         </div>
       </section>
 
-      {/* Organising */}
-      <section className="mt-16 md:mt-24 pt-10 border-t border-fg grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14">
+      {/* Organising: the community first, then the same ruled index by year as On stage. */}
+      <section className="mt-16 md:mt-24 pt-10 border-t border-rule grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14">
         <Side tape="Organising" tilt={2}>
           The rooms I help fill, so other people can share too.
         </Side>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="flex flex-col gap-[18px]">
-            <div className="relative w-full h-[220px] md:h-[300px]">
-              <Image
-                src="/images/osday-audience.webp"
-                alt="The Open Source Day audience in Florence"
-                fill
-                sizes="(min-width: 768px) 400px, 100vw"
-                className="object-cover grayscale contrast-[1.05]"
-              />
+        <div className="flex flex-col gap-12 min-w-0">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 md:gap-10 items-start">
+            <div className="flex flex-col gap-[18px]">
+              <h3 className="m-0 font-sans font-bold text-[28px] md:text-[32px] tracking-[-0.03em] text-fg">
+                Schrodinger Hat
+              </h3>
+              <p className="m-0 font-sans text-[17px] md:text-[18px] leading-[1.6] text-fg-body">
+                The open source community I co-founded: 20k+ people reached and 100+ speakers across
+                Europe. Every year it runs Open Source Day, a conference in Florence on open source
+                culture, and in between, meetups wherever there is a room and a topic worth it.
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[14px]">
+                {sh?.url && (
+                  <a href={sh.url} target="_blank" rel="noopener noreferrer" className={inlineLink}>
+                    {sh.url.replace(/^https?:\/\//, "")}
+                  </a>
+                )}
+                {osday?.url && (
+                  <a
+                    href={osday.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={inlineLink}
+                  >
+                    {osday.url.replace(/^https?:\/\//, "")}
+                  </a>
+                )}
+              </div>
             </div>
-            <h3 className="m-0 font-sans font-bold text-[28px] md:text-[32px] tracking-[-0.03em] text-fg">
-              Open Source Day
-            </h3>
-            <p className="m-0 font-sans text-[17px] md:text-[18px] leading-[1.6] text-fg-body">
-              A yearly conference in Florence on open source culture, co-organised with Schrodinger
-              Hat. A full day of talks, workshops and the people behind the projects.
-            </p>
-            <div className="flex flex-wrap items-baseline gap-[22px] font-mono text-[14px] text-fg-muted">
-              {organising.conferenceYears.map((year) => (
-                <span key={year} className={year === thisYear ? "text-fg font-medium" : ""}>
-                  {year}
-                </span>
-              ))}
-              {osday?.url && (
-                <a
-                  href={osday.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`ml-auto ${inlineLink}`}
-                >
-                  {osday.url.replace(/^https?:\/\//, "")}
-                </a>
-              )}
-            </div>
+            <figure className="m-0 flex flex-col gap-2.5">
+              <div className="relative w-full aspect-[3/2]">
+                <Image
+                  src="/images/osday-audience.webp"
+                  alt="The Open Source Day audience in Florence"
+                  fill
+                  sizes="(min-width: 768px) 420px, 100vw"
+                  className="object-cover grayscale contrast-[1.05]"
+                />
+              </div>
+              <figcaption className="font-mono text-[13px] text-fg-subtle">
+                Open Source Day, Florence
+              </figcaption>
+            </figure>
           </div>
-          <div className="flex flex-col gap-[18px]">
-            <h3 className="m-0 font-sans font-bold text-[28px] md:text-[32px] tracking-[-0.03em] text-fg">
-              Schrodinger Hat
-            </h3>
-            <p className="m-0 font-sans text-[17px] md:text-[18px] leading-[1.6] text-fg-body">
-              The open source community I co-founded: 20k+ people reached and 100+ speakers across
-              Europe. Meetups wherever there is a room and a topic worth it.
-            </p>
-            <ul className="m-0 p-0 list-none flex flex-col">
-              {organising.recent.map((talk) => (
-                <li
-                  key={talk.slug}
-                  id={talk.slug}
-                  className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 py-3 border-t border-border font-sans text-[16px] text-fg"
-                >
-                  <span>{talk.event}</span>
-                  <span className="font-mono text-[13px] text-fg-subtle">
-                    {city(talk.location)} · {formatMonthYear(talk.date)}
+
+          {/* What it runs, folded by kind: a second long list under On stage
+              would read as more of the same, so the full list waits behind a
+              disclosure the way the interviews do. */}
+          <ul className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            {kinds.map((k) => {
+              const { title, line } = describeKind(k);
+              return (
+                <li key={k.kind} className="flex flex-col gap-2 pt-4 border-t border-rule">
+                  <span className="font-mono text-[13px] text-fg-subtle">{k.kind}</span>
+                  <span className="font-sans font-bold text-[22px] md:text-[24px] leading-[1.15] tracking-[-0.025em] text-fg">
+                    {title}
                   </span>
+                  <span className="font-sans text-[16px] leading-[1.55] text-fg-muted">{line}</span>
                 </li>
-              ))}
-              {organising.more > 0 && (
-                <li className="py-3 border-t border-b border-border font-mono text-[13px] text-fg-subtle">
-                  and {organising.more} more in {listJoin(organising.moreCities)}
-                </li>
-              )}
-            </ul>
-            {sh?.url && (
-              <a
-                href={sh.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`self-start font-mono text-[14px] ${inlineLink}`}
-              >
-                {sh.url.replace(/^https?:\/\//, "")}
-              </a>
-            )}
-          </div>
+              );
+            })}
+          </ul>
+
+          <details className="group">
+            <summary className="cursor-pointer list-none font-sans font-semibold text-[16px] text-fg self-start">
+              <span className="border-b border-fg pb-0.5 hover:text-accent hover:border-accent">
+                All {stats.organised} events, by year
+              </span>
+            </summary>
+            <div className="mt-5">
+              <div className="flex flex-col min-w-0">
+                <div className="hidden md:grid grid-cols-[96px_minmax(0,1fr)_140px_150px] gap-6 pb-3 border-b border-rule font-mono text-[13px] text-fg-subtle">
+                  <span>When</span>
+                  <span>Event</span>
+                  <span>Kind</span>
+                  <span>Where</span>
+                </div>
+                {organised.map((group) => (
+                  <div key={group.year} className="border-t md:border-t-0 border-rule">
+                    {group.talks.map((talk, i) => (
+                      <div
+                        key={talk.slug}
+                        id={talk.slug}
+                        className="scroll-mt-28 grid grid-cols-1 md:grid-cols-[96px_minmax(0,1fr)_140px_150px] gap-x-6 gap-y-1 py-4 border-b border-border items-baseline"
+                      >
+                        <When year={i === 0 ? group.year : null} date={talk.date} />
+                        <span className="font-sans font-semibold text-[17px] md:text-[18px] leading-[1.3] tracking-[-0.015em] text-fg">
+                          {/* Only a conference series carries its year in the name;
+                            a meetup title can end in one ("Dev/DevRel nel 2024"). */}
+                          {talk.type === "Conference" ? eventName(talk.event) : talk.event}
+                        </span>
+                        <span className="md:hidden font-sans text-[15px] text-fg-muted">
+                          {talk.type} · {city(talk.location)}
+                        </span>
+                        <span className="hidden md:block font-sans text-[16px] text-fg-muted">
+                          {talk.type}
+                        </span>
+                        <span className="hidden md:block font-sans text-[16px] text-fg-muted">
+                          {city(talk.location)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </details>
         </div>
       </section>
 
       {/* Speaker kit */}
       <section
         id="speaker-kit"
-        className="mt-16 md:mt-24 pt-10 border-t border-fg grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14 scroll-mt-28"
+        className="mt-16 md:mt-24 pt-10 border-t border-rule grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14 scroll-mt-28"
       >
         <Side tape="Speaker kit" tilt={0}>
           For a CfP or an event program. Copy freely.

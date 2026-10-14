@@ -2,7 +2,7 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState, useEffect, useRef } from "react";
-import { StdoutPanel } from "../../../components/ui/StdoutPanel";
+import { Card } from "../../../components/ui/Card";
 import { useResolvedTheme } from "../../../components/ui/ThemeToggle";
 import { sendContactEmail } from "../../actions/contact";
 
@@ -21,8 +21,8 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <StdoutPanel label="Message sent" className="max-w-[640px]">
-        <div className="px-5 py-6 flex flex-col gap-3">
+      <Card tape="Message sent" hoverable={false} className="max-w-[640px]">
+        <div className="flex flex-col gap-3" role="status">
           <p className="m-0 font-sans text-[17px] text-fg-body">
             Thanks. I'll get back to you as soon as I can.
           </p>
@@ -34,7 +34,7 @@ export function ContactForm() {
             Send another
           </button>
         </div>
-      </StdoutPanel>
+      </Card>
     );
   }
 

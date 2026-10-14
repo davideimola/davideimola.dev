@@ -18,7 +18,7 @@ interface HowIWorkSectionProps {
 export function HowIWorkSection({ quote, gloss, principles }: HowIWorkSectionProps) {
   return (
     <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-16 md:mt-[120px]">
-      <div className="border-t border-fg pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-4 lg:gap-[72px]">
+      <div className="border-t border-rule pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-4 lg:gap-[72px]">
         <div className="flex flex-col items-start gap-4 md:gap-6">
           <Tape tilt={0}>How I work</Tape>
           <h2 className="m-0 font-sans font-bold text-fg text-[34px] md:text-[56px] leading-[1.03] tracking-[-0.04em]">

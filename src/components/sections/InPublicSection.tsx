@@ -18,7 +18,7 @@ interface InPublicSectionProps {
 export function InPublicSection({ communities, spokenAt }: InPublicSectionProps) {
   return (
     <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-14 md:mt-[120px]">
-      <div className="border-t border-fg pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-6 lg:gap-16 items-start">
+      <div className="border-t border-rule pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-6 lg:gap-16 items-start">
         <figure className="m-0 order-2 lg:order-1">
           <div className="relative w-full h-[200px] sm:h-[300px] lg:h-[400px]">
             <Image

@@ -1,51 +1,44 @@
 import { Badge } from "../ui/Badge";
+import { ROW_CLASSES } from "./row";
 
 interface TalkRowProps {
   event: string;
   date: string;
   location: string;
-  /** Talk type, e.g. "Conference" | "Meetup". Rendered as a neutral chip. Optional. */
+  /** Talk type, e.g. "Conference" | "Meetup". Rendered as a Badge. Optional. */
   type?: string;
-  /** Session title, shown after the event path. Optional. */
+  /** Session title. Optional. */
   sessionTitle?: string;
   /** Link to the engagement (e.g. /sharing#slug). Optional. */
   url?: string;
 }
 
-// Web counterpart of the email TalkRow (src/emails/components/TalkRow.tsx): same props,
-// same 2px Akane left border, echoing the on-site talk card (meta row + "./event / session"
-// path). `not-prose` keeps prose styles off it.
+// Web counterpart of the email TalkRow (src/emails/components/TalkRow.tsx): same props.
+// A ruled row like the index on /sharing: the session in sans, the event under it, the
+// date and place in mono. `not-prose` keeps prose styles off it.
 export function TalkRow({ event, date, location, type, sessionTitle, url }: TalkRowProps) {
-  const path = (
+  const body = (
     <>
-      <span className="text-fg">./</span>
-      <span className="text-fg-muted">{event}</span>
+      <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[13px] text-fg-subtle">
+        <span>
+          {date} · {location}
+        </span>
+        {type && <Badge variant="category">{type}</Badge>}
+      </span>
+      <span className="block mt-2 font-sans text-[19px] sm:text-[20px] font-bold text-fg leading-[1.25] tracking-[-0.02em] group-hover:text-accent transition-colors duration-150">
+        {sessionTitle ?? event}
+      </span>
       {sessionTitle && (
-        <>
-          <span className="text-fg-subtle"> / </span>
-          <span className="text-fg font-semibold">{sessionTitle}</span>
-        </>
+        <span className="block mt-1 font-sans text-[16px] text-fg-muted">{event}</span>
       )}
     </>
   );
 
-  return (
-    <div className="not-prose border-l-2 border-fg pl-4 sm:pl-5 my-5">
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-2">
-        <span className="font-mono text-[11px] text-fg-subtle">{date}</span>
-        <span className="font-mono text-[11px] text-fg-subtle">·</span>
-        <span className="font-mono text-[11px] text-fg-subtle">{location}</span>
-        {type && <Badge variant="category">{type}</Badge>}
-      </div>
-      <p className="font-mono text-[16px] sm:text-[18px] leading-snug mb-0">
-        {url ? (
-          <a href={url} className="no-underline">
-            {path}
-          </a>
-        ) : (
-          path
-        )}
-      </p>
-    </div>
+  return url ? (
+    <a href={url} className={ROW_CLASSES}>
+      {body}
+    </a>
+  ) : (
+    <div className={ROW_CLASSES}>{body}</div>
   );
 }

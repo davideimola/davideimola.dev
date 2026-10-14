@@ -18,7 +18,7 @@ importers:
     dependencies:
       '@davideimola/brand':
         specifier: github:davideimola/brand
-        version: https://codeload.github.com/davideimola/brand/tar.gz/58954f3ce048fd12f7b030449db9240a174cd0ae
+        version: https://codeload.github.com/davideimola/brand/tar.gz/09f660459ebc4d42b8e6c1b706d704d692aab1aa
       '@giscus/react':
         specifier: ^3.1.0
         version: 3.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -397,8 +397,8 @@ packages:
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
 
-  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/58954f3ce048fd12f7b030449db9240a174cd0ae':
-    resolution: {tarball: https://codeload.github.com/davideimola/brand/tar.gz/58954f3ce048fd12f7b030449db9240a174cd0ae}
+  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/09f660459ebc4d42b8e6c1b706d704d692aab1aa':
+    resolution: {tarball: https://codeload.github.com/davideimola/brand/tar.gz/09f660459ebc4d42b8e6c1b706d704d692aab1aa}
     version: 1.0.0
 
   '@emnapi/core@1.11.0':
@@ -4268,7 +4268,7 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
-  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/58954f3ce048fd12f7b030449db9240a174cd0ae': {}
+  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/09f660459ebc4d42b8e6c1b706d704d692aab1aa': {}
 
   '@emnapi/core@1.11.0':
     dependencies:

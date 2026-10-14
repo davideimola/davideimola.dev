@@ -69,7 +69,7 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
   return (
     <>
       {/* Filters */}
-      <div className="mt-8 md:mt-10 py-[18px] border-t border-fg border-b border-b-border flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-4 lg:gap-8">
+      <div className="mt-8 md:mt-10 py-[18px] border-t border-rule border-b border-b-border flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-4 lg:gap-8">
         <div className="flex flex-wrap items-baseline gap-x-[22px] gap-y-2">
           <span className="font-mono text-[13px] text-fg-subtle mr-1.5">Topics</span>
           {tags.map((tag) => {
@@ -172,7 +172,7 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
       {/* Archive */}
       <section aria-label="Archive" className="mt-12 md:mt-14 flex flex-col">
         {groups.length === 0 && (
-          <p className="font-sans text-[17px] text-fg-muted py-6 border-t border-fg">
+          <p className="font-sans text-[17px] text-fg-muted py-6 border-t border-rule">
             Nothing here yet.{" "}
             <Link href="/blog" scroll={false} className="text-fg underline hover:text-accent">
               Show every post
@@ -182,7 +182,7 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
         {groups.map((group) => (
           <div
             key={group.label}
-            className="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)] gap-2 lg:gap-10 border-t border-fg pt-5 pb-2.5"
+            className="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)] gap-2 lg:gap-10 border-t border-rule pt-5 pb-2.5"
           >
             <h2
               className={`m-0 font-sans font-bold text-[32px] lg:text-[40px] leading-none tracking-[-0.04em] ${

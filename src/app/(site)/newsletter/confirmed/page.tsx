@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ButtonLink } from "../../../../components/ui/Button";
 import { PageHero } from "../../../../components/ui/PageHero";
-import { StdoutPanel } from "../../../../components/ui/StdoutPanel";
 
 export const metadata: Metadata = {
   title: "You're in",
@@ -19,34 +18,25 @@ export default function NewsletterConfirmedPage() {
         label="Welcome"
         title="You're in"
         description="Your subscription is confirmed. Thanks for joining, I'm glad to have you."
+        className="mb-10"
       />
 
-      <StdoutPanel className="max-w-2xl">
-        <div className="px-4 py-8 flex flex-col gap-4">
-          <p className="font-mono text-[13px]">
-            <span className="text-fg">✓</span>{" "}
-            <span className="text-fg">Subscription confirmed.</span>
-          </p>
-          <p className="font-sans text-[14px] text-fg-muted leading-relaxed">
-            Once a month you'll get a short digest of what I published: new posts, upcoming talks,
-            and the occasional project. One email a month, no spam, unsubscribe anytime.
-          </p>
-          <div className="flex flex-wrap gap-4 pt-2">
-            <Link
-              href="/blog"
-              className="font-mono text-[12px] text-fg-subtle hover:text-accent transition-colors duration-150"
-            >
-              <span className="text-fg mr-1.5">→</span>read the blog
-            </Link>
-            <Link
-              href="/"
-              className="font-mono text-[12px] text-fg-subtle hover:text-accent transition-colors duration-150"
-            >
-              <span className="text-fg mr-1.5">→</span>back home
-            </Link>
-          </div>
+      <div className="h-px bg-rule max-w-[42rem]" />
+
+      <div className="pt-8 flex flex-col gap-7 max-w-[42rem]">
+        <p className="m-0 font-sans text-[18px] sm:text-[19px] leading-[1.6] text-fg-body">
+          Once a month, at the start of the month, you'll get what actually happened: what I found,
+          tried, built and killed. One email, and every issue has an unsubscribe link.
+        </p>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+          <ButtonLink variant="primary" href="/newsletter">
+            Read past issues
+          </ButtonLink>
+          <ButtonLink variant="link" href="/blog">
+            Or the writing
+          </ButtonLink>
         </div>
-      </StdoutPanel>
+      </div>
     </div>
   );
 }

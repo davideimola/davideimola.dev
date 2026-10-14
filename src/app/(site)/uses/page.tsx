@@ -284,7 +284,7 @@ export default function UsesPage() {
         )}
       </header>
 
-      <section className="mt-10 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+      <section className="mt-10 pt-7 border-t border-rule grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
         <div className="flex flex-col gap-3.5">
           <Tape as="h2" tilt={1}>
             Hardware
@@ -305,7 +305,7 @@ export default function UsesPage() {
         </div>
       </section>
 
-      <section className="mt-11 pt-6 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+      <section className="mt-11 pt-6 border-t border-rule grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
         <Tape as="h2" tilt={0} className="self-start">
           The stack
         </Tape>

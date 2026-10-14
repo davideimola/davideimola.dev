@@ -3,7 +3,7 @@
 import { Turnstile } from "@marsidev/react-turnstile";
 import { type ReactNode, useActionState, useId } from "react";
 import { subscribe } from "../../app/actions/subscribe";
-import { StdoutPanel } from "./StdoutPanel";
+import { Card } from "./Card";
 import { useResolvedTheme } from "./ThemeToggle";
 
 const initialState = { status: "idle" as const };
@@ -43,13 +43,11 @@ export function SubscribeForm({
   // not done until they click it. The success copy says so; it never claims "subscribed".
   if (state.status === "success") {
     return (
-      <StdoutPanel label="Almost there" className={className}>
-        <div className="px-4 py-5">
-          <p className="font-sans text-[15px] text-fg-muted m-0">
-            Check your inbox and click the confirmation link to finish subscribing.
-          </p>
-        </div>
-      </StdoutPanel>
+      <Card tape="Almost there" hoverable={false} className={className}>
+        <p className="m-0 font-sans text-[17px] leading-[1.55] text-fg-body" role="status">
+          Check your inbox and click the confirmation link to finish subscribing.
+        </p>
+      </Card>
     );
   }
 
