@@ -1,197 +1,75 @@
 # Design System
 
+The visual language comes from the brand repo ([davideimola/brand](https://github.com/davideimola/brand), see [brand.md](./brand.md) and ADR-0004). This file is how the site applies it.
+
 ## Philosophy
 
-Dark, terminal-inspired aesthetic. Not a literal terminal, but the feeling of precision and control. Influenced by Japanese minimalism (ma/間 — negative space as a design element). Akane Red is used sparingly as the single accent.
+Light, human, precise. Two inks on a paper ground, plenty of white space, a hairline as the only divider. Three graphic elements and nothing else: **the marker** (one rough red stroke per page), **the tape** (label-maker tape for sections and content types) and **the rule** (an ink hairline). No terminal dressing.
 
-## Brand
+## Themes
 
-The personal mark is `di` + red bar cursor — the hero typing animation's end state. Outlined SVG assets live in `public/brand/`; construction and usage rules in [brand.md](./brand.md). The NavBar logo is the domain lockup: `davideimola` + `.dev` in Akane Red.
+Light is the default. Dark follows `prefers-color-scheme`; `ThemeToggle` pins a choice per browser (`src/lib/theme.ts`, applied before first paint by an inline script). Print is always light.
 
-## Palette
+## Tokens
 
-| Name | Variable | Value | Usage |
-|------|----------|-------|-------|
-| Background | `--bg` | `#080807` | Page background |
-| Card background | `--bg-card` | `#0F0E0D` | Cards, nav background |
-| Hover background | `--bg-hover` | `#141311` | Hover state background |
-| Border | `--border` | `#1C1A18` | Default borders |
-| Border mid | `--border-mid` | `#252220` | Stronger borders |
-| Border hover | `--border-hover` | `rgba(201,31,55,.30)` | Card hover border |
-| Text primary | `--text-1` | `#EAE5DF` | Headings, primary content |
-| Text secondary | `--text-2` | `#9A948E` | Body text, descriptions |
-| Text muted | `--text-3` | `#7E7874` | Labels, metadata, nav links |
-| Akane Red | `--accent` | `#C91F37` | Interactive elements, `//` prefix |
-| Akane hover | `--accent-hover` | `#a8192e` | Accent hover state |
-| Akane glow | `--accent-glow` | `rgba(201,31,55,.12)` | Card hover overlay |
+All values come from `@davideimola/brand/tailwind.css`. Use the utilities, never hex values.
 
-### Print palette
+| Token | Light | Dark | Utilities |
+|-------|-------|------|-----------|
+| `bg` | paper `#F7F5F0` | night `#13151C` | `bg-bg` |
+| `fg` | ink `#1C2233` | chalk `#ECE9E2` | `text-fg`, `bg-fg`, `border-fg` |
+| `fg-body` | `#2A3042` | `#D6D3CC` | `text-fg-body` (long-form text) |
+| `fg-muted` | `#3B4152` | `#B4B2AC` | `text-fg-muted` (secondary) |
+| `fg-subtle` | `#5B6070` | `#8E8C86` | `text-fg-subtle` (meta) |
+| `border` | `#DEDCD5` | `#2C3040` | `border-border` (hairlines) |
+| `surface` | `#FFFFFF` | `#1B1E27` | `bg-surface` (cards, code) |
+| `surface-inline` | `#EDEAE3` | `#262A35` | `bg-surface-inline` (inline code, pills) |
+| `accent` | akane `#C91F37` | `#E0475C` | knot and marker only; `hover:text-accent` on links |
+| `tape-bg` / `tape-fg` | ink / paper | chalk / night | the Tape component |
 
-Paper is the one light ground on this site. `@utility light-ground` in `globals.css`, applied as `print:light-ground` on `<body>`, redefines these seven variables for print media and nothing else: the accent and both fonts carry over unchanged, so a printed page still reads as this site.
-
-| Variable | Screen | Paper |
-|----------|--------|-------|
-| `--bg` | `#080807` | `#FFFFFF` |
-| `--bg-card` | `#0F0E0D` | `#FAFAF8` |
-| `--border` | `#1C1A18` | `#E4E1DC` |
-| `--border-mid` | `#252220` | `#CFCBC5` |
-| `--text-1` | `#EAE5DF` | `#16150F` |
-| `--text-2` | `#9A948E` | `#4A4640` |
-| `--text-3` | `#7E7874` | `#6F6A63` |
-
-The hover tokens are deliberately not in the list: nothing hovers on paper.
-
-### Usage rules
-
-- `--accent` (Akane Red) is an accent only. Never use as a large fill or background.
-- Valid accent uses: `//` section prefix, active badge, cursor blink, corner decoration, button fill (small), link hover, dot separator.
-- The dot grid (`body::before`) is at 35% opacity — subtle texture, not a statement.
+**The red rule.** Red belongs to the knot and the marker. Links may turn red on hover; code keywords may be red. No red buttons, tapes, badges, borders or backgrounds.
 
 ## Typography
 
-### Fonts
+| Family | Utility | Use |
+|--------|---------|-----|
+| Schibsted Grotesk | `font-sans` | Titles and all running text |
+| IBM Plex Mono | `font-mono` | Code, dates, metadata, small labels |
+| Barlow Condensed 700 | `font-label` | Tape labels only, uppercase |
 
-| Font | Variable | CSS var | Role |
-|------|----------|---------|------|
-| JetBrains Mono | `--font-jetbrains-mono` | `--font-mono` | Headings, UI labels, code, nav, buttons |
-| IBM Plex Sans | `--font-ibm-plex-sans` | `--font-sans` | Body text, descriptions, prose |
-
-### Scale
-
-| Use case | Size | Weight | Class |
-|----------|------|--------|-------|
-| Hero name | `clamp(42px, 7vw, 72px)` | 700 | `text-[clamp(42px,7vw,72px)] font-bold font-mono` |
-| Section title | 11px | 500 | `text-[11px] font-medium font-mono tracking-[0.12em] uppercase` |
-| Section title, printed | 11px | 500 | as above plus `print:tracking-[0.08em]` (see note) |
-| Card title | 16px | 600 | `text-[16px] font-semibold font-mono` |
-| Nav links | 12px | 400 | `text-[12px] font-mono tracking-[0.04em] lowercase text-text-2` |
-| Body | 15px | 400 | `text-[15px] font-sans` |
-| Small/meta | 11px | 400 | `text-[11px] font-mono` |
-| Badge | 10px | 500 | `text-[10px] font-mono tracking-[0.08em] uppercase` |
-| Button | 12px | 500 | `text-[12px] font-mono font-medium` |
-
-Note on the printed section title: at `0.12em` a PDF text extractor reads the gap between glyphs as word breaks and hands `E X P E R I E N C E` to whatever parses the document. `0.08em` extracts as one word and is indistinguishable at 11px.
-
-## Spacing scale
-
-Use Tailwind's default spacing scale. Key values in use:
-
-- Section padding: `py-20` (80px)
-- Container max-width: `max-w-[1024px] mx-auto px-4 sm:px-8`
-- Card padding: `p-6`
-- Hero padding: `pt-40 pb-30`
-- Section header margin-bottom: `mb-12`
-- Gap between grid items: `gap-3`
+Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `text-h1` 64/1.02, `text-h2` 32/1.15, `text-h3` 24/1.2, `text-lead` 22/1.5, `text-body` 19/1.7, `text-small` 15/1.5, `text-meta` 14/1.6, `text-label` 15. Display and h1 step up from a smaller size on phones (`text-[44px] sm:text-[64px] lg:text-display`).
 
 ## Components
 
-### Button
+- **Tape** (`ui/Tape.tsx`) — ink tape, flat, `tilt` 0/1/2 cycles -1deg, 1deg, -0.5deg. Alternate between neighbours; one tape per block; never stacked; never red. Use as a section heading via `as="h2"` (SectionHeader does this).
+- **Marker** (`ui/Marker.tsx`) — wrap the one word that matters most. One per page. Draws once on first view, instant under reduced motion. On a card, set `[--marker-halo-color:var(--di-surface)]`.
+- **Mark / Wordmark** (`ui/BrandMark.tsx`) — never typeset the name; switch cut instead of shrinking.
+- **Button / ButtonLink** — `primary` (filled ink, at most one per view), `ghost` (outlined ink), `link` (underlined text, red on hover). Sizes `sm`, `md`, `lg`. Both set `data-print-hide`.
+- **Card** — straight, `bg-surface` plus hairline, hover darkens the hairline. Optional `tape` on the top-left edge.
+- **Badge** — status pills only (Coming soon, Conference, roles). Never for section labels (tape) or tags (`#tag` in mono).
+- **SectionHeader** — tape plus an optional mono "see all" link.
+- **PageHero** — tape `label`, h1, lead. Every page uses it.
+- **NavBar** — sticky, S mark plus bold wordmark, sans links, current page in ink with a 2px underline, search, theme toggle, mobile menu.
+- **Footer** — ink hairline, S mark with the motto, the one-line newsletter form, links in mono.
 
-Two variants:
-- `primary` — Akane Red fill, white text. Use for the main CTA.
-- `ghost` — transparent, `--border-mid` border, `--text-2` color. Use for secondary actions.
+## Article
 
-Three sizes: `sm`, `md` (default), `lg`.
+`/blog/[slug]`: tape with the category, h1, lead (the excerpt), mono meta line, an ink hairline, then a 700px reading column with the ToC on the right. Prose (in `globals.css`): body 19/1.7 in `fg-body`, sans titles, ink links with red on hover, quotes set large with a small ink square instead of a side bar, inline code on `surface-inline`, code blocks on `surface` with a 1px border and a mono title bar. At most one marker in a whole piece.
 
-```tsx
-<Button variant="primary">Read the blog →</Button>
-<Button variant="ghost">View talks →</Button>
-<ButtonLink variant="primary" href="/blog">Read the blog →</ButtonLink>
-```
+## Photography
 
-### Badge
+Portraits are black and white (`grayscale`). A tape may sit on a photo's edge; the mark never sits on a photo.
 
-Four variants:
-- `default` / `active` — dark pill, muted text. For category labels and active state.
-- `coming-soon` — Akane glow background with Akane border. For upcoming projects.
-- `category` — same as default. For blog/project categories.
+## Spacing and layout
 
-```tsx
-<Badge variant="active">Community · Active</Badge>
-<Badge variant="coming-soon">Coming soon</Badge>
-<Badge variant="category">Security</Badge>
-```
+- Container: `max-w-[1136px] mx-auto px-4 sm:px-8`
+- Page top padding (under the sticky NavBar): `pt-12 md:pt-16`
+- Section padding: `py-20`, separated by `border-t border-border`
+- Mobile-first always: base styles for phones, then `sm:` / `md:` / `lg:`.
 
-### Card
+## Motion
 
-Base card with optional hover glow effect (Akane border + overlay on hover).
-
-- `hoverable={true}` (default) — adds hover transition
-- `href` prop — renders as an `<a>` tag
-
-```tsx
-<Card href="/projects/schrodinger-hat">
-  <Badge variant="active">Active</Badge>
-  <h3>Schrodinger Hat</h3>
-  <p>Description…</p>
-</Card>
-```
-
-### SectionHeader
-
-`//` prefix in Akane Red + optional "see all" link aligned right.
-
-```tsx
-<SectionHeader title="Projects" seeAllHref="/projects" seeAllLabel="All projects →" />
-<SectionHeader title="What I do" />
-```
-
-### NavBar
-
-Fixed, blurred backdrop. Wordmark logo — `davideimola` + red cursor bar, pairing with the `di` mark. Nav links, ⌘K button.
-Requires `"use client"` for the search handler.
-
-### Footer
-
-Minimal: copyright + links (privacy, now, rss, source).
-
-## Responsive design
-
-Responsiveness is a cardinal requirement. Every component must be designed mobile-first.
-
-### Breakpoints
-
-| Prefix | Width | Target |
-|--------|-------|--------|
-| (base) | < 640px | Mobile |
-| `sm:` | 640px+ | Large phones, small tablets |
-| `md:` | 768px+ | Tablets — used for desktop nav switch |
-| `lg:` | 1024px+ | Desktops |
-
-### Rules
-
-- Write base styles for mobile, then add `sm:`/`md:`/`lg:` overrides
-- Container padding: `px-4 sm:px-8` (not a fixed `px-8`)
-- NavBar: hamburger on mobile (`md:hidden` / `hidden md:flex` pattern)
-- Multi-column layouts: `flex-col sm:flex-row` or `grid-cols-1 md:grid-cols-2`
-- A component is not done until its responsive behavior has been verified
-
-## Prose (Tailwind Typography)
-
-`@tailwindcss/typography` is installed and configured with the design system tokens. Use the `prose` class for any long-form content (blog posts, talk descriptions, MDX pages).
-
-```tsx
-<article className="prose prose-lg max-w-none">
-  {/* MDX content */}
-</article>
-```
-
-All prose tokens are overridden in `globals.css`:
-- Body text → `--text-2`
-- Headings → `--text-1` + `font-mono` + tight tracking
-- Links → `--text-1` default, `--accent` on hover
-- Blockquote border → `--accent`
-- Inline code → pill with `--bg-card` + `--border-mid`, no backtick wrappers
-- Pre/code blocks → `--bg-card` background with `--border` border
-
-Do **not** use `prose-invert` — the site is dark-only and tokens are already mapped.
-
-## Animation guidelines
-
-- Transitions: `150ms` for color/border, `200ms` for background + opacity
-- Hover translate: `translateX(3px)` on arrow icons
-- Hero entrance: `fadeUp` animation (0.5s ease, staggered 100ms delays)
-- Cursor blink: `blink` keyframe, 1.1s step-end infinite
-- Scroll reveal: IntersectionObserver, `opacity 0 → 1` + `translateY(12px → 0)`
-
-Never use `transition-all` — be explicit about which properties transition.
+- `motion/react` for scroll reveals; CSS transitions of 150ms for colour and border.
+- The marker draws once (~500ms). Nothing blinks, nothing loops.
+- `prefers-reduced-motion` collapses every animation and transition (`globals.css`).
+- Never `transition-all`.

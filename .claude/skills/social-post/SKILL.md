@@ -108,6 +108,9 @@ Load Google Fonts at the top of each slide:
 ```
 
 ### Brand colors
+
+> **Outdated since the 2026-10 rebrand (ADR-0004).** The dark, JetBrains Mono, terminal-styled spec below predates the new brand. New images should follow the brand repo's "Social cards" rules instead: light ground, a flat ink tape with the content type, the title large in Schibsted Grotesk, the wordmark and URL at the bottom, red only for the knot and one marker stroke. Rewriting this section is an open follow-up.
+
 | Token | Value | Usage |
 |-------|-------|-------|
 | Background | `#080807` | Slide background |
@@ -164,7 +167,7 @@ Every slide uses the same three-zone layout:
 ### Design rules
 
 - **`davideimola.dev` brand (domain lockup)**: name always in `#9A948E`, `.dev` always in `#C91F37`. Only `.dev` is red. The old `~/davideimola` form is retired — never use it.
-- **Brand assets**: outlined SVGs live in `public/brand/` — `mark.svg` (the `di` + red cursor tile), `wordmark.svg` (`davide imola` + cursor), `domain.svg`. Construction and rules in `docs/brand.md`. Use `mark.svg` when a slide needs a logo block (e.g. the final CTA slide); the red bar cursor after a name is the brand signature.
+- **Brand assets**: the mark, wordmark and lockups live in `public/brand/` (copied from the brand repo by `pnpm brand:sync`): `mark-l.svg` / `mark-l-dark.svg`, `wordmark.svg`, `lockup.svg`. The brand repo (github.com/davideimola/brand, `docs/brand.md`) is the source of truth; see `docs/brand.md` here for how the site uses it. Use the lockup or the L mark when a slide needs a logo block (e.g. the final CTA slide). The wordmark is never typeset in a font.
 - **Decorative `❯`**: present on all slides except the last. It signals "keep scrolling". Bottom-right, 500px, `rgba(201,31,55,0.06)`.
 - **`./` prefix**: use only for actual URL-like paths (`./davideimola.dev`, `./blog/post-slug`). Not as a decoration on every title.
 - **Titles**: IBM Plex Sans, 72-90px bold, `#EAE5DF`, line-height 0.95-1.0. Wrapping across 2 lines is fine; never break mid-word.

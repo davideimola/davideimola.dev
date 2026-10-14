@@ -1,73 +1,34 @@
 # Brand
 
-The personal mark for davideimola.dev. One concept, three lockups, all derived
-from the site's design system (JetBrains Mono + Akane Red on near-black).
+The brand is not defined here. Its single source of truth is the brand repository:
+**[github.com/davideimola/brand](https://github.com/davideimola/brand)** (installed as
+`@davideimola/brand`). Read its `docs/brand.md` before changing anything visual.
+ADR-0004 records why.
 
-## Concept
+What the brand repo owns:
 
-The mark is the end state of the homepage hero typing animation: the name has
-just been typed, the red cursor is still there. `di` + cursor reads as "just
-typed, still writing".
+- **Tokens:** `tokens/tokens.json`, built to `dist/css/tokens.css` (`--di-*` custom properties for light, dark and print) and `dist/css/tailwind.css` (the Tailwind v4 `@theme` mapping this site imports in `src/app/globals.css`).
+- **The mark and the wordmark:** a `d` and an `i` drawn as a git graph, tied with a red knot, in three cuts (L from 96px, M from 40 to 95px, S below 40px) and three colourways; the wordmark in regular and bold; lockups; avatar; favicon.
+- **The guidelines:** colour, typography, the three graphic elements (marker, tape, rule), photography, site, slides and social cards.
 
-## Assets
+## How this site uses it
 
-All assets live in `public/brand/` as outlined SVG paths — no font dependency,
-safe to use anywhere (READMEs, stickers, external tools).
+| Where | What |
+|-------|------|
+| `src/app/globals.css` | Imports `@davideimola/brand/tailwind.css`; adds the next/font wiring, the type scale, the `dark:` variant, prose, Prism and print rules |
+| `src/components/ui/brand-geometry.ts` | The mark and wordmark geometry, copied from the brand repo's `src/geometry.mjs` (the package does not export it) |
+| `src/components/ui/BrandMark.tsx` | `Mark` and `Wordmark`, drawn inline so strokes follow the theme and the knot stays red |
+| `src/components/ui/Tape.tsx`, `Marker.tsx` | The tape and the marker |
+| `src/lib/og.tsx` | Satori versions of the tape, mark and wordmark for the image routes |
+| `public/brand/` | Every SVG and PNG, served for download on `/brand` |
+| `src/app/icon.svg`, `src/app/apple-icon.png` | Favicon and iOS icon |
 
-| Asset | File | Use |
-|-------|------|-----|
-| Mark, dark tile | `mark.svg` | Avatars, stickers, app icons |
-| Mark, light tile | `mark-light.svg` | Light surfaces |
-| Mark, mono | `mark-mono.svg` | Single-color contexts — inherits `currentColor` |
-| Wordmark | `wordmark.svg` | `davide imola` + cursor, light ink for dark surfaces |
-| Wordmark, dark ink | `wordmark-dark.svg` | Same, for light surfaces |
-| Domain lockup | `domain.svg` | `davideimola` + red `.dev`, light ink for dark surfaces |
-| Domain lockup, dark ink | `domain-dark.svg` | Same, for light surfaces |
+## Updating
 
-Regenerate the SVGs with `python3 scripts/generate-brand.py` (requires
-`fonttools`: `python3 -m venv .venv && .venv/bin/pip install fonttools`),
-then the PNG exports (`mark-512/1024.png`, `wordmark-1200.png`, …) with
-`pnpm brand:png`.
+1. Change the brand repo, run its `pnpm build`, push.
+2. Here: `pnpm update @davideimola/brand` (or re-add `github:davideimola/brand`), then `pnpm brand:sync` to copy the assets, favicon and apple icon.
+3. If the mark geometry changed, copy the new numbers into `src/components/ui/brand-geometry.ts`.
 
-The assets are publicly downloadable at
-[davideimola.dev/brand](https://davideimola.dev/brand) and licensed under
-CC BY-ND 4.0 — see `public/brand/LICENSE.md`. The license covers the brand
-assets only, not the site's source code.
+## License
 
-## Construction
-
-- Type: JetBrains Mono Bold, lowercase, 0.6 em monospace advance.
-- Cursor bar: 0.14 em wide, 0.86 em tall, top at 0.78 em above the baseline
-  (it slightly crosses it), 0.10 em gap after the last glyph. Always Akane Red.
-- Mark tile: glyphs at ~34% of tile height, optically centered. The air is
-  deliberate — circular avatar crops eat the edges.
-- Favicon cut (`src/app/icon.svg`, `apple-icon.tsx`): same mark scaled to
-  ~80% of the square's width. Favicons are never cropped, and at 16 px the
-  tile's padding would make the glyphs illegible.
-- Ink: `#EAE5DF` on `#080807` (dark), `#1A1816` on `#F0EDE9` (light).
-
-## Rules
-
-- The cursor is always `#C91F37` — never recolor it, never drop it.
-- The cursor may blink in animated contexts (1.1s `step-end`, like the site);
-  respect `prefers-reduced-motion`.
-- Domain lockup: name in the context's ink (`#EAE5DF`, or `#9A948E` when the
-  lockup must stay quiet), `.dev` always red.
-- Don't prepend the old `~/` form to the mark or wordmark.
-- Minimum sizes: mark 16 px (favicon), wordmark ~120 px wide.
-
-## Where it's applied
-
-- `src/app/icon.svg` — favicon (dark/light via `prefers-color-scheme`)
-- `src/app/apple-icon.tsx` — iOS home-screen icon
-- `src/app/og/route.tsx` — OG image footer signature (`davide imola` + cursor)
-- `src/app/api/bluesky-cover/route.tsx`, `src/app/api/linkedin-cover/route.tsx`
-  — social covers (domain lockup top-left, name + cursor as hero)
-- `src/components/layout/NavBar.tsx` — wordmark form as site logo
-  (`davideimola` + cursor, pairing with the mark)
-- `src/app/brand/page.tsx` — public brand page with downloads and license
-- `.claude/skills/social-post/SKILL.md` — carousel slide anatomy
-
-The domain lockup is reserved for contexts where the address itself is the
-signature: the OG image path, the social covers' top-left corner, and the
-carousel slides. The brand signature everywhere else is the cursor.
+The assets are CC BY-ND 4.0, see `public/brand/LICENSE.md`. The license covers the brand assets only, not the site's source code.
