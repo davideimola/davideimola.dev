@@ -16,6 +16,9 @@ importers:
 
   .:
     dependencies:
+      '@davideimola/brand':
+        specifier: github:davideimola/brand
+        version: https://codeload.github.com/davideimola/brand/tar.gz/46ed3cf22e4b44eecc1a0f7a3d42f6609c9d2831
       '@giscus/react':
         specifier: ^3.1.0
         version: 3.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -393,6 +396,10 @@ packages:
   '@csstools/css-tokenizer@4.0.0':
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
+
+  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/46ed3cf22e4b44eecc1a0f7a3d42f6609c9d2831':
+    resolution: {tarball: https://codeload.github.com/davideimola/brand/tar.gz/46ed3cf22e4b44eecc1a0f7a3d42f6609c9d2831}
+    version: 1.0.0
 
   '@emnapi/core@1.11.0':
     resolution: {integrity: sha512-l9Oo58x0HOP5znGzVhYW9U3e5wVuA4LAZU2AGezTmkhO1CgQRFDhDg4nneHsu/t3WniXg9QrG2nIXL/ZS8ln8Q==}
@@ -4253,6 +4260,8 @@ snapshots:
       css-tree: 3.2.1
 
   '@csstools/css-tokenizer@4.0.0': {}
+
+  '@davideimola/brand@https://codeload.github.com/davideimola/brand/tar.gz/46ed3cf22e4b44eecc1a0f7a3d42f6609c9d2831': {}
 
   '@emnapi/core@1.11.0':
     dependencies:
