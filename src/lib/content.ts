@@ -18,6 +18,8 @@ export interface BlogPost {
   draft?: boolean;
   heroImage?: string;
   heroImageAlt?: string;
+  /** Editorial topic for the home "By topic" block and the blog; see src/lib/topics.ts. */
+  topic?: string;
   content: string;
 }
 
@@ -120,6 +122,7 @@ function parsePost(slug: string): BlogPost {
     draft: data.draft ?? false,
     heroImage: data.heroImage,
     heroImageAlt: data.heroImageAlt,
+    topic: data.topic,
     content,
   };
 }

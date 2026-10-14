@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Project, Talk } from "./content";
-import { pickBuildingProject, pickRotatingCard, todayKey } from "./home-cards";
+import { pickBuildingProject, pickRotatingCard, pickSpokenAt, todayKey } from "./home-cards";
 import type { ShelfPass } from "./shelf";
 
 function talk(slug: string, date: string, session?: Partial<NonNullable<Talk["session"]>>): Talk {
@@ -141,5 +141,20 @@ describe("pickBuildingProject", () => {
 describe("todayKey", () => {
   it("formats the local calendar day", () => {
     expect(todayKey(new Date(2026, 0, 5, 23, 30))).toBe("2026-01-05");
+  });
+});
+
+describe("pickSpokenAt", () => {
+  it("names past conferences with a session once, newest first, without the year", () => {
+    const talks: Talk[] = [
+      { ...talk("g24", "2024-11-13", {}), event: "GoLab 2024" },
+      { ...talk("g23", "2023-11-21", {}), event: "GoLab 2023" },
+      { ...talk("kcd", "2024-06-20", {}), event: "KCD Italy 2024" },
+      { ...talk("future", "2026-12-01", {}), event: "Future Conf 2026" },
+      { ...talk("org", "2025-03-21", {}), event: "Open Source Day 2025", organizer: true },
+      { ...talk("meet", "2025-01-01", {}), event: "A Meetup", type: "Meetup" },
+      { ...talk("nosession", "2025-02-01"), event: "Audience Only 2025" },
+    ];
+    expect(pickSpokenAt(talks, TODAY)).toEqual(["GoLab", "KCD Italy"]);
   });
 });

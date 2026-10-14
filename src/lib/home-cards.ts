@@ -77,3 +77,22 @@ export function pickBuildingProject(projects: Project[]): Project | null {
   }
   return best;
 }
+
+/**
+ * The conferences Davide has given a session at, newest first, the year
+ * stripped from the event name and each named once. Events he organised are
+ * left out: the IN PUBLIC block already names those.
+ */
+export function pickSpokenAt(talks: Talk[], today: Date, limit = 5): string[] {
+  const key = todayKey(today);
+  const names: string[] = [];
+  const sorted = [...talks].sort((a, b) => b.date.localeCompare(a.date));
+  for (const talk of sorted) {
+    if (talk.type !== "Conference" || !talk.session || talk.organizer) continue;
+    if (talk.date.slice(0, 10) >= key) continue;
+    const name = talk.event.replace(/\s+\d{4}$/, "");
+    if (!names.includes(name)) names.push(name);
+    if (names.length === limit) break;
+  }
+  return names;
+}

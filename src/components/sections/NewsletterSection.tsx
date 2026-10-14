@@ -1,32 +1,32 @@
-import { ScrollReveal } from "../ui/ScrollReveal";
-import { SectionHeader } from "../ui/SectionHeader";
 import { SubscribeForm } from "../ui/SubscribeForm";
+import { Tape } from "../ui/Tape";
 
-// A full-width band: the pitch on the left, the form on the right. Left-aligned
-// so it reads distinctly from the centered ConnectSection that closes the page.
+// The one newsletter block on the home page: a white card with its tape on
+// the edge, the pitch on the left and the form on the right.
 export function NewsletterSection() {
   return (
-    <section className="border-t border-border py-20">
-      <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-8 md:gap-12 md:items-center">
-            {/* Pitch */}
-            <div>
-              <SectionHeader title="Newsletter" tilt={0} className="mb-6" />
-              <p className="font-sans text-[26px] sm:text-h2 font-bold text-fg mb-3">
-                One email a month.
-              </p>
-              <p className="font-sans text-[16px] text-fg-muted leading-relaxed max-w-md">
-                A short digest of what I published: new posts, upcoming talks, and the occasional
-                project. One email a month, no spam.
-              </p>
-            </div>
-            {/* Form */}
-            <div>
-              <SubscribeForm mode="compact" />
-            </div>
-          </div>
-        </ScrollReveal>
+    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-14 md:mt-[120px]">
+      <div className="relative bg-surface border border-border px-[18px] pt-8 pb-6 md:p-14 lg:px-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_460px] gap-3 lg:gap-14 items-center">
+        <Tape tilt={0} className="absolute -left-1.5 md:-left-2.5 -top-3.5">
+          Newsletter
+        </Tape>
+        <div className="flex flex-col gap-3 md:gap-3.5">
+          <h2 className="m-0 font-sans font-bold text-fg text-[26px] md:text-[40px] leading-[1.05] tracking-[-0.04em]">
+            One email a month
+          </h2>
+          <p className="m-0 font-sans text-[16px] md:text-[19px] leading-[1.55] text-fg-body">
+            A monthly digest of everything I write, build and speak about.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2.5">
+          <SubscribeForm mode="inline" field="bg" />
+          <a
+            href="/newsletter"
+            className="self-start font-sans text-[14px] text-fg-subtle no-underline hover:text-accent transition-colors duration-150"
+          >
+            Read past issues
+          </a>
+        </div>
       </div>
     </section>
   );

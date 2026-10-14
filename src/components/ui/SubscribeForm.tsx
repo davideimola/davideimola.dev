@@ -1,7 +1,7 @@
 "use client";
 
 import { Turnstile } from "@marsidev/react-turnstile";
-import { useActionState } from "react";
+import { type ReactNode, useActionState, useId } from "react";
 import { subscribe } from "../../app/actions/subscribe";
 import { StdoutPanel } from "./StdoutPanel";
 import { useResolvedTheme } from "./ThemeToggle";
@@ -10,29 +10,42 @@ const initialState = { status: "idle" as const };
 
 interface SubscribeFormProps {
   /**
-   * `full`: the standalone form for the /newsletter page (label + widget + button).
-   * `compact`: a tight CTA for the home, sharing, and end-of-post placements.
-   * `inline`: the footer's one-line form, field and button joined; the security
-   * check only shows itself when Cloudflare needs an interaction.
+   * `full`: the /newsletter hero. A sans label, a large joined field and button.
+   * `inline`: the joined field and button at the regular size, for the home
+   *   newsletter block and /links. The label is mono unless `label` says otherwise.
+   * `compact`: field above button, for the end of a post and narrow columns.
    */
-  mode?: "full" | "compact" | "inline";
+  mode?: "full" | "inline" | "compact";
+  /** Visible label. `null` hides it (the field keeps an aria-label). */
+  label?: string | null;
+  /** A line under the field, e.g. "One email a month. Unsubscribe from any issue." */
+  note?: ReactNode;
+  /** Field background: `surface` on the page ground, `bg` inside a white block. */
+  field?: "surface" | "bg";
   className?: string;
 }
 
-export function SubscribeForm({ mode = "full", className = "" }: SubscribeFormProps) {
+export function SubscribeForm({
+  mode = "full",
+  label,
+  note,
+  field = "surface",
+  className = "",
+}: SubscribeFormProps) {
   const [state, action, pending] = useActionState(subscribe, initialState);
   const theme = useResolvedTheme();
-  const compact = mode !== "full";
-  const inline = mode === "inline";
+  const id = useId();
+  const joined = mode !== "compact";
+  const large = mode === "full";
+  const labelText = label === undefined ? "Your email" : label;
 
   // Double opt-in: submitting only queues the confirmation email; the subscriber is
   // not done until they click it. The success copy says so; it never claims "subscribed".
   if (state.status === "success") {
     return (
-      <StdoutPanel className={className}>
-        <div className="px-4 py-6 flex flex-col gap-2">
-          <p className="font-sans font-semibold text-[16px] text-fg">Almost there.</p>
-          <p className="font-sans text-[15px] text-fg-muted">
+      <StdoutPanel label="Almost there" className={className}>
+        <div className="px-4 py-5">
+          <p className="font-sans text-[15px] text-fg-muted m-0">
             Check your inbox and click the confirmation link to finish subscribing.
           </p>
         </div>
@@ -40,89 +53,79 @@ export function SubscribeForm({ mode = "full", className = "" }: SubscribeFormPr
     );
   }
 
+  const fieldBg = field === "bg" ? "bg-bg" : "bg-surface";
+  const height = large ? "h-14" : "h-12 sm:h-[52px]";
+  const inputClasses = `min-w-0 ${height} ${fieldBg} border border-fg px-4 font-sans ${
+    large ? "text-[18px]" : "text-[16px]"
+  } text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg`;
+  const buttonClasses = `${height} shrink-0 bg-fg text-bg ${
+    large ? "px-[26px] text-[17px]" : "px-6 text-[16px]"
+  } font-sans font-semibold cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed`;
+
   return (
-    <form action={action} className={`flex flex-col ${compact ? "gap-3" : "gap-5"} ${className}`}>
+    <form action={action} className={`flex flex-col gap-2.5 ${className}`}>
       {/* Honeypot: hidden from humans, filled by bots */}
       <div
         aria-hidden="true"
         tabIndex={-1}
         style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}
       >
-        <label htmlFor={`website-${mode}`}>Website</label>
-        <input id={`website-${mode}`} name="website" type="text" autoComplete="off" tabIndex={-1} />
+        <label htmlFor={`website-${id}`}>Website</label>
+        <input id={`website-${id}`} name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>
 
-      {inline ? (
-        <div className="flex w-full max-w-[400px]">
-          <input
-            id={`email-${mode}`}
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="you@domain.dev"
-            aria-label="Email address"
-            className="min-w-0 flex-1 h-11 bg-surface border border-fg border-r-0 px-3.5 font-sans text-[15px] text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-          />
-          <button
-            type="submit"
-            disabled={pending}
-            className="h-11 shrink-0 bg-fg text-bg px-[18px] font-sans font-semibold text-[15px] cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {pending ? "Subscribing..." : "Subscribe"}
-          </button>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-1.5">
-          {!compact && (
-            <label
-              htmlFor={`email-${mode}`}
-              className="font-mono text-[12px] text-fg-subtle tracking-[0.06em] uppercase"
-            >
-              Email
-            </label>
-          )}
-          <input
-            id={`email-${mode}`}
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="you@domain.dev"
-            aria-label={compact ? "Email address" : undefined}
-            className="h-11 bg-surface border border-fg px-3.5 font-sans text-[15px] text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-          />
-        </div>
+      {labelText && (
+        <label
+          htmlFor={`email-${id}`}
+          className={
+            large
+              ? "font-sans font-semibold text-[16px] text-fg"
+              : "font-mono text-[12px] sm:text-[13px] text-fg-subtle"
+          }
+        >
+          {labelText}
+        </label>
       )}
 
-      {/* Turnstile. The theme follows the site's, not only the system's. */}
+      <div className={joined ? "flex flex-col sm:flex-row" : "flex flex-col gap-2.5"}>
+        <input
+          id={`email-${id}`}
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          placeholder="you@domain.dev"
+          aria-label={labelText ? undefined : "Email address"}
+          className={`${inputClasses} ${joined ? "sm:flex-1 sm:border-r-0" : ""}`}
+        />
+        <button
+          type="submit"
+          disabled={pending}
+          className={`${buttonClasses} ${joined ? "mt-2.5 sm:mt-0" : "self-start"}`}
+        >
+          {pending ? "Subscribing..." : "Subscribe"}
+        </button>
+      </div>
+
+      {/* Turnstile. The theme follows the site's, not only the system's; it only
+          takes room when Cloudflare needs an interaction. */}
       <Turnstile
         key={theme ?? "pending"}
         siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
         options={{
           theme: theme ?? "auto",
-          size: compact ? "flexible" : "normal",
-          appearance: inline ? "interaction-only" : "always",
+          size: "flexible",
+          appearance: "interaction-only",
         }}
       />
 
-      {/* Error */}
       {state.status === "error" && (
-        <p role="alert" className="font-sans text-[14px] text-fg">
+        <p role="alert" className="font-sans text-[14px] text-fg m-0">
           {state.message}
         </p>
       )}
 
-      {/* Submit */}
-      {!inline && (
-        <button
-          type="submit"
-          disabled={pending}
-          className="self-start h-11 bg-fg text-bg px-[18px] font-sans font-semibold text-[15px] cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {pending ? "Subscribing..." : "Subscribe"}
-        </button>
-      )}
+      {note && <p className="font-mono text-[13px] text-fg-subtle m-0">{note}</p>}
     </form>
   );
 }

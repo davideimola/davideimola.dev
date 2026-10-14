@@ -1,10 +1,8 @@
-export { ConnectSection } from "./ConnectSection";
 export { HeroSection } from "./HeroSection";
+export { HowIWorkSection } from "./HowIWorkSection";
+export { InPublicSection } from "./InPublicSection";
 export { InteractiveTerminal } from "./InteractiveTerminal";
 export { NewsletterSection } from "./NewsletterSection";
-export { ProjectsSection } from "./ProjectsSection";
 export { ShelfNow } from "./ShelfNow";
 export { ShelfWall } from "./ShelfWall";
-export { TalksSection } from "./TalksSection";
-export { WhatIDoSection } from "./WhatIDoSection";
-export { WritingSection } from "./WritingSection";
+export { TopicsSection } from "./TopicsSection";

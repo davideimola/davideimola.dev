@@ -32,3 +32,17 @@ export function formatRelative(dateStr: string, today: Date): string {
   const months = Math.max(1, Math.round(days / 30));
   return months === 1 ? "next month" : `in ${months} months`;
 }
+
+// Day-first label for cards and archives: "14 Oct 2026"
+export function formatDayMonthYear(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+// Day-first label inside a year group: "14 Oct"
+export function formatDayMonth(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}

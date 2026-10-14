@@ -20,7 +20,7 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["Community", "Open Source"],
-    "description": "International open source community. 20k+ people reached, 100+ speakers at events across Europe."
+    "description": "International open source community I co-founded. 20k+ people reached, 100+ speakers at events across Europe."
   },
   {
     "slug": "os-day",
@@ -30,7 +30,7 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["Conference", "Open Source"],
-    "description": "Open source conference I co-organize. A full day of talks, workshops, and community connections for the Italian OSS ecosystem."
+    "description": "The open source conference I co-organise in Florence. A full day of talks, workshops and community."
   },
   {
     "slug": "argus",

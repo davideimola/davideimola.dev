@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { BlogPost, Project } from "../../lib/content";
-import { formatShortDate } from "../../lib/dates";
+import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
 import type { RotatingCard } from "../../lib/home-cards";
 import { ButtonLink } from "../ui/Button";
 import { Card } from "../ui/Card";
@@ -19,6 +19,8 @@ interface HomeCard {
   href: string;
   title: string;
   meta?: string;
+  /** Mono date line instead of the sans meta line. */
+  date?: string;
 }
 
 function rotatingCard(card: RotatingCard): HomeCard {
@@ -29,7 +31,7 @@ function rotatingCard(card: RotatingCard): HomeCard {
         tape: "Next talk",
         href: `/sharing#${card.talk.slug}`,
         title: card.talk.session?.title ?? card.talk.event,
-        meta: `${card.talk.event} · ${formatShortDate(card.talk.date)}`,
+        meta: `${card.talk.event} · ${formatDayMonth(card.talk.date)}`,
       };
     case "last-recording":
       return {
@@ -70,6 +72,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
       tape: "Writing",
       href: `/blog/${latestPost.slug}`,
       title: latestPost.title,
+      date: formatDayMonthYear(latestPost.date),
     });
   }
   if (project) {
@@ -84,7 +87,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
   if (rotating) cards.push(rotatingCard(rotating));
 
   return (
-    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-14 pb-16 md:pb-20">
+    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-6 md:pt-14">
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-12 lg:gap-[72px] items-stretch">
         <div className="flex flex-col gap-7">
           <h1 className="m-0 font-sans font-bold text-fg text-[44px] sm:text-[64px] lg:text-display leading-[0.98] tracking-[-0.045em]">
@@ -121,7 +124,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
 
       {cards.length > 0 && (
         <div
-          className={`mt-16 md:mt-20 grid grid-cols-1 gap-9 md:gap-7 ${GRID_COLS[cards.length]}`}
+          className={`mt-10 md:mt-[72px] grid grid-cols-1 gap-[26px] md:gap-7 ${GRID_COLS[cards.length]}`}
         >
           {cards.map((card, i) => (
             <Card
@@ -135,6 +138,11 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
                 <span className="font-sans font-bold text-[23px] leading-[1.2] tracking-[-0.025em] text-fg">
                   {card.title}
                 </span>
+                {card.date && (
+                  <span className="font-mono text-[12px] md:text-[13px] text-fg-subtle">
+                    {card.date}
+                  </span>
+                )}
                 {card.meta && (
                   <span className="font-sans text-[16px] leading-[1.5] text-fg-subtle line-clamp-2">
                     {card.meta}
