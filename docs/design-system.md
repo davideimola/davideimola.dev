@@ -49,16 +49,20 @@ Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `te
 - **Badge** — status pills only (Coming soon, Conference, roles). Never for section labels (tape) or tags (`#tag` in mono).
 - **SectionHeader** — tape plus an optional mono "see all" link.
 - **PageHero** — tape `label`, h1, lead. Every page uses it.
-- **NavBar** — sticky, S mark plus bold wordmark, sans links, current page in ink with a 2px underline, search, theme toggle, mobile menu.
-- **Footer** — ink hairline, S mark with the motto, the one-line newsletter form, links in mono.
+- **NavBar** — sticky, S mark plus bold wordmark, four sans links (Writing, Built, Talks, About), current page in ink with a 2px underline, search, theme toggle, mobile menu behind a 44px ink-framed button.
+- **Footer** — ink hairline, S mark with name and place, the personal pages (Now, Uses, Shelf, CV, Contact) and the profiles in mono, a quieter row of site links. No newsletter form.
+- **PostCover** — a post's cover at 16:9 in a hairline frame, unfiltered; SVG covers skip the optimiser.
+- **SubscribeForm** — `full` (the /newsletter hero), `inline` (joined field and button), `compact` (stacked).
 
 ## Article
 
 `/blog/[slug]`: tape with the category, h1, lead (the excerpt), mono meta line, an ink hairline, then a 700px reading column with the ToC on the right. Prose (in `globals.css`): body 19/1.7 in `fg-body`, sans titles, ink links with red on hover, quotes set large with a small ink square instead of a side bar, inline code on `surface-inline`, code blocks on `surface` with a 1px border and a mono title bar. At most one marker in a whole piece.
 
-## Photography
+## Photography and covers
 
-Portraits are black and white (`grayscale`). A tape may sit on a photo's edge; the mark never sits on a photo.
+Portraits and photos of people are black and white (`grayscale`). A tape may sit on a photo's edge; the mark never sits on a photo.
+
+Blog covers are monoline ink illustrations on paper with exactly one red detail, shown as they are (see CLAUDE.md, Rules).
 
 ## Spacing and layout
 
