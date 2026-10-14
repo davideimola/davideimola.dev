@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Badge } from "../../../components/ui/Badge";
 import { CoverTile } from "../../../components/ui/CoverTile";
 import { JsonLd } from "../../../components/ui/JsonLd";
-import { PageHero } from "../../../components/ui/PageHero";
-import { ScrollReveal } from "../../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../../components/ui/SectionHeader";
-import { formatDate, formatMonthYear } from "../../../lib/dates";
+import { Marker } from "../../../components/ui/Marker";
+import { Tape } from "../../../components/ui/Tape";
+import { formatDate, formatDayMonth, formatMonthYear } from "../../../lib/dates";
 import {
   getShowcase,
   groupPassesByVerb,
@@ -65,187 +64,138 @@ export default async function ShelfPage() {
     },
   };
 
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const queuedTypes = showcase.pile.byType.filter((entry) => entry.count > 0);
+
   return (
-    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-11">
       <JsonLd data={shelfSchema} />
-      <PageHero label="Shelf" title="Shelf" description={DESCRIPTION}>
-        <p className="font-mono text-[12px] text-fg-subtle mt-4 leading-relaxed">
-          This page is read live out of{" "}
+      <header className="flex flex-col gap-5 max-w-[920px]">
+        <Tape tilt={0}>Shelf</Tape>
+        <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.045em]">
+          What I'm <Marker>reading</Marker>, and what comes next.
+        </h1>
+        <p className="m-0 font-sans text-[18px] sm:text-[19px] leading-[1.55] text-fg-muted">
+          Books, comics and games, straight from{" "}
           <a
             href={TSUNDOKU_REPO}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-fg-muted hover:text-accent transition-colors duration-150"
+            className="text-fg border-b border-fg no-underline hover:text-accent hover:border-accent"
           >
             tsundoku
           </a>
-          , the open source library I run at home. Every number below is a query against it.
+          , the library I built for myself: what's open now, the verdicts on what I finished or put
+          down, and the queue of what to take on next.
         </p>
-        <p className="font-mono text-[11px] text-fg-subtle mt-2">
-          {source === "live" ? (
-            <>
-              Last read: <span className="text-fg-muted">{formatDate(showcase.generatedAt)}</span>
-            </>
-          ) : (
-            <>
-              tsundoku is not answering right now, so this is the last snapshot committed to the
-              site, from <span className="text-fg-muted">{formatDate(showcase.generatedAt)}</span>.
-            </>
-          )}
+        <p className="m-0 font-mono text-[13px] text-fg-subtle">
+          {source === "live"
+            ? `Read live from the library on ${formatDate(showcase.generatedAt)}.`
+            : `The library is not answering right now, so this is the last snapshot committed to the site, from ${formatDate(showcase.generatedAt)}.`}
         </p>
-      </PageHero>
+      </header>
 
       {/* 1. Open passes, one block per Type verb. An empty block renders nothing. */}
-      {openGroups.map((group) => (
-        <section key={group.verbBase} className="mb-16">
-          <ScrollReveal>
-            <SectionHeader title={group.label} className="mb-6" />
-          </ScrollReveal>
-          <div className="flex flex-col gap-4">
-            {group.passes.map((pass, i) => (
-              <ScrollReveal key={pass.id} delay={i * 40}>
-                <OpenPassRow pass={pass} />
-              </ScrollReveal>
-            ))}
+      {openGroups.map((group, gi) => (
+        <section
+          key={group.verbBase}
+          className="mt-11 pt-7 border-t border-fg flex flex-col gap-[22px]"
+        >
+          <div className="flex items-baseline justify-between gap-4">
+            <Tape as="h2" tilt={gi % 2 === 0 ? 1 : 2}>
+              {group.label} now
+            </Tape>
+            <span className="font-mono text-[13px] text-fg-subtle">{group.passes.length} open</span>
           </div>
+          <ul className="m-0 p-0 list-none grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {group.passes.map((pass) => (
+              <li key={pass.id}>
+                <OpenPassCard pass={pass} />
+              </li>
+            ))}
+          </ul>
         </section>
       ))}
 
-      {/* 2. The judgements. What I wrote about a book stays in my own library, so
-          this block has a score, an outcome and two dates to work with. That is
-          enough: an abandonment is the loudest row on the page.
+      {/* 2. The judgements: a score, an outcome and the dates, never the review.
           tsundoku sends only the passes carrying a verdict, most recent first,
           capped at twelve, with `count` holding every verdict behind them.
           Nothing is filtered or sliced here. */}
       {showcase.finished.recent.length > 0 && (
-        <section className="mb-16 border-t border-border pt-10">
-          <ScrollReveal>
-            <SectionHeader title="Recent verdicts" className="mb-3" />
-          </ScrollReveal>
-          <ScrollReveal>
-            <p className="font-sans text-[14px] text-fg-muted leading-relaxed max-w-2xl mb-6">
-              A score and a date, no review: what I thought of something stays in my own library.
-              Only the passes I actually judged land here, so the quiet finishes I never scored do
-              not, and they run newest first where I bothered to write a date down. Putting a book
-              down is a verdict too, with or without a number, and it gets the same row as a finish.
-              Finishing something bad is the failure.
+        <section className="mt-14 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+          <div className="flex flex-col items-start gap-3">
+            <Tape as="h2" tilt={2}>
+              Verdicts
+            </Tape>
+            <p className="m-0 font-sans text-[15px] leading-[1.5] text-fg-muted">
+              Only what I judged lands here, newest first where a date was recorded. The score is
+              the whole verdict.
             </p>
-          </ScrollReveal>
-          <div className="flex flex-col gap-4">
-            {showcase.finished.recent.map((pass, i) => (
-              <ScrollReveal key={pass.id} delay={i * 40}>
-                <FinishedPassRow pass={pass} />
-              </ScrollReveal>
-            ))}
           </div>
-          {/* When the sample is everything there is, saying "3 of 3" is noise,
-              so the line goes away entirely. */}
-          {showcase.finished.count > showcase.finished.recent.length && (
-            <ScrollReveal>
-              <p className="font-mono text-[11px] text-fg-subtle mt-4">
-                Showing {showcase.finished.recent.length} of {showcase.finished.count}. The block is
-                the most recent sample, the count is every verdict I have recorded.
+          <div className="flex flex-col">
+            <ul className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-2 md:gap-x-12">
+              {showcase.finished.recent.map((pass) => (
+                <li key={pass.id}>
+                  <VerdictRow pass={pass} />
+                </li>
+              ))}
+            </ul>
+            {/* When the sample is everything there is, "3 of 3" is noise. */}
+            {showcase.finished.count > showcase.finished.recent.length && (
+              <p className="m-0 mt-4 font-mono text-[13px] text-fg-subtle">
+                Showing {showcase.finished.recent.length} of {showcase.finished.count}
               </p>
-            </ScrollReveal>
-          )}
+            )}
+          </div>
         </section>
       )}
 
-      {/* 3. The pile, and the last block on the page. The project is named
-          after it, so it gets the big number. */}
-      <section className="border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="The pile" className="mb-6" />
-        </ScrollReveal>
-        <ScrollReveal>
-          <div className="border border-border bg-surface p-5 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8">
-              <div>
-                <p className="font-mono text-[44px] sm:text-[56px] font-bold text-fg leading-none tracking-[-0.04em]">
-                  {showcase.pile.count}
-                </p>
-                {/* Not "volumes": the pile holds a videogame as readily as a
-                    manga, and the breakdown right under it says so. Not
-                    "unread" either: half of it is already in progress and some
-                    of it I do not own yet. */}
-                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mt-2">
-                  next up
-                </p>
-              </div>
-              <p className="font-sans text-[14px] text-fg-muted leading-relaxed max-w-md">
-                Tsundoku is the pile that keeps growing, and this is mine: what I take on next, not
-                a heap of unread purchases. Some of it I pinned by hand. The rest composes itself
-                out of the stories left on a path I am walking, the things I want and do not own
-                yet, the runs with somewhere left to go, and the next missing volume of every series
-                I collect.
-              </p>
-            </div>
-
-            {showcase.pile.byType.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-6">
-                {showcase.pile.byType.map((entry) => (
-                  <span
-                    key={entry.type.slug}
-                    className="font-mono text-[11px] text-fg-muted border border-border px-2 py-1"
-                  >
-                    {entry.type.label} <span className="text-fg-subtle">· {entry.count}</span>
-                  </span>
-                ))}
-              </div>
+      {/* 3. The pile: what to take on next, a queue and not a heap of unread
+          purchases. It holds videogames as readily as manga, and things not
+          owned yet, so the copy never calls it volumes or purchases. */}
+      <section className="mt-14 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+        <div className="flex flex-col items-start gap-2">
+          <Tape as="h2" tilt={0}>
+            Up next
+          </Tape>
+          <p className="m-0 mt-1 font-sans text-[15px] leading-[1.5] text-fg-muted">
+            A queue, not a heap: what I pinned first, then what my open series and wants put next.
+          </p>
+          <span className="font-mono font-medium text-[34px] leading-none text-fg mt-2">
+            {showcase.pile.count}
+          </span>
+          <span className="font-mono text-[13px] text-fg-subtle">queued</span>
+          {queuedTypes.length > 0 && (
+            <span className="font-mono text-[12px] leading-[1.6] text-fg-subtle">
+              {queuedTypes.map((entry) => `${entry.type.label} ${entry.count}`).join(" · ")}
+            </span>
+          )}
+        </div>
+        {showcase.pile.recent.length > 0 && (
+          <div className="flex flex-col gap-4">
+            {/* A dozen rows, every one a different kind of thing and no filter to
+                say which is which, so the Type is worth a Badge here. */}
+            <ol className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-2 md:gap-x-12">
+              {showcase.pile.recent.map((entry, i) => (
+                <li
+                  key={entry.id}
+                  className="grid grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-3 py-[11px] border-b border-border"
+                >
+                  <span className="font-mono text-[13px] text-fg-subtle">{pad(i + 1)}</span>
+                  <span className="font-sans font-semibold text-[16px] text-fg">{entry.title}</span>
+                  <Badge variant="outline">{entry.type.label}</Badge>
+                </li>
+              ))}
+            </ol>
+            {showcase.pile.count > showcase.pile.recent.length && (
+              <span className="font-mono text-[13px] text-fg-subtle">
+                Showing {showcase.pile.recent.length} of {showcase.pile.count} queued
+              </span>
             )}
           </div>
-        </ScrollReveal>
-
-        {showcase.pile.recent.length > 0 && (
-          <ScrollReveal>
-            <div className="mt-8">
-              <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
-                Newest in the pile{" "}
-                <span className="normal-case tracking-normal">
-                  ({showcase.pile.recent.length} of {showcase.pile.count})
-                </span>
-              </p>
-              <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-3">
-                {/* A dozen rows, every one of them a different kind of thing,
-                    and no filter above them to say which is which, so here the
-                    Type is worth a Badge. */}
-                {showcase.pile.recent.map((entry) => (
-                  <div key={entry.id} className="flex flex-col gap-2">
-                    <CoverTile title={entry.title} cover={entry.cover} series={entry.series} />
-                    <div className="flex flex-col gap-1.5">
-                      <p className="font-mono text-[10px] text-fg-subtle leading-tight line-clamp-2">
-                        {entry.title}
-                      </p>
-                      <Badge variant="category" className="self-start">
-                        {entry.type.label}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
         )}
       </section>
     </div>
-  );
-}
-
-function PassMeta({ pass }: { pass: ShelfPass }) {
-  return (
-    <p className="font-mono text-[11px] text-fg-subtle flex flex-wrap items-center gap-x-2 gap-y-1">
-      <span>{pass.type.label}</span>
-      <span className="text-border">/</span>
-      {/* The Medium arrives as a label tsundoku chose. Printing the slug back
-          would give us "Playstation 5". */}
-      <span>{pass.medium.label}</span>
-      {pass.series && (
-        <>
-          <span className="text-border">/</span>
-          <span>{pass.series.name}</span>
-        </>
-      )}
-    </p>
   );
 }
 
@@ -269,41 +219,35 @@ function ProgressRatio({ progress }: { progress: ShelfProgress }) {
   );
 }
 
-function OpenPassRow({ pass }: { pass: ShelfPass }) {
+function OpenPassCard({ pass }: { pass: ShelfPass }) {
   const percent =
     pass.progress && pass.progress.total > 0
       ? Math.min(100, Math.round((pass.progress.reached / pass.progress.total) * 100))
       : null;
 
   return (
-    <article className="flex items-start gap-4 border border-border bg-surface p-4 transition-[border-color] duration-200 hover:border-fg">
-      <div className="w-14 sm:w-16 shrink-0">
-        <CoverTile title={pass.title} cover={pass.cover} series={pass.series} />
-      </div>
-      <div className="min-w-0 flex-1">
-        <h3 className="font-sans text-[14px] text-fg leading-snug mb-1 font-bold tracking-[-0.02em]">
-          {pass.title}
-        </h3>
-        <PassMeta pass={pass} />
-        {/* A pass with no start date is ordinary, and the line simply goes away. */}
-        {pass.startedAt && (
-          <p className="font-mono text-[11px] text-fg-subtle mt-2">
-            Started {formatMonthYear(pass.startedAt)}
-          </p>
-        )}
-        {percent !== null && pass.progress && (
-          <div className="mt-3">
-            <div className="h-px w-full bg-border" aria-hidden="true">
-              {/* The width is a measurement, so it cannot be a Tailwind class. */}
-              <div className="h-px bg-fg" style={{ width: `${percent}%` }} />
-            </div>
-            <p className="font-mono text-[10px] text-fg-subtle mt-1.5">
-              <ProgressRatio progress={pass.progress} /> <span aria-hidden="true">·</span> {percent}
-              %
-            </p>
+    <article className="flex flex-col gap-2.5">
+      <CoverTile title={pass.title} cover={pass.cover} series={pass.series} />
+      <h3 className="m-0 font-sans font-bold text-[17px] md:text-[19px] tracking-[-0.02em] text-fg">
+        {pass.title}
+      </h3>
+      {/* The Medium arrives as a label tsundoku chose, never the slug. A pass with
+          no start date is ordinary, and that part of the line goes away. */}
+      <p className="m-0 font-mono text-[13px] text-fg-subtle">
+        {pass.type.label} · {pass.medium.label}
+        {pass.startedAt && ` · since ${formatDayMonth(pass.startedAt)}`}
+      </p>
+      {percent !== null && pass.progress && (
+        <div>
+          <div className="h-px w-full bg-border" aria-hidden="true">
+            {/* The width is a measurement, so it cannot be a Tailwind class. */}
+            <div className="h-px bg-fg" style={{ width: `${percent}%` }} />
           </div>
-        )}
-      </div>
+          <p className="m-0 font-mono text-[12px] text-fg-subtle mt-1.5">
+            <ProgressRatio progress={pass.progress} />
+          </p>
+        </div>
+      )}
     </article>
   );
 }
@@ -322,74 +266,45 @@ function verdictDates(pass: ShelfFinishedPass, abandoned: boolean): string | nul
   return null;
 }
 
-function FinishedPassRow({ pass }: { pass: ShelfFinishedPass }) {
+// The score is the loudest thing in the row. An abandonment is the loudest row
+// of the block: its outcome is a filled ink pill, where a finish stays mono.
+function VerdictRow({ pass }: { pass: ShelfFinishedPass }) {
   const abandoned = pass.outcome === "given-up";
   const dates = verdictDates(pass, abandoned);
 
   return (
-    <article
-      className={[
-        "flex items-start gap-4  bg-surface p-4",
-        "border transition-[border-color] duration-200 hover:border-fg",
-        // An abandonment is the most expressive row here, so it wears the accent
-        // on its edge and the finishes stay quiet around it.
-        abandoned ? "border-border border-l-2 border-l-fg" : "border-border",
-      ].join(" ")}
-    >
-      <div className="w-14 sm:w-16 shrink-0">
-        <CoverTile title={pass.title} cover={pass.cover} series={pass.series} />
-      </div>
-
-      <div className="min-w-0 flex-1">
-        <h3 className="font-sans text-[14px] text-fg leading-snug mb-1 font-bold tracking-[-0.02em]">
-          {pass.title}
-        </h3>
-        <PassMeta pass={pass} />
-        <p className="font-mono text-[11px] text-fg-subtle mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
-          {dates && <span>{dates}</span>}
+    <article className="grid grid-cols-[64px_minmax(0,1fr)] items-baseline gap-4 py-4 border-b border-border">
+      {pass.rating ? (
+        <p className="m-0 font-mono font-medium text-[26px] leading-none text-fg">
+          <span className="sr-only">Scored </span>
+          {pass.rating.score}
+        </p>
+      ) : (
+        <p className="m-0 font-mono text-[26px] leading-none text-border">
+          <span className="sr-only">Not scored</span>
+          <span aria-hidden="true">--</span>
+        </p>
+      )}
+      <div className="flex flex-col gap-1">
+        <h3 className="m-0 font-sans font-semibold text-[18px] text-fg">{pass.title}</h3>
+        <p className="m-0 font-mono text-[12px] text-fg-subtle flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>{pass.type.label}</span>
+          <span aria-hidden="true">·</span>
+          {abandoned ? <Badge variant="accent">Put down</Badge> : <span>finished</span>}
+          {dates && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{dates}</span>
+            </>
+          )}
           {abandoned && pass.progress && pass.progress.total > 0 && (
             <>
-              {dates && (
-                <span className="text-border" aria-hidden="true">
-                  /
-                </span>
-              )}
+              <span aria-hidden="true">·</span>
               <span className="text-fg-muted">
                 stopped at <ProgressRatio progress={pass.progress} />
               </span>
             </>
           )}
-        </p>
-      </div>
-
-      {/* The verdict column. The score is the loudest thing in the row, and the
-          outcome sits under it as its label, so the block scans as a column of
-          judgements rather than a table of numbers. */}
-      <div className="shrink-0 text-right w-16 sm:w-20">
-        {pass.rating ? (
-          <p
-            className={[
-              "font-mono font-bold leading-none tracking-[-0.03em] text-[26px] sm:text-[32px]",
-              abandoned ? "text-fg" : "text-fg",
-            ].join(" ")}
-          >
-            <span className="sr-only">Scored </span>
-            {pass.rating.score}
-            <span className="text-fg-subtle text-[13px] sm:text-[15px] font-normal">/10</span>
-          </p>
-        ) : (
-          <p className="font-mono text-[26px] sm:text-[32px] leading-none text-border">
-            <span className="sr-only">Not scored</span>
-            <span aria-hidden="true">--</span>
-          </p>
-        )}
-        <p
-          className={[
-            "font-mono text-[10px] tracking-[0.08em] uppercase mt-2",
-            abandoned ? "text-fg" : "text-fg-subtle",
-          ].join(" ")}
-        >
-          {abandoned ? "Put down" : "Finished"}
         </p>
       </div>
     </article>
