@@ -88,6 +88,7 @@
       "slug": "edalab",
       "type": "employment",
       "org": "EDALab Networked Embedded Systems",
+      "short": "EDALab",
       "location": "Verona, Italy",
       "period": "Nov 2016 – Sep 2017",
       "roles": [
@@ -105,6 +106,7 @@
       "slug": "si-fa",
       "type": "freelance",
       "org": "Si-Fa Cooperativa Sociale",
+      "short": "Si-Fa",
       "location": "Verona, Italy",
       "period": "Oct 2019 – Dec 2021",
       "roles": [

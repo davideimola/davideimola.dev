@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { JsonLd } from "../../../components/ui/JsonLd";
-import { ScrollReveal } from "../../../components/ui/ScrollReveal";
+import { Marker } from "../../../components/ui/Marker";
+import { Tape } from "../../../components/ui/Tape";
+import { getAllProjects } from "../../../lib/content";
 import {
   getAboutNarrative,
   getIdentity,
   getOrganisedEvents,
   getTotalTalkCount,
   getTrajectory,
+  type ResolvedPhase,
+  shortOrg,
 } from "../../../lib/cv";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
@@ -35,60 +40,90 @@ const HOBBIES = [
   { label: "Football", context: "I play futsal and follow Hellas Verona, home games included." },
   {
     label: "BBQ, low and slow",
-    context:
-      "American-style long cooks, sous vide, and underrated cuts. Favourite: skirt steak. Cheap, flavourful, unbeatable.",
+    context: "Long cooks, sous vide, underrated cuts. Favourite: skirt steak.",
   },
   {
     label: "Video games",
-    context:
-      "RPGs and action-adventure. Loved: Clair Obscur Expedition 33, Baldur's Gate 3, Zelda BotW and TotK. Lifelong Pokémon fan.",
+    context: "RPGs and action-adventure. Clair Obscur, Baldur's Gate 3, Zelda.",
   },
-  {
-    label: "Pokémon cards",
-    context:
-      "Building the Pokédex in rare and full-art variants. An obsession disguised as a hobby.",
-  },
+  { label: "Pokémon cards", context: "Building the Pokédex in rare and full-art variants." },
   {
     label: "Tabletop and D&D",
-    context: "Board game collector. Currently playing a campaign, and writing one to DM soon.",
+    context: "Board game collector, playing a campaign, writing one to DM.",
   },
-  { label: "JuJutsu", context: "Hontai Yōshin-ryū. Yellow belt; orange is the next milestone." },
-  {
-    label: "Music",
-    context:
-      "Everything from Linkin Park to De André, Eminem to Hans Zimmer. Concerts whenever I can.",
-  },
-  {
-    label: "Travel",
-    context: "I travel to learn. Japan was a dream; I'll go back. Asia draws me most.",
-  },
-  {
-    label: "Film and series",
-    context: "Fantasy and action. Lord of the Rings is untouchable. The occasional anime binge.",
-  },
+  { label: "JuJutsu", context: "Hontai Yōshin-ryū. Yellow belt; orange is next." },
+  { label: "Music", context: "From Linkin Park to De André, Eminem to Hans Zimmer." },
+  { label: "Travel", context: "I travel to learn. Japan was a dream; Asia draws me most." },
+  { label: "Film and series", context: "Fantasy and action. Lord of the Rings is untouchable." },
 ];
 
-function RailHeading({ children }: { children: string }) {
+const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
+
+function PhaseRow({
+  phase,
+  index,
+  last,
+  started,
+}: {
+  phase: ResolvedPhase;
+  index: number;
+  last: boolean;
+  started: ReactNode;
+}) {
   return (
-    <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
-      {children}
-    </p>
+    <article
+      className={`grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)] gap-4 md:gap-14 py-8 md:py-9 ${
+        last ? "" : "border-b border-border"
+      }`}
+    >
+      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-2">
+        {/* Decorative: the order is already carried by the periods. */}
+        <span
+          aria-hidden="true"
+          className={`font-mono font-medium text-[32px] md:text-[40px] leading-none tabular-nums ${
+            phase.current ? "text-fg" : "text-border"
+          }`}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="font-mono text-[13px] text-fg-subtle">
+          {phase.current ? phase.period.replace(/Present$/, "today") : phase.period}
+        </span>
+        <span className="font-sans text-[15px] text-fg-muted">{phase.credits.join(" · ")}</span>
+      </div>
+      <div className="flex flex-col gap-3">
+        <h2 className="m-0 font-sans font-bold text-[24px] md:text-[30px] tracking-[-0.03em] text-fg">
+          {phase.title}
+        </h2>
+        <p className="m-0 font-sans text-[16px] leading-[1.65] text-fg-body">{phase.prose}</p>
+        {phase.tools.length > 0 && (
+          <span className="font-mono text-[13px] text-fg-subtle">{phase.tools.join(" · ")}</span>
+        )}
+        {started}
+        {phase.opened.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-1.5">
+            {phase.opened.map((question) => (
+              <div
+                key={question.name}
+                className="bg-surface border border-border px-5 py-[18px] flex flex-col gap-1.5"
+              >
+                <span className="font-mono text-[12px] text-fg-subtle">Open question</span>
+                <span className="font-sans font-bold text-[18px] text-fg">{question.name}</span>
+                <span className="font-sans text-[15px] leading-[1.5] text-fg-muted">
+                  {question.body}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
   );
 }
 
-function ToolChips({ names }: { names: string[] }) {
-  return (
-    <ul className="flex flex-wrap gap-1.5">
-      {names.map((name) => (
-        <li
-          key={name}
-          className="font-mono text-[11px] text-fg-muted border border-border rounded-full px-2.5 py-1"
-        >
-          {name}
-        </li>
-      ))}
-    </ul>
-  );
+function splitLastWord(text: string): [string, string] {
+  const i = text.trimEnd().lastIndexOf(" ");
+  return i < 0 ? ["", text] : [text.slice(0, i + 1), text.slice(i + 1)];
 }
 
 export default function AboutPage() {
@@ -97,289 +132,177 @@ export default function AboutPage() {
   const phases = getTrajectory();
   // Conference series only, which `noun` identifies: what a step *started* is the
   // community and the conference, and the meetup nights and the hackathon are what
-  // that community then does. /cv lists all of them; here they would turn a
-  // three-item block into a five-item one that mixes granularity.
+  // that community then does. /cv lists all of them.
   const organised = getOrganisedEvents().filter((event) => event.noun === "edition");
   const talkCount = getTotalTalkCount();
+  const projects = getAllProjects();
 
-  return (
-    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
-      <JsonLd data={PERSON_SCHEMA} />
+  const creedIndex = phases.findIndex((p) => p.slug === creed.phase);
+  const split = creedIndex < 0 ? phases.length : creedIndex + 1;
+  const before = phases.slice(0, split);
+  const after = phases.slice(split);
+  const creedImage = creedIndex < 0 ? undefined : phases[creedIndex].image;
+  const [creedHead, creedLast] = splitLastWord(creed.quote);
 
-      {/* The portrait stretches to the height of the text beside it rather than
-          setting its own: a tall image next to three lines of lead is what used to
-          open a band of blank page under the words. */}
-      <ScrollReveal>
-        <header className="mb-16">
-          <p className="font-mono text-[13px] text-fg-subtle mb-4">whoami</p>
-          <div className="flex flex-col sm:flex-row gap-8 sm:gap-10 sm:items-stretch">
-            <div className="flex-1 min-w-0">
-              <h1 className="font-sans text-[32px] sm:text-[44px] font-bold text-fg tracking-[-0.03em] leading-none mb-5">
-                {identity.name}
-              </h1>
-              <p className="font-sans text-[16px] text-fg-muted leading-relaxed max-w-xl mb-8">
-                {lead}
-              </p>
-              {/* The command is stated once and the chapters below are its output.
-                  Repeating it per chapter is what made the device wear out. */}
-              <p className="font-mono text-[13px] text-fg-subtle">git log --oneline --reverse</p>
-              <p className="font-mono text-[12px] text-fg-subtle mt-2 pl-6">
-                {phases.length} commits, {phases[0].period.split(" ")[0]} to today. The dated
-                version is on{" "}
-                <Link href="/cv" className="text-fg-muted hover:text-accent transition-colors">
-                  /cv
-                </Link>
-                .
-              </p>
-            </div>
-            <div className="shrink-0 w-[200px] sm:w-[220px] sm:self-stretch min-h-[280px] overflow-hidden border border-border">
-              <Image
-                src="/images/davide-about-profile.webp"
-                alt="Portrait of Davide Imola"
-                width={220}
-                height={420}
-                className="w-full h-full object-cover object-top grayscale"
-              />
-            </div>
-          </div>
-        </header>
-      </ScrollReveal>
-
-      {/* The trajectory is the page. Stack, Community and What I'm exploring used to
-          be sections underneath it and are now the steps' own content: what each one
-          left behind, set going, and opened. */}
-      <div className="flex flex-col gap-16">
-        {phases.map((phase, i) => {
-          const isCreed = creed.phase === phase.slug;
-          const hasRail = phase.started.length > 0 || phase.opened.length > 0;
-
+  // Derived, not restated: the communities from the Record, the conferences
+  // from the talk archive's organiser flag, the total from its length.
+  const startedLine = (phase: ResolvedPhase) => {
+    if (phase.started.length === 0) return null;
+    return (
+      <span className="font-mono text-[13px] text-fg-subtle">
+        Started here:{" "}
+        {phase.started.map((engagement) => {
+          const project = projects.find((p) => p.slug === engagement.slug);
+          const href = project?.caseStudy ?? project?.url;
           return (
-            <ScrollReveal key={phase.slug}>
-              <section className={i === 0 ? "" : "border-t border-border pt-8"}>
-                {/* A photograph belongs to the step it documents, at full width: a
-                    band wants a wide frame, not a portrait with its sides cut off. */}
-                {phase.image && (
-                  <figure className="mb-8">
-                    <div className="h-[200px] sm:h-[260px] overflow-hidden border border-border">
-                      <Image
-                        src={phase.image.src}
-                        alt={phase.image.caption}
-                        width={1024}
-                        height={260}
-                        // The crowd is in the middle of the frame: the room's ceiling
-                        // fills the top and the floor the bottom, so both `top` and
-                        // `bottom` spend the band on an empty surface.
-                        className="w-full h-full object-cover object-[center_45%] grayscale"
-                      />
-                    </div>
-                    <figcaption className="font-mono text-[10px] text-fg-subtle mt-2">
-                      {phase.image.caption}
-                    </figcaption>
-                  </figure>
-                )}
-
-                <div className="flex items-baseline gap-4 mb-6">
-                  {/* Decorative: the order is already carried by the periods. */}
-                  <span
-                    aria-hidden="true"
-                    className="font-mono text-[40px] sm:text-[56px] font-bold leading-none text-border tabular-nums shrink-0"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-mono text-[11px] text-fg-subtle tabular-nums mb-1">
-                      {phase.period}
-                      {phase.current && <span className="text-fg"> · now</span>}
-                    </p>
-                    <h2 className="font-sans text-[19px] sm:text-[24px] font-bold text-fg tracking-[-0.01em]">
-                      {phase.title}
-                    </h2>
-                  </div>
-                </div>
-
-                {/* Two rails only where there is something for the second one. A step
-                    that carries nothing but its tools runs full width instead of
-                    sitting next to a blank column. */}
-                <div className={hasRail ? "lg:grid lg:grid-cols-[1fr_300px] lg:gap-12" : ""}>
-                  <div className="min-w-0">
-                    <p className="font-sans text-[15px] sm:text-[16px] text-fg-muted leading-relaxed">
-                      {phase.prose}
-                    </p>
-
-                    {isCreed && (
-                      <blockquote className="border-l-2 border-fg pl-6 py-1 mt-8">
-                        <p className="font-mono text-[17px] sm:text-[19px] text-fg leading-snug">
-                          {creed.quote}
-                        </p>
-                        <p className="font-sans text-[14px] text-fg-muted mt-2">{creed.gloss}</p>
-                      </blockquote>
-                    )}
-
-                    {/* Names only: Docker and Kubernetes explain themselves, and a
-                        note per tool ended up saying what he did with them, which the
-                        prose above and /sharing already carry. */}
-                    {phase.tools.length > 0 && (
-                      <div className="mt-8">
-                        <RailHeading>What it left me with</RailHeading>
-                        <ToolChips names={phase.tools} />
-                      </div>
-                    )}
-
-                    {/* Deliberately not hung off the tools block. It was, and when
-                        "Technical leadership" left the current step's tool list the
-                        link went with it and /uses disappeared from the page. It
-                        belongs to the step that is today, whatever that step lists. */}
-                    {phase.current && (
-                      <p className="font-mono text-[11px] text-fg-subtle mt-8">
-                        <Link
-                          href="/uses"
-                          className="text-fg-muted hover:text-accent transition-colors"
-                        >
-                          /uses
-                        </Link>{" "}
-                        for the hardware and software behind all of it
-                      </p>
-                    )}
-                  </div>
-
-                  {hasRail && (
-                    <aside className="min-w-0 mt-10 lg:mt-0 flex flex-col gap-8">
-                      {phase.started.length > 0 && (
-                        <div>
-                          <RailHeading>What it started</RailHeading>
-                          <ul className="flex flex-col gap-3">
-                            {phase.started.map((item) => (
-                              <li key={item.slug} className="border-l border-border pl-4">
-                                <p className="font-mono text-[12px] font-medium text-fg">
-                                  {item.org}
-                                  <span className="font-normal text-[10px] text-fg">
-                                    {" "}
-                                    {item.roles[0].role}
-                                  </span>
-                                </p>
-                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
-                                  {item.roles[0].summary}
-                                </p>
-                              </li>
-                            ))}
-
-                            {/* Derived, not restated: the conferences come from the
-                                talk archive's organiser flag and the total from its
-                                length, so neither can drift from /sharing. */}
-                            {organised.map((event) => (
-                              <li key={event.slug} className="border-l border-border pl-4">
-                                <p className="font-mono text-[12px] font-medium text-fg">
-                                  {event.label}
-                                  <span className="font-normal text-[10px] text-fg">
-                                    {" "}
-                                    {event.count > 1 && `${event.count} ${event.noun}s · `}
-                                    {event.years}
-                                  </span>
-                                </p>
-                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
-                                  {event.location}
-                                </p>
-                              </li>
-                            ))}
-
-                            <li className="border-l border-border pl-4">
-                              <p className="font-mono text-[12px] font-medium text-fg">
-                                Speaking
-                                <span className="font-normal text-[10px] text-fg">
-                                  {" "}
-                                  {talkCount} talks and appearances
-                                </span>
-                              </p>
-                              <p className="font-sans text-[12px] text-fg-subtle leading-snug">
-                                Concrete talks, honest about tradeoffs.{" "}
-                                <Link
-                                  href="/sharing"
-                                  className="text-fg-muted hover:text-accent transition-colors"
-                                >
-                                  /sharing
-                                </Link>
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-
-                      {phase.opened.length > 0 && (
-                        <div>
-                          <RailHeading>What it opened</RailHeading>
-                          <ul className="flex flex-col gap-3">
-                            {phase.opened.map((question) => (
-                              <li key={question.name} className="border-l-2 border-fg pl-4">
-                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
-                                  <span className="font-mono font-medium text-fg">
-                                    {question.name}
-                                  </span>
-                                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-fg mx-1.5 align-middle" />
-                                  {question.body}
-                                </p>
-                              </li>
-                            ))}
-                          </ul>
-                          <p className="font-mono text-[11px] text-fg-subtle mt-4 pl-4">
-                            <Link
-                              href="/now"
-                              className="text-fg-muted hover:text-accent transition-colors"
-                            >
-                              /now
-                            </Link>{" "}
-                            for this month
-                          </p>
-                        </div>
-                      )}
-                    </aside>
-                  )}
-                </div>
-              </section>
-            </ScrollReveal>
+            <span key={engagement.slug}>
+              {href ? (
+                <a href={href} className={inlineLink}>
+                  {shortOrg(engagement)}
+                </a>
+              ) : (
+                shortOrg(engagement)
+              )}
+              {" · "}
+            </span>
           );
         })}
-      </div>
+        {organised.map((event) => (
+          <span key={event.slug}>
+            {event.label}
+            {" · "}
+          </span>
+        ))}
+        <a href="/sharing" className={inlineLink}>
+          {talkCount} talks so far
+        </a>
+      </span>
+    );
+  };
 
-      <ScrollReveal>
-        <section className="mt-16 border-t border-border pt-8">
-          <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-2">
-            Off the clock
-          </p>
-          <p className="font-sans text-[14px] text-fg-subtle mb-6 max-w-2xl">
-            None of this is part of the story above, which is the point of putting it after it.
-          </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
-            {HOBBIES.map((hobby) => (
-              <li key={hobby.label} className="font-sans text-[13px] text-fg-muted">
-                <span className="font-mono text-[13px] text-fg">{hobby.label}</span>
-                <span className="text-fg-subtle"> · {hobby.context}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="font-mono text-[11px] text-fg-subtle mt-6">
-            <Link href="/shelf" className="text-fg-muted hover:text-accent transition-colors">
-              /shelf
-            </Link>{" "}
-            for what I am reading and playing right now
-          </p>
-        </section>
-      </ScrollReveal>
+  const renderPhases = (list: ResolvedPhase[], offset: number) =>
+    list.map((phase, i) => (
+      <PhaseRow
+        key={phase.slug}
+        phase={phase}
+        index={offset + i}
+        last={i === list.length - 1}
+        started={startedLine(phase)}
+      />
+    ));
 
-      <ScrollReveal>
-        <section className="mt-16 border-t border-border pt-8">
-          <p className="font-sans text-[14px] text-fg-muted">
-            Want to talk engineering, community, or collaboration?{" "}
-            <a
-              href="https://www.linkedin.com/in/davideimola/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-fg hover:text-accent transition-colors duration-150"
-            >
-              Get in touch →
-            </a>
+  return (
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-12">
+      <JsonLd data={PERSON_SCHEMA} />
+
+      <header className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-[72px] items-stretch">
+        <div className="flex flex-col gap-6">
+          <Tape tilt={0}>About</Tape>
+          <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.045em]">
+            Ten years of pipelines, then the agents that run on them.
+          </h1>
+          <p className="m-0 font-sans text-[18px] sm:text-[21px] leading-[1.55] text-fg-muted max-w-[640px]">
+            {lead}
           </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[14px] text-fg-subtle">
+            <span>{identity.location}</span>
+            <span aria-hidden="true">·</span>
+            <Link href="/cv" className={inlineLink}>
+              The dated version: my CV
+            </Link>
+          </div>
+        </div>
+        {/* The portrait stretches to the height of the text beside it. */}
+        <figure className="relative m-0 lg:mt-1 w-full max-w-[360px] min-h-[320px] lg:min-h-[380px] aspect-[4/5] lg:aspect-auto">
+          <Image
+            src="/images/davide-about-profile.webp"
+            alt="Davide at a lectern, laptop covered in community stickers"
+            fill
+            sizes="360px"
+            priority
+            className="object-cover object-[50%_18%] grayscale contrast-[1.05]"
+          />
+        </figure>
+      </header>
+
+      <div className="h-px bg-fg mt-12 md:mt-14" />
+
+      {/* The trajectory is the page: each step's prose, what it left behind,
+          set going and opened, all from the CV Record. */}
+      <section className="pt-2 flex flex-col">{renderPhases(before, 0)}</section>
+
+      {creedIndex >= 0 && (
+        <section className="mt-2 py-10 border-t border-b border-fg grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-8 lg:gap-14 items-center">
+          <div className="flex flex-col gap-3.5">
+            <p className="m-0 font-sans font-bold text-fg text-[36px] sm:text-[52px] leading-[1.02] tracking-[-0.045em]">
+              {creedHead}
+              <Marker>{creedLast}</Marker>
+            </p>
+            <p className="m-0 font-sans text-[17px] sm:text-[18px] leading-[1.5] text-fg-muted">
+              {creed.gloss}
+            </p>
+          </div>
+          {creedImage && (
+            <figure className="m-0 flex flex-col gap-2">
+              <div className="relative w-full h-[236px]">
+                <Image
+                  src={creedImage.src}
+                  alt={creedImage.caption}
+                  fill
+                  sizes="420px"
+                  className="object-cover object-[center_45%] grayscale contrast-[1.05]"
+                />
+              </div>
+              <figcaption className="font-mono text-[13px] text-fg-subtle">
+                {creedImage.caption}
+              </figcaption>
+            </figure>
+          )}
         </section>
-      </ScrollReveal>
+      )}
+
+      {after.length > 0 && (
+        <section className="flex flex-col">{renderPhases(after, before.length)}</section>
+      )}
+
+      <section className="py-10 md:pb-12 border-t border-fg grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)] gap-6 md:gap-14">
+        <div className="flex flex-col items-start gap-3.5">
+          <Tape tilt={1}>Off the clock</Tape>
+          <p className="m-0 font-sans text-[15px] leading-[1.55] text-fg-muted">
+            Outside the story, because they are not part of the job. What I'm reading lives on{" "}
+            <Link href="/shelf" className={inlineLink}>
+              the shelf
+            </Link>
+            ; what I'm up to this month, on{" "}
+            <Link href="/now" className={inlineLink}>
+              now
+            </Link>
+            ; the desk, on{" "}
+            <Link href="/uses" className={inlineLink}>
+              uses
+            </Link>
+            .
+          </p>
+        </div>
+        <ul className="m-0 p-0 list-none grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-9 gap-y-[22px]">
+          {HOBBIES.map((hobby) => (
+            <li key={hobby.label} className="flex flex-col gap-1">
+              <span className="font-sans font-bold text-[17px] text-fg">{hobby.label}</span>
+              <span className="font-sans text-[14px] leading-[1.45] text-fg-muted">
+                {hobby.context}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <p className="m-0 pt-6 border-t border-border font-sans text-[16px] text-fg-muted">
+        Want to talk engineering, community or a talk at your event?{" "}
+        <Link href="/contact" className={inlineLink}>
+          Say hello
+        </Link>
+        .
+      </p>
     </div>
   );
 }

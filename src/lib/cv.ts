@@ -31,6 +31,8 @@ export interface Engagement {
   slug: string;
   type: EngagementType;
   org: string;
+  /** How prose names the organisation ("EDALab"), where the legal name is long. */
+  short?: string;
   location: string;
   period: string;
   current?: boolean;
@@ -390,6 +392,8 @@ export interface ResolvedPhase {
   // True while one of those periods is still open.
   current: boolean;
   engagements: Engagement[];
+  /** Who the phase was spent with: short org names, with the role for a single role. */
+  credits: string[];
   tools: string[];
   started: Engagement[];
   opened: OpenQuestion[];
@@ -433,6 +437,11 @@ function resolveReference(
   return { engagement, period: role.period };
 }
 
+/** The organisation as prose names it: `short`, else the legal name without its suffix. */
+export function shortOrg(engagement: Pick<Engagement, "org" | "short">): string {
+  return engagement.short ?? engagement.org.replace(/\s+S\.(r\.l|p\.A)\.?$/i, "");
+}
+
 // The phases of /about, in Record order: the story's order is editorial, so it
 // is not re-sorted here the way the schematic history is.
 export function getTrajectory(): ResolvedPhase[] {
@@ -457,6 +466,10 @@ export function getTrajectory(): ResolvedPhase[] {
       period: spanLabel(Math.min(...starts), current ? null : Math.max(...closed)),
       current,
       engagements: [...new Set(covered.map((entry) => entry.engagement))],
+      credits: phase.covers.map((reference, i) => {
+        const name = shortOrg(covered[i].engagement);
+        return reference.role ? `${name}, ${reference.role}` : name;
+      }),
       tools: phase.tools ?? [],
       // Resolved loudly, for the same reason `covers` is: a renamed slug would
       // otherwise delete the community work from the story without a word.

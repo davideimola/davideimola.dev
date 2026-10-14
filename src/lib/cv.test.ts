@@ -914,3 +914,13 @@ describe("the published /about narrative", () => {
     }
   });
 });
+
+describe("shortOrg", () => {
+  it("prefers the short name, else drops the legal suffix", async () => {
+    const { shortOrg } = await import("./cv");
+    expect(shortOrg({ org: "EDALab Networked Embedded Systems", short: "EDALab" })).toBe("EDALab");
+    expect(shortOrg({ org: "ASEM S.r.l." })).toBe("ASEM");
+    expect(shortOrg({ org: "Milkman Technologies S.p.A." })).toBe("Milkman Technologies");
+    expect(shortOrg({ org: "Codemotion" })).toBe("Codemotion");
+  });
+});
