@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { PageHero } from "../../../components/ui/PageHero";
-import { ScrollReveal } from "../../../components/ui/ScrollReveal";
-import { SectionHeader } from "../../../components/ui/SectionHeader";
+import { Marker } from "../../../components/ui/Marker";
+import { Tape } from "../../../components/ui/Tape";
 
 export const metadata: Metadata = {
   title: "Uses",
@@ -32,7 +31,7 @@ const HARDWARE = [
     ],
   },
   {
-    category: "Display & Video",
+    category: "Display and video",
     items: [
       {
         name: 'Samsung LU28R550 · 28" 4K UHD',
@@ -98,7 +97,7 @@ const HARDWARE = [
           "For sketching ideas, annotating, and thinking visually when the screen isn't enough.",
       },
       {
-        name: "Paper & pen",
+        name: "Paper and pen",
         description: "Still the fastest way to think. Always on the desk.",
       },
     ],
@@ -107,7 +106,7 @@ const HARDWARE = [
 
 const SOFTWARE = [
   {
-    category: "Editor & Terminal",
+    category: "Editor and terminal",
     items: [
       {
         name: "Cursor",
@@ -125,7 +124,7 @@ const SOFTWARE = [
     ],
   },
   {
-    category: "Browser & Productivity",
+    category: "Browser and productivity",
     items: [
       {
         name: "Arc",
@@ -151,7 +150,7 @@ const SOFTWARE = [
     ],
   },
   {
-    category: "Design & Diagrams",
+    category: "Design and diagrams",
     items: [
       {
         name: "diagrams.net",
@@ -227,166 +226,112 @@ const DEV_STACK = [
   },
 ];
 
-export default function UsesPage() {
+type Group = (typeof HARDWARE)[number];
+
+function ItemList({ groups }: { groups: Group[] }) {
   return (
-    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
-      <PageHero
-        label="Uses"
-        title="Uses"
-        className="mb-16"
-        description={
-          <>
-            Hardware, software, and tools I use daily to build and think. Inspired by{" "}
-            <a
-              href="https://uses.tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-fg hover:text-accent transition-colors duration-150"
+    <>
+      {groups.map((group) => (
+        <div key={group.category} className="flex flex-col gap-3.5">
+          <span className="font-mono text-[12px] text-fg-subtle mt-1.5">{group.category}</span>
+          {group.items.map((item, i) => (
+            <div
+              key={item.name}
+              className={`flex flex-col gap-0.5 ${
+                i < group.items.length - 1 ? "pb-3 border-b border-border" : "pb-3"
+              }`}
             >
-              uses.tech
-            </a>
-            .
-          </>
-        }
-      />
-
-      {/* Hardware */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Hardware" />
-        </ScrollReveal>
-        <div className="flex flex-col gap-10">
-          {HARDWARE.map((section, si) => (
-            <ScrollReveal key={section.category} delay={si * 40}>
-              <div>
-                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
-                  {section.category}
-                </p>
-                <div className="flex flex-col gap-4">
-                  {section.items.map((item) => (
-                    <div key={item.name} className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
-                        <span
-                          aria-hidden="true"
-                          className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                        />
-                        {item.name}
-                      </span>
-                      <span className="font-sans text-[13px] text-fg-subtle pl-5">
-                        {item.description}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Software */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Software" />
-        </ScrollReveal>
-        <div className="flex flex-col gap-10">
-          {SOFTWARE.map((section, si) => (
-            <ScrollReveal key={section.category} delay={si * 40}>
-              <div>
-                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
-                  {section.category}
-                </p>
-                <div className="flex flex-col gap-4">
-                  {section.items.map((item) => (
-                    <div key={item.name} className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
-                        <span
-                          aria-hidden="true"
-                          className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
-                        />
-                        {item.name}
-                      </span>
-                      <span className="font-sans text-[13px] text-fg-subtle pl-5">
-                        {item.description}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* Cursor extensions */}
-        <ScrollReveal>
-          <div className="mt-10">
-            <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
-              Cursor extensions
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {CURSOR_EXTENSIONS.map((ext) => (
-                <span
-                  key={ext}
-                  className="font-mono text-[11px] text-fg-muted border border-border px-2 py-1"
-                >
-                  {ext}
+              <span className="font-sans font-semibold text-[16px] text-fg">{item.name}</span>
+              {item.description && (
+                <span className="font-sans text-[14px] leading-[1.45] text-fg-muted">
+                  {item.description}
                 </span>
-              ))}
+              )}
             </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* Dev stack */}
-      <section className="mb-16 border-t border-border pt-10">
-        <ScrollReveal>
-          <SectionHeader title="Dev stack" />
-        </ScrollReveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {DEV_STACK.map((section, si) => (
-            <ScrollReveal key={section.category} delay={si * 40}>
-              <div>
-                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
-                  {section.category}
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {section.items.map((item) => {
-                    const name = typeof item === "string" ? item : item.name;
-                    const note = typeof item === "string" ? null : item.note;
-                    return (
-                      <li
-                        key={name}
-                        className="font-mono text-[12px] text-fg-muted flex items-center gap-2"
-                      >
-                        <span className="text-fg text-[10px]">-</span>
-                        {name}
-                        {note && <span className="text-fg-subtle text-[10px]">({note})</span>}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </ScrollReveal>
           ))}
         </div>
-      </section>
+      ))}
+    </>
+  );
+}
 
-      {/* Footer */}
-      <ScrollReveal>
-        <div className="pt-8 border-t border-border">
-          <p className="font-sans text-[13px] text-fg-subtle">
-            Something changed?{" "}
-            <a
-              href="https://www.linkedin.com/in/davideimola/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-fg-muted hover:text-accent transition-colors duration-150"
-            >
-              Let me know →
-            </a>
+export default function UsesPage() {
+  // The pull quote is the desk's oldest tool, read from the list rather than restated.
+  const paper = HARDWARE.flatMap((g) => g.items).find((i) => i.name === "Paper and pen");
+  const half = Math.ceil(HARDWARE.length / 2);
+
+  return (
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-10">
+      <header className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-8 lg:gap-16 items-end">
+        <div className="flex flex-col gap-5">
+          <Tape tilt={0}>Uses</Tape>
+          <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.045em]">
+            What's on the <Marker>desk.</Marker>
+          </h1>
+          <p className="m-0 font-sans text-[18px] sm:text-[20px] leading-[1.5] text-fg-muted">
+            Hardware, software, and tools I use daily to build and think.
           </p>
         </div>
-      </ScrollReveal>
+        {paper && (
+          <p className="relative m-0 pl-5 font-sans font-semibold text-[20px] sm:text-[22px] leading-[1.3] tracking-[-0.02em] text-fg">
+            <span
+              aria-hidden="true"
+              className="absolute left-0 top-[9px] w-[9px] h-[9px] bg-fg rounded-[2px]"
+            />
+            {paper.name}: {paper.description.charAt(0).toLowerCase()}
+            {paper.description.slice(1)}
+          </p>
+        )}
+      </header>
+
+      <section className="mt-10 pt-7 border-t border-fg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div className="flex flex-col gap-3.5">
+          <Tape as="h2" tilt={1}>
+            Hardware
+          </Tape>
+          <ItemList groups={HARDWARE.slice(0, half)} />
+        </div>
+        <div className="flex flex-col gap-3.5 lg:pt-[37px]">
+          <ItemList groups={HARDWARE.slice(half)} />
+        </div>
+        <div className="flex flex-col gap-3.5">
+          <Tape as="h2" tilt={2}>
+            Software
+          </Tape>
+          <ItemList groups={SOFTWARE} />
+          <p className="m-0 font-mono text-[12px] leading-[1.6] text-fg-subtle">
+            Cursor extensions: {CURSOR_EXTENSIONS.join(" · ")}
+          </p>
+        </div>
+      </section>
+
+      <section className="mt-11 pt-6 border-t border-fg grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
+        <Tape as="h2" tilt={0} className="self-start">
+          The stack
+        </Tape>
+        <dl className="m-0 grid grid-cols-[110px_minmax(0,1fr)] sm:grid-cols-[140px_minmax(0,1fr)] gap-x-6 gap-y-2.5 font-sans text-[16px] text-fg">
+          {DEV_STACK.map((row) => (
+            <div key={row.category} className="contents">
+              <dt className="font-mono text-[13px] text-fg-subtle pt-0.5">{row.category}</dt>
+              <dd className="m-0">
+                {row.items.map((item, i) => (
+                  <span key={typeof item === "string" ? item : item.name}>
+                    {i > 0 && " · "}
+                    {typeof item === "string" ? (
+                      item
+                    ) : (
+                      <>
+                        {item.name}
+                        {item.note && <span className="text-fg-subtle"> ({item.note})</span>}
+                      </>
+                    )}
+                  </span>
+                ))}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
     </div>
   );
 }
