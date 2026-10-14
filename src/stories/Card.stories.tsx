@@ -51,10 +51,10 @@ export const ComingSoon: Story = {
       <Card>
         <Badge variant="coming-soon">Coming soon</Badge>
         <p className="font-sans text-fg text-[20px] font-bold tracking-[-0.02em] mt-4 mb-2">
-          Worky
+          Next project
         </p>
         <p className="font-sans text-fg-muted text-[15px] leading-relaxed">
-          A tool for running workshops. Still in the works.
+          Something being built in the open. Still in the works.
         </p>
       </Card>
     </div>

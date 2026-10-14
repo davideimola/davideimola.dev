@@ -19,10 +19,8 @@ export const metadata: Metadata = {
   },
 };
 
-const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
-
 function hrefOf(project: Project): string {
-  return project.caseStudy ?? project.url ?? project.github ?? "/projects";
+  return project.url ?? project.github ?? "/projects";
 }
 
 function startYear(period: string): string {
@@ -73,7 +71,6 @@ export default function ProjectsPage() {
   const work = byGroup("work");
   const personal = byGroup("personal");
   const community = byGroup("community");
-  const caseStudies = projects.filter((p) => p.caseStudy);
   const flagshipPost = flagship?.post ? getPostBySlug(flagship.post) : null;
   if (flagship?.post && !flagshipPost) {
     throw new Error(`/projects: the flagship's post "${flagship.post}" does not exist.`);
@@ -203,21 +200,6 @@ export default function ProjectsPage() {
             </div>
           </div>
         </Group>
-      )}
-
-      {caseStudies.length > 0 && (
-        <p className="mt-14 m-0 font-sans text-[16px] text-fg-muted">
-          Case studies:{" "}
-          {caseStudies.map((p, i) => (
-            <span key={p.slug}>
-              {i > 0 && (i === caseStudies.length - 1 ? " and " : ", ")}
-              <a href={p.caseStudy} className={inlineLink}>
-                {p.title}
-              </a>
-            </span>
-          ))}
-          .
-        </p>
       )}
     </div>
   );

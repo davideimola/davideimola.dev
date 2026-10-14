@@ -5,7 +5,6 @@
     "role": "Tech Lead",
     "status": "active",
     "url": "https://redcarbon.ai",
-    "caseStudy": "/projects/redcarbon",
     "period": "2022–present",
     "featured": true,
     "tags": ["AI", "Security", "Startup"],
@@ -18,7 +17,6 @@
     "title": "Schrodinger Hat",
     "status": "active",
     "url": "https://schroedinger-hat.org",
-    "caseStudy": "/projects/schrodinger-hat",
     "period": "2022–present",
     "featured": true,
     "tags": ["Community", "Open Source"],
@@ -75,18 +73,5 @@
     "note": "in progress",
     "tags": ["Next.js", "PostgreSQL", "MCP"],
     "description": "The same idea for wine and spirits: what I tasted, what is in the house and what is worth trying, for a sommelier that reads it over MCP."
-  },
-  {
-    "slug": "worky",
-    "title": "Worky",
-    "status": "coming-soon",
-    "url": "https://worky.davideimola.dev",
-    "github": "https://github.com/davideimola/worky",
-    "period": "2026",
-    "featured": false,
-    "tags": ["Tool", "Workshops"],
-    "description": "A tool for running interactive workshops. Designed for speakers and educators who want to engage their audience.",
-    "group": "personal",
-    "note": "coming soon"
   }
 ]

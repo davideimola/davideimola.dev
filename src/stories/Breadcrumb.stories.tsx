@@ -23,7 +23,7 @@ export const DeepPath: Story = {
   args: {
     items: [
       { label: "Projects", href: "/projects" },
-      { label: "Schrodinger Hat", href: "/projects/schrodinger-hat" },
+      { label: "Talks", href: "/sharing" },
       { label: "Events" },
     ],
   },

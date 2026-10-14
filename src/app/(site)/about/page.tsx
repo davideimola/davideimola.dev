@@ -153,7 +153,7 @@ export default function AboutPage() {
         Started here:{" "}
         {phase.started.map((engagement) => {
           const project = projects.find((p) => p.slug === engagement.slug);
-          const href = project?.caseStudy ?? project?.url;
+          const href = project?.url;
           return (
             <span key={engagement.slug}>
               {href ? (

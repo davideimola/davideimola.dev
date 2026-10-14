@@ -38,6 +38,18 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // The case studies told the story /about and /sharing already tell,
+      // with facts of their own that drifted; old links land on those.
+      {
+        source: "/projects/redcarbon",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/projects/schrodinger-hat",
+        destination: "/sharing#organising",
+        permanent: true,
+      },
       // Legacy security.txt location (RFC 9116 fallback) points to the
       // canonical /.well-known/ path.
       {

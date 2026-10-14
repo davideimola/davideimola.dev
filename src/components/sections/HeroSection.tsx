@@ -79,7 +79,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
     cards.push({
       key: "building",
       tape: "Building",
-      href: project.caseStudy ?? project.url ?? project.github ?? "/projects",
+      href: project.url ?? project.github ?? "/projects",
       title: project.title,
       meta: project.description,
     });

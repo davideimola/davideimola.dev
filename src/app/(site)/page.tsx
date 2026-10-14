@@ -52,7 +52,7 @@ export default async function HomePage() {
     return {
       title: project.title,
       description: project.description,
-      href: project.caseStudy ?? project.url ?? "/projects",
+      href: project.url ?? "/projects",
     };
   });
 

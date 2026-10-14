@@ -275,7 +275,10 @@ export default function SharingPage() {
       </section>
 
       {/* Organising: the community first, then the same ruled index by year as On stage. */}
-      <section className="mt-16 md:mt-24 pt-10 border-t border-rule grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14">
+      <section
+        id="organising"
+        className="mt-16 md:mt-24 pt-10 border-t border-rule grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-14 scroll-mt-28"
+      >
         <Side tape="Organising" tilt={2}>
           The rooms I help fill, so other people can share too.
         </Side>
