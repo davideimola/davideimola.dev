@@ -9,7 +9,6 @@ export { CopyButton } from "./CopyButton";
 export { CoverTile } from "./CoverTile";
 export { GiscusComments } from "./GiscusComments";
 export { JsonLd } from "./JsonLd";
-export { LinkTile } from "./LinkTile";
 export { PageHero } from "./PageHero";
 export { PostNavigation } from "./PostNavigation";
 export { ReadingProgress } from "./ReadingProgress";
