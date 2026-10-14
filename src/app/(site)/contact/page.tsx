@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { PageHero } from "../../../components/ui/PageHero";
+import { ButtonLink } from "../../../components/ui/Button";
+import { Marker } from "../../../components/ui/Marker";
+import { Tape } from "../../../components/ui/Tape";
+import { getIdentity } from "../../../lib/cv";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../../lib/social";
 import { ContactForm } from "./ContactForm";
 
@@ -20,71 +23,74 @@ export const metadata: Metadata = {
   },
 };
 
-const LINKS = [
-  ...SOCIAL_PROFILES.map((profile) => ({
-    label: profile.label,
-    handle: profile.handle,
-    href: profile.url,
-  })),
-  { label: "Cal.com", handle: "book a call", href: CAL_COM_URL },
-];
+const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
 
 export default function ContactPage() {
+  const { email } = getIdentity();
   return (
-    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
-      <PageHero
-        label="Contact"
-        title="Contact"
-        description="Open to talks, workshops, collaborations, and interesting conversations. Fill in the form or reach out directly."
-      />
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-16">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-12 lg:gap-24">
+        <div className="flex flex-col gap-7">
+          <Tape tilt={0} size="lg">
+            Contact
+          </Tape>
+          <h1 className="m-0 font-sans font-bold text-fg text-[48px] sm:text-[64px] lg:text-[72px] leading-[1] tracking-[-0.045em]">
+            Say <Marker>hello</Marker>.
+          </h1>
+          <p className="m-0 font-sans text-[18px] sm:text-[21px] leading-[1.55] text-fg-muted max-w-[600px]">
+            Open to talks, workshops, collaborations and interesting conversations. Fill in the form
+            or reach out directly.
+          </p>
+          <ContactForm />
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
-        {/* Form */}
-        <ContactForm />
-
-        {/* Sidebar */}
-        <aside className="flex flex-col gap-8">
-          {/* Direct links */}
-          <div>
-            <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
-              Or find me at
-            </p>
-            <ul className="flex flex-col gap-3">
-              {LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 group no-underline"
-                  >
-                    <span className="text-fg text-[10px]">→</span>
-                    <span className="font-mono text-[12px] text-fg-subtle group-hover:text-fg transition-colors duration-150">
-                      {link.label}
-                    </span>
-                    <span className="font-mono text-[11px] text-fg-subtle opacity-60">
-                      {link.handle}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <aside className="flex flex-col gap-9 lg:pt-[52px]">
+          <div className="flex flex-col gap-2.5">
+            <span className="font-mono text-[13px] text-fg-subtle">Or write directly</span>
+            <a
+              href={`mailto:${email}`}
+              className="font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.02em] text-fg no-underline hover:text-accent break-all"
+            >
+              {email}
+            </a>
           </div>
-
-          {/* Speaking note */}
-          <div className="border-l-2 border-fg pl-4 flex flex-col gap-1.5">
-            <span className="font-mono text-[11px] font-medium text-fg">Speaking & workshops</span>
-            <p className="font-sans text-[12px] text-fg-subtle leading-relaxed">
-              I'm open to talks and workshops on AI, security, Go, GitOps, and open source. Check
-              the{" "}
-              <a
-                href="/sharing"
-                className="text-fg-muted hover:text-accent transition-colors duration-150"
-              >
-                sharing page
-              </a>{" "}
-              for past events.
+          <div className="flex flex-col gap-2.5 border-t border-border pt-6">
+            <span className="font-mono text-[13px] text-fg-subtle">Rather talk?</span>
+            <ButtonLink
+              variant="ghost"
+              href={CAL_COM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="self-start"
+            >
+              Book a call
+            </ButtonLink>
+            <span className="font-sans text-[14px] text-fg-subtle">
+              {CAL_COM_URL.replace(/^https?:\/\//, "")}
+            </span>
+          </div>
+          <div className="flex flex-col gap-2.5 border-t border-border pt-6">
+            <span className="font-mono text-[13px] text-fg-subtle">Organising an event?</span>
+            <p className="m-0 font-sans text-[17px] leading-[1.5] text-fg-body">
+              Bios, headshot and topics are in the{" "}
+              <a href="/sharing#speaker-kit" className={inlineLink}>
+                speaker kit
+              </a>
+              .
             </p>
+          </div>
+          <div className="flex flex-wrap gap-[22px] border-t border-border pt-6 font-mono text-[14px]">
+            {SOCIAL_PROFILES.map((profile) => (
+              <a
+                key={profile.url}
+                href={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-fg no-underline hover:text-accent"
+              >
+                {profile.label === "BlueSky" ? "Bluesky" : profile.label}
+              </a>
+            ))}
           </div>
         </aside>
       </div>

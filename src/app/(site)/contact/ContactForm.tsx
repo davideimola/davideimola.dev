@@ -3,6 +3,7 @@
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState, useEffect, useRef } from "react";
 import { StdoutPanel } from "../../../components/ui/StdoutPanel";
+import { useResolvedTheme } from "../../../components/ui/ThemeToggle";
 import { sendContactEmail } from "../../actions/contact";
 
 const initialState = { status: "idle" as const };
@@ -10,6 +11,7 @@ const initialState = { status: "idle" as const };
 export function ContactForm() {
   const [state, action, pending] = useActionState(sendContactEmail, initialState);
   const loadTimeRef = useRef<HTMLInputElement>(null);
+  const theme = useResolvedTheme();
 
   useEffect(() => {
     if (loadTimeRef.current) {
@@ -19,29 +21,30 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <StdoutPanel>
-        <div className="px-4 py-8 flex flex-col gap-3">
-          <p className="font-mono text-[13px]">
-            <span className="text-fg">✓</span> <span className="text-fg">Message sent.</span>
-          </p>
-          <p className="font-sans text-[13px] text-fg-subtle">
-            I'll get back to you as soon as I can.
+      <StdoutPanel label="Message sent" className="max-w-[640px]">
+        <div className="px-5 py-6 flex flex-col gap-3">
+          <p className="m-0 font-sans text-[17px] text-fg-body">
+            Thanks. I'll get back to you as soon as I can.
           </p>
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mt-2 self-start font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
+            className="self-start font-mono text-[13px] text-fg border-b border-fg hover:text-accent hover:border-accent cursor-pointer"
           >
-            ← send another
+            Send another
           </button>
         </div>
       </StdoutPanel>
     );
   }
 
+  const label = "font-sans font-semibold text-[15px] text-fg";
+  const field =
+    "bg-surface border border-fg px-3.5 font-sans text-[17px] text-fg placeholder:text-fg-subtle outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg";
+
   return (
-    <form action={action} className="flex flex-col gap-5">
-      {/* Honeypot — hidden from humans, filled by bots */}
+    <form action={action} className="flex flex-col gap-[22px] max-w-[640px] mt-2">
+      {/* Honeypot: hidden from humans, filled by bots */}
       <div
         aria-hidden="true"
         tabIndex={-1}
@@ -51,91 +54,80 @@ export function ContactForm() {
         <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>
 
-      {/* Time-based check — value set by JS, empty means bot rendered server-side */}
       <input ref={loadTimeRef} type="hidden" name="_t" value="" />
 
-      {/* Name */}
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="name"
-          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
-        >
-          Name
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required
-          autoComplete="name"
-          placeholder="Your name"
-          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className={label}>
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            autoComplete="name"
+            placeholder="Your name"
+            className={`h-12 ${field}`}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className={label}>
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="your@email.com"
+            className={`h-12 ${field}`}
+          />
+        </div>
       </div>
 
-      {/* Email */}
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="email"
-          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="your@email.com"
-          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150"
-        />
-      </div>
-
-      {/* Message */}
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="message"
-          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
-        >
+      <div className="flex flex-col gap-2">
+        <label htmlFor="message" className={label}>
           Message
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={6}
+          rows={7}
           placeholder="What's on your mind?"
-          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150 resize-none"
+          className={`py-3 leading-[1.5] resize-y ${field}`}
         />
-        <p className="font-mono text-[11px] text-fg-subtle">
-          <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" /> no
-          links, please. You can share them once I reply
+        <p className="m-0 font-mono text-[13px] text-fg-subtle">
+          No links, please. You can share them once I reply.
         </p>
       </div>
 
-      {/* Turnstile */}
       <Turnstile
+        key={theme ?? "pending"}
         siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-        options={{ theme: "dark", size: "normal" }}
+        options={{ theme: theme ?? "auto", size: "flexible", appearance: "interaction-only" }}
       />
 
-      {/* Error */}
       {state.status === "error" && (
-        <p className="font-mono text-[12px] text-fg">
-          <span className="mr-2">✗</span>
+        <p role="alert" className="m-0 font-sans text-[15px] text-fg">
           {state.message}
         </p>
       )}
 
-      {/* Submit */}
-      <button
-        type="submit"
-        disabled={pending}
-        className="self-start font-mono text-[12px] text-fg bg-surface border border-border px-4 py-2.5 cursor-pointer hover:border-fg hover:text-accent transition-[border-color,color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-      >
-        {pending ? <>sending...</> : <>send message</>}
-      </button>
+      <div className="flex flex-wrap items-center gap-5">
+        <button
+          type="submit"
+          disabled={pending}
+          className="h-[50px] bg-fg text-bg px-[26px] font-sans font-semibold text-[16px] cursor-pointer hover:bg-fg-body transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {pending ? "Sending..." : "Send message"}
+        </button>
+        <span className="font-sans text-[14px] text-fg-subtle">
+          Protected by Cloudflare Turnstile.
+        </span>
+      </div>
     </form>
   );
 }
