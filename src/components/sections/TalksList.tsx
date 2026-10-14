@@ -49,10 +49,9 @@ function AbstractToggle({ abstract }: { abstract: string }) {
         aria-expanded={open}
         className="group font-mono text-[12px] cursor-pointer"
       >
-        <span className="text-accent">❯ </span>
         <span
           className={`transition-colors duration-150 ${
-            open ? "text-accent" : "text-text-2 group-hover:text-accent"
+            open ? "text-fg" : "text-fg-muted group-hover:text-accent"
           }`}
         >
           cat abstract.md
@@ -67,7 +66,7 @@ function AbstractToggle({ abstract }: { abstract: string }) {
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <p className="font-sans text-[13px] leading-relaxed text-text-2 border-l border-border-mid pl-3 mt-3 max-w-[640px]">
+            <p className="font-sans text-[13px] leading-relaxed text-fg-muted border-l border-border pl-3 mt-3 max-w-[640px]">
               {abstract}
             </p>
           </motion.div>
@@ -110,8 +109,8 @@ function TalkCard({
             {/* Stop node: filled accent for the next stop, hollow for the rest */}
             <span
               aria-hidden
-              className={`absolute left-[1px] top-4 z-10 h-[9px] w-[9px] rounded-[1px] ${
-                timeline.isFirst ? "bg-accent" : "border border-border-mid bg-bg"
+              className={`absolute left-[1px] top-4 z-10 h-[9px] w-[9px] ${
+                timeline.isFirst ? "bg-fg" : "border border-border bg-bg"
               }`}
             />
           </>
@@ -120,11 +119,11 @@ function TalkCard({
           {/* Next-stop eyebrow */}
           {timeline?.isFirst && (
             <div className="flex items-center gap-2 font-mono text-[11px]">
-              <span className="text-accent">❯ next</span>
+              <span className="text-fg font-medium">Next</span>
               {timeline.relative && (
                 <>
-                  <span className="text-text-3">·</span>
-                  <span className="text-text-2">{timeline.relative}</span>
+                  <span className="text-fg-subtle">·</span>
+                  <span className="text-fg-muted">{timeline.relative}</span>
                 </>
               )}
             </div>
@@ -132,9 +131,9 @@ function TalkCard({
 
           {/* Meta row: date · location · type/role badges */}
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 sm:gap-x-3">
-            <span className="font-mono text-[11px] text-text-3">{displayDate}</span>
-            <span className="font-mono text-[11px] text-text-3">·</span>
-            <span className="font-mono text-[11px] text-text-3">{talk.location}</span>
+            <span className="font-mono text-[11px] text-fg-subtle">{displayDate}</span>
+            <span className="font-mono text-[11px] text-fg-subtle">·</span>
+            <span className="font-mono text-[11px] text-fg-subtle">{talk.location}</span>
             <Badge variant="category">{talk.type}</Badge>
             {session && session.format !== "Talk" && (
               <Badge variant="outline">{session.format}</Badge>
@@ -146,17 +145,20 @@ function TalkCard({
           </div>
 
           {/* Path: ./event / session title */}
-          <h3 className="font-mono text-[16px] sm:text-[18px] leading-snug">
-            <span className="text-accent">./</span>
-            <span className="text-text-2">{talk.event}</span>
+          <h3 className="font-sans text-[16px] sm:text-[18px] leading-snug font-bold tracking-[-0.02em]">
+            <span className="text-fg">./</span>
+            <span className="text-fg-muted">{talk.event}</span>
             {session && (
               <>
-                <span className="text-text-3"> / </span>
-                <span className="text-text-1 font-semibold">{session.title}</span>
+                <span className="text-fg-subtle"> / </span>
+                <span className="text-fg font-semibold">{session.title}</span>
               </>
             )}
             {session?.coSpeaker && (
-              <span className="text-text-3 font-normal text-[13px]"> w/ {session.coSpeaker}</span>
+              <span className="text-fg-subtle font-normal text-[13px]">
+                {" "}
+                w/ {session.coSpeaker}
+              </span>
             )}
           </h3>
 
@@ -173,7 +175,7 @@ function TalkCard({
                   scroll={false}
                   className={[
                     "font-mono text-[11px] transition-colors duration-150",
-                    activeTag === t.toLowerCase() ? "text-accent" : "text-text-3 hover:text-accent",
+                    activeTag === t.toLowerCase() ? "text-fg" : "text-fg-subtle hover:text-accent",
                   ].join(" ")}
                 >
                   #{t.toLowerCase()}
@@ -187,7 +189,7 @@ function TalkCard({
                     href={talk.feedback.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-[11px] text-accent hover:text-accent-hover transition-colors duration-150"
+                    className="font-mono text-[11px] text-fg hover:text-fg-body transition-colors duration-150"
                   >
                     Rate this talk →
                   </a>
@@ -197,7 +199,7 @@ function TalkCard({
                     href={session.slides}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                    className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
                   >
                     Slides →
                   </a>
@@ -207,7 +209,7 @@ function TalkCard({
                     href={session.video}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                    className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
                   >
                     Video →
                   </a>
@@ -277,8 +279,7 @@ export function TalksList({ talks }: TalksListProps) {
     <div className="border-t border-border pt-10">
       {/* Role filter, styled as flags on an ls command */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[12px] mb-10">
-        <span className="text-accent">❯</span>
-        <span className="text-text-3">ls ./talks</span>
+        <span className="text-fg-subtle">ls ./talks</span>
         {ROLE_FLAGS.map(({ flag, role }) => (
           <Link
             key={flag}
@@ -286,7 +287,7 @@ export function TalksList({ talks }: TalksListProps) {
             scroll={false}
             aria-current={activeRole === role ? "true" : undefined}
             className={`transition-colors duration-150 ${
-              activeRole === role ? "text-accent" : "text-text-3 hover:text-accent"
+              activeRole === role ? "text-fg" : "text-fg-subtle hover:text-accent"
             }`}
           >
             {flag}
@@ -296,13 +297,12 @@ export function TalksList({ talks }: TalksListProps) {
 
       {activeTag && (
         <div className="flex items-center gap-2 font-mono text-[12px] -mt-6 mb-10">
-          <span className="text-accent">❯</span>
-          <span className="text-text-3">grep --tag</span>
-          <span className="text-accent">#{activeTag.toLowerCase()}</span>
+          <span className="text-fg-subtle">grep --tag</span>
+          <span className="text-fg">#{activeTag.toLowerCase()}</span>
           <Link
             href={sharingHref(activeRole)}
             scroll={false}
-            className="text-text-3 hover:text-accent border border-border hover:border-border-hover rounded-[2px] px-1.5 py-0.5 transition-[color,border-color] duration-150"
+            className="text-fg-subtle hover:text-accent border border-border hover:border-fg px-1.5 py-0.5 transition-[color,border-color] duration-150"
           >
             ×
           </Link>
@@ -311,12 +311,12 @@ export function TalksList({ talks }: TalksListProps) {
 
       {(activeTag || activeRole) && upcoming.length === 0 && past.length === 0 ? (
         // Filters matched nothing — give direction instead of a blank page.
-        <p className="font-mono text-[13px] text-text-2">
+        <p className="font-mono text-[13px] text-fg-muted">
           No engagements match the current filter.{" "}
           <Link
             href="/sharing"
             scroll={false}
-            className="text-text-3 hover:text-accent transition-colors duration-150"
+            className="text-fg-subtle hover:text-accent transition-colors duration-150"
           >
             Clear filters →
           </Link>
@@ -327,7 +327,7 @@ export function TalksList({ talks }: TalksListProps) {
             <section>
               <ScrollReveal>
                 <SectionHeader title="Upcoming Engagements" />
-                <p className="font-sans text-[13px] text-text-3 -mt-8 mb-8">
+                <p className="font-sans text-[13px] text-fg-subtle -mt-8 mb-8">
                   Where you can catch me next, soonest first.
                 </p>
               </ScrollReveal>
@@ -375,7 +375,7 @@ export function TalksList({ talks }: TalksListProps) {
                     <ScrollReveal>
                       {/* T3 group divider — year grouping, subordinate to the Past section */}
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="font-mono text-[11px] text-text-3 tracking-[0.08em]">
+                        <span className="font-mono text-[11px] text-fg-subtle tracking-[0.08em]">
                           {year}
                         </span>
                         <span aria-hidden className="h-px flex-1 bg-border" />

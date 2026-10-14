@@ -229,9 +229,9 @@ const DEV_STACK = [
 
 export default function UsesPage() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="ls ./uses"
+        label="Uses"
         title="Uses"
         className="mb-16"
         description={
@@ -241,7 +241,7 @@ export default function UsesPage() {
               href="https://uses.tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               uses.tech
             </a>
@@ -259,17 +259,20 @@ export default function UsesPage() {
           {HARDWARE.map((section, si) => (
             <ScrollReveal key={section.category} delay={si * 40}>
               <div>
-                <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
+                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
                   {section.category}
                 </p>
                 <div className="flex flex-col gap-4">
                   {section.items.map((item) => (
                     <div key={item.name} className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                        <span className="text-accent text-[10px]">{"//"}</span>
+                      <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
+                        <span
+                          aria-hidden="true"
+                          className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                        />
                         {item.name}
                       </span>
-                      <span className="font-sans text-[13px] text-text-3 pl-5">
+                      <span className="font-sans text-[13px] text-fg-subtle pl-5">
                         {item.description}
                       </span>
                     </div>
@@ -290,17 +293,20 @@ export default function UsesPage() {
           {SOFTWARE.map((section, si) => (
             <ScrollReveal key={section.category} delay={si * 40}>
               <div>
-                <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
+                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
                   {section.category}
                 </p>
                 <div className="flex flex-col gap-4">
                   {section.items.map((item) => (
                     <div key={item.name} className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                        <span className="text-accent text-[10px]">{"//"}</span>
+                      <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
+                        <span
+                          aria-hidden="true"
+                          className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                        />
                         {item.name}
                       </span>
-                      <span className="font-sans text-[13px] text-text-3 pl-5">
+                      <span className="font-sans text-[13px] text-fg-subtle pl-5">
                         {item.description}
                       </span>
                     </div>
@@ -314,14 +320,14 @@ export default function UsesPage() {
         {/* Cursor extensions */}
         <ScrollReveal>
           <div className="mt-10">
-            <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
+            <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
               Cursor extensions
             </p>
             <div className="flex flex-wrap gap-2">
               {CURSOR_EXTENSIONS.map((ext) => (
                 <span
                   key={ext}
-                  className="font-mono text-[11px] text-text-2 border border-border rounded-[2px] px-2 py-1"
+                  className="font-mono text-[11px] text-fg-muted border border-border px-2 py-1"
                 >
                   {ext}
                 </span>
@@ -340,7 +346,7 @@ export default function UsesPage() {
           {DEV_STACK.map((section, si) => (
             <ScrollReveal key={section.category} delay={si * 40}>
               <div>
-                <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-3">
+                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
                   {section.category}
                 </p>
                 <ul className="flex flex-col gap-2">
@@ -350,11 +356,11 @@ export default function UsesPage() {
                     return (
                       <li
                         key={name}
-                        className="font-mono text-[12px] text-text-2 flex items-center gap-2"
+                        className="font-mono text-[12px] text-fg-muted flex items-center gap-2"
                       >
-                        <span className="text-accent text-[10px]">-</span>
+                        <span className="text-fg text-[10px]">-</span>
                         {name}
-                        {note && <span className="text-text-3 text-[10px]">({note})</span>}
+                        {note && <span className="text-fg-subtle text-[10px]">({note})</span>}
                       </li>
                     );
                   })}
@@ -368,13 +374,13 @@ export default function UsesPage() {
       {/* Footer */}
       <ScrollReveal>
         <div className="pt-8 border-t border-border">
-          <p className="font-sans text-[13px] text-text-3">
+          <p className="font-sans text-[13px] text-fg-subtle">
             Something changed?{" "}
             <a
               href="https://www.linkedin.com/in/davideimola/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-2 hover:text-accent transition-colors duration-150"
+              className="text-fg-muted hover:text-accent transition-colors duration-150"
             >
               Let me know →
             </a>

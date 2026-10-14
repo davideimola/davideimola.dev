@@ -99,9 +99,9 @@ export default async function TerminalPage() {
   const data = await buildTerminalData();
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="ssh guest@davideimola.dev"
+        label="Terminal"
         title="Terminal"
         description="Every page on this site pretends to be a terminal. This one actually answers. Type 'help' to get started. A few commands are undocumented."
         className="mb-10"

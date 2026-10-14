@@ -39,8 +39,7 @@ export function ShelfWall({ total, byType, volumes }: ShelfWallProps) {
     <div>
       {/* The wall is the Collection: what is actually in the house. It names
           the thing and argues nothing. */}
-      <p className="font-mono text-[11px] text-text-3 leading-relaxed mb-6">
-        <span className="text-accent mr-2">{"//"}</span>
+      <p className="font-mono text-[11px] text-fg-subtle leading-relaxed mb-6">
         Books on my shelf at home, one tile per volume.
       </p>
 
@@ -74,7 +73,7 @@ export function ShelfWall({ total, byType, volumes }: ShelfWallProps) {
           <div key={volume.id} className="flex flex-col gap-1.5">
             <CoverTile title={volume.title} cover={volume.cover} series={volume.series} />
             {activeSlug === null && (
-              <p className="font-mono text-[9px] leading-none text-text-3 truncate">
+              <p className="font-mono text-[9px] leading-none text-fg-subtle truncate">
                 {volume.type?.label ?? "Uncatalogued"}
               </p>
             )}
@@ -82,7 +81,7 @@ export function ShelfWall({ total, byType, volumes }: ShelfWallProps) {
         ))}
       </div>
 
-      <p className="font-mono text-[11px] text-text-3 mt-4">
+      <p className="font-mono text-[11px] text-fg-subtle mt-4">
         Showing {shown.length} of {activeCount}. The wall is the most recent sample, the count is
         the whole shelf.
       </p>
@@ -105,11 +104,11 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={active}
       className={[
-        "font-mono text-[11px] rounded-[2px] px-2 py-1 cursor-pointer",
+        "font-mono text-[11px]  px-2 py-1 cursor-pointer",
         "border transition-[color,border-color] duration-150",
         active
-          ? "text-accent border-border-hover bg-accent-glow"
-          : "text-text-3 border-border hover:text-text-2 hover:border-border-mid",
+          ? "text-fg border-fg bg-surface-inline"
+          : "text-fg-subtle border-border hover:text-fg-muted hover:border-border",
       ].join(" ")}
     >
       {children}

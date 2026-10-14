@@ -41,9 +41,9 @@ export default function ProjectsPage() {
   const oss = getOssContributions();
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="ls ./projects"
+        label="Built by me"
         title="Projects"
         description="Open source tools, communities, and things I build in public."
       />
@@ -63,30 +63,30 @@ export default function ProjectsPage() {
                       {statusLabel(project.status)}
                     </Badge>
                   )}
-                  <span className="font-mono text-[11px] text-text-3 shrink-0">
+                  <span className="font-mono text-[11px] text-fg-subtle shrink-0">
                     {project.period}
                   </span>
                 </div>
 
                 {/* TOP — title + role */}
                 <div className="flex items-baseline gap-2">
-                  <h2 className="font-mono text-[17px] font-semibold text-text-1 group-hover:text-accent transition-colors duration-200">
+                  <h2 className="font-sans text-[17px] font-bold text-fg group-hover:text-accent transition-colors duration-200 tracking-[-0.02em]">
                     {project.title}
                   </h2>
                   {project.role && (
-                    <span className="font-mono text-[11px] text-text-3">{`// ${project.role}`}</span>
+                    <span className="font-mono text-[11px] text-fg-subtle">{`// ${project.role}`}</span>
                   )}
                 </div>
 
                 {/* MIDDLE — description (grows) */}
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed flex-1">
+                <p className="font-sans text-[14px] text-fg-muted leading-relaxed flex-1">
                   {project.description}
                 </p>
 
                 {/* BOTTOM — tags */}
                 <div className="flex flex-wrap gap-x-2 gap-y-1">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                    <span key={tag} className="font-mono text-[11px] text-fg-subtle">
                       #{tag.toLowerCase()}
                     </span>
                   ))}
@@ -98,7 +98,7 @@ export default function ProjectsPage() {
                     {project.caseStudy && (
                       <a
                         href={project.caseStudy}
-                        className="font-mono text-[11px] text-accent hover:text-accent-hover transition-colors duration-150"
+                        className="font-mono text-[11px] text-fg hover:text-fg-body transition-colors duration-150"
                       >
                         Read case study →
                       </a>
@@ -108,7 +108,7 @@ export default function ProjectsPage() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                        className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
                       >
                         Website →
                       </a>
@@ -118,7 +118,7 @@ export default function ProjectsPage() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+                        className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
                       >
                         GitHub →
                       </a>
@@ -135,7 +135,7 @@ export default function ProjectsPage() {
       <section className="mt-16 border-t border-border pt-10">
         <ScrollReveal>
           <SectionHeader title="OSS Contributions" className="mb-6" />
-          <p className="font-sans text-[14px] text-text-2 mb-8">
+          <p className="font-sans text-[14px] text-fg-muted mb-8">
             Projects I've contributed to: bug fixes, features, and documentation.
           </p>
         </ScrollReveal>
@@ -143,11 +143,13 @@ export default function ProjectsPage() {
           {oss.map((item, i) => (
             <ScrollReveal key={item.name} delay={i * 60}>
               <li className="py-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
-                <span className="font-mono text-[14px] text-text-1 w-36 shrink-0">{item.name}</span>
-                <span className="font-sans text-[13px] text-text-2 flex-1">{item.description}</span>
+                <span className="font-mono text-[14px] text-fg w-36 shrink-0">{item.name}</span>
+                <span className="font-sans text-[13px] text-fg-muted flex-1">
+                  {item.description}
+                </span>
                 <div className="flex flex-wrap gap-x-2 gap-y-1 shrink-0">
                   {item.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                    <span key={tag} className="font-mono text-[11px] text-fg-subtle">
                       #{tag.toLowerCase()}
                     </span>
                   ))}
@@ -161,7 +163,7 @@ export default function ProjectsPage() {
             href="https://github.com/davideimola"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block font-mono text-[12px] text-text-3 hover:text-accent transition-colors duration-150 mt-6"
+            className="inline-block font-mono text-[12px] text-fg-subtle hover:text-accent transition-colors duration-150 mt-6"
           >
             See all contributions on GitHub →
           </a>

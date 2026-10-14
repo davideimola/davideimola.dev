@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ScrollReveal } from "../../../../components/ui/ScrollReveal";
+import { Tape } from "../../../../components/ui/Tape";
 
 export const metadata: Metadata = {
   title: "Schrodinger Hat Case Study",
@@ -29,12 +30,12 @@ const STATS = [
 
 export default function SchrodingerHatCaseStudy() {
   return (
-    <div className="max-w-[720px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[720px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       {/* Back */}
       <ScrollReveal>
         <a
           href="/projects"
-          className="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 mb-12"
+          className="inline-flex items-center gap-1.5 font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150 mb-12"
         >
           ← Back to projects
         </a>
@@ -43,27 +44,25 @@ export default function SchrodingerHatCaseStudy() {
       {/* Header */}
       <ScrollReveal>
         <header className="mb-14">
-          <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>cat ./projects/schrodinger-hat.md
-          </p>
-          <h1 className="font-mono text-[32px] sm:text-[40px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-3">
+          <Tape tilt={0} className="mb-6">
+            Case study
+          </Tape>
+          <h1 className="font-sans text-[40px] sm:text-[52px] font-bold text-fg tracking-[-0.045em] leading-[1.02] mb-4">
             Schrodinger Hat
           </h1>
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="font-mono text-[12px] text-accent">
-              {"// Co-founder & Admin Member"}
-            </span>
-            <span className="font-mono text-[12px] text-text-3">2022 – present</span>
+            <span className="font-mono text-[12px] text-fg">Co-founder & Admin Member</span>
+            <span className="font-mono text-[12px] text-fg-subtle">2022 – present</span>
             <a
               href="https://schroedinger-hat.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+              className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
             >
               schroedinger-hat.org →
             </a>
           </div>
-          <p className="font-sans text-[16px] text-text-2 leading-relaxed">
+          <p className="font-sans text-[16px] text-fg-muted leading-relaxed">
             I didn't found Schrodinger Hat. I joined it as an unknown, worked hard, and earned my
             place, to the point of becoming a co-founder and one of the principal members of the
             organization. This is the story of what happens when a developer decides to leave the
@@ -77,10 +76,10 @@ export default function SchrodingerHatCaseStudy() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14 border-t border-b border-border py-8">
           {STATS.map((stat) => (
             <div key={stat.label} className="flex flex-col gap-1">
-              <span className="font-mono text-[22px] font-bold text-text-1 leading-none">
+              <span className="font-mono text-[22px] font-bold text-fg leading-none">
                 {stat.value}
               </span>
-              <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
+              <span className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase">
                 {stat.label}
               </span>
             </div>
@@ -91,18 +90,18 @@ export default function SchrodingerHatCaseStudy() {
       {/* The beginning */}
       <ScrollReveal>
         <section className="mb-12">
-          <h2 className="font-mono text-[14px] font-semibold text-text-1 mb-4 flex items-center gap-2">
-            <span className="text-accent text-[10px]">{`//`}</span>
+          <h2 className="font-sans text-[14px] font-bold text-fg mb-4 flex items-center gap-2 tracking-[-0.02em]">
+            <span className="text-fg text-[10px]">{`//`}</span>
             Starting from the last row
           </h2>
           <div className="flex flex-col gap-4">
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Schrodinger Hat was founded in 2021 by a small group of developers who put out a call
               to action: come build an international open source community with us. I saw it in 2022
               and thought: why not? It was an uncomfortable choice. I was shy, not particularly
               public-facing, and had no experience running anything beyond a codebase.
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               I joined as the last person in. No role, no title, no authority. Just the willingness
               to contribute and see what happened.
             </p>
@@ -113,24 +112,24 @@ export default function SchrodingerHatCaseStudy() {
       {/* The work */}
       <ScrollReveal>
         <section className="mb-12 border-t border-border pt-10">
-          <h2 className="font-mono text-[14px] font-semibold text-text-1 mb-4 flex items-center gap-2">
-            <span className="text-accent text-[10px]">{`//`}</span>
+          <h2 className="font-sans text-[14px] font-bold text-fg mb-4 flex items-center gap-2 tracking-[-0.02em]">
+            <span className="text-fg text-[10px]">{`//`}</span>
             The work nobody tells you about
           </h2>
           <div className="flex flex-col gap-4">
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Running a non-profit community looks like organizing events and writing code. In
               reality, it's also finance management, sponsor acquisition, speaker outreach,
               newsletter campaigns, social media strategy, logistics, and contracts. None of these
               appear in any engineering job description.
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Open Source Day is our flagship conference: a full-day, free event in Florence.
               Keeping it free means finding the money elsewhere. I've sat across from companies and
               made the case for a sponsorship worth thousands of euros. That's not a skill you learn
               by writing Go code.
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Over time, through consistent contribution, I became a socio fondatore, a co-founder
               in the formal sense, and an admin member of the organization. I didn't start there. I
               earned it.
@@ -142,8 +141,8 @@ export default function SchrodingerHatCaseStudy() {
       {/* Skills unlocked */}
       <ScrollReveal>
         <section className="mb-12 border-t border-border pt-10">
-          <h2 className="font-mono text-[14px] font-semibold text-text-1 mb-6 flex items-center gap-2">
-            <span className="text-accent text-[10px]">{`//`}</span>
+          <h2 className="font-sans text-[14px] font-bold text-fg mb-6 flex items-center gap-2 tracking-[-0.02em]">
+            <span className="text-fg text-[10px]">{`//`}</span>
             Skills I didn't expect to develop
           </h2>
           <div className="flex flex-col gap-5">
@@ -166,8 +165,8 @@ export default function SchrodingerHatCaseStudy() {
               },
             ].map((item) => (
               <div key={item.title} className="flex flex-col gap-2 border-l border-border pl-5">
-                <span className="font-mono text-[13px] font-medium text-text-1">{item.title}</span>
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed">{item.body}</p>
+                <span className="font-mono text-[13px] font-medium text-fg">{item.title}</span>
+                <p className="font-sans text-[14px] text-fg-muted leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
@@ -177,29 +176,29 @@ export default function SchrodingerHatCaseStudy() {
       {/* Open Source Day */}
       <ScrollReveal>
         <section className="mb-12 border-t border-border pt-10">
-          <h2 className="font-mono text-[14px] font-semibold text-text-1 mb-4 flex items-center gap-2">
-            <span className="text-accent text-[10px]">{`//`}</span>
+          <h2 className="font-sans text-[14px] font-bold text-fg mb-4 flex items-center gap-2 tracking-[-0.02em]">
+            <span className="text-fg text-[10px]">{`//`}</span>
             Open Source Day
           </h2>
           <div className="flex flex-col gap-4">
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Five editions. Free admission. Florence. Hundreds of developers, students, and
               professionals who come because they want to be part of something, not because their
               company paid for it.
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               The feedback we hear most often is that Open Source Day feels like a community, not a
               conference. That's intentional. Every logistical choice, from the schedule to the
               hallway layout, is made with one question: does this help people connect?
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               It's the project I'm most proud of. And the one that costs me the most sleep.
             </p>
             <a
               href="https://osday.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start"
+              className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150 self-start"
             >
               osday.dev →
             </a>
@@ -210,29 +209,29 @@ export default function SchrodingerHatCaseStudy() {
       {/* What I learned */}
       <ScrollReveal>
         <section className="mb-14 border-t border-border pt-10">
-          <h2 className="font-mono text-[14px] font-semibold text-text-1 mb-4 flex items-center gap-2">
-            <span className="text-accent text-[10px]">{`//`}</span>
+          <h2 className="font-sans text-[14px] font-bold text-fg mb-4 flex items-center gap-2 tracking-[-0.02em]">
+            <span className="text-fg text-[10px]">{`//`}</span>
             What I learned
           </h2>
           <div className="flex flex-col gap-4">
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               Community can change your career in ways no job posting can. I found the company where
               I'm now Tech Lead through a connection I made at a community event. Not through
               LinkedIn. Not through a recruiter. Through showing up consistently and building
               relationships with people who care about the same things.
             </p>
-            <p className="font-sans text-[15px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[15px] text-fg-muted leading-relaxed">
               The comfort zone is a slow trap. It feels safe because nothing is changing, but
               nothing is growing either. Joining Schrodinger Hat was uncomfortable. So was speaking
               on stage for the first time, and cold-calling sponsors, and managing a budget I'd
               never managed before. Every one of those discomforts made me better at the things that
               matter.
             </p>
-            <blockquote className="border-l-2 border-accent pl-5 py-1 mt-2">
-              <p className="font-mono text-[14px] text-text-1 leading-snug">
+            <blockquote className="border-l-2 border-fg pl-5 py-1 mt-2">
+              <p className="font-mono text-[14px] text-fg leading-snug">
                 The community is open to everyone.
                 <br />
-                <span className="text-text-2 text-[13px]">
+                <span className="text-fg-muted text-[13px]">
                   Anyone can contribute, volunteer, and grow, regardless of where they start.
                 </span>
               </p>
@@ -244,18 +243,18 @@ export default function SchrodingerHatCaseStudy() {
       {/* Footer CTA */}
       <ScrollReveal>
         <div className="border-t border-border pt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <p className="font-mono text-[12px] text-text-3">
+          <p className="font-mono text-[12px] text-fg-subtle">
             Want to talk about this?{" "}
             <a
               href="/contact"
-              className="text-text-2 hover:text-accent transition-colors duration-150"
+              className="text-fg-muted hover:text-accent transition-colors duration-150"
             >
               Get in touch →
             </a>
           </p>
           <a
             href="/projects"
-            className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+            className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
           >
             ← All projects
           </a>

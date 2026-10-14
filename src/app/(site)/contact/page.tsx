@@ -27,9 +27,9 @@ const LINKS = [
 
 export default function ContactPage() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="ping davideimola.dev"
+        label="Contact"
         title="Contact"
         description="Open to talks, workshops, collaborations, and interesting conversations. Fill in the form or reach out directly."
       />
@@ -42,7 +42,7 @@ export default function ContactPage() {
         <aside className="flex flex-col gap-8">
           {/* Direct links */}
           <div>
-            <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
+            <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
               Or find me at
             </p>
             <ul className="flex flex-col gap-3">
@@ -54,11 +54,11 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 group no-underline"
                   >
-                    <span className="text-accent text-[10px]">→</span>
-                    <span className="font-mono text-[12px] text-text-3 group-hover:text-text-1 transition-colors duration-150">
+                    <span className="text-fg text-[10px]">→</span>
+                    <span className="font-mono text-[12px] text-fg-subtle group-hover:text-fg transition-colors duration-150">
                       {link.label}
                     </span>
-                    <span className="font-mono text-[11px] text-text-3 opacity-60">
+                    <span className="font-mono text-[11px] text-fg-subtle opacity-60">
                       {link.handle}
                     </span>
                   </a>
@@ -68,16 +68,14 @@ export default function ContactPage() {
           </div>
 
           {/* Speaking note */}
-          <div className="border-l-2 border-accent pl-4 flex flex-col gap-1.5">
-            <span className="font-mono text-[11px] font-medium text-text-1">
-              Speaking & workshops
-            </span>
-            <p className="font-sans text-[12px] text-text-3 leading-relaxed">
+          <div className="border-l-2 border-fg pl-4 flex flex-col gap-1.5">
+            <span className="font-mono text-[11px] font-medium text-fg">Speaking & workshops</span>
+            <p className="font-sans text-[12px] text-fg-subtle leading-relaxed">
               I'm open to talks and workshops on AI, security, Go, GitOps, and open source. Check
               the{" "}
               <a
                 href="/sharing"
-                className="text-text-2 hover:text-accent transition-colors duration-150"
+                className="text-fg-muted hover:text-accent transition-colors duration-150"
               >
                 sharing page
               </a>{" "}

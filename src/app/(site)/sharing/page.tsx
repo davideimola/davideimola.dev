@@ -73,10 +73,10 @@ export default function SharingPage() {
   };
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <JsonLd data={talksSchema} />
       <PageHero
-        command="ls ./sharing"
+        label="Talks"
         title="Sharing"
         description="I share what I learn in public through talks, workshops, and events on AI, security, Go, GitOps, and open source. I like sessions that are concrete, honest about tradeoffs, and leave the audience with something they can apply the next day."
       >
@@ -92,9 +92,8 @@ export default function SharingPage() {
             href="https://cal.com/davideimola"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-[12px] text-text-2 border border-border rounded-sm px-3 py-2 hover:border-border-hover hover:text-accent transition-[border-color,color] duration-150"
+            className="inline-flex items-center gap-2 font-mono text-[12px] text-fg-muted border border-border px-3 py-2 hover:border-fg hover:text-accent transition-[border-color,color] duration-150"
           >
-            <span className="text-accent">❯</span>
             book a call
           </a>
         </div>
@@ -104,7 +103,7 @@ export default function SharingPage() {
       <section className="mb-16 border-t border-border pt-10" id="speaker-kit">
         <ScrollReveal>
           <SectionHeader title="Speaker Kit" />
-          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-10">
+          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-10">
             Everything you need for a CfP or event program. Copy and paste freely.
           </p>
         </ScrollReveal>
@@ -112,18 +111,18 @@ export default function SharingPage() {
         <div className="flex flex-col gap-6">
           {/* Short bio */}
           <ScrollReveal>
-            <div className="border border-border rounded-sm overflow-hidden">
-              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+            <div className="border border-border overflow-hidden">
+              <div className="flex items-center justify-between bg-surface border-b border-border px-4 py-2">
+                <span className="font-mono text-[10px] text-fg-subtle tracking-[0.06em]">
                   SHORT BIO
                 </span>
                 <CopyButton
                   code={SHORT_BIO}
                   label="copy"
-                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
+                  className="border border-border px-2 py-1 hover:border-fg hover:text-fg"
                 />
               </div>
-              <p className="font-sans text-[14px] text-text-2 leading-relaxed px-4 py-4">
+              <p className="font-sans text-[14px] text-fg-muted leading-relaxed px-4 py-4">
                 {SHORT_BIO}
               </p>
             </div>
@@ -131,21 +130,21 @@ export default function SharingPage() {
 
           {/* Long bio */}
           <ScrollReveal>
-            <div className="border border-border rounded-sm overflow-hidden">
-              <div className="flex items-center justify-between bg-bg-card border-b border-border px-4 py-2">
-                <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+            <div className="border border-border overflow-hidden">
+              <div className="flex items-center justify-between bg-surface border-b border-border px-4 py-2">
+                <span className="font-mono text-[10px] text-fg-subtle tracking-[0.06em]">
                   LONG BIO
                 </span>
                 <CopyButton
                   code={LONG_BIO}
                   label="copy"
-                  className="border border-border rounded-[2px] px-2 py-1 hover:border-border-hover hover:text-text-1"
+                  className="border border-border px-2 py-1 hover:border-fg hover:text-fg"
                 />
               </div>
               <div className="px-4 py-4 flex flex-col gap-3">
                 {LONG_BIO.split("\n\n").map((paragraph, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: static content, order never changes
-                  <p key={i} className="font-sans text-[14px] text-text-2 leading-relaxed">
+                  <p key={i} className="font-sans text-[14px] text-fg-muted leading-relaxed">
                     {paragraph}
                   </p>
                 ))}
@@ -156,9 +155,9 @@ export default function SharingPage() {
           {/* Topics + links */}
           <ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="border border-border rounded-sm overflow-hidden">
-                <div className="bg-bg-card border-b border-border px-4 py-2">
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">
+              <div className="border border-border overflow-hidden">
+                <div className="bg-surface border-b border-border px-4 py-2">
+                  <span className="font-mono text-[10px] text-fg-subtle tracking-[0.06em]">
                     TOPIC AREAS
                   </span>
                 </div>
@@ -166,24 +165,29 @@ export default function SharingPage() {
                   {TOPICS.map((topic) => (
                     <li
                       key={topic}
-                      className="font-sans text-[14px] text-text-2 flex items-center gap-2"
+                      className="font-sans text-[14px] text-fg-muted flex items-center gap-2"
                     >
-                      <span className="text-accent font-mono text-[10px]">{"//"}</span>
+                      <span
+                        aria-hidden="true"
+                        className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                      />
                       {topic}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="border border-border rounded-sm overflow-hidden">
-                <div className="bg-bg-card border-b border-border px-4 py-2">
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.06em]">LINKS</span>
+              <div className="border border-border overflow-hidden">
+                <div className="bg-surface border-b border-border px-4 py-2">
+                  <span className="font-mono text-[10px] text-fg-subtle tracking-[0.06em]">
+                    LINKS
+                  </span>
                 </div>
                 <ul className="px-4 py-4 flex flex-col gap-3">
                   <li>
                     <a
                       href="/images/davide-speaking-profile.webp"
                       download
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       ↓ Headshot (webp)
                     </a>
@@ -191,7 +195,7 @@ export default function SharingPage() {
                   <li>
                     <a
                       href="/brand"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       Brand assets (logo, wordmark) →
                     </a>
@@ -201,7 +205,7 @@ export default function SharingPage() {
                       href="https://bsky.app/profile/davideimola.dev"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       BlueSky →
                     </a>
@@ -211,7 +215,7 @@ export default function SharingPage() {
                       href="https://www.linkedin.com/in/davideimola/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       LinkedIn →
                     </a>
@@ -221,7 +225,7 @@ export default function SharingPage() {
                       href="https://github.com/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       GitHub →
                     </a>
@@ -231,7 +235,7 @@ export default function SharingPage() {
                       href="https://emblema.live/speaker/davideimola"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[12px] text-text-2 hover:text-accent transition-colors duration-150"
+                      className="font-mono text-[12px] text-fg-muted hover:text-accent transition-colors duration-150"
                     >
                       Emblema →
                     </a>
@@ -246,9 +250,8 @@ export default function SharingPage() {
       {/* Talks */}
       <Suspense
         fallback={
-          <p className="font-mono text-[13px] text-text-3" aria-hidden="true">
-            <span className="text-accent">❯</span> loading
-            <span className="inline-block w-[3px] h-[1em] bg-accent ml-1 align-middle animate-[blink_1.1s_step-end_infinite]" />
+          <p className="font-mono text-meta text-fg-subtle" aria-hidden="true">
+            Loading...
           </p>
         }
       >
@@ -258,13 +261,13 @@ export default function SharingPage() {
       {/* CTA */}
       <ScrollReveal>
         <div className="mt-12 pt-8 border-t border-border">
-          <p className="font-sans text-[14px] text-text-2">
+          <p className="font-sans text-[14px] text-fg-muted">
             Interested in having me speak at your event?{" "}
             <a
               href="https://www.linkedin.com/in/davideimola/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Get in touch →
             </a>

@@ -27,7 +27,7 @@ export async function ShelfNow() {
       </ScrollReveal>
 
       <ScrollReveal>
-        <p className="font-sans text-[14px] text-text-3 mb-6 max-w-2xl">
+        <p className="font-sans text-[14px] text-fg-subtle mb-6 max-w-2xl">
           Not written by hand: this is whatever my library says I have open today.
         </p>
       </ScrollReveal>
@@ -36,16 +36,16 @@ export async function ShelfNow() {
         {groups.map((group, i) => (
           <ScrollReveal key={group.verbBase} delay={i * 60}>
             <div>
-              <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-3">
+              <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
                 {group.label}
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2">
                 {group.passes.map((pass) => (
-                  <li key={pass.id} className="font-sans text-[13px] text-text-2">
-                    <span className="font-mono text-[13px] text-text-1">{pass.title}</span>
+                  <li key={pass.id} className="font-sans text-[13px] text-fg-muted">
+                    <span className="font-mono text-[13px] text-fg">{pass.title}</span>
                     {/* The Medium arrives as a label tsundoku chose: printing the
                         slug back would give us "Playstation 5". */}
-                    <span className="text-text-3">
+                    <span className="text-fg-subtle">
                       {" "}
                       · {pass.type.label} · {pass.medium.label}
                     </span>
@@ -58,8 +58,8 @@ export async function ShelfNow() {
       </div>
 
       <ScrollReveal>
-        <p className="font-mono text-[11px] text-text-3 mt-6">
-          <Link href="/shelf" className="text-text-2 hover:text-accent transition-colors">
+        <p className="font-mono text-[11px] text-fg-subtle mt-6">
+          <Link href="/shelf" className="text-fg-muted hover:text-accent transition-colors">
             /shelf
           </Link>{" "}
           for what I finished, what I put down, and what I take on next

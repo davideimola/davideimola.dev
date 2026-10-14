@@ -22,17 +22,16 @@ export default function BlogPage() {
   const allPosts = getAllPosts();
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="ls ./blog"
+        label="Blog"
         title="Writing"
         description={`${allPosts.length} articles on engineering, platform thinking, Go, and security.`}
       />
       <Suspense
         fallback={
-          <p className="font-mono text-[13px] text-text-3" aria-hidden="true">
-            <span className="text-accent">❯</span> loading
-            <span className="inline-block w-[3px] h-[1em] bg-accent ml-1 align-middle animate-[blink_1.1s_step-end_infinite]" />
+          <p className="font-mono text-meta text-fg-subtle" aria-hidden="true">
+            Loading...
           </p>
         }
       >

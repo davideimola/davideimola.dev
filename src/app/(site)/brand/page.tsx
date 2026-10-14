@@ -32,7 +32,7 @@ function DownloadRow({ downloads }: { downloads: Download[] }) {
           key={d.href}
           href={d.href}
           download
-          className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+          className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
         >
           ↓ {d.label}
         </a>
@@ -43,9 +43,9 @@ function DownloadRow({ downloads }: { downloads: Download[] }) {
 
 export default function BrandPage() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="cat ./brand.md"
+        label="Brand"
         title="Brand"
         description="The mark is the end state of this site's hero: the name has just been typed, the red cursor is still there. Use these assets as-is to refer to me in conference programs, event pages, articles."
       />
@@ -54,15 +54,15 @@ export default function BrandPage() {
       <section className="mb-16">
         <ScrollReveal>
           <SectionHeader title="Mark" />
-          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-8">
-            The primary mark: <span className="font-mono text-text-1">di</span> plus the cursor. For
+          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
+            The primary mark: <span className="font-mono text-fg">di</span> plus the cursor. For
             avatars, favicons, and stickers. Minimum size 16&nbsp;px.
           </p>
         </ScrollReveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <ScrollReveal>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm overflow-hidden w-[160px]">
+              <div className="border border-border overflow-hidden w-[160px]">
                 <Image
                   src="/brand/mark.svg"
                   alt="Davide Imola mark, dark"
@@ -82,7 +82,7 @@ export default function BrandPage() {
           </ScrollReveal>
           <ScrollReveal delay={60}>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm overflow-hidden w-[160px]">
+              <div className="border border-border overflow-hidden w-[160px]">
                 <Image
                   src="/brand/mark-light.svg"
                   alt="Davide Imola mark, light"
@@ -102,7 +102,7 @@ export default function BrandPage() {
           </ScrollReveal>
           <ScrollReveal delay={120}>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm w-[160px] h-[160px] flex items-center justify-center text-text-2">
+              <div className="border border-border w-[160px] h-[160px] flex items-center justify-center text-fg-muted">
                 {/* mark-mono.svg inherits currentColor — shown here in text-2 */}
                 <Image
                   src="/brand/mark-mono.svg"
@@ -124,14 +124,14 @@ export default function BrandPage() {
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
           <SectionHeader title="Wordmark" />
-          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-8">
+          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
             For horizontal contexts: slide headers, covers, signatures. Minimum width ~120&nbsp;px.
           </p>
         </ScrollReveal>
         <div className="flex flex-col gap-6">
           <ScrollReveal>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm bg-bg px-8 py-7">
+              <div className="border border-border bg-bg px-8 py-7">
                 <Image
                   src="/brand/wordmark.svg"
                   alt="davide imola wordmark, light ink"
@@ -151,7 +151,7 @@ export default function BrandPage() {
           </ScrollReveal>
           <ScrollReveal delay={60}>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm bg-[#F0EDE9] px-8 py-7">
+              <div className="border border-border bg-[#F0EDE9] px-8 py-7">
                 <Image
                   src="/brand/wordmark-dark.svg"
                   alt="davide imola wordmark, dark ink"
@@ -176,18 +176,18 @@ export default function BrandPage() {
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
           <SectionHeader title="Domain lockup" />
-          <p className="font-sans text-[14px] text-text-2 -mt-6 mb-8">
+          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
             The URL as a mark, for contexts where the address itself is the signature.{" "}
-            <span className="font-mono text-text-2">
-              davideimola<span className="text-accent">.dev</span>
+            <span className="font-mono text-fg-muted">
+              davideimola<span className="text-fg">.dev</span>
             </span>
-            , only the <span className="font-mono text-accent">.dev</span> is red.
+            , only the <span className="font-mono text-fg">.dev</span> is red.
           </p>
         </ScrollReveal>
         <div className="flex flex-col gap-6">
           <ScrollReveal>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm bg-bg px-8 py-7">
+              <div className="border border-border bg-bg px-8 py-7">
                 <Image
                   src="/brand/domain.svg"
                   alt="davideimola.dev domain lockup, light ink"
@@ -207,7 +207,7 @@ export default function BrandPage() {
           </ScrollReveal>
           <ScrollReveal delay={60}>
             <div className="flex flex-col gap-3">
-              <div className="border border-border-mid rounded-sm bg-[#F0EDE9] px-8 py-7">
+              <div className="border border-border bg-[#F0EDE9] px-8 py-7">
                 <Image
                   src="/brand/domain-dark.svg"
                   alt="davideimola.dev domain lockup, dark ink"
@@ -241,11 +241,11 @@ export default function BrandPage() {
             { name: "Ink on light", hex: "#1A1816", note: "glyphs, light surfaces" },
           ].map((c, i) => (
             <ScrollReveal key={c.hex} delay={i * 40}>
-              <div className="border border-border rounded-sm overflow-hidden">
+              <div className="border border-border overflow-hidden">
                 <div className="h-16" style={{ background: c.hex }} />
                 <div className="px-3 py-2.5 flex flex-col gap-0.5">
-                  <span className="font-mono text-[12px] text-text-1">{c.hex}</span>
-                  <span className="font-mono text-[10px] text-text-3 tracking-[0.04em]">
+                  <span className="font-mono text-[12px] text-fg">{c.hex}</span>
+                  <span className="font-mono text-[10px] text-fg-subtle tracking-[0.04em]">
                     {c.name} · {c.note}
                   </span>
                 </div>
@@ -266,35 +266,33 @@ export default function BrandPage() {
               "Don't restyle or remove the cursor, don't change the typeface, don't crop the lockups.",
               "In animated contexts the cursor may blink (1.1s step-end), respecting prefers-reduced-motion.",
             ].map((rule) => (
-              <li key={rule} className="font-sans text-[14px] text-text-2 flex gap-2">
-                <span className="text-accent font-mono text-[10px] leading-[1.7] shrink-0">
-                  {"//"}
-                </span>
+              <li key={rule} className="font-sans text-[14px] text-fg-muted flex gap-2">
+                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
                 {rule}
               </li>
             ))}
           </ul>
-          <p className="font-sans text-[14px] text-text-2">
+          <p className="font-sans text-[14px] text-fg-muted">
             All brand assets are licensed under{" "}
             <a
               href="https://creativecommons.org/licenses/by-nd/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 underline decoration-border-mid hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
             >
               CC BY-ND 4.0
             </a>
             {"; see the "}
             <a
               href="/brand/LICENSE.md"
-              className="text-text-1 underline decoration-border-mid hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
             >
               full license
             </a>
             . Need a different format or something not covered here?{" "}
             <a
               href="/contact"
-              className="text-text-1 underline decoration-border-mid hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
             >
               Get in touch
             </a>

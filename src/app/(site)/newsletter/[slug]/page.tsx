@@ -69,24 +69,23 @@ export default async function NewsletterIssuePage({ params }: Props) {
   return (
     <>
       <JsonLd data={schema} />
-      <div className="max-w-[768px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+      <div className="max-w-[764px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
         <Breadcrumb
-          command="cat"
-          items={[{ label: "newsletter", href: "/newsletter" }, { label: `${slug}.mdx` }]}
+          items={[{ label: "Newsletter", href: "/newsletter" }, { label: `Issue #${issue.issue}` }]}
           className="mb-10"
         />
 
         <article>
           <header className="mb-10">
-            <p className="font-mono text-[12px] text-text-3 mb-3">
+            <p className="font-mono text-meta text-fg-subtle mb-4">
               Issue #{issue.issue} · {formatDate(issue.date)}
             </p>
-            <h1 className="font-mono text-[26px] sm:text-[32px] font-bold text-text-1 tracking-[-0.03em] leading-tight">
+            <h1 className="font-sans text-[36px] sm:text-[48px] font-bold text-fg tracking-[-0.045em] leading-[1.05]">
               {issue.subject}
             </h1>
           </header>
 
-          <div className="prose prose-lg max-w-none">
+          <div className="prose max-w-none">
             <MDXRemote
               source={issue.content}
               options={{
@@ -109,7 +108,7 @@ export default async function NewsletterIssuePage({ params }: Props) {
 
         {/* Subscribe CTA */}
         <div className="mt-14 pt-10 border-t border-border">
-          <p className="font-mono text-[11px] text-text-3 tracking-widest uppercase mb-4">
+          <p className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase mb-4">
             Get the next issue
           </p>
           <div className="max-w-md">

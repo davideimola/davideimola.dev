@@ -9,7 +9,6 @@ import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
 import { AuthorBio } from "../../../../components/ui/AuthorBio";
 import { BackToTop } from "../../../../components/ui/BackToTop";
-import { Breadcrumb } from "../../../../components/ui/Breadcrumb";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
 import { GiscusComments } from "../../../../components/ui/GiscusComments";
 import { JsonLd } from "../../../../components/ui/JsonLd";
@@ -19,6 +18,7 @@ import { RelatedPosts } from "../../../../components/ui/RelatedPosts";
 import { ShareButtons } from "../../../../components/ui/ShareButtons";
 import { SubscribeCTA } from "../../../../components/ui/SubscribeCTA";
 import { TableOfContents } from "../../../../components/ui/TableOfContents";
+import { Tape } from "../../../../components/ui/Tape";
 import {
   extractToc,
   getAllPosts,
@@ -117,50 +117,42 @@ export default async function BlogPostPage({ params }: Props) {
       <JsonLd data={blogPostingSchema} />
       <ReadingProgress />
       <BackToTop />
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
-        <Breadcrumb
-          command="cat"
-          items={[{ label: "blog", href: "/blog" }, { label: `${slug}.mdx` }]}
-          className="mb-10"
-        />
-
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-          {/* Article */}
-          <article className="flex-1 min-w-0">
-            {/* Header */}
-            <header className="mb-10">
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
+        <header className="flex flex-col gap-[22px] max-w-[1000px] pb-10 md:pb-12">
+          <Tape tilt={0}>{post.category}</Tape>
+          <h1 className="m-0 font-sans font-bold text-fg text-[38px] sm:text-[52px] lg:text-h1 leading-[1.02] tracking-[-0.045em]">
+            {post.title}
+          </h1>
+          <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted max-w-[820px]">
+            {post.excerpt}
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-meta text-fg-subtle">
+            <span>{formatDate(post.date)}</span>
+            <span aria-hidden="true">·</span>
+            <span>{post.readingTime}</span>
+            <span aria-hidden="true">·</span>
+            <span className="flex flex-wrap gap-x-2 gap-y-1">
+              {post.tags.map((tag) => (
                 <a
-                  href={`/blog?category=${encodeURIComponent(post.category)}`}
-                  className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border hover:text-accent transition-colors duration-150"
+                  key={tag}
+                  href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+                  className="text-fg-subtle no-underline hover:text-accent transition-colors duration-150"
                 >
-                  {post.category}
+                  #{tag.toLowerCase()}
                 </a>
-              </div>
-              <h1 className="font-mono text-[26px] sm:text-[32px] font-bold text-text-1 tracking-[-0.03em] leading-tight mb-4">
-                {post.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <p className="font-mono text-[12px] text-text-3">
-                  {formatDate(post.date)} · {post.readingTime}
-                </p>
-                <div className="flex flex-wrap gap-x-2 gap-y-1">
-                  {post.tags.map((tag) => (
-                    <a
-                      key={tag}
-                      href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
-                      className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
-                    >
-                      #{tag.toLowerCase()}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </header>
+              ))}
+            </span>
+          </div>
+        </header>
 
+        <div className="h-px bg-fg" />
+
+        <div className="pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,700px)_240px] lg:justify-between gap-12">
+          {/* Article: the 700px reading column (docs/brand.md, "Site") */}
+          <article className="min-w-0">
             {/* Hero image */}
             {post.heroImage && (
-              <div className="relative w-full aspect-2/1 mb-10 rounded-sm overflow-hidden border border-border">
+              <div className="relative w-full aspect-2/1 mb-10 overflow-hidden border border-border">
                 <Image
                   src={post.heroImage}
                   alt={post.heroImageAlt ?? post.title}
@@ -172,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
             )}
 
             {/* Content */}
-            <div id="article-content" className="prose prose-lg max-w-none">
+            <div id="article-content" className="prose max-w-none">
               <MDXRemote
                 source={post.content}
                 options={{
@@ -189,15 +181,14 @@ export default async function BlogPostPage({ params }: Props) {
               />
             </div>
 
-            {/* Easter egg for silicon readers — the same post, served raw */}
-            <p className="font-mono text-[12px] text-text-3 mt-12">
-              <span className="text-accent"># </span>
+            {/* Easter egg for silicon readers: the same post, served raw */}
+            <p className="font-mono text-[13px] text-fg-subtle mt-12">
               Are you an LLM? You&apos;d probably prefer the Markdown:{" "}
               <a
                 href={`/blog/${slug}.md`}
-                className="text-text-2 hover:text-accent transition-colors duration-150"
+                className="text-fg-muted hover:text-accent transition-colors duration-150"
               >
-                cat {slug}.md →
+                {slug}.md →
               </a>
             </p>
 
@@ -211,8 +202,8 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Sticky ToC */}
           {toc.length > 0 && (
-            <aside className="hidden lg:block w-[220px] shrink-0">
-              <div className="sticky top-[72px]">
+            <aside className="hidden lg:block pt-1.5">
+              <div className="sticky top-[110px]">
                 <TableOfContents items={toc} />
               </div>
             </aside>

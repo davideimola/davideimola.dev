@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { Button, ButtonLink } from "../components/ui/Button";
+import { Tape } from "../components/ui/Tape";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -13,52 +15,25 @@ export default function GlobalError({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 min-h-[60vh] flex items-center">
-      <div className="font-mono flex flex-col gap-6">
-        {/* Command */}
-        <p className="text-[13px] text-text-3">
-          <span className="text-accent mr-2">❯</span>
-          process exited with code 1
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20 min-h-[60vh] flex items-center">
+      <div className="flex flex-col gap-6 max-w-[42rem]">
+        <Tape tilt={1}>Error</Tape>
+        <h1 className="m-0 font-sans font-bold text-fg text-[40px] sm:text-[52px] lg:text-h1 leading-[1.02] tracking-[-0.045em]">
+          Something broke on my side.
+        </h1>
+        <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
+          An unexpected error stopped this page. Trying again usually helps.
         </p>
-
-        {/* Error block */}
-        <div className="border border-border rounded-sm overflow-hidden">
-          <div className="bg-bg-card border-b border-border px-4 py-2">
-            <span className="text-[10px] text-text-3 tracking-widest uppercase">stderr</span>
-          </div>
-          <div className="px-4 py-5 flex flex-col gap-2">
-            <p className="text-[14px]">
-              <span className="text-accent">Error:</span>{" "}
-              <span className="text-text-1">an unexpected error occurred</span>
-            </p>
-            {error.digest && (
-              <p className="text-[13px] text-text-3">
-                digest: <span className="text-text-2">{error.digest}</span>
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="flex flex-col gap-3">
-          <p className="text-[12px] text-text-3 tracking-widest uppercase">recovery options</p>
-          <div className="flex flex-col gap-2">
-            <button
-              type="button"
-              onClick={reset}
-              className="text-[13px] text-text-2 hover:text-accent transition-colors duration-150 flex items-center gap-2 w-fit"
-            >
-              <span className="text-accent">→</span>
-              try again
-            </button>
-            <a
-              href="/"
-              className="text-[13px] text-text-2 hover:text-accent transition-colors duration-150 flex items-center gap-2"
-            >
-              <span className="text-accent">→</span>
-              ~/home
-            </a>
-          </div>
+        {error.digest && (
+          <p className="m-0 font-mono text-meta text-fg-subtle">digest: {error.digest}</p>
+        )}
+        <div className="flex flex-wrap items-center gap-6 mt-2">
+          <Button type="button" variant="primary" onClick={reset}>
+            Try again
+          </Button>
+          <ButtonLink variant="link" href="/">
+            Back to the home page
+          </ButtonLink>
         </div>
       </div>
     </div>

@@ -18,23 +18,23 @@ interface TalkRowProps {
 export function TalkRow({ event, date, location, type, sessionTitle, url }: TalkRowProps) {
   const path = (
     <>
-      <span className="text-accent">./</span>
-      <span className="text-text-2">{event}</span>
+      <span className="text-fg">./</span>
+      <span className="text-fg-muted">{event}</span>
       {sessionTitle && (
         <>
-          <span className="text-text-3"> / </span>
-          <span className="text-text-1 font-semibold">{sessionTitle}</span>
+          <span className="text-fg-subtle"> / </span>
+          <span className="text-fg font-semibold">{sessionTitle}</span>
         </>
       )}
     </>
   );
 
   return (
-    <div className="not-prose border-l-2 border-accent pl-4 sm:pl-5 my-5">
+    <div className="not-prose border-l-2 border-fg pl-4 sm:pl-5 my-5">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-2">
-        <span className="font-mono text-[11px] text-text-3">{date}</span>
-        <span className="font-mono text-[11px] text-text-3">·</span>
-        <span className="font-mono text-[11px] text-text-3">{location}</span>
+        <span className="font-mono text-[11px] text-fg-subtle">{date}</span>
+        <span className="font-mono text-[11px] text-fg-subtle">·</span>
+        <span className="font-mono text-[11px] text-fg-subtle">{location}</span>
         {type && <Badge variant="category">{type}</Badge>}
       </div>
       <p className="font-mono text-[16px] sm:text-[18px] leading-snug mb-0">

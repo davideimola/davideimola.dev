@@ -70,7 +70,9 @@ const HOBBIES = [
 
 function RailHeading({ children }: { children: string }) {
   return (
-    <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-3">{children}</p>
+    <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-3">
+      {children}
+    </p>
   );
 }
 
@@ -80,7 +82,7 @@ function ToolChips({ names }: { names: string[] }) {
       {names.map((name) => (
         <li
           key={name}
-          className="font-mono text-[11px] text-text-2 border border-border rounded-full px-2.5 py-1"
+          className="font-mono text-[11px] text-fg-muted border border-border rounded-full px-2.5 py-1"
         >
           {name}
         </li>
@@ -101,7 +103,7 @@ export default function AboutPage() {
   const talkCount = getTotalTalkCount();
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <JsonLd data={PERSON_SCHEMA} />
 
       {/* The portrait stretches to the height of the text beside it rather than
@@ -109,32 +111,28 @@ export default function AboutPage() {
           open a band of blank page under the words. */}
       <ScrollReveal>
         <header className="mb-16">
-          <p className="font-mono text-[13px] text-text-3 mb-4">
-            <span className="text-accent mr-2">❯</span>whoami
-          </p>
+          <p className="font-mono text-[13px] text-fg-subtle mb-4">whoami</p>
           <div className="flex flex-col sm:flex-row gap-8 sm:gap-10 sm:items-stretch">
             <div className="flex-1 min-w-0">
-              <h1 className="font-mono text-[32px] sm:text-[44px] font-bold text-text-1 tracking-[-0.03em] leading-none mb-5">
+              <h1 className="font-sans text-[32px] sm:text-[44px] font-bold text-fg tracking-[-0.03em] leading-none mb-5">
                 {identity.name}
               </h1>
-              <p className="font-sans text-[16px] text-text-2 leading-relaxed max-w-xl mb-8">
+              <p className="font-sans text-[16px] text-fg-muted leading-relaxed max-w-xl mb-8">
                 {lead}
               </p>
               {/* The command is stated once and the chapters below are its output.
                   Repeating it per chapter is what made the device wear out. */}
-              <p className="font-mono text-[13px] text-text-3">
-                <span className="text-accent mr-2">❯</span>git log --oneline --reverse
-              </p>
-              <p className="font-mono text-[12px] text-text-3 mt-2 pl-6">
+              <p className="font-mono text-[13px] text-fg-subtle">git log --oneline --reverse</p>
+              <p className="font-mono text-[12px] text-fg-subtle mt-2 pl-6">
                 {phases.length} commits, {phases[0].period.split(" ")[0]} to today. The dated
                 version is on{" "}
-                <Link href="/cv" className="text-text-2 hover:text-accent transition-colors">
+                <Link href="/cv" className="text-fg-muted hover:text-accent transition-colors">
                   /cv
                 </Link>
                 .
               </p>
             </div>
-            <div className="shrink-0 w-[200px] sm:w-[220px] sm:self-stretch min-h-[280px] overflow-hidden rounded-sm border border-border">
+            <div className="shrink-0 w-[200px] sm:w-[220px] sm:self-stretch min-h-[280px] overflow-hidden border border-border">
               <Image
                 src="/images/davide-about-profile.webp"
                 alt="Portrait of Davide Imola"
@@ -162,7 +160,7 @@ export default function AboutPage() {
                     band wants a wide frame, not a portrait with its sides cut off. */}
                 {phase.image && (
                   <figure className="mb-8">
-                    <div className="h-[200px] sm:h-[260px] overflow-hidden rounded-sm border border-border">
+                    <div className="h-[200px] sm:h-[260px] overflow-hidden border border-border">
                       <Image
                         src={phase.image.src}
                         alt={phase.image.caption}
@@ -174,7 +172,7 @@ export default function AboutPage() {
                         className="w-full h-full object-cover object-[center_45%] grayscale"
                       />
                     </div>
-                    <figcaption className="font-mono text-[10px] text-text-3 mt-2">
+                    <figcaption className="font-mono text-[10px] text-fg-subtle mt-2">
                       {phase.image.caption}
                     </figcaption>
                   </figure>
@@ -184,16 +182,16 @@ export default function AboutPage() {
                   {/* Decorative: the order is already carried by the periods. */}
                   <span
                     aria-hidden="true"
-                    className="font-mono text-[40px] sm:text-[56px] font-bold leading-none text-border-mid tabular-nums shrink-0"
+                    className="font-mono text-[40px] sm:text-[56px] font-bold leading-none text-border tabular-nums shrink-0"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0">
-                    <p className="font-mono text-[11px] text-text-3 tabular-nums mb-1">
+                    <p className="font-mono text-[11px] text-fg-subtle tabular-nums mb-1">
                       {phase.period}
-                      {phase.current && <span className="text-accent"> · now</span>}
+                      {phase.current && <span className="text-fg"> · now</span>}
                     </p>
-                    <h2 className="font-mono text-[19px] sm:text-[24px] font-semibold text-text-1 tracking-[-0.01em]">
+                    <h2 className="font-sans text-[19px] sm:text-[24px] font-bold text-fg tracking-[-0.01em]">
                       {phase.title}
                     </h2>
                   </div>
@@ -204,16 +202,16 @@ export default function AboutPage() {
                     sitting next to a blank column. */}
                 <div className={hasRail ? "lg:grid lg:grid-cols-[1fr_300px] lg:gap-12" : ""}>
                   <div className="min-w-0">
-                    <p className="font-sans text-[15px] sm:text-[16px] text-text-2 leading-relaxed">
+                    <p className="font-sans text-[15px] sm:text-[16px] text-fg-muted leading-relaxed">
                       {phase.prose}
                     </p>
 
                     {isCreed && (
-                      <blockquote className="border-l-2 border-accent pl-6 py-1 mt-8">
-                        <p className="font-mono text-[17px] sm:text-[19px] text-text-1 leading-snug">
+                      <blockquote className="border-l-2 border-fg pl-6 py-1 mt-8">
+                        <p className="font-mono text-[17px] sm:text-[19px] text-fg leading-snug">
                           {creed.quote}
                         </p>
-                        <p className="font-sans text-[14px] text-text-2 mt-2">{creed.gloss}</p>
+                        <p className="font-sans text-[14px] text-fg-muted mt-2">{creed.gloss}</p>
                       </blockquote>
                     )}
 
@@ -232,10 +230,10 @@ export default function AboutPage() {
                         link went with it and /uses disappeared from the page. It
                         belongs to the step that is today, whatever that step lists. */}
                     {phase.current && (
-                      <p className="font-mono text-[11px] text-text-3 mt-8">
+                      <p className="font-mono text-[11px] text-fg-subtle mt-8">
                         <Link
                           href="/uses"
-                          className="text-text-2 hover:text-accent transition-colors"
+                          className="text-fg-muted hover:text-accent transition-colors"
                         >
                           /uses
                         </Link>{" "}
@@ -251,15 +249,15 @@ export default function AboutPage() {
                           <RailHeading>What it started</RailHeading>
                           <ul className="flex flex-col gap-3">
                             {phase.started.map((item) => (
-                              <li key={item.slug} className="border-l border-border-mid pl-4">
-                                <p className="font-mono text-[12px] font-medium text-text-1">
+                              <li key={item.slug} className="border-l border-border pl-4">
+                                <p className="font-mono text-[12px] font-medium text-fg">
                                   {item.org}
-                                  <span className="font-normal text-[10px] text-accent">
+                                  <span className="font-normal text-[10px] text-fg">
                                     {" "}
                                     {item.roles[0].role}
                                   </span>
                                 </p>
-                                <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
                                   {item.roles[0].summary}
                                 </p>
                               </li>
@@ -269,34 +267,34 @@ export default function AboutPage() {
                                 talk archive's organiser flag and the total from its
                                 length, so neither can drift from /sharing. */}
                             {organised.map((event) => (
-                              <li key={event.slug} className="border-l border-border-mid pl-4">
-                                <p className="font-mono text-[12px] font-medium text-text-1">
+                              <li key={event.slug} className="border-l border-border pl-4">
+                                <p className="font-mono text-[12px] font-medium text-fg">
                                   {event.label}
-                                  <span className="font-normal text-[10px] text-accent">
+                                  <span className="font-normal text-[10px] text-fg">
                                     {" "}
                                     {event.count > 1 && `${event.count} ${event.noun}s · `}
                                     {event.years}
                                   </span>
                                 </p>
-                                <p className="font-sans text-[12px] text-text-3 leading-snug">
+                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
                                   {event.location}
                                 </p>
                               </li>
                             ))}
 
-                            <li className="border-l border-border-mid pl-4">
-                              <p className="font-mono text-[12px] font-medium text-text-1">
+                            <li className="border-l border-border pl-4">
+                              <p className="font-mono text-[12px] font-medium text-fg">
                                 Speaking
-                                <span className="font-normal text-[10px] text-accent">
+                                <span className="font-normal text-[10px] text-fg">
                                   {" "}
                                   {talkCount} talks and appearances
                                 </span>
                               </p>
-                              <p className="font-sans text-[12px] text-text-3 leading-snug">
+                              <p className="font-sans text-[12px] text-fg-subtle leading-snug">
                                 Concrete talks, honest about tradeoffs.{" "}
                                 <Link
                                   href="/sharing"
-                                  className="text-text-2 hover:text-accent transition-colors"
+                                  className="text-fg-muted hover:text-accent transition-colors"
                                 >
                                   /sharing
                                 </Link>
@@ -311,21 +309,21 @@ export default function AboutPage() {
                           <RailHeading>What it opened</RailHeading>
                           <ul className="flex flex-col gap-3">
                             {phase.opened.map((question) => (
-                              <li key={question.name} className="border-l-2 border-accent pl-4">
-                                <p className="font-sans text-[12px] text-text-3 leading-snug">
-                                  <span className="font-mono font-medium text-text-1">
+                              <li key={question.name} className="border-l-2 border-fg pl-4">
+                                <p className="font-sans text-[12px] text-fg-subtle leading-snug">
+                                  <span className="font-mono font-medium text-fg">
                                     {question.name}
                                   </span>
-                                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mx-1.5 align-middle" />
+                                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-fg mx-1.5 align-middle" />
                                   {question.body}
                                 </p>
                               </li>
                             ))}
                           </ul>
-                          <p className="font-mono text-[11px] text-text-3 mt-4 pl-4">
+                          <p className="font-mono text-[11px] text-fg-subtle mt-4 pl-4">
                             <Link
                               href="/now"
-                              className="text-text-2 hover:text-accent transition-colors"
+                              className="text-fg-muted hover:text-accent transition-colors"
                             >
                               /now
                             </Link>{" "}
@@ -344,22 +342,22 @@ export default function AboutPage() {
 
       <ScrollReveal>
         <section className="mt-16 border-t border-border pt-8">
-          <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-2">
+          <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-2">
             Off the clock
           </p>
-          <p className="font-sans text-[14px] text-text-3 mb-6 max-w-2xl">
+          <p className="font-sans text-[14px] text-fg-subtle mb-6 max-w-2xl">
             None of this is part of the story above, which is the point of putting it after it.
           </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
             {HOBBIES.map((hobby) => (
-              <li key={hobby.label} className="font-sans text-[13px] text-text-2">
-                <span className="font-mono text-[13px] text-text-1">{hobby.label}</span>
-                <span className="text-text-3"> · {hobby.context}</span>
+              <li key={hobby.label} className="font-sans text-[13px] text-fg-muted">
+                <span className="font-mono text-[13px] text-fg">{hobby.label}</span>
+                <span className="text-fg-subtle"> · {hobby.context}</span>
               </li>
             ))}
           </ul>
-          <p className="font-mono text-[11px] text-text-3 mt-6">
-            <Link href="/shelf" className="text-text-2 hover:text-accent transition-colors">
+          <p className="font-mono text-[11px] text-fg-subtle mt-6">
+            <Link href="/shelf" className="text-fg-muted hover:text-accent transition-colors">
               /shelf
             </Link>{" "}
             for what I am reading and playing right now
@@ -369,13 +367,13 @@ export default function AboutPage() {
 
       <ScrollReveal>
         <section className="mt-16 border-t border-border pt-8">
-          <p className="font-sans text-[14px] text-text-2">
+          <p className="font-sans text-[14px] text-fg-muted">
             Want to talk engineering, community, or collaboration?{" "}
             <a
               href="https://www.linkedin.com/in/davideimola/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Get in touch →
             </a>

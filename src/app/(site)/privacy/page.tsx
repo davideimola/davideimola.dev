@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "../../../components/ui/PageHero";
+import { Tape } from "../../../components/ui/Tape";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -8,18 +9,18 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="cat ./privacy.md"
+        label="Privacy"
         title="Privacy"
         description="How this site handles your data. Short version: as little as possible."
       />
 
-      <div className="max-w-2xl flex flex-col gap-10 font-sans text-[14px] text-text-2 leading-relaxed">
+      <div className="max-w-2xl flex flex-col gap-10 font-sans text-[14px] text-fg-muted leading-relaxed">
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Data collected"}
-          </h2>
+          <Tape as="h2" tilt={0} className="mb-6">
+            Data collected
+          </Tape>
           <p>
             This site does not collect personal data directly. No account, no login, no tracking
             pixel.
@@ -30,7 +31,7 @@ export default function PrivacyPage() {
               href="https://resend.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Resend
             </a>
@@ -40,16 +41,16 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Comments"}
-          </h2>
+          <Tape as="h2" tilt={1} className="mb-6">
+            Comments
+          </Tape>
           <p>
             Blog post comments are powered by{" "}
             <a
               href="https://giscus.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Giscus
             </a>
@@ -58,7 +59,7 @@ export default function PrivacyPage() {
               href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               GitHub's privacy policy
             </a>{" "}
@@ -67,16 +68,16 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Hosting"}
-          </h2>
+          <Tape as="h2" tilt={2} className="mb-6">
+            Hosting
+          </Tape>
           <p>
             This site is hosted on{" "}
             <a
               href="https://vercel.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Vercel
             </a>
@@ -86,7 +87,7 @@ export default function PrivacyPage() {
               href="https://vercel.com/legal/privacy-policy"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Vercel's privacy policy
             </a>
@@ -95,16 +96,16 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Analytics"}
-          </h2>
+          <Tape as="h2" tilt={0} className="mb-6">
+            Analytics
+          </Tape>
           <p>
             This site uses{" "}
             <a
               href="https://umami.is"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Umami
             </a>{" "}
@@ -117,7 +118,7 @@ export default function PrivacyPage() {
               href="https://umami.is/privacy"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               Umami's privacy policy
             </a>{" "}
@@ -126,9 +127,9 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Cookies"}
-          </h2>
+          <Tape as="h2" tilt={1} className="mb-6">
+            Cookies
+          </Tape>
           <p>
             This site sets no first-party cookies. Third-party services (Giscus/GitHub) may set
             their own cookies when you interact with them.
@@ -136,14 +137,14 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-[11px] text-text-3 tracking-widest uppercase">
-            {"// Contact"}
-          </h2>
+          <Tape as="h2" tilt={2} className="mb-6">
+            Contact
+          </Tape>
           <p>
             For any privacy-related questions, reach me at{" "}
             <a
               href="mailto:hello@davideimola.dev"
-              className="text-text-1 hover:text-accent transition-colors duration-150"
+              className="text-fg hover:text-accent transition-colors duration-150"
             >
               hello@davideimola.dev
             </a>
@@ -151,7 +152,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <p className="font-mono text-[11px] text-text-3">Last updated: July 2026</p>
+        <p className="font-mono text-[11px] text-fg-subtle">Last updated: July 2026</p>
       </div>
     </div>
   );

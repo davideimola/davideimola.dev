@@ -22,16 +22,15 @@ export function ContactForm() {
       <StdoutPanel>
         <div className="px-4 py-8 flex flex-col gap-3">
           <p className="font-mono text-[13px]">
-            <span className="text-accent">✓</span>{" "}
-            <span className="text-text-1">Message sent.</span>
+            <span className="text-fg">✓</span> <span className="text-fg">Message sent.</span>
           </p>
-          <p className="font-sans text-[13px] text-text-3">
+          <p className="font-sans text-[13px] text-fg-subtle">
             I'll get back to you as soon as I can.
           </p>
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mt-2 self-start font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+            className="mt-2 self-start font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
           >
             ← send another
           </button>
@@ -59,7 +58,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="name"
-          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
         >
           Name
         </label>
@@ -70,7 +69,7 @@ export function ContactForm() {
           required
           autoComplete="name"
           placeholder="Your name"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150"
+          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150"
         />
       </div>
 
@@ -78,7 +77,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="email"
-          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
         >
           Email
         </label>
@@ -89,7 +88,7 @@ export function ContactForm() {
           required
           autoComplete="email"
           placeholder="your@email.com"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150"
+          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150"
         />
       </div>
 
@@ -97,7 +96,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="message"
-          className="font-mono text-[11px] text-text-3 tracking-widest uppercase"
+          className="font-mono text-[11px] text-fg-subtle tracking-widest uppercase"
         >
           Message
         </label>
@@ -107,11 +106,11 @@ export function ContactForm() {
           required
           rows={6}
           placeholder="What's on your mind?"
-          className="bg-bg-card border border-border rounded-sm px-3 py-2.5 font-mono text-[13px] text-text-1 placeholder:text-text-3 outline-none focus:border-accent transition-colors duration-150 resize-none"
+          className="bg-surface border border-border px-3 py-2.5 font-mono text-[13px] text-fg placeholder:text-fg-subtle outline-none focus:border-fg transition-colors duration-150 resize-none"
         />
-        <p className="font-mono text-[11px] text-text-3">
-          <span className="text-accent">{"//"}</span> no links, please. You can share them once I
-          reply
+        <p className="font-mono text-[11px] text-fg-subtle">
+          <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" /> no
+          links, please. You can share them once I reply
         </p>
       </div>
 
@@ -123,7 +122,7 @@ export function ContactForm() {
 
       {/* Error */}
       {state.status === "error" && (
-        <p className="font-mono text-[12px] text-accent">
+        <p className="font-mono text-[12px] text-fg">
           <span className="mr-2">✗</span>
           {state.message}
         </p>
@@ -133,19 +132,9 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="self-start font-mono text-[12px] text-text-1 bg-bg-card border border-border rounded-sm px-4 py-2.5 cursor-pointer hover:border-border-hover hover:text-accent transition-[border-color,color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+        className="self-start font-mono text-[12px] text-fg bg-surface border border-border px-4 py-2.5 cursor-pointer hover:border-fg hover:text-accent transition-[border-color,color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
       >
-        {pending ? (
-          <>
-            <span className="text-accent">❯</span>
-            sending...
-          </>
-        ) : (
-          <>
-            <span className="text-accent">❯</span>
-            send message
-          </>
-        )}
+        {pending ? <>sending...</> : <>send message</>}
       </button>
     </form>
   );

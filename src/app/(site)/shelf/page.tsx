@@ -66,31 +66,30 @@ export default async function ShelfPage() {
   };
 
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <JsonLd data={shelfSchema} />
-      <PageHero command="ls ./shelf" title="Shelf" description={DESCRIPTION}>
-        <p className="font-mono text-[12px] text-text-3 mt-4 leading-relaxed">
-          <span className="text-accent mr-2">{"//"}</span>
+      <PageHero label="Shelf" title="Shelf" description={DESCRIPTION}>
+        <p className="font-mono text-[12px] text-fg-subtle mt-4 leading-relaxed">
           This page is read live out of{" "}
           <a
             href={TSUNDOKU_REPO}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-2 hover:text-accent transition-colors duration-150"
+            className="text-fg-muted hover:text-accent transition-colors duration-150"
           >
             tsundoku
           </a>
           , the open source library I run at home. Every number below is a query against it.
         </p>
-        <p className="font-mono text-[11px] text-text-3 mt-2">
+        <p className="font-mono text-[11px] text-fg-subtle mt-2">
           {source === "live" ? (
             <>
-              Last read: <span className="text-text-2">{formatDate(showcase.generatedAt)}</span>
+              Last read: <span className="text-fg-muted">{formatDate(showcase.generatedAt)}</span>
             </>
           ) : (
             <>
               tsundoku is not answering right now, so this is the last snapshot committed to the
-              site, from <span className="text-text-2">{formatDate(showcase.generatedAt)}</span>.
+              site, from <span className="text-fg-muted">{formatDate(showcase.generatedAt)}</span>.
             </>
           )}
         </p>
@@ -124,7 +123,7 @@ export default async function ShelfPage() {
             <SectionHeader title="Recent verdicts" className="mb-3" />
           </ScrollReveal>
           <ScrollReveal>
-            <p className="font-sans text-[14px] text-text-2 leading-relaxed max-w-2xl mb-6">
+            <p className="font-sans text-[14px] text-fg-muted leading-relaxed max-w-2xl mb-6">
               A score and a date, no review: what I thought of something stays in my own library.
               Only the passes I actually judged land here, so the quiet finishes I never scored do
               not, and they run newest first where I bothered to write a date down. Putting a book
@@ -143,7 +142,7 @@ export default async function ShelfPage() {
               so the line goes away entirely. */}
           {showcase.finished.count > showcase.finished.recent.length && (
             <ScrollReveal>
-              <p className="font-mono text-[11px] text-text-3 mt-4">
+              <p className="font-mono text-[11px] text-fg-subtle mt-4">
                 Showing {showcase.finished.recent.length} of {showcase.finished.count}. The block is
                 the most recent sample, the count is every verdict I have recorded.
               </p>
@@ -159,21 +158,21 @@ export default async function ShelfPage() {
           <SectionHeader title="The pile" className="mb-6" />
         </ScrollReveal>
         <ScrollReveal>
-          <div className="border border-border rounded-sm bg-bg-card p-5 sm:p-6">
+          <div className="border border-border bg-surface p-5 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8">
               <div>
-                <p className="font-mono text-[44px] sm:text-[56px] font-bold text-accent leading-none tracking-[-0.04em]">
+                <p className="font-mono text-[44px] sm:text-[56px] font-bold text-fg leading-none tracking-[-0.04em]">
                   {showcase.pile.count}
                 </p>
                 {/* Not "volumes": the pile holds a videogame as readily as a
                     manga, and the breakdown right under it says so. Not
                     "unread" either: half of it is already in progress and some
                     of it I do not own yet. */}
-                <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mt-2">
+                <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mt-2">
                   next up
                 </p>
               </div>
-              <p className="font-sans text-[14px] text-text-2 leading-relaxed max-w-md">
+              <p className="font-sans text-[14px] text-fg-muted leading-relaxed max-w-md">
                 Tsundoku is the pile that keeps growing, and this is mine: what I take on next, not
                 a heap of unread purchases. Some of it I pinned by hand. The rest composes itself
                 out of the stories left on a path I am walking, the things I want and do not own
@@ -187,9 +186,9 @@ export default async function ShelfPage() {
                 {showcase.pile.byType.map((entry) => (
                   <span
                     key={entry.type.slug}
-                    className="font-mono text-[11px] text-text-2 border border-border rounded-[2px] px-2 py-1"
+                    className="font-mono text-[11px] text-fg-muted border border-border px-2 py-1"
                   >
-                    {entry.type.label} <span className="text-text-3">· {entry.count}</span>
+                    {entry.type.label} <span className="text-fg-subtle">· {entry.count}</span>
                   </span>
                 ))}
               </div>
@@ -200,7 +199,7 @@ export default async function ShelfPage() {
         {showcase.pile.recent.length > 0 && (
           <ScrollReveal>
             <div className="mt-8">
-              <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-4">
+              <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-4">
                 Newest in the pile{" "}
                 <span className="normal-case tracking-normal">
                   ({showcase.pile.recent.length} of {showcase.pile.count})
@@ -214,7 +213,7 @@ export default async function ShelfPage() {
                   <div key={entry.id} className="flex flex-col gap-2">
                     <CoverTile title={entry.title} cover={entry.cover} series={entry.series} />
                     <div className="flex flex-col gap-1.5">
-                      <p className="font-mono text-[10px] text-text-3 leading-tight line-clamp-2">
+                      <p className="font-mono text-[10px] text-fg-subtle leading-tight line-clamp-2">
                         {entry.title}
                       </p>
                       <Badge variant="category" className="self-start">
@@ -234,15 +233,15 @@ export default async function ShelfPage() {
 
 function PassMeta({ pass }: { pass: ShelfPass }) {
   return (
-    <p className="font-mono text-[11px] text-text-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+    <p className="font-mono text-[11px] text-fg-subtle flex flex-wrap items-center gap-x-2 gap-y-1">
       <span>{pass.type.label}</span>
-      <span className="text-border-mid">/</span>
+      <span className="text-border">/</span>
       {/* The Medium arrives as a label tsundoku chose. Printing the slug back
           would give us "Playstation 5". */}
       <span>{pass.medium.label}</span>
       {pass.series && (
         <>
-          <span className="text-border-mid">/</span>
+          <span className="text-border">/</span>
           <span>{pass.series.name}</span>
         </>
       )}
@@ -277,26 +276,28 @@ function OpenPassRow({ pass }: { pass: ShelfPass }) {
       : null;
 
   return (
-    <article className="flex items-start gap-4 border border-border rounded-sm bg-bg-card p-4 transition-[border-color] duration-200 hover:border-border-hover">
+    <article className="flex items-start gap-4 border border-border bg-surface p-4 transition-[border-color] duration-200 hover:border-fg">
       <div className="w-14 sm:w-16 shrink-0">
         <CoverTile title={pass.title} cover={pass.cover} series={pass.series} />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="font-mono text-[14px] text-text-1 leading-snug mb-1">{pass.title}</h3>
+        <h3 className="font-sans text-[14px] text-fg leading-snug mb-1 font-bold tracking-[-0.02em]">
+          {pass.title}
+        </h3>
         <PassMeta pass={pass} />
         {/* A pass with no start date is ordinary, and the line simply goes away. */}
         {pass.startedAt && (
-          <p className="font-mono text-[11px] text-text-3 mt-2">
+          <p className="font-mono text-[11px] text-fg-subtle mt-2">
             Started {formatMonthYear(pass.startedAt)}
           </p>
         )}
         {percent !== null && pass.progress && (
           <div className="mt-3">
-            <div className="h-px w-full bg-border-mid" aria-hidden="true">
+            <div className="h-px w-full bg-border" aria-hidden="true">
               {/* The width is a measurement, so it cannot be a Tailwind class. */}
-              <div className="h-px bg-accent" style={{ width: `${percent}%` }} />
+              <div className="h-px bg-fg" style={{ width: `${percent}%` }} />
             </div>
-            <p className="font-mono text-[10px] text-text-3 mt-1.5">
+            <p className="font-mono text-[10px] text-fg-subtle mt-1.5">
               <ProgressRatio progress={pass.progress} /> <span aria-hidden="true">·</span> {percent}
               %
             </p>
@@ -328,11 +329,11 @@ function FinishedPassRow({ pass }: { pass: ShelfFinishedPass }) {
   return (
     <article
       className={[
-        "flex items-start gap-4 rounded-sm bg-bg-card p-4",
-        "border transition-[border-color] duration-200 hover:border-border-hover",
+        "flex items-start gap-4  bg-surface p-4",
+        "border transition-[border-color] duration-200 hover:border-fg",
         // An abandonment is the most expressive row here, so it wears the accent
         // on its edge and the finishes stay quiet around it.
-        abandoned ? "border-border-mid border-l-2 border-l-accent" : "border-border",
+        abandoned ? "border-border border-l-2 border-l-fg" : "border-border",
       ].join(" ")}
     >
       <div className="w-14 sm:w-16 shrink-0">
@@ -340,18 +341,20 @@ function FinishedPassRow({ pass }: { pass: ShelfFinishedPass }) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="font-mono text-[14px] text-text-1 leading-snug mb-1">{pass.title}</h3>
+        <h3 className="font-sans text-[14px] text-fg leading-snug mb-1 font-bold tracking-[-0.02em]">
+          {pass.title}
+        </h3>
         <PassMeta pass={pass} />
-        <p className="font-mono text-[11px] text-text-3 mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <p className="font-mono text-[11px] text-fg-subtle mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
           {dates && <span>{dates}</span>}
           {abandoned && pass.progress && pass.progress.total > 0 && (
             <>
               {dates && (
-                <span className="text-border-mid" aria-hidden="true">
+                <span className="text-border" aria-hidden="true">
                   /
                 </span>
               )}
-              <span className="text-text-2">
+              <span className="text-fg-muted">
                 stopped at <ProgressRatio progress={pass.progress} />
               </span>
             </>
@@ -367,15 +370,15 @@ function FinishedPassRow({ pass }: { pass: ShelfFinishedPass }) {
           <p
             className={[
               "font-mono font-bold leading-none tracking-[-0.03em] text-[26px] sm:text-[32px]",
-              abandoned ? "text-accent" : "text-text-1",
+              abandoned ? "text-fg" : "text-fg",
             ].join(" ")}
           >
             <span className="sr-only">Scored </span>
             {pass.rating.score}
-            <span className="text-text-3 text-[13px] sm:text-[15px] font-normal">/10</span>
+            <span className="text-fg-subtle text-[13px] sm:text-[15px] font-normal">/10</span>
           </p>
         ) : (
-          <p className="font-mono text-[26px] sm:text-[32px] leading-none text-border-mid">
+          <p className="font-mono text-[26px] sm:text-[32px] leading-none text-border">
             <span className="sr-only">Not scored</span>
             <span aria-hidden="true">--</span>
           </p>
@@ -383,7 +386,7 @@ function FinishedPassRow({ pass }: { pass: ShelfFinishedPass }) {
         <p
           className={[
             "font-mono text-[10px] tracking-[0.08em] uppercase mt-2",
-            abandoned ? "text-accent" : "text-text-3",
+            abandoned ? "text-fg" : "text-fg-subtle",
           ].join(" ")}
         >
           {abandoned ? "Put down" : "Finished"}

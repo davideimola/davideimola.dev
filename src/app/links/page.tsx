@@ -84,8 +84,8 @@ const PROFILE_JSON_LD = {
 
 function CommandLine({ command, className = "" }: { command: string; className?: string }) {
   return (
-    <p className={`font-mono text-[13px] text-text-3 ${className}`}>
-      <span className="text-accent mr-2">❯</span>
+    <p className={`font-mono text-[13px] text-fg-subtle ${className}`}>
+      <span className="text-fg mr-2">❯</span>
       {command}
     </p>
   );
@@ -116,7 +116,7 @@ export default async function LinksPage() {
         <header className="mb-12">
           <CommandLine command="whoami" className="mb-6" />
           <div className="flex items-center gap-5 sm:gap-7">
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-full overflow-hidden border border-border-mid">
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-full overflow-hidden border border-border">
               <Image
                 src="/images/davide-about-profile.webp"
                 alt="Davide Imola"
@@ -127,10 +127,10 @@ export default async function LinksPage() {
               />
             </div>
             <div className="flex flex-col min-w-0">
-              <h1 className="font-mono text-[24px] sm:text-[30px] font-bold text-text-1 tracking-[-0.03em] leading-tight mb-1.5">
+              <h1 className="font-sans text-[24px] sm:text-[30px] font-bold text-fg tracking-[-0.03em] leading-tight mb-1.5">
                 Davide Imola
               </h1>
-              <p className="font-sans text-[13px] sm:text-[14px] text-text-2 leading-relaxed">
+              <p className="font-sans text-[13px] sm:text-[14px] text-fg-muted leading-relaxed">
                 Tech Lead @ RedCarbon
                 <br />
                 Co-founder @ Schrödinger Hat
@@ -144,7 +144,7 @@ export default async function LinksPage() {
                       href={link.href}
                       aria-label={`${link.label}, ${link.handle}`}
                       title={link.label}
-                      className="flex h-11 w-11 items-center justify-center rounded-md border border-border bg-bg-card text-text-1 transition-colors duration-150 hover:border-border-hover hover:text-accent"
+                      className="flex h-11 w-11 items-center justify-center border border-border bg-surface text-fg transition-colors duration-150 hover:border-fg hover:text-accent"
                       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     >
                       <link.icon size={19} stroke={1.5} />
@@ -169,17 +169,17 @@ export default async function LinksPage() {
                 const slides = talk.session?.slides;
                 return (
                   <div key={talk.slug} className="flex flex-col gap-3">
-                    <Card href={talk.feedback?.url} className="border-border-hover">
-                      <p className="font-mono text-[11px] text-accent tracking-[0.15em] uppercase mb-2">
+                    <Card href={talk.feedback?.url} className="border-fg">
+                      <p className="font-mono text-[11px] text-fg tracking-[0.15em] uppercase mb-2">
                         Just saw me speak?
                       </p>
-                      <p className="font-mono text-[15px] font-semibold text-text-1 leading-snug">
+                      <p className="font-mono text-[15px] font-semibold text-fg leading-snug">
                         {talk.session?.title ?? talk.event}
                       </p>
-                      <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-2">
+                      <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-2">
                         {talk.event} · {talk.location}
                       </p>
-                      <p className="font-mono text-[11px] text-text-3 mt-4">
+                      <p className="font-mono text-[11px] text-fg-subtle mt-4">
                         Rate the talk →{host && <span> {host}</span>}
                       </p>
                     </Card>
@@ -213,7 +213,7 @@ export default async function LinksPage() {
                   />
                 </div>
               )}
-              <p className="font-mono text-[11px] text-text-3 mb-2">
+              <p className="font-mono text-[11px] text-fg-subtle mb-2">
                 {new Date(latestPost.date).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -221,10 +221,10 @@ export default async function LinksPage() {
                 })}{" "}
                 · {latestPost.category}
               </p>
-              <p className="font-mono text-[15px] font-semibold text-text-1 leading-snug">
+              <p className="font-mono text-[15px] font-semibold text-fg leading-snug">
                 {latestPost.title}
               </p>
-              <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-2 line-clamp-2">
+              <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-2 line-clamp-2">
                 {latestPost.excerpt}
               </p>
             </Card>
@@ -236,8 +236,8 @@ export default async function LinksPage() {
       <ScrollReveal>
         <section className="mb-12">
           <CommandLine command="subscribe --newsletter" className="mb-5" />
-          <div className="border border-border rounded-sm bg-bg-card px-6 py-6">
-            <p className="font-sans text-[13px] text-text-3 leading-relaxed mb-4">
+          <div className="border border-border bg-surface px-6 py-6">
+            <p className="font-sans text-[13px] text-fg-subtle leading-relaxed mb-4">
               One email a month: new posts, upcoming talks, the occasional project.
             </p>
             <SubscribeForm mode="compact" />
@@ -256,19 +256,19 @@ export default async function LinksPage() {
                 return (
                   <Card key={talk.slug} href="/sharing">
                     <div className="flex items-center gap-4">
-                      <div className="flex flex-col items-center justify-center w-12 h-12 shrink-0 rounded-md border border-border-mid">
-                        <span className="font-mono text-[9px] tracking-[0.15em] uppercase text-accent leading-none">
+                      <div className="flex flex-col items-center justify-center w-12 h-12 shrink-0 border border-border">
+                        <span className="font-mono text-[9px] tracking-[0.15em] uppercase text-fg leading-none">
                           {date.toLocaleDateString("en-US", { month: "short" })}
                         </span>
-                        <span className="font-mono text-[18px] font-bold text-text-1 leading-none mt-1">
+                        <span className="font-mono text-[18px] font-bold text-fg leading-none mt-1">
                           {date.getDate()}
                         </span>
                       </div>
                       <div className="min-w-0">
-                        <p className="font-mono text-[14px] font-medium text-text-1 truncate">
+                        <p className="font-mono text-[14px] font-medium text-fg truncate">
                           {talk.event}
                         </p>
-                        <p className="font-sans text-[12px] text-text-2 mt-1 line-clamp-1">
+                        <p className="font-sans text-[12px] text-fg-muted mt-1 line-clamp-1">
                           {talk.session?.title ?? talk.type} · {talk.location}
                         </p>
                       </div>
@@ -310,50 +310,49 @@ export default async function LinksPage() {
               <div className="flex flex-col gap-4">
                 {openGroups.map((group) => (
                   <div key={group.verbBase}>
-                    <p className="font-mono text-[10px] text-text-3 tracking-widest uppercase mb-2">
+                    <p className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase mb-2">
                       {group.label}
                     </p>
                     <ul className="flex flex-col gap-1">
                       {group.passes.map((pass) => (
-                        <li
-                          key={pass.id}
-                          className="font-mono text-[13px] text-text-1 leading-snug"
-                        >
+                        <li key={pass.id} className="font-mono text-[13px] text-fg leading-snug">
                           {pass.title}
-                          <span className="text-text-3"> · {pass.type.label}</span>
+                          <span className="text-fg-subtle"> · {pass.type.label}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 ))}
               </div>
-              <p className="font-mono text-[11px] text-text-3 mt-4">the verdicts and the pile →</p>
+              <p className="font-mono text-[11px] text-fg-subtle mt-4">
+                the verdicts and the pile →
+              </p>
             </Card>
           </section>
         </ScrollReveal>
       )}
 
       {/* Idle prompt — the session stays open */}
-      <p className="font-mono text-[13px] text-text-3 mb-10" aria-hidden="true">
-        <span className="text-accent mr-2">❯</span>
-        <span className="inline-block w-[7px] h-[0.95em] bg-accent align-middle animate-[blink_1.1s_steps(1)_infinite]" />
+      <p className="font-mono text-[13px] text-fg-subtle mb-10" aria-hidden="true">
+        <span className="text-fg mr-2">❯</span>
+        <span className="inline-block w-[7px] h-[0.95em] bg-fg align-middle animate-[blink_1.1s_steps(1)_infinite]" />
       </p>
 
       {/* Minimal footer — the global one is hidden on this route */}
       <footer className="border-t border-border pt-6 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
-        <p className="font-mono text-[11px] text-text-3">
-          © {year} <span className="text-accent">Davide Imola</span>
+        <p className="font-mono text-[11px] text-fg-subtle">
+          © {year} <span className="text-fg">Davide Imola</span>
         </p>
         <nav className="flex gap-5">
           <a
             href="/"
-            className="font-mono text-[11px] text-text-3 no-underline transition-colors duration-150 hover:text-text-2"
+            className="font-mono text-[11px] text-fg-subtle no-underline transition-colors duration-150 hover:text-fg-muted"
           >
             davideimola.dev
           </a>
           <a
             href="/privacy"
-            className="font-mono text-[11px] text-text-3 no-underline transition-colors duration-150 hover:text-text-2"
+            className="font-mono text-[11px] text-fg-subtle no-underline transition-colors duration-150 hover:text-fg-muted"
           >
             privacy
           </a>

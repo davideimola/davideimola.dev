@@ -21,17 +21,17 @@ const MOTD: TerminalLine[] = [
 
 function tokenClass(token: TerminalToken): string {
   if (token.href) {
-    return "text-text-1 underline decoration-border-mid underline-offset-4 hover:text-accent hover:decoration-accent transition-colors duration-150";
+    return "text-fg underline decoration-border underline-offset-4 hover:text-accent hover:decoration-accent transition-colors duration-150";
   }
   switch (token.variant) {
     case "accent":
-      return "text-accent";
+      return "text-fg";
     case "error":
-      return "text-accent";
+      return "text-fg";
     case "muted":
-      return "text-text-3";
+      return "text-fg-subtle";
     default:
-      return "text-text-2";
+      return "text-fg-muted";
   }
 }
 
@@ -180,17 +180,17 @@ export function InteractiveTerminal({ data }: InteractiveTerminalProps) {
     // biome-ignore lint/a11y/noStaticElementInteractions: click-to-focus convenience; the input inside is the interactive element
     // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard users interact with the input directly
     <div
-      className="border border-border rounded-sm overflow-hidden bg-bg-card cursor-text"
+      className="border border-border overflow-hidden bg-surface cursor-text"
       onClick={focusInput}
     >
       {/* Window chrome */}
       <div className="flex items-center justify-between border-b border-border px-4 py-2">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-border-mid" />
-          <span className="w-2 h-2 rounded-full bg-border-mid" />
-          <span className="w-2 h-2 rounded-full bg-border-mid" />
+          <span className="w-2 h-2 rounded-full bg-border" />
+          <span className="w-2 h-2 rounded-full bg-border" />
+          <span className="w-2 h-2 rounded-full bg-border" />
         </div>
-        <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
+        <span className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase">
           guest@davideimola.dev - zsh
         </span>
       </div>
@@ -208,14 +208,14 @@ export function InteractiveTerminal({ data }: InteractiveTerminalProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-accent shrink-0">❯</span>
+          <span className="text-fg shrink-0">❯</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 min-w-0 bg-transparent text-text-1 outline-none caret-accent placeholder:text-text-3"
+            className="flex-1 min-w-0 bg-transparent text-fg outline-none caret-fg placeholder:text-fg-subtle"
             placeholder={lines === MOTD ? "help" : undefined}
             aria-label="Terminal command input"
             autoCapitalize="none"

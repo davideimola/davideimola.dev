@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ButtonLink } from "../components/ui/Button";
+import { Tape } from "../components/ui/Tape";
 
 export const metadata: Metadata = {
   title: "404: Page not found",
@@ -6,72 +8,43 @@ export const metadata: Metadata = {
 };
 
 const SUGGESTIONS = [
-  { label: "/blog", href: "/blog" },
-  { label: "/about", href: "/about" },
-  { label: "/sharing", href: "/sharing" },
-  { label: "/now", href: "/now" },
+  { label: "Writing", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Sharing", href: "/sharing" },
+  { label: "Now", href: "/now" },
 ];
 
 export default function NotFound() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 min-h-[60vh] flex items-center">
-      <div className="font-mono flex flex-col gap-6">
-        {/* Command */}
-        <p className="text-[13px] text-text-3">
-          <span className="text-accent mr-2">❯</span>
-          GET /this-page-does-not-exist
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20 min-h-[60vh] flex items-center">
+      <div className="flex flex-col gap-6 max-w-[42rem]">
+        <Tape tilt={0}>404</Tape>
+        <h1 className="m-0 font-sans font-bold text-fg text-[40px] sm:text-[52px] lg:text-h1 leading-[1.02] tracking-[-0.045em]">
+          This page does not exist.
+        </h1>
+        <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
+          The link may be old, or the page moved. Try one of these instead.
         </p>
-
-        {/* Error block */}
-        <div className="border border-border rounded-sm overflow-hidden">
-          <div className="bg-bg-card border-b border-border px-4 py-2">
-            <span className="text-[10px] text-text-3 tracking-widest uppercase">stderr</span>
-          </div>
-          <div className="px-4 py-5 flex flex-col gap-2">
-            <p className="text-[14px]">
-              <span className="text-accent">Error:</span>{" "}
-              <span className="text-text-1">page not found</span>
-            </p>
-            <p className="text-[13px] text-text-3">
-              code: <span className="text-text-2">404</span>
-            </p>
-          </div>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 list-none m-0 p-0">
+          {SUGGESTIONS.map((s) => (
+            <li key={s.href}>
+              <a
+                href={s.href}
+                className="font-mono text-[14px] text-fg no-underline hover:text-accent transition-colors duration-150"
+              >
+                {s.label} →
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap items-center gap-6 mt-2">
+          <ButtonLink variant="primary" href="/">
+            Back to the home page
+          </ButtonLink>
+          <ButtonLink variant="link" href="/terminal">
+            Or open a shell
+          </ButtonLink>
         </div>
-
-        {/* Suggestions */}
-        <div className="flex flex-col gap-3">
-          <p className="text-[12px] text-text-3 tracking-widest uppercase">
-            suggestion: try one of these instead
-          </p>
-          <ul className="flex flex-col gap-2">
-            {SUGGESTIONS.map((s) => (
-              <li key={s.href}>
-                <a
-                  href={s.href}
-                  className="text-[13px] text-text-2 hover:text-accent transition-colors duration-150 flex items-center gap-2"
-                >
-                  <span className="text-accent">→</span>
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Home link */}
-        <p className="text-[12px] text-text-3">
-          or go back to{" "}
-          <a href="/" className="text-text-2 hover:text-accent transition-colors duration-150">
-            ~/home
-          </a>
-          {", or open "}
-          <a
-            href="/terminal"
-            className="text-text-2 hover:text-accent transition-colors duration-150"
-          >
-            a shell
-          </a>
-        </p>
       </div>
     </div>
   );

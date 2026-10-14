@@ -25,14 +25,14 @@ export const revalidate = 3600;
 
 export default function NowPage() {
   return (
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
-        command="cat ./now.md"
+        label="Now"
         title="Now"
         description="A snapshot of what I'm focused on right now, updated when something changes."
       >
-        <p className="font-mono text-[12px] text-text-3 mt-4">
-          Last updated: <span className="text-text-2">{LAST_UPDATED}</span>
+        <p className="font-mono text-[12px] text-fg-subtle mt-4">
+          Last updated: <span className="text-fg-muted">{LAST_UPDATED}</span>
           {" · "}
           <a
             href="https://nownownow.com/about"
@@ -47,9 +47,9 @@ export default function NowPage() {
 
       {/* Status card */}
       <ScrollReveal>
-        <div className="mb-14 border border-border rounded-sm overflow-hidden">
-          <div className="bg-bg-card border-b border-border px-4 py-2">
-            <span className="font-mono text-[10px] text-text-3 tracking-widest uppercase">
+        <div className="mb-14 border border-border overflow-hidden">
+          <div className="bg-surface border-b border-border px-4 py-2">
+            <span className="font-mono text-[10px] text-fg-subtle tracking-widest uppercase">
               ~/status
             </span>
           </div>
@@ -61,9 +61,9 @@ export default function NowPage() {
               { key: "Status", value: "Not looking for new roles", last: true },
             ].map((item) => (
               <li key={item.key} className="flex items-baseline gap-3 font-mono text-[13px]">
-                <span className="text-border-mid select-none">{item.last ? "└──" : "├──"}</span>
-                <span className="text-text-3 w-20 shrink-0">{item.key}</span>
-                <span className="text-text-1">{item.value}</span>
+                <span className="text-border select-none">{item.last ? "└──" : "├──"}</span>
+                <span className="text-fg-subtle w-20 shrink-0">{item.key}</span>
+                <span className="text-fg">{item.value}</span>
               </li>
             ))}
           </ul>
@@ -79,11 +79,11 @@ export default function NowPage() {
         <div className="flex flex-col gap-8">
           <ScrollReveal>
             <div className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                <span className="text-accent text-[10px]">{"//"}</span>
+              <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
+                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
                 Tech Lead at RedCarbon
               </span>
-              <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
+              <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
                 I'm navigating the hardest part of the Tech Lead transition: the duality between
                 deep product work and people work. When I'm building, I go full focus, and that
                 makes it hard to context-switch into mentoring mode. I haven't found the right
@@ -94,11 +94,11 @@ export default function NowPage() {
 
           <ScrollReveal delay={60}>
             <div className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-                <span className="text-accent text-[10px]">{"//"}</span>
+              <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
+                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
                 Building Argus
               </span>
-              <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
+              <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
                 Open-source AI agent for security code reviews, written in Go. It runs real scanners
                 (Semgrep, Gitleaks, OSV-Scanner), reads the findings, and reasons about them like an
                 analyst would. Early days, moving fast.
@@ -108,12 +108,15 @@ export default function NowPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <ScrollReveal delay={120}>
-              <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">{"//"}</span>
+              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
+                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                  />
                   Learning to work with AI
                 </span>
-                <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
+                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
                   Until recently, the answer was "write more code." Now I'm building the meta-skill
                   of knowing when and how to use AI: agents, tools, prompting patterns. A new way of
                   thinking about work.
@@ -122,12 +125,15 @@ export default function NowPage() {
             </ScrollReveal>
 
             <ScrollReveal delay={180}>
-              <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">{"//"}</span>
+              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
+                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                  />
                   Security: daily practice
                 </span>
-                <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
+                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
                   SOC teams, threat models, secure architectures. Outbox pattern, event integrity,
                   secure-by-design API boundaries. Less course, more daily practice.
                 </p>
@@ -135,12 +141,15 @@ export default function NowPage() {
             </ScrollReveal>
 
             <ScrollReveal delay={240}>
-              <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">{"//"}</span>
+              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
+                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                  />
                   Tools I run for myself
                 </span>
-                <p className="font-sans text-[13px] text-text-3 leading-relaxed pl-5">
+                <p className="font-sans text-[13px] text-fg-subtle leading-relaxed pl-5">
                   tsundoku for the library, bindex for the Pokémon collection, an Obsidian vault for
                   what I write. Single-owner systems that answer what I used to keep in my head, and
                   that an assistant can query.
@@ -154,16 +163,14 @@ export default function NowPage() {
       {/* SH Branches — standalone, no section header overhead */}
       <ScrollReveal>
         <div className="mb-14 border-t border-border pt-10">
-          <div className="border-l-2 border-accent pl-6 flex flex-col gap-2">
+          <div className="border-l-2 border-fg pl-6 flex flex-col gap-2">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-[13px] font-medium text-text-1">
+              <span className="font-mono text-[13px] font-medium text-fg">
                 Schrodinger Hat Branches
               </span>
-              <span className="font-mono text-[10px] text-accent tracking-[0.06em]">
-                co-organizer
-              </span>
+              <span className="font-mono text-[10px] text-fg tracking-[0.06em]">co-organizer</span>
             </div>
-            <p className="font-sans text-[14px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[14px] text-fg-muted leading-relaxed">
               Schrodinger Hat's distributed arm: free local meetups, each run by people on the
               ground. I lead the program: spinning up new chapters and keeping the active ones
               moving. Rome, Verona, Milan, Florence launching now. Looking abroad next.
@@ -172,7 +179,7 @@ export default function NowPage() {
               href="https://schroedinger-hat.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150 self-start"
+              className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150 self-start"
             >
               schroedinger-hat.org →
             </a>
@@ -189,21 +196,20 @@ export default function NowPage() {
         {/* D&D — full entry, worth the space */}
         <ScrollReveal>
           <div className="flex flex-col gap-2 mb-8">
-            <span className="font-mono text-[13px] font-medium text-text-1 flex items-center gap-2">
-              <span className="text-accent text-[10px]">{"//"}</span>
+            <span className="font-mono text-[13px] font-medium text-fg flex items-center gap-2">
+              <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
               D&D: playing and building
             </span>
-            <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
-              Currently playing <span className="text-text-1">Krug the Touchy</span>, a half-orc
+            <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
+              Currently playing <span className="text-fg">Krug the Touchy</span>, a half-orc
               barbarian folk hero who ran an inn and rages if you don't finish his food. The DM
               reset the character sheets mid-campaign so I'm technically human now, but I miss Krug.
             </p>
-            <p className="font-sans text-[14px] text-text-2 leading-relaxed pl-5">
-              The longer campaign on hold features{" "}
-              <span className="text-text-1">Thalion Melora</span>, a half-elf bard who wields a
-              violin as a psychic weapon and heals through sound waves. Favourite character I've
-              ever played. Meanwhile I'm writing my own campaign to DM: world, NPCs, encounters.
-              Surprisingly addictive.
+            <p className="font-sans text-[14px] text-fg-muted leading-relaxed pl-5">
+              The longer campaign on hold features <span className="text-fg">Thalion Melora</span>,
+              a half-elf bard who wields a violin as a psychic weapon and heals through sound waves.
+              Favourite character I've ever played. Meanwhile I'm writing my own campaign to DM:
+              world, NPCs, encounters. Surprisingly addictive.
             </p>
           </div>
         </ScrollReveal>
@@ -226,12 +232,15 @@ export default function NowPage() {
             },
           ].map((item, i) => (
             <ScrollReveal key={item.label} delay={i * 60}>
-              <div className="border border-border rounded-sm p-4 flex flex-col gap-1.5 h-full">
-                <span className="font-mono text-[12px] font-medium text-text-1 flex items-center gap-2">
-                  <span className="text-accent text-[10px]">{"//"}</span>
+              <div className="border border-border p-4 flex flex-col gap-1.5 h-full">
+                <span className="font-mono text-[12px] font-medium text-fg flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-[6px] h-[6px] bg-fg shrink-0"
+                  />
                   {item.label}
                 </span>
-                <p className="font-sans text-[12px] text-text-3 leading-relaxed pl-5">
+                <p className="font-sans text-[12px] text-fg-subtle leading-relaxed pl-5">
                   {item.context}
                 </p>
               </div>
@@ -246,20 +255,20 @@ export default function NowPage() {
       {/* Footer */}
       <ScrollReveal>
         <div className="pt-8 border-t border-border">
-          <p className="font-sans text-[13px] text-text-3">
+          <p className="font-sans text-[13px] text-fg-subtle">
             This page is inspired by the{" "}
             <a
               href="https://nownownow.com/about"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-2 hover:text-accent transition-colors duration-150"
+              className="text-fg-muted hover:text-accent transition-colors duration-150"
             >
               /now movement
             </a>
             . Want to know more about me?{" "}
             <a
               href="/about"
-              className="text-text-2 hover:text-accent transition-colors duration-150"
+              className="text-fg-muted hover:text-accent transition-colors duration-150"
             >
               /about →
             </a>

@@ -14,23 +14,23 @@ interface PostCardProps {
 // site and in the inbox. `not-prose` keeps the @tailwindcss/typography prose styles off it.
 export function PostCard({ title, url, description, category, meta }: PostCardProps) {
   return (
-    <div className="not-prose border-l-2 border-accent pl-4 sm:pl-5 my-6">
+    <div className="not-prose border-l-2 border-fg pl-4 sm:pl-5 my-6">
       {category && (
-        <span className="inline-block font-mono text-[10px] font-medium tracking-[0.08em] uppercase rounded-[2px] px-2 py-0.5 text-text-3 bg-border mb-2.5">
+        <span className="inline-block font-mono text-[10px] font-medium tracking-[0.08em] uppercase px-2 py-0.5 text-fg-subtle bg-border mb-2.5">
           {category}
         </span>
       )}
       <a href={url} className="group block no-underline">
-        <h3 className="font-mono text-[17px] sm:text-[19px] font-semibold text-text-1 leading-snug mb-2 group-hover:text-accent transition-colors duration-150">
+        <h3 className="font-sans text-[17px] sm:text-[19px] font-bold text-fg leading-snug mb-2 group-hover:text-accent transition-colors duration-150 tracking-[-0.02em]">
           {title}
         </h3>
-        <p className="font-sans text-[14px] text-text-2 leading-relaxed mb-0">{description}</p>
+        <p className="font-sans text-[14px] text-fg-muted leading-relaxed mb-0">{description}</p>
       </a>
       <div className="flex items-center justify-between gap-3 mt-3">
-        <span className="font-mono text-[11px] text-text-3">{meta}</span>
+        <span className="font-mono text-[11px] text-fg-subtle">{meta}</span>
         <a
           href={url}
-          className="font-mono text-[12px] font-medium text-text-3 hover:text-accent transition-colors duration-150 no-underline"
+          className="font-mono text-[12px] font-medium text-fg-subtle hover:text-accent transition-colors duration-150 no-underline"
         >
           Read →
         </a>

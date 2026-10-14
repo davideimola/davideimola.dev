@@ -64,7 +64,7 @@ const PAID_TYPES = ENGAGEMENT_TYPES.filter((type) => type !== "volunteering");
 // keys off.
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-text-1 pb-3 mb-5 border-b border-border print:tracking-[0.08em] print:break-after-avoid">
+    <h2 className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-fg pb-3 mb-5 border-b border-border print:tracking-[0.08em] print:break-after-avoid">
       {children}
     </h2>
   );
@@ -73,7 +73,7 @@ function SectionTitle({ children }: { children: ReactNode }) {
 function AsideBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2 pb-5 mb-5 border-b border-border last:border-0 last:pb-0 last:mb-0 print:break-inside-avoid">
-      <p className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase text-accent">
+      <p className="font-mono text-[10px] font-medium tracking-[0.08em] uppercase text-fg">
         {title}
       </p>
       {children}
@@ -86,8 +86,8 @@ function AsideBlock({ title, children }: { title: string; children: ReactNode })
 function EntryHeader({ name, place }: { name: string; place: string }) {
   return (
     <div className="flex items-baseline justify-between gap-3 flex-wrap">
-      <h3 className="font-mono text-[15px] font-semibold text-text-1">{name}</h3>
-      <p className="font-mono text-[11px] text-text-3 shrink-0">{place}</p>
+      <h3 className="font-sans text-[15px] font-bold text-fg tracking-[-0.02em]">{name}</h3>
+      <p className="font-mono text-[11px] text-fg-subtle shrink-0">{place}</p>
     </div>
   );
 }
@@ -99,23 +99,27 @@ function EngagementEntry({ engagement }: { engagement: Engagement }) {
       {engagement.roles.map((role) => (
         <div key={role.role} className="mt-2">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <p className="font-mono text-[13px] text-accent">{role.role}</p>
-            <p className="font-mono text-[11px] text-text-2 tabular-nums shrink-0">{role.period}</p>
+            <p className="font-mono text-[13px] text-fg">{role.role}</p>
+            <p className="font-mono text-[11px] text-fg-muted tabular-nums shrink-0">
+              {role.period}
+            </p>
           </div>
           {role.bullets ? (
             <ul className="mt-1.5 flex flex-col gap-1">
               {role.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className="font-sans text-[13px] text-text-2 leading-relaxed flex gap-2"
+                  className="font-sans text-[13px] text-fg-muted leading-relaxed flex gap-2"
                 >
-                  <span className="text-text-3 shrink-0">·</span>
+                  <span className="text-fg-subtle shrink-0">·</span>
                   <span>{bullet}</span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="font-sans text-[13px] text-text-2 leading-relaxed mt-1">{role.summary}</p>
+            <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-1">
+              {role.summary}
+            </p>
           )}
         </div>
       ))}
@@ -160,12 +164,14 @@ function CommunityAndProjectsSection() {
             {/* A project has no location, so the right-hand slot carries its period:
                 the same row shape as an engagement, one fact swapped. */}
             <div className="flex items-baseline justify-between gap-3 flex-wrap">
-              <h3 className="font-mono text-[15px] font-semibold text-text-1">{project.title}</h3>
-              <p className="font-mono text-[11px] text-text-2 tabular-nums shrink-0">
+              <h3 className="font-sans text-[15px] font-bold text-fg tracking-[-0.02em]">
+                {project.title}
+              </h3>
+              <p className="font-mono text-[11px] text-fg-muted tabular-nums shrink-0">
                 {project.period}
               </p>
             </div>
-            <p className="font-sans text-[13px] text-text-2 leading-relaxed">
+            <p className="font-sans text-[13px] text-fg-muted leading-relaxed">
               {project.description}
             </p>
           </div>
@@ -187,10 +193,10 @@ function SelectedTalksSection() {
       <ul className="flex flex-col gap-3">
         {talks.map((talk) => (
           <li key={talk.slug} className="flex flex-col gap-0.5 print:break-inside-avoid">
-            <p className="font-sans text-[14px] text-text-1 leading-snug">{talk.title}</p>
+            <p className="font-sans text-[14px] text-fg leading-snug">{talk.title}</p>
             {/* The year is null when the event name already carries it, which is
                 most of them, so this line does not say 2026 twice. */}
-            <p className="font-mono text-[11px] text-text-3">
+            <p className="font-mono text-[11px] text-fg-subtle">
               {talk.event}
               {talk.year && ` · ${talk.year}`}
             </p>
@@ -201,7 +207,7 @@ function SelectedTalksSection() {
           instead. Same link, two words swapped: not a second Rendering. */}
       <Link
         href="/sharing"
-        className="inline-block mt-4 font-mono text-[11px] text-text-3 hover:text-accent transition-colors duration-150"
+        className="inline-block mt-4 font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
       >
         Full archive: {getTotalTalkCount()} talks and appearances{" "}
         <span className="print:hidden">→</span>
@@ -226,7 +232,7 @@ function OrganisedEventsSection() {
         {events.map((event) => (
           <div key={event.slug} className="flex flex-col gap-1 print:break-inside-avoid">
             <EntryHeader name={event.label} place={event.location} />
-            <p className="font-mono text-[12px] text-accent tabular-nums">
+            <p className="font-mono text-[12px] text-fg tabular-nums">
               {event.count > 1 && `${event.count} ${event.noun}s · `}
               {event.years}
             </p>
@@ -242,10 +248,10 @@ function OrganisedEventsSection() {
 // would work against both.
 //
 // Printing this page is the same markup, not a second layout: the tokens flip
-// to the light palette through `print:light-ground` on <body> (globals.css), the
-// chrome drops out on `data-print-hide`, and the `print:` utilities below undo
-// the two screen affordances that make no sense on paper: the padding that
-// clears the fixed NavBar, and the sticky aside.
+// to the light palette in print media (the brand tokens plus the print block in
+// globals.css), the chrome drops out on `data-print-hide`, and the `print:`
+// utilities below undo the two screen affordances that make no sense on paper:
+// the padding under the NavBar, and the sticky aside.
 //
 // Paper keeps the two rails. The sheet is narrower than `lg`, so the desktop
 // grid does not apply there and the print variant has to state it again at a
@@ -266,7 +272,7 @@ export default function CvPage() {
   const openSource = getOpenSource();
 
   return (
-    // `pt-24` clears the fixed NavBar, which paper does not have; the sheet
+    // The top padding sits under the NavBar, which paper does not have; the sheet
     // margin comes from `@page` instead of from the page's own padding.
     // In print this is the grid, not just its wrapper: the hero has to be a cell
     // of it so the aside can start at the top of the first sheet. See the comment
@@ -307,12 +313,12 @@ export default function CvPage() {
     // about 87px into the hero's row and opened a band of blank paper between the
     // headline and the summary. Sizing row one to its content and letting row two
     // take the rest sends the whole excess where it belongs, under the history.
-    <div className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_364px] print:grid-rows-[auto_1fr] print:gap-x-7 print:items-start print:[zoom:0.66]">
+    <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20 print:px-0 print:pt-0 print:pb-0 print:grid print:grid-cols-[1fr_364px] print:grid-rows-[auto_1fr] print:gap-x-7 print:items-start print:[zoom:0.66]">
       <PageHero
-        command="cat ./cv.md"
+        label="CV"
         title={identity.name}
         className="mb-10 print:mb-5 print:col-start-1 print:row-start-1"
-        description={<span className="font-mono text-[14px] text-accent">{identity.headline}</span>}
+        description={<span className="font-mono text-[14px] text-fg">{identity.headline}</span>}
       >
         {/* The page is the link Davide sends; this is the copy a reader keeps.
             It points at the committed Rendering `pnpm cv:pdf` generates from this
@@ -321,7 +327,7 @@ export default function CvPage() {
             ButtonLink carries `data-print-hide`, so it is absent from the PDF it
             links to without a rule of its own. */}
         {/* `primary`: on this page downloading the CV is the main CTA, which is
-            what the design system reserves the accent fill for. */}
+            what the design system reserves the filled ink button for. */}
         <ButtonLink
           href={CV_PDF_URL_PATH}
           download={downloadFileName(identity.name)}
@@ -343,7 +349,7 @@ export default function CvPage() {
       <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_260px] lg:gap-12 print:contents">
         {/* Main rail: the history, typed */}
         <div className="min-w-0 flex flex-col gap-10 print:gap-6 print:col-start-1 print:row-start-2">
-          <p className="font-sans text-[15px] text-text-2 leading-relaxed border-l-2 border-accent pl-5">
+          <p className="font-sans text-[15px] text-fg-muted leading-relaxed border-l-2 border-fg pl-5">
             {identity.summary}
           </p>
 
@@ -363,9 +369,9 @@ export default function CvPage() {
           {/* `print:break-inside-avoid` keeps the card whole rather than letting it
               split across the fold, and the tighter padding buys back width at the
               narrower print track. */}
-          <aside className="border border-border rounded-sm p-5 bg-bg-card print:p-4 print:break-inside-avoid">
+          <aside className="border border-border p-5 bg-surface print:p-4 print:break-inside-avoid">
             <AsideBlock title="Contact">
-              <div className="flex flex-col gap-1 font-mono text-[12px] text-text-2 break-words">
+              <div className="flex flex-col gap-1 font-mono text-[12px] text-fg-muted break-words">
                 {contact.map((item) => {
                   const external = item.href.startsWith("http");
                   return (
@@ -379,7 +385,7 @@ export default function CvPage() {
                     </a>
                   );
                 })}
-                <span className="text-text-3">{identity.location}</span>
+                <span className="text-fg-subtle">{identity.location}</span>
               </div>
             </AsideBlock>
 
@@ -387,10 +393,10 @@ export default function CvPage() {
               <div className="flex flex-col gap-3">
                 {skills.map((group) => (
                   <div key={group.group}>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-text-3 mb-0.5">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-fg-subtle mb-0.5">
                       {group.group}
                     </p>
-                    <p className="font-sans text-[12px] text-text-1 leading-snug">
+                    <p className="font-sans text-[12px] text-fg leading-snug">
                       {group.items.join(", ")}
                     </p>
                   </div>
@@ -402,21 +408,23 @@ export default function CvPage() {
               <div className="flex flex-col gap-3">
                 {education.map((entry) => (
                   <div key={entry.slug}>
-                    <p className="font-mono text-[12px] text-text-1 leading-snug">{entry.school}</p>
-                    <p className="font-sans text-[12px] text-text-2">{entry.award}</p>
+                    <p className="font-mono text-[12px] text-fg leading-snug">{entry.school}</p>
+                    <p className="font-sans text-[12px] text-fg-muted">{entry.award}</p>
                     {entry.detail && (
-                      <p className="font-sans text-[11px] text-text-3 leading-snug">
+                      <p className="font-sans text-[11px] text-fg-subtle leading-snug">
                         {entry.detail}
                       </p>
                     )}
-                    <p className="font-mono text-[11px] text-text-3 tabular-nums">{entry.period}</p>
+                    <p className="font-mono text-[11px] text-fg-subtle tabular-nums">
+                      {entry.period}
+                    </p>
                   </div>
                 ))}
               </div>
             </AsideBlock>
 
             <AsideBlock title="Open source">
-              <p className="font-sans text-[12px] text-text-1">{openSource.join(", ")}</p>
+              <p className="font-sans text-[12px] text-fg">{openSource.join(", ")}</p>
             </AsideBlock>
           </aside>
 
