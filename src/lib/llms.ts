@@ -1,4 +1,5 @@
 import type { BlogPost, Project, Talk } from "./content";
+import { rasterCover } from "./covers";
 
 // Plain-Markdown views of the site for LLM consumers, following the
 // llms.txt convention (https://llmstxt.org): /llms.txt is a compact index,
@@ -40,7 +41,10 @@ export function postToMarkdown(post: BlogPost, baseUrl = SITE_URL): string {
     `- Canonical: ${baseUrl}/blog/${post.slug}`,
   ];
   if (post.heroImage) {
-    lines.push("", `![${post.heroImageAlt ?? post.title}](${baseUrl}${post.heroImage})`);
+    lines.push(
+      "",
+      `![${post.heroImageAlt ?? post.title}](${baseUrl}${rasterCover(post.heroImage)})`
+    );
   }
   lines.push("", "---", "", absolutizeUrls(post.content.trim(), baseUrl), "");
   return lines.join("\n");

@@ -9,7 +9,7 @@ interface PostCoverProps {
   className?: string;
 }
 
-// A post's cover, shown as it is: covers are monoline ink illustrations on
+// A post's cover (16:9), shown as it is: covers are monoline ink illustrations on
 // paper (CLAUDE.md, "Blog covers"), so no filter and no hover reveal. SVG
 // covers skip the image optimiser, which does not rasterise vectors.
 export function PostCover({
@@ -22,7 +22,7 @@ export function PostCover({
   const isSvg = src.split("?")[0].toLowerCase().endsWith(".svg");
   return (
     <div
-      className={`relative w-full aspect-2/1 overflow-hidden border border-border bg-[var(--di-color-paper)] ${className}`}
+      className={`relative w-full aspect-video overflow-hidden border border-border bg-[var(--di-color-paper)] ${className}`}
     >
       <Image
         src={src}

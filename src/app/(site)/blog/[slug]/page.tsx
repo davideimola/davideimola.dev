@@ -26,8 +26,13 @@ import {
   getPrevNextPosts,
   getRelatedPosts,
 } from "../../../../lib/content";
+import { rasterCover } from "../../../../lib/covers";
 import { formatDate } from "../../../../lib/dates";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
+
+function absoluteUrl(src: string): string {
+  return src.startsWith("http") ? src : `https://davideimola.dev${src}`;
+}
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -108,7 +113,7 @@ export default async function BlogPostPage({ params }: Props) {
       url: "https://davideimola.dev",
     },
     keywords: post.tags.join(", "),
-    ...(post.heroImage && { image: post.heroImage }),
+    ...(post.heroImage && { image: absoluteUrl(rasterCover(post.heroImage)) }),
   };
 
   return (
