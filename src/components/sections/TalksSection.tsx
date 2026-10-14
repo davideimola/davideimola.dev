@@ -11,23 +11,22 @@ function displayDate(talk: Talk): string {
 function FeaturedNext({ talk, relative }: { talk: Talk; relative: string }) {
   return (
     <a href={`/sharing#${talk.slug}`} className="group block py-4 no-underline">
-      <div className="flex items-center gap-2 font-mono text-[11px] mb-2">
-        <span className="text-accent">❯ next</span>
-        <span className="text-text-3">·</span>
-        <span className="text-text-2">{relative}</span>
+      <div className="flex items-center gap-2 font-mono text-[13px] mb-2">
+        <span className="text-fg font-medium">Next</span>
+        <span className="text-fg-subtle">·</span>
+        <span className="text-fg-muted">{relative}</span>
       </div>
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
         <div className="min-w-0">
-          <div className="font-mono text-[11px] text-text-3 mb-1.5">
+          <div className="font-mono text-[13px] text-fg-subtle mb-1.5">
             {displayDate(talk)} · {talk.location}
           </div>
-          <div className="font-mono text-[15px] sm:text-[16px] leading-snug">
-            <span className="text-accent">./</span>
-            <span className="text-text-1 font-semibold">{talk.event}</span>
-            {talk.session?.title && <span className="text-text-2"> / {talk.session.title}</span>}
+          <div className="font-sans text-[20px] sm:text-[22px] tracking-[-0.02em] leading-snug">
+            <span className="text-fg font-bold">{talk.event}</span>
+            {talk.session?.title && <span className="text-fg-muted"> / {talk.session.title}</span>}
           </div>
         </div>
-        <span className="font-mono text-[13px] text-text-3 group-hover:text-accent group-hover:translate-x-1 transition-[color,transform] duration-150 shrink-0 hidden sm:inline">
+        <span className="font-mono text-[13px] text-fg-subtle group-hover:text-accent group-hover:translate-x-1 transition-[color,transform] duration-150 shrink-0 hidden sm:inline">
           →
         </span>
       </div>
@@ -42,14 +41,16 @@ function CompactRow({ talk }: { talk: Talk }) {
       className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 no-underline transition-colors duration-150"
     >
       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 min-w-0">
-        <span className="font-mono text-[11px] text-text-3 shrink-0">{displayDate(talk)}</span>
-        <span className="font-mono text-[11px] text-text-3 shrink-0 hidden sm:inline">·</span>
-        <span className="font-mono text-[11px] text-accent shrink-0">{talk.event}</span>
+        <span className="font-mono text-[13px] text-fg-subtle shrink-0">{displayDate(talk)}</span>
+        <span className="font-mono text-[13px] text-fg-subtle shrink-0 hidden sm:inline">·</span>
+        <span className="font-mono text-[13px] text-fg-muted shrink-0">{talk.event}</span>
         {talk.session?.title && (
-          <span className="font-sans text-[14px] text-text-1 truncate">{talk.session.title}</span>
+          <span className="font-sans text-[16px] font-semibold text-fg truncate">
+            {talk.session.title}
+          </span>
         )}
       </div>
-      <span className="font-mono text-[13px] text-text-3 group-hover:text-accent group-hover:translate-x-1 transition-[color,transform] duration-150 shrink-0">
+      <span className="font-mono text-[13px] text-fg-subtle group-hover:text-accent group-hover:translate-x-1 transition-[color,transform] duration-150 shrink-0">
         →
       </span>
     </a>
@@ -59,7 +60,7 @@ function CompactRow({ talk }: { talk: Talk }) {
 function SectionWrapper({ children }: { children: React.ReactNode }) {
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">{children}</div>
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8">{children}</div>
     </section>
   );
 }
@@ -69,7 +70,7 @@ export function TalksSection() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // State A — forward-looking: lead with where you can catch me next.
+  // State A: forward-looking: lead with where you can catch me next.
   if (upcoming.length > 0) {
     const [next, ...rest] = upcoming;
     return (
@@ -79,6 +80,7 @@ export function TalksSection() {
             title="Upcoming Engagements"
             seeAllHref="/sharing"
             seeAllLabel="All engagements →"
+            tilt={1}
           />
         </ScrollReveal>
         <div className="mt-8 flex flex-col divide-y divide-border">
@@ -95,7 +97,7 @@ export function TalksSection() {
     );
   }
 
-  // State B — calendar empty, but there's a track record: prove it, then invite.
+  // State B: calendar empty, but there's a track record: prove it, then invite.
   const recent = getRecentTalks(3);
   if (recent.length > 0) {
     return (
@@ -105,6 +107,7 @@ export function TalksSection() {
             title="Recently spoke"
             seeAllHref="/sharing"
             seeAllLabel="All engagements →"
+            tilt={1}
           />
         </ScrollReveal>
         <ul className="mt-8 flex flex-col divide-y divide-border">
@@ -126,11 +129,16 @@ export function TalksSection() {
     );
   }
 
-  // State C — nothing yet: a pure invitation.
+  // State C: nothing yet: a pure invitation.
   return (
     <SectionWrapper>
       <ScrollReveal>
-        <SectionHeader title="Speaking" seeAllHref="/sharing" seeAllLabel="Speaker kit →" />
+        <SectionHeader
+          title="Speaking"
+          seeAllHref="/sharing"
+          seeAllLabel="Speaker kit →"
+          tilt={1}
+        />
       </ScrollReveal>
       <ScrollReveal>
         <BookingPrompt

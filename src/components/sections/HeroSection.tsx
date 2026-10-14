@@ -1,116 +1,150 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { ButtonLink } from "../ui";
+import type { BlogPost, Project } from "../../lib/content";
+import { formatShortDate } from "../../lib/dates";
+import type { RotatingCard } from "../../lib/home-cards";
+import { ButtonLink } from "../ui/Button";
+import { Card } from "../ui/Card";
+import { Marker } from "../ui/Marker";
+import { Tape } from "../ui/Tape";
 
-const FULL_NAME = "Davide Imola";
-const TYPING_SPEED = 80;
+interface HeroSectionProps {
+  latestPost: BlogPost | null;
+  project: Project | null;
+  rotating: RotatingCard | null;
+}
 
-// Module-level flag — persists across navigations within the same JS session.
-// Set to true after the first mount so back navigation skips all animations.
-let hasAnimated = false;
+interface HomeCard {
+  key: string;
+  tape: string;
+  href: string;
+  title: string;
+  meta?: string;
+}
 
-export function HeroSection() {
-  // Capture once synchronously at mount: true = first load, false = revisit
-  const [isFirstLoad] = useState(() => !hasAnimated);
+function rotatingCard(card: RotatingCard): HomeCard {
+  switch (card.kind) {
+    case "next-talk":
+      return {
+        key: "talk",
+        tape: "Next talk",
+        href: `/sharing#${card.talk.slug}`,
+        title: card.talk.session?.title ?? card.talk.event,
+        meta: `${card.talk.event} · ${formatShortDate(card.talk.date)}`,
+      };
+    case "last-recording":
+      return {
+        key: "talk",
+        tape: "Last talk",
+        href: card.talk.session?.video ?? `/sharing#${card.talk.slug}`,
+        title: card.talk.session?.title ?? card.talk.event,
+        meta: `${card.talk.event} · Watch the recording`,
+      };
+    case "reading":
+      return {
+        key: "reading",
+        tape: "Reading",
+        href: "/shelf",
+        title: card.pass.title,
+        meta: card.pass.type.label,
+      };
+  }
+}
 
-  const [displayedName, setDisplayedName] = useState(isFirstLoad ? "" : FULL_NAME);
-  const [typingDone, setTypingDone] = useState(!isFirstLoad);
+// The column count follows the cards that exist: the rotating slot never
+// renders empty, it disappears and the grid closes up.
+const GRID_COLS: Record<number, string> = {
+  1: "md:grid-cols-1 md:max-w-[33%]",
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+};
 
-  useEffect(() => {
-    if (hasAnimated) return; // module-level guard handles StrictMode correctly
-
-    hasAnimated = true;
-
-    // Respect OS-level reduced-motion: show the full name immediately
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayedName(FULL_NAME);
-      setTypingDone(true);
-      return;
-    }
-
-    let i = 0;
-    const timer = setInterval(() => {
-      i++;
-      setDisplayedName(FULL_NAME.slice(0, i));
-      if (i >= FULL_NAME.length) {
-        clearInterval(timer);
-        setTypingDone(true);
-      }
-    }, TYPING_SPEED);
-    return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const anim0 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_both]" : "";
-  const anim1 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.1s_both]" : "";
-  const anim2 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.2s_both]" : "";
-  const anim3 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.3s_both]" : "";
-  const anim4 = isFirstLoad ? "animate-[fadeUp_0.5s_ease_0.4s_both]" : "";
+// The home hero (docs/brand.md, "Site"): display headline with the page's one
+// marker on "security", the lead, one ink button plus one text link, the place
+// in mono, and the portrait on the right in black and white with its tape.
+// Under it three straight cards, each with a tape on its edge.
+export function HeroSection({ latestPost, project, rotating }: HeroSectionProps) {
+  const cards: HomeCard[] = [];
+  if (latestPost) {
+    cards.push({
+      key: "writing",
+      tape: "Writing",
+      href: `/blog/${latestPost.slug}`,
+      title: latestPost.title,
+    });
+  }
+  if (project) {
+    cards.push({
+      key: "building",
+      tape: "Building",
+      href: project.caseStudy ?? project.url ?? project.github ?? "/projects",
+      title: project.title,
+      meta: project.description,
+    });
+  }
+  if (rotating) cards.push(rotatingCard(rotating));
 
   return (
-    <section className="max-w-[1024px] mx-auto px-4 sm:px-8 pt-24 pb-20 md:pt-32 md:pb-24">
-      <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-12 md:gap-8">
-        {/* Text block */}
-        <div className={`flex-1 ${anim0}`}>
-          {/* Prompt */}
-          <p className="font-mono text-[13px] text-text-3 mb-4 tracking-[0.04em]">
-            <span className="text-accent mr-2">❯</span>whoami
-          </p>
-
-          {/* Name with typing animation */}
-          <h1 className="font-mono font-bold text-[clamp(36px,7vw,64px)] text-text-1 leading-none tracking-[-0.03em] mb-4">
-            {displayedName}
-            <span
-              className={`inline-block w-[3px] h-[0.85em] bg-accent ml-1 align-middle ${typingDone ? "animate-[blink_1.1s_step-end_infinite]" : ""}`}
-            />
+    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-10 md:pt-14 pb-16 md:pb-20">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-12 lg:gap-[72px] items-stretch">
+        <div className="flex flex-col gap-7">
+          <h1 className="m-0 font-sans font-bold text-fg text-[44px] sm:text-[64px] lg:text-display leading-[0.98] tracking-[-0.045em]">
+            I build AI agents for <Marker>security</Marker>, and the tools I need along the way.
           </h1>
-
-          {/* Tagline */}
-          <p
-            className={`font-sans text-[15px] text-text-2 leading-relaxed max-w-[46ch] mb-5 ${anim2}`}
-          >
-            I build AI agents for cybersecurity, and I share everything I learn building them.
+          <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
+            Tech Lead at RedCarbon, mostly in Go. Everything I learn, I share.
           </p>
-
-          {/* Role */}
-          <p className={`font-mono text-[13px] text-text-2 tracking-[0.04em] mb-2 ${anim3}`}>
-            Tech Lead @ RedCarbon · Co-founder @ Schrödinger Hat
-          </p>
-
-          {/* Location */}
-          <p className={`font-mono text-[12px] text-text-3 tracking-[0.04em] mb-8 ${anim3}`}>
-            Based in Verona, Italy
-          </p>
-
-          {/* CTAs */}
-          <div className={`flex flex-wrap gap-3 ${anim4}`}>
-            <ButtonLink variant="primary" href="/about">
-              About me →
+          <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <ButtonLink variant="primary" size="lg" href="/blog">
+              Read the writing
             </ButtonLink>
-            <ButtonLink variant="ghost" href="/blog">
-              Read the blog →
+            <ButtonLink variant="link" size="lg" href="/about">
+              More about me
             </ButtonLink>
+            <span className="font-mono text-meta text-fg-subtle">Verona, Italy · Remote</span>
           </div>
         </div>
 
-        {/* Photo */}
-        <div
-          className={`relative w-[180px] sm:w-[220px] md:w-[260px] shrink-0 mx-auto md:mx-0 ${anim1}`}
-        >
+        <figure className="relative m-0 lg:mt-1.5 w-full max-w-[340px] min-h-[340px] aspect-[4/5] lg:aspect-auto">
           <Image
-            src="/images/davide-speaking-profile.webp"
-            alt="Davide Imola speaking at a conference"
-            width={260}
-            height={310}
-            className="grayscale rounded-sm object-cover w-full h-auto"
+            src="/images/davide-about-profile.webp"
+            alt="Davide at a lectern giving a talk, laptop covered in community stickers"
+            fill
+            sizes="340px"
             priority
+            className="object-cover object-[50%_20%] grayscale contrast-[1.05]"
           />
-          {/* Akane corner accent */}
-          <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-accent translate-x-2 translate-y-2" />
-        </div>
+          <Tape size="lg" tilt={0} className="absolute -left-3 lg:-left-[26px] bottom-[30px]">
+            That&apos;s me, mid-talk
+          </Tape>
+        </figure>
       </div>
+
+      {cards.length > 0 && (
+        <div
+          className={`mt-16 md:mt-20 grid grid-cols-1 gap-9 md:gap-7 ${GRID_COLS[cards.length]}`}
+        >
+          {cards.map((card, i) => (
+            <Card
+              key={card.key}
+              href={card.href}
+              tape={card.tape}
+              tapeTilt={(i % 3) as 0 | 1 | 2}
+              className="px-[26px] pb-6 pt-[34px]"
+            >
+              <span className="flex flex-col gap-2">
+                <span className="font-sans font-bold text-[23px] leading-[1.2] tracking-[-0.025em] text-fg">
+                  {card.title}
+                </span>
+                {card.meta && (
+                  <span className="font-sans text-[16px] leading-[1.5] text-fg-subtle line-clamp-2">
+                    {card.meta}
+                  </span>
+                )}
+              </span>
+            </Card>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

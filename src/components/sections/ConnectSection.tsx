@@ -1,16 +1,16 @@
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
-import { ScrollReveal } from "../ui";
+import { ButtonLink, ScrollReveal, Tape } from "../ui";
 
 export function ConnectSection() {
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
           <div className="flex flex-col items-center text-center gap-6">
-            <h2 className="font-mono text-[11px] font-medium text-text-3 tracking-[0.12em] uppercase">
-              <span className="text-accent mr-2">{"// "}</span>connect
-            </h2>
-            <p className="font-sans text-[15px] text-text-2 max-w-[480px] leading-relaxed">
+            <Tape as="h2" tilt={0}>
+              Connect
+            </Tape>
+            <p className="font-sans text-[18px] text-fg-muted max-w-[480px] leading-relaxed">
               Open to talks, workshops, and interesting conversations. Find me online or reach out
               directly.
             </p>
@@ -21,28 +21,24 @@ export function ConnectSection() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-[13px] text-text-2 no-underline tracking-[0.04em] transition-colors duration-150 hover:text-accent"
+                  className="font-mono text-[14px] text-fg no-underline transition-colors duration-150 hover:text-accent"
                 >
-                  <span className="text-accent mr-1.5">→</span>
-                  {link.label}
+                  {link.label} ↗
                 </a>
               ))}
             </div>
-            <div className="flex flex-wrap justify-center gap-3">
-              <a
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <ButtonLink
+                variant="ghost"
                 href={CAL_COM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[12px] text-text-1 bg-accent/10 border border-accent/30 rounded-[3px] px-4 py-2 no-underline transition-[border-color,color,background-color] duration-150 hover:bg-accent/20 hover:border-accent/50"
               >
-                <span className="text-accent mr-1.5">❯</span>book a call
-              </a>
-              <a
-                href="/contact"
-                className="font-mono text-[12px] text-text-3 border border-border rounded-[3px] px-4 py-2 no-underline transition-[border-color,color] duration-150 hover:border-border-hover hover:text-text-1"
-              >
-                send a message →
-              </a>
+                Book a call
+              </ButtonLink>
+              <ButtonLink variant="link" href="/contact">
+                Send a message
+              </ButtonLink>
             </div>
           </div>
         </ScrollReveal>

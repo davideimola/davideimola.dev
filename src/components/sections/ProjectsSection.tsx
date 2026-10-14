@@ -11,12 +11,17 @@ export function ProjectsSection() {
 
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
-          <SectionHeader title="Projects" seeAllHref="/projects" seeAllLabel="All projects →" />
+          <SectionHeader
+            title="Projects"
+            seeAllHref="/projects"
+            seeAllLabel="All projects →"
+            tilt={2}
+          />
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
           {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
               <Card
@@ -30,15 +35,15 @@ export function ProjectsSection() {
                     </Badge>
                   </div>
                 )}
-                <h3 className="font-mono text-[16px] font-semibold text-text-1 mb-2">
+                <h3 className="font-sans text-[22px] font-bold tracking-[-0.025em] text-fg mb-2">
                   {project.title}
                 </h3>
-                <p className="font-sans text-[13px] text-text-2 leading-relaxed mb-4">
+                <p className="font-sans text-[15px] text-fg-muted leading-relaxed mb-4">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-x-2 gap-y-1 mt-auto">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[11px] text-text-3">
+                    <span key={tag} className="font-mono text-[12px] text-fg-subtle">
                       #{tag.toLowerCase()}
                     </span>
                   ))}

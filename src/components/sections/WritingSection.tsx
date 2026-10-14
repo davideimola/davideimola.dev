@@ -2,61 +2,66 @@ import { getRecentPosts } from "../../lib/content";
 import { formatDate } from "../../lib/dates";
 import { Card, ScrollReveal, SectionHeader } from "../ui";
 
+function Tags({ tags }: { tags: string[] }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
+      {tags.map((tag) => (
+        <span key={tag} className="font-mono text-[12px] text-fg-subtle">
+          #{tag.toLowerCase()}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function WritingSection() {
   const [featured, ...rest] = getRecentPosts(3);
 
   return (
     <section className="border-t border-border py-20">
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
         <ScrollReveal>
-          <SectionHeader title="Latest writing" seeAllHref="/blog" seeAllLabel="All posts →" />
+          <SectionHeader
+            title="Latest writing"
+            seeAllHref="/blog"
+            seeAllLabel="All posts →"
+            tilt={2}
+          />
         </ScrollReveal>
 
-        <div className="mt-8 flex flex-col gap-3">
+        <div className="mt-8 flex flex-col gap-5">
           {/* Featured post */}
           {featured && (
             <ScrollReveal>
               <Card href={`/blog/${featured.slug}`} className="w-full">
-                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
-                  {featured.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[11px] text-text-3">
-                      #{tag.toLowerCase()}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="font-mono text-[18px] font-semibold text-text-1 mb-2 leading-snug">
+                <Tags tags={featured.tags} />
+                <h3 className="font-sans text-[24px] sm:text-[28px] font-bold tracking-[-0.03em] leading-[1.15] text-fg mb-2">
                   {featured.title}
                 </h3>
-                <p className="font-sans text-[14px] text-text-2 leading-relaxed mb-4">
+                <p className="font-sans text-[17px] text-fg-muted leading-relaxed mb-4">
                   {featured.excerpt}
                 </p>
-                <p className="font-mono text-[11px] text-text-3">
-                  {formatDate(featured.date)} · {featured.readingTime}{" "}
+                <p className="font-mono text-[13px] text-fg-subtle">
+                  {formatDate(featured.date)} · {featured.readingTime}
                 </p>
               </Card>
             </ScrollReveal>
           )}
 
           {/* Smaller posts */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {rest.map((post, i) => (
               <ScrollReveal key={post.slug} delay={i * 80}>
                 <Card href={`/blog/${post.slug}`} className="h-full">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
-                    {post.tags.slice(0, 2).map((tag) => (
-                      <span key={tag} className="font-mono text-[11px] text-text-3">
-                        #{tag.toLowerCase()}
-                      </span>
-                    ))}
-                  </div>
-                  <h3 className="font-mono text-[15px] font-semibold text-text-1 mb-2 leading-snug">
+                  <Tags tags={post.tags.slice(0, 2)} />
+                  <h3 className="font-sans text-[20px] font-bold tracking-[-0.025em] leading-[1.2] text-fg mb-2">
                     {post.title}
                   </h3>
-                  <p className="font-sans text-[13px] text-text-2 leading-relaxed mb-4">
+                  <p className="font-sans text-[15px] text-fg-muted leading-relaxed mb-4">
                     {post.excerpt}
                   </p>
-                  <p className="font-mono text-[11px] text-text-3">
-                    {formatDate(post.date)} · {post.readingTime}{" "}
+                  <p className="font-mono text-[13px] text-fg-subtle">
+                    {formatDate(post.date)} · {post.readingTime}
                   </p>
                 </Card>
               </ScrollReveal>
