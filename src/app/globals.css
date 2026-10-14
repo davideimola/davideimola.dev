@@ -148,6 +148,89 @@ body {
   stroke-dashoffset: 0;
 }
 
+/* ── The cover draws itself ──
+   A post's cover traces in the first time it scrolls into view (DrawnCover):
+   the ink lines run their dash from 0 to 1 together, the ink fills fade in
+   as they finish, and the red detail, stroke or fill, lands last. Elements
+   are tagged by src/lib/cover-draw.ts. Once, never looping. */
+.cover-draw [data-draw] {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.05;
+}
+
+.cover-draw [data-fill] {
+  opacity: 0;
+}
+
+.cover-draw[data-drawn] [data-draw] {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1200ms cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.cover-draw[data-drawn] [data-fill] {
+  opacity: 1;
+  transition: opacity 300ms ease-out 900ms;
+}
+
+.cover-draw[data-drawn] [data-accent] {
+  transition-delay: 1250ms;
+  transition-duration: 450ms;
+}
+
+/* ── The mark draws itself ──
+   On the first load of the home page the NavBar's mark traces its graph and
+   ties the red knot last (Mark `draw`). A CSS animation, so it runs without
+   JavaScript and only once per page load. */
+@keyframes mark-trace {
+  from {
+    stroke-dashoffset: 1.05;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mark-knot {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.mark-draw [data-trace] {
+  stroke-dasharray: 1 2;
+  animation: mark-trace 700ms cubic-bezier(0.45, 0, 0.25, 1) 200ms both;
+}
+
+.mark-draw [data-trace]:nth-child(2) {
+  animation-delay: 320ms;
+}
+
+.mark-draw [data-trace]:nth-child(3) {
+  animation-delay: 440ms;
+}
+
+.mark-draw [data-knot] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-knot 380ms cubic-bezier(0.3, 1.4, 0.5, 1) 950ms both;
+}
+
+/* The wordmark's two knots answer the mark's, one after the other */
+.wordmark-echo [data-echo] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-knot 380ms cubic-bezier(0.3, 1.4, 0.5, 1) 1180ms both;
+}
+
+.wordmark-echo [data-echo]:nth-child(2) {
+  animation-delay: 1330ms;
+}
+
 /* ── Prose (Tailwind Typography) ──
    The article column (docs/brand.md, "Site"): body 19/1.7 in fg-body, titles in
    sans, links in ink that turn red on hover only, quotes set large with a small
@@ -384,6 +467,20 @@ pre[class*="language-"] {
    specific than its print block, so a reader on a dark OS would print dark.
    This block outranks both and pins the light palette on paper. */
 @media print {
+  /* Paper never waits for an animation: covers and the mark print drawn */
+  .cover-draw [data-draw],
+  .mark-draw [data-trace] {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .cover-draw [data-fill],
+  .mark-draw [data-knot],
+  .wordmark-echo [data-echo] {
+    opacity: 1;
+    animation: none;
+  }
+
   :root:not([data-theme="print"]):not(.print) {
     /* The sheet is the paper: printing the paper tint on top of it would put a
        second background on a white page, so the ground prints as white. */
@@ -459,5 +556,10 @@ pre[class*="language-"] {
     animation-iteration-count: 1 !important;
     /* biome-ignore lint/complexity/noImportantStyles: as above */
     transition-duration: 0.01ms !important;
+    /* A delay would still hold back what reduced motion shows at once */
+    /* biome-ignore lint/complexity/noImportantStyles: as above */
+    transition-delay: 0ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: as above */
+    animation-delay: 0ms !important;
   }
 }

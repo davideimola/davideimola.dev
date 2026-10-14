@@ -88,7 +88,10 @@ export default function RootLayout({
             show it drawn instead of leaving the page without its one red gesture. */}
         <noscript
           // biome-ignore lint/security/noDangerouslySetInnerHtml: a constant style rule, no user input
-          dangerouslySetInnerHTML={{ __html: "<style>.marker-stroke{stroke-dashoffset:0}</style>" }}
+          dangerouslySetInnerHTML={{
+            __html:
+              "<style>.marker-stroke,.cover-draw [data-draw]{stroke-dashoffset:0}.cover-draw [data-fill]{opacity:1}</style>",
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col antialiased">

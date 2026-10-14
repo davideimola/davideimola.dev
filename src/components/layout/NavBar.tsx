@@ -33,6 +33,9 @@ interface NavBarProps {
 export function NavBar({ onSearchOpen }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  // The mark draws itself on the first load of the home page only: captured
+  // once, so a client-side visit to / later does not replay it.
+  const [drawMark] = useState(() => pathname === "/");
 
   return (
     // data-print-hide: site chrome is screen-only, so it never reaches paper.
@@ -47,8 +50,18 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
           aria-label="davide imola, home"
           className="flex items-center gap-2.5 text-fg no-underline"
         >
-          <Mark cut="s" size={34} className="w-[30px] h-[30px] md:w-[34px] md:h-[34px]" />
-          <Wordmark weight="bold" width={172} className="w-[136px] md:w-[172px] h-auto" />
+          <Mark
+            cut="s"
+            size={34}
+            draw={drawMark}
+            className="w-[30px] h-[30px] md:w-[34px] md:h-[34px]"
+          />
+          <Wordmark
+            weight="bold"
+            width={172}
+            echo={drawMark}
+            className="w-[136px] md:w-[172px] h-auto"
+          />
         </a>
 
         {/* Desktop: links, search, theme */}

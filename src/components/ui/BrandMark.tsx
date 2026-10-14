@@ -28,37 +28,55 @@ interface MarkProps {
    * social cards, where the mark must never outshout the title.
    */
   tonal?: boolean;
+  /**
+   * Trace the graph and tie the knot last, once, as it mounts (globals.css,
+   * "The mark draws itself"). For the NavBar on the first load of the home.
+   */
+  draw?: boolean;
   className?: string;
 }
 
-export function Mark({ cut = "s", size = 32, title, tonal = false, className = "" }: MarkProps) {
+export function Mark({
+  cut = "s",
+  size = 32,
+  title,
+  tonal = false,
+  draw = false,
+  className = "",
+}: MarkProps) {
   const g = MARK_CUTS[cut];
   const a11y = title ? { role: "img", "aria-label": title } : { "aria-hidden": true as const };
+  // A stroke that draws needs a pathLength of 1 for its dash to run 0 to 1.
+  const trace = draw ? { pathLength: 1, "data-trace": "" } : {};
   return (
     // biome-ignore lint/a11y/noSvgWithoutTitle: titled when `title` is passed, aria-hidden otherwise (see a11y)
     <svg
       viewBox={MARK_VIEWBOX}
       width={size}
       height={size}
-      className={`shrink-0 ${className}`}
+      className={`shrink-0 ${draw ? "mark-draw" : ""} ${className}`}
       {...a11y}
     >
       {title && <title>{title}</title>}
       <g fill="none" stroke="currentColor" strokeWidth={g.stroke} strokeLinecap="round">
-        <path d={g.i} />
-        <path d={g.stem} />
-        <circle cx={g.bowl.cx} cy={g.bowl.cy} r={g.bowl.r} />
-        {g.tail && <path d={g.tail.d} strokeWidth={g.tail.width} />}
+        <path d={g.i} {...trace} />
+        <path d={g.stem} {...trace} />
+        <circle cx={g.bowl.cx} cy={g.bowl.cy} r={g.bowl.r} {...trace} />
+        {g.tail && <path d={g.tail.d} strokeWidth={g.tail.width} {...trace} />}
       </g>
-      <rect
-        x={g.knot.x}
-        y={g.knot.y}
-        width={g.knot.w}
-        height={g.knot.h}
-        rx={g.knot.rx}
-        transform={`rotate(${g.knot.rotate})`}
-        className={tonal ? "fill-current" : "fill-accent"}
-      />
+      {/* The knot animates on a wrapper: a CSS transform on the rect itself
+          would replace its rotate() attribute. */}
+      <g {...(draw ? { "data-knot": "" } : {})}>
+        <rect
+          x={g.knot.x}
+          y={g.knot.y}
+          width={g.knot.w}
+          height={g.knot.h}
+          rx={g.knot.rx}
+          transform={`rotate(${g.knot.rotate})`}
+          className={tonal ? "fill-current" : "fill-accent"}
+        />
+      </g>
     </svg>
   );
 }
@@ -69,10 +87,21 @@ interface WordmarkProps {
   /** Rendered width in px; the height follows the drawing's proportions. */
   width?: number;
   title?: string;
+  /**
+   * The two knots on the i's land one after the other, right after a drawing
+   * Mark ties its own: the name answering the mark. Pair with `Mark draw`.
+   */
+  echo?: boolean;
   className?: string;
 }
 
-export function Wordmark({ weight = "bold", width = 160, title, className = "" }: WordmarkProps) {
+export function Wordmark({
+  weight = "bold",
+  width = 160,
+  title,
+  echo = false,
+  className = "",
+}: WordmarkProps) {
   const viewBox = WORDMARK_VIEWBOX[weight];
   const [, , vw, vh] = viewBox.split(" ").map(Number);
   const height = Math.round((width * vh) / vw);
@@ -83,7 +112,7 @@ export function Wordmark({ weight = "bold", width = 160, title, className = "" }
       viewBox={viewBox}
       width={width}
       height={height}
-      className={`shrink-0 ${className}`}
+      className={`shrink-0 ${echo ? "wordmark-echo" : ""} ${className}`}
       {...a11y}
     >
       {title && <title>{title}</title>}
@@ -104,15 +133,17 @@ export function Wordmark({ weight = "bold", width = 160, title, className = "" }
       </g>
       <g className="fill-accent" transform={`translate(0 ${WORDMARK_KNOT_LIFT[weight]})`}>
         {WORDMARK_KNOTS.map((k) => (
-          <rect
-            key={k.x}
-            x={k.x}
-            y={k.y}
-            width={k.w}
-            height={k.h}
-            rx={k.rx}
-            transform={`rotate(${k.rotate})`}
-          />
+          // Wrapped so the animation's transform leaves the rect's rotate() alone.
+          <g key={k.x} {...(echo ? { "data-echo": "" } : {})}>
+            <rect
+              x={k.x}
+              y={k.y}
+              width={k.w}
+              height={k.h}
+              rx={k.rx}
+              transform={`rotate(${k.rotate})`}
+            />
+          </g>
         ))}
       </g>
     </svg>

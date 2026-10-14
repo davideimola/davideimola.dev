@@ -79,5 +79,6 @@ Blog covers are monoline ink illustrations on paper with exactly one red detail,
 
 - `motion/react` for scroll reveals; CSS transitions of 150ms for colour and border.
 - The marker draws once (~500ms). Nothing blinks, nothing loops.
+- A post's cover draws itself once in the post page, the red detail last (`DrawnCover`); the NavBar mark traces its graph on the first load of the home (`Mark draw`) and the wordmark's two knots answer it (`Wordmark echo`). Motion belongs to the brand's elements, never to the text.
 - `prefers-reduced-motion` collapses every animation and transition (`globals.css`).
 - Never `transition-all`.

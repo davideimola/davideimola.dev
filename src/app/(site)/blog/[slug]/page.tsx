@@ -9,6 +9,7 @@ import remarkGithubAlerts from "remark-github-alerts";
 import { AuthorBio } from "../../../../components/ui/AuthorBio";
 import { BackToTop } from "../../../../components/ui/BackToTop";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
+import { DrawnCover } from "../../../../components/ui/DrawnCover";
 import { GiscusComments } from "../../../../components/ui/GiscusComments";
 import { JsonLd } from "../../../../components/ui/JsonLd";
 import { PostCover } from "../../../../components/ui/PostCover";
@@ -26,6 +27,7 @@ import {
   getPrevNextPosts,
   getRelatedPosts,
 } from "../../../../lib/content";
+import { loadDrawableCover } from "../../../../lib/cover-files";
 import { rasterCover } from "../../../../lib/covers";
 import { formatDate } from "../../../../lib/dates";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
@@ -100,6 +102,8 @@ export default async function BlogPostPage({ params }: Props) {
     ],
   };
 
+  const cover = post.heroImage ? loadDrawableCover(post.heroImage) : null;
+
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -156,13 +160,23 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Article: the 700px reading column (docs/brand.md, "Site") */}
           <article className="min-w-0">
             {/* Hero image */}
-            {post.heroImage && (
-              <PostCover
-                src={post.heroImage}
+            {/* An SVG cover draws itself; a raster one is shown as it is */}
+            {cover ? (
+              <DrawnCover
+                light={cover.light}
+                dark={cover.dark}
                 alt={post.heroImageAlt ?? post.title}
-                priority
                 className="mb-10"
               />
+            ) : (
+              post.heroImage && (
+                <PostCover
+                  src={post.heroImage}
+                  alt={post.heroImageAlt ?? post.title}
+                  priority
+                  className="mb-10"
+                />
+              )
             )}
 
             {/* Content */}

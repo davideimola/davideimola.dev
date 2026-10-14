@@ -187,6 +187,7 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 - Use `motion/react` (not `framer-motion`) for all animations
 - `ScrollReveal` handles scroll-triggered fade+slide for section content
 - The `Marker` draws itself once (~500ms) when it scrolls into view; reduced motion makes it instant and `<noscript>` shows it drawn. Nothing blinks or loops
+- Motion animates the brand's own elements, never the text. A post's SVG cover draws itself in the post page (`DrawnCover`, ~1.2s, the red detail last), prepared by `src/lib/cover-draw.ts` and read by `src/lib/cover-files.ts`; the NavBar's `Mark` traces its graph and ties the knot on the first load of the home page only (`draw`), and the wordmark's two knots answer it one after the other (`Wordmark echo`). Both run once, show drawn under reduced motion (which also zeroes delays), in print and without JavaScript
 - `reactStrictMode` is set to `false` in `next.config.ts` — React's double-mount in dev mode resets framer-motion's IntersectionObserver state, causing a flash of invisible content
 - Do NOT wrap Next.js App Router `children` in `AnimatePresence mode="wait"` — it blocks page rendering
 

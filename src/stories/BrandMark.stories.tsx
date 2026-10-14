@@ -46,6 +46,28 @@ export const Cuts: Story = {
 };
 
 /** Tone-on-tone, for social card watermarks only. */
+// Traces the graph and ties the knot once, as it mounts. Re-render the story
+// (or reload) to see it again.
+export const Draw: Story = {
+  args: { cut: "l", size: 160, title: "Davide Imola", draw: true },
+  render: (args) => (
+    <div className="text-fg">
+      <Mark {...args} />
+    </div>
+  ),
+};
+
+// The NavBar pair on the first load of the home: the mark draws, then the
+// wordmark's knots answer.
+export const DrawWithEcho: Story = {
+  render: () => (
+    <div className="flex items-center gap-3 text-fg">
+      <Mark cut="s" size={34} draw />
+      <Wordmark weight="bold" width={172} echo />
+    </div>
+  ),
+};
+
 export const Tonal: Story = {
   render: () => (
     <div className="text-border">
