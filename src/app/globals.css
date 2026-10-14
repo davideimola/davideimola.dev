@@ -1,78 +1,82 @@
 @import "tailwindcss";
+@import "@davideimola/brand/tailwind.css";
 @plugin "@tailwindcss/typography";
 
-/* ── Design Tokens ── */
+/* ── Design tokens ──
+   The palette, the type families and the radii come from the brand package
+   (github.com/davideimola/brand, `@davideimola/brand`): `tokens.css` declares
+   the `--di-*` custom properties for light, dark and print, and `tailwind.css`
+   maps them onto Tailwind utilities (`bg-bg`, `text-fg`, `text-fg-muted`,
+   `border-border`, `bg-surface`, `font-label`, ...). Never restate a brand value
+   here: change it in the brand repo and bump the dependency.
+
+   What this file adds is site-only: the next/font families wired into the
+   brand's family tokens, the type scale as Tailwind text utilities, and the
+   dark variant. */
+
 :root {
-  /* Backgrounds */
-  --bg: #080807;
-  --bg-card: #0f0e0d;
-  --bg-hover: #141311;
+  /* next/font serves the three families under hashed names; the brand tokens
+     name the real families, so prepend the hashed ones. */
+  --di-font-family-sans:
+    var(--font-schibsted-grotesk), "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --di-font-family-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --di-font-family-label:
+    var(--font-barlow-condensed), "Barlow Condensed", ui-sans-serif, sans-serif;
 
-  /* Borders */
-  --border: #1c1a18;
-  --border-mid: #252220;
-  --border-hover: rgba(201, 31, 55, 0.3);
-
-  /* Text hierarchy */
-  --text-1: #eae5df;
-  --text-2: #9a948e;
-  --text-3: #7e7874;
-
-  /* Accent — Akane Red */
-  --accent: #c91f37;
-  --accent-hover: #a8192e;
-  --accent-glow: rgba(201, 31, 55, 0.12);
-
-  /* Typography */
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Courier New", monospace;
-  --font-sans: var(--font-ibm-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
+  color-scheme: light;
 }
 
-/* ── Tailwind v4 Theme Extension ── */
-@theme inline {
-  /* Colors */
-  --color-bg: var(--bg);
-  --color-bg-card: var(--bg-card);
-  --color-bg-hover: var(--bg-hover);
-  --color-border: var(--border);
-  --color-border-mid: var(--border-mid);
-  --color-border-hover: var(--border-hover);
-  --color-text-1: var(--text-1);
-  --color-text-2: var(--text-2);
-  --color-text-3: var(--text-3);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-glow: var(--accent-glow);
-
-  /* Fonts */
-  --font-mono: var(--font-mono);
-  --font-sans: var(--font-sans);
+/* Native controls and scrollbars follow the theme the tokens are in. */
+[data-theme="dark"] {
+  color-scheme: dark;
 }
 
-/* ── Print palette ──
-   Paper inverts the ground and nothing else: the Akane Red accent and both
-   brand fonts are deliberately left alone, so a printed page still reads as
-   this site rather than as an inverted screenshot.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  }
+}
 
-   Redefining these variables re-themes the whole subtree with no second copy of
-   the markup, because the `@theme inline` block above compiles every token
-   utility down to `var(--bg)`, `var(--text-1)` and friends. The hover tokens
-   (`--bg-hover`, `--border-hover`) are absent on purpose: nothing hovers on
-   paper. A print Rendering that ever needs them has to add them here.
+/* `dark:` matches whenever the dark tokens are active: an explicit
+   data-theme="dark", or the system preference unless the visitor pinned light.
+   Prefer tokens over `dark:`; it exists for the rare asset that cannot use one. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
 
-   Applied as `print:light-ground` on <body> in src/app/layout.tsx. It has to
-   sit on <body> rather than on <html>: utilities live in Tailwind's `utilities`
-   cascade layer, so the unlayered `:root` block above would win on the same
-   element. On <body> those tokens are only inherited, and a declaration on the
-   element itself always beats an inherited value. */
-@utility light-ground {
-  --bg: #ffffff;
-  --bg-card: #fafaf8;
-  --border: #e4e1dc;
-  --border-mid: #cfcbc5;
-  --text-1: #16150f;
-  --text-2: #4a4640;
-  --text-3: #6f6a63;
+@theme {
+  /* The brand type scale (docs/brand.md, "Typography"). Display and h1 are too
+     big for a phone, so callers step up to them from a smaller size. */
+  --text-display: 80px;
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.045em;
+  --text-h1: 64px;
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.045em;
+  --text-h2: 32px;
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h3: 24px;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.025em;
+  --text-lead: 22px;
+  --text-lead--line-height: 1.5;
+  --text-body: 19px;
+  --text-body--line-height: 1.7;
+  --text-small: 15px;
+  --text-small--line-height: 1.5;
+  --text-meta: 14px;
+  --text-meta--line-height: 1.6;
+  --text-label: 15px;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.12em;
 }
 
 /* ── Base ── */
@@ -81,118 +85,132 @@ html {
 }
 
 /* Offset in-page anchor jumps (footnotes, heading links) so targets land below
-   the fixed 52px NavBar instead of behind it. scroll-margin lives on the target,
-   so it works regardless of which element is the scroll container (body has
-   overflow-x: hidden, which promotes body to the Y-axis scroller over html). */
+   the sticky NavBar instead of behind it. scroll-margin lives on the target,
+   so it works regardless of which element is the scroll container. */
 :is(h2, h3, h4, h5, h6)[id],
 [id^="user-content-fn"] {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 6rem;
 }
 
-/* Visible keyboard focus on the near-black background. Lives in the base
-   layer so deliberate `outline-none` utilities (form fields with their own
-   border-based focus) still win. */
+/* Visible keyboard focus. Ink, not red: red belongs to the knot and the
+   marker. Lives in the base layer so deliberate `outline-none` utilities (form
+   fields with their own border-based focus) still win. */
 @layer base {
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--di-fg);
     outline-offset: 2px;
   }
 }
 
 body {
-  background: var(--bg);
-  color: var(--text-1);
-  font-family: var(--font-sans);
-  font-size: 15px;
+  background: var(--di-bg);
+  color: var(--di-fg);
+  font-family: var(--di-font-family-sans);
+  font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-/* ── Dot grid background texture ── */
-.dot-grid {
-  background-image: radial-gradient(circle, #2a2520 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(circle, #2a2520 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.35;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border-mid);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-3);
-}
-
 /* ── Selection ── */
 ::selection {
-  background: var(--accent-glow);
-  color: var(--text-1);
+  background: var(--di-fg);
+  color: var(--di-bg);
 }
 
-/* ── Prose (Tailwind Typography) ── */
+/* ── The marker ──
+   One rough red stroke per page under the word that matters most (see the
+   Marker component). The glyphs wear a halo in the ground colour so they cut
+   through the stroke: skip-ink, never ink over the letters. */
+.marker-word {
+  --marker-halo: var(--di-marker-halo);
+  --marker-halo-color: var(--di-bg);
+  text-shadow:
+    var(--marker-halo) 0 0 var(--marker-halo-color),
+    calc(var(--marker-halo) * -1) 0 0 var(--marker-halo-color),
+    0 var(--marker-halo) 0 var(--marker-halo-color),
+    0 calc(var(--marker-halo) * -1) 0 var(--marker-halo-color),
+    calc(var(--marker-halo) * 0.75) calc(var(--marker-halo) * 0.75) 0 var(--marker-halo-color),
+    calc(var(--marker-halo) * -0.75) calc(var(--marker-halo) * 0.75) 0 var(--marker-halo-color),
+    calc(var(--marker-halo) * 0.75) calc(var(--marker-halo) * -0.75) 0 var(--marker-halo-color),
+    calc(var(--marker-halo) * -0.75) calc(var(--marker-halo) * -0.75) 0 var(--marker-halo-color);
+}
+
+.marker-stroke {
+  /* pathLength is 1: the dash covers the whole stroke, the offset hides it
+     just past its start so the round cap leaves no dot behind. */
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.05;
+  transition: stroke-dashoffset 500ms cubic-bezier(0.3, 0.7, 0.4, 1) 150ms;
+}
+
+.marker[data-drawn] .marker-stroke {
+  stroke-dashoffset: 0;
+}
+
+/* ── Prose (Tailwind Typography) ──
+   The article column (docs/brand.md, "Site"): body 19/1.7 in fg-body, titles in
+   sans, links in ink that turn red on hover only, quotes set large with a small
+   ink square instead of a side bar, code on the surface with a hairline. */
 .prose {
-  --tw-prose-body: var(--text-2);
-  --tw-prose-headings: var(--text-1);
-  --tw-prose-lead: var(--text-2);
-  --tw-prose-links: var(--text-1);
-  --tw-prose-bold: var(--text-1);
-  --tw-prose-counters: var(--text-3);
-  --tw-prose-bullets: var(--text-3);
-  --tw-prose-hr: var(--border-mid);
-  --tw-prose-quotes: var(--text-1);
-  --tw-prose-quote-borders: var(--accent);
-  --tw-prose-captions: var(--text-3);
-  --tw-prose-code: var(--text-1);
-  --tw-prose-pre-code: var(--text-1);
-  --tw-prose-pre-bg: var(--bg-card);
-  --tw-prose-th-borders: var(--border-mid);
-  --tw-prose-td-borders: var(--border);
+  font-size: 19px;
+  line-height: 1.7;
+  --tw-prose-body: var(--di-fg-body);
+  --tw-prose-headings: var(--di-fg);
+  --tw-prose-lead: var(--di-fg-muted);
+  --tw-prose-links: var(--di-fg);
+  --tw-prose-bold: var(--di-fg);
+  --tw-prose-counters: var(--di-fg-subtle);
+  --tw-prose-bullets: var(--di-fg-subtle);
+  --tw-prose-hr: var(--di-border);
+  --tw-prose-quotes: var(--di-fg);
+  --tw-prose-quote-borders: transparent;
+  --tw-prose-captions: var(--di-fg-subtle);
+  --tw-prose-code: var(--di-fg);
+  --tw-prose-pre-code: var(--di-fg);
+  --tw-prose-pre-bg: var(--di-surface);
+  --tw-prose-th-borders: var(--di-border);
+  --tw-prose-td-borders: var(--di-border);
 }
 
 .prose :where(h1, h2, h3, h4) {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: var(--di-font-family-sans);
+  font-weight: 700;
+}
+
+.prose :where(h2) {
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.prose :where(h3) {
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .prose :where(a) {
-  color: var(--text-1);
-  text-decoration-color: var(--border-mid);
+  color: var(--di-fg);
+  text-decoration-color: var(--di-fg);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
   transition:
     color 150ms,
     text-decoration-color 150ms;
 }
 
 .prose :where(a):hover {
-  color: var(--accent);
-  text-decoration-color: var(--accent);
+  color: var(--di-accent);
+  text-decoration-color: var(--di-accent);
 }
 
 .prose :where(code):not(pre code) {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--bg-card);
-  border: 1px solid var(--border-mid);
-  border-radius: 3px;
-  padding: 0.15em 0.4em;
+  font-family: var(--di-font-family-mono);
+  font-size: 0.85em;
+  background: var(--di-surface-inline);
+  border-radius: var(--di-radius-sm);
+  padding: 0.12em 0.35em;
   font-weight: 400;
 }
 
@@ -202,14 +220,35 @@ body::before {
 }
 
 .prose :where(pre) {
-  font-family: var(--font-mono);
+  font-family: var(--di-font-family-mono);
   margin-top: 0;
   margin-bottom: 0;
 }
 
 .prose :where(blockquote) {
+  position: relative;
+  border: 0;
+  margin: 1.6em 0;
+  padding: 0 0 0 1.75rem;
+  font-family: var(--di-font-family-sans);
   font-style: normal;
-  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(22px, 3.2vw, 30px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--di-fg);
+}
+
+/* The small ink square that replaces the side bar. */
+.prose :where(blockquote)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--di-fg);
 }
 
 .prose :where(blockquote p:first-of-type)::before,
@@ -217,13 +256,15 @@ body::before {
   content: none;
 }
 
-/* ── Prism syntax highlighting ── */
+/* ── Prism syntax highlighting ──
+   Code is the one place colour carries meaning instead of identity: keywords
+   may be red, strings take the brand's code green, everything else stays ink. */
 code[class*="language-"],
 pre[class*="language-"] {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  line-height: 1.7;
-  color: var(--text-1);
+  font-family: var(--di-font-family-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--di-fg);
   background: none;
   tab-size: 2;
 }
@@ -232,67 +273,59 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: var(--text-3);
+  color: var(--di-fg-subtle);
   font-style: italic;
 }
 
-.token.punctuation {
-  color: var(--text-2);
+.token.punctuation,
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--di-fg-muted);
 }
 
 .token.property,
 .token.tag,
 .token.constant,
 .token.symbol,
-.token.deleted {
-  color: #f7768e;
-}
-
 .token.boolean,
-.token.number {
-  color: #ff9e64;
-}
-
+.token.number,
+.token.function,
+.token.class-name,
+.token.regex,
+.token.important,
+.token.variable,
 .token.selector,
 .token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-  color: #9ece6a;
-}
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: var(--text-2);
-}
-
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: var(--accent);
+.token.builtin {
+  color: var(--di-fg);
 }
 
 .token.function,
 .token.class-name {
-  color: #7aa2f7;
+  font-weight: 600;
 }
 
-.token.regex,
-.token.important,
-.token.variable {
-  color: #bb9af7;
+.token.string,
+.token.char,
+.token.attr-value,
+.token.inserted {
+  color: var(--di-code-string);
 }
 
-/* ── GitHub-style Callouts (remark-github-alerts) ── */
+.token.atrule,
+.token.keyword,
+.token.deleted {
+  color: var(--di-accent);
+}
+
+/* ── GitHub-style callouts (remark-github-alerts) ──
+   No coloured side bars: a callout is a block on the surface with a hairline,
+   and its kind is said by the title, not by a colour. */
 .markdown-alert {
-  border-left: 3px solid var(--border-mid);
-  background: var(--bg-card);
-  border-radius: 0 3px 3px 0;
-  padding: 12px 16px;
+  border: 1px solid var(--di-border);
+  background: var(--di-surface);
+  padding: 14px 18px;
   margin: 1.5em 0;
 }
 
@@ -301,18 +334,19 @@ pre[class*="language-"] {
 }
 
 .markdown-alert-title {
-  font-family: var(--font-mono);
-  font-size: 11px !important;
-  font-weight: 600;
+  font-family: var(--di-font-family-mono);
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-top: 0 !important;
-  margin-bottom: 8px !important;
-  padding: 0 !important;
+  color: var(--di-fg);
+  margin-top: 0;
+  margin-bottom: 8px;
+  padding: 0;
   display: flex;
   align-items: center;
   gap: 6px;
-  border: none !important;
+  border: none;
 }
 
 .markdown-alert-title .octicon {
@@ -327,57 +361,12 @@ pre[class*="language-"] {
 }
 
 .markdown-alert p {
-  font-size: 14px;
-  color: var(--text-2);
+  font-size: 16px;
+  color: var(--di-fg-body);
   margin: 0;
 }
 
-.markdown-alert-note {
-  border-left-color: #4a7fa8;
-}
-.markdown-alert-note .markdown-alert-title {
-  color: #4a7fa8;
-}
-
-.markdown-alert-tip {
-  border-left-color: #3d8c5e;
-}
-.markdown-alert-tip .markdown-alert-title {
-  color: #3d8c5e;
-}
-
-.markdown-alert-important {
-  border-left-color: #7a5aa8;
-}
-.markdown-alert-important .markdown-alert-title {
-  color: #7a5aa8;
-}
-
-.markdown-alert-warning {
-  border-left-color: #a07a12;
-}
-.markdown-alert-warning .markdown-alert-title {
-  color: #a07a12;
-}
-
-.markdown-alert-caution {
-  border-left-color: var(--accent);
-}
-.markdown-alert-caution .markdown-alert-title {
-  color: var(--accent);
-}
-
 /* ── Animations ── */
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -390,24 +379,34 @@ pre[class*="language-"] {
 }
 
 /* ── Print Rendering ──
-   Printing is the same markup with the ground flipped: the palette comes from
-   `print:light-ground` on <body>, and the page's own layout collapses to a
-   single column through `print:` utilities. What is left here is what a token
-   or a utility cannot express. */
+   Paper is always light. The brand's tokens.css resets the palette for print,
+   but its system-preference block (`:root:not([data-theme="light"])`) is more
+   specific than its print block, so a reader on a dark OS would print dark.
+   This block outranks both and pins the light palette on paper. */
 @media print {
+  :root:not([data-theme="print"]):not(.print) {
+    --di-bg: var(--di-color-paper);
+    --di-fg: var(--di-color-ink);
+    --di-fg-body: var(--di-color-ink-body);
+    --di-fg-muted: var(--di-color-graphite);
+    --di-fg-subtle: var(--di-color-slate);
+    --di-border: var(--di-color-rule);
+    --di-surface: var(--di-color-white);
+    --di-surface-inline: var(--di-color-linen);
+    --di-accent: var(--di-color-akane);
+    --di-tape-bg: var(--di-color-ink);
+    --di-tape-fg: var(--di-color-paper);
+    --di-code-string: var(--di-color-code-string);
+    color-scheme: light;
+  }
+
   /* Print the palette as declared. Chromium prints "with modified colors" by
-     default, which would mute the Akane Red the print palette deliberately
-     keeps. It belongs here rather than in the PDF generator, so a reader who
-     hits Cmd+P gets the same colours the generated PDF has. */
+     default, which would mute the tape and the knot. It belongs here rather
+     than in the PDF generator, so a reader who hits Cmd+P gets the same colours
+     the generated PDF has. */
   html {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-  }
-
-  /* Screen texture, not paper: the fixed dot-grid overlay would otherwise be
-     stamped over every sheet. */
-  body::before {
-    display: none;
   }
 
   /* `overflow-x: hidden` computes `overflow-y` to `auto`, which Chrome treats
@@ -419,10 +418,10 @@ pre[class*="language-"] {
   /* A control does nothing on paper. `button` catches real buttons; everything
      else screen-only carries `data-print-hide`, which is why the design system's
      Button and ButtonLink both set it (ButtonLink renders an <a>, so the
-     `button` selector would never reach it) and why the NavBar, the ⌘K
-     affordance inside it and the Footer all vanish. A new control built the
-     repo's way therefore needs no rule of its own. Unlayered, so it beats the
-     `display` utilities in the utilities layer without `!important`. */
+     `button` selector would never reach it) and why the NavBar, the theme
+     toggle and the Footer all vanish. A new control built the repo's way
+     therefore needs no rule of its own. Unlayered, so it beats the `display`
+     utilities in the utilities layer without `!important`. */
   button,
   [data-print-hide] {
     display: none;
@@ -451,8 +450,11 @@ pre[class*="language-"] {
   *,
   *::before,
   *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: reduced motion has to beat every component's own timing */
     animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: as above */
     animation-iteration-count: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: as above */
     transition-duration: 0.01ms !important;
   }
 }

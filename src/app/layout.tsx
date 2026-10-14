@@ -1,21 +1,32 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Barlow_Condensed, IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { UmamiAnalytics } from "@/components/analytics/UmamiAnalytics";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+// The brand's three families (docs/brand.md, "Typography"). The variables are
+// wired into the brand's `--di-font-family-*` tokens in globals.css.
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted-grotesk",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+// Tape labels only, always bold and uppercase.
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: "700",
   display: "swap",
 });
 
@@ -61,11 +72,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full`}>
-      {/* `print:light-ground` flips the design tokens for paper. It has to sit on
-          <body> rather than on <html>; the print palette in globals.css says
-          why. */}
-      <body className="min-h-full flex flex-col antialiased print:light-ground">
+    // suppressHydrationWarning: THEME_INIT_SCRIPT sets data-theme on <html>
+    // before React hydrates, on purpose.
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${schibstedGrotesk.variable} ${ibmPlexMono.variable} ${barlowCondensed.variable} h-full`}
+    >
+      <head>
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: a constant string from src/lib/theme.ts, no user input
+          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+        />
+        {/* Without JavaScript the marker never hears it scrolled into view:
+            show it drawn instead of leaving the page without its one red gesture. */}
+        <noscript
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: a constant style rule, no user input
+          dangerouslySetInnerHTML={{ __html: "<style>.marker-stroke{stroke-dashoffset:0}</style>" }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col antialiased">
         {children}
         <UmamiAnalytics />
         <SpeedInsights />
