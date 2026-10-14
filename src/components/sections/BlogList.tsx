@@ -149,6 +149,14 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
                     href={`/blog/${post.slug}`}
                     className="group flex flex-col gap-2 no-underline"
                   >
+                    {post.heroImage && (
+                      <PostCover
+                        src={post.heroImage}
+                        alt=""
+                        sizes="(min-width: 768px) 260px, 100vw"
+                        className="mb-1"
+                      />
+                    )}
                     <span className="font-sans font-bold text-[20px] leading-[1.25] tracking-[-0.02em] text-fg group-hover:text-accent transition-colors duration-150">
                       {post.title}
                     </span>
@@ -188,25 +196,36 @@ export function BlogList({ posts, tags, categories, startHere }: BlogListProps) 
                 <li key={post.slug}>
                   <a
                     href={`/blog/${post.slug}`}
-                    className={`group grid grid-cols-[64px_minmax(0,1fr)] md:grid-cols-[80px_minmax(0,1fr)_auto] gap-x-4 md:gap-x-5 gap-y-1 items-baseline py-3 no-underline ${
+                    className={`group grid grid-cols-[64px_minmax(0,1fr)] md:grid-cols-[80px_minmax(0,1fr)_160px] gap-x-4 md:gap-x-5 items-start py-3 no-underline ${
                       i < group.posts.length - 1 ? "border-b border-border" : ""
                     }`}
                   >
-                    <span className="font-mono text-[13px] text-fg-subtle">
+                    <span className="font-mono text-[13px] text-fg-subtle pt-1">
                       {group.earlier
                         ? new Date(post.date).getFullYear()
                         : formatDayMonth(post.date)}
                     </span>
-                    <span
-                      className={`font-sans font-semibold text-[17px] md:text-[19px] tracking-[-0.015em] group-hover:text-accent transition-colors duration-150 ${
-                        group.earlier ? "text-fg-muted" : "text-fg"
-                      }`}
-                    >
-                      {post.title}
+                    <span className="flex flex-col gap-1">
+                      <span
+                        className={`font-sans font-semibold text-[17px] md:text-[19px] tracking-[-0.015em] group-hover:text-accent transition-colors duration-150 ${
+                          group.earlier ? "text-fg-muted" : "text-fg"
+                        }`}
+                      >
+                        {post.title}
+                      </span>
+                      <span className="font-mono text-[12px] text-fg-subtle">{rowTags(post)}</span>
                     </span>
-                    <span className="col-start-2 md:col-start-3 font-mono text-[12px] text-fg-subtle">
-                      {rowTags(post)}
-                    </span>
+                    {/* The cover as a thumbnail on wide screens; on a phone the row
+                        stays text only, the list is dense enough already. A post
+                        without a cover gets no box at all. */}
+                    {post.heroImage && (
+                      <PostCover
+                        src={post.heroImage}
+                        alt=""
+                        sizes="160px"
+                        className="hidden md:block"
+                      />
+                    )}
                   </a>
                 </li>
               ))}
