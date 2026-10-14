@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { CopyButton } from "../../../components/ui/CopyButton";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { Marker } from "../../../components/ui/Marker";
+import { Photo } from "../../../components/ui/Photo";
 import { Tape } from "../../../components/ui/Tape";
 import { getAllProjects, getAllTalks, type Talk } from "../../../lib/content";
 import { formatDayMonth, formatMonthYear } from "../../../lib/dates";
@@ -313,12 +313,10 @@ export default function SharingPage() {
             </div>
             <figure className="m-0 flex flex-col gap-2.5">
               <div className="relative w-full aspect-[3/2]">
-                <Image
+                <Photo
                   src="/images/osday-audience.webp"
                   alt="The Open Source Day audience in Florence"
-                  fill
                   sizes="(min-width: 768px) 420px, 100vw"
-                  className="object-cover grayscale contrast-[1.05]"
                 />
               </div>
               <figcaption className="font-mono text-[13px] text-fg-subtle">
@@ -441,12 +439,11 @@ export default function SharingPage() {
           </div>
           <div className="flex flex-col gap-3.5">
             <div className="relative w-full h-[180px]">
-              <Image
+              <Photo
                 src="/images/davide-speaking-profile.webp"
                 alt="Headshot of Davide Imola"
-                fill
                 sizes="300px"
-                className="object-cover object-top grayscale contrast-[1.05]"
+                position="object-top"
               />
             </div>
             <a

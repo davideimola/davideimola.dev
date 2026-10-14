@@ -47,6 +47,7 @@ Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `te
 - **Mark / Wordmark** (`ui/BrandMark.tsx`) — never typeset the name; switch cut instead of shrinking.
 - **Button / ButtonLink** — `primary` (filled ink, at most one per view), `ghost` (outlined ink), `link` (underlined text, red on hover). Sizes `sm`, `md`, `lg`. Both set `data-print-hide`.
 - **Card** — straight, `bg-surface` plus hairline, hover darkens the hairline. Optional `tape` on the top-left edge.
+- **Photo** — a photograph of people: black and white, its colour painted back left to right on hover in the marker's timing. Fills a sized `relative` parent.
 - **Badge** — status pills only (Coming soon, Conference, roles). Never for section labels (tape) or tags (`#tag` in mono).
 - **SectionHeader** — tape plus an optional mono "see all" link.
 - **PageHero** — tape `label`, h1, lead. Every page uses it.
@@ -64,7 +65,7 @@ Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `te
 
 ## Photography and covers
 
-Portraits and photos of people are black and white (`grayscale`). A tape may sit on a photo's edge; the mark never sits on a photo.
+Portraits and photos of people are black and white (`Photo`) and take their colour back on hover, swept in left to right. A tape may sit on a photo's edge; the mark never sits on a photo.
 
 Blog covers are monoline ink illustrations on paper with exactly one red detail, shown as they are (see CLAUDE.md, Rules).
 

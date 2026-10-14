@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Photo } from "../ui/Photo";
 import { Tape } from "../ui/Tape";
 
 export interface Community {
@@ -21,12 +21,10 @@ export function InPublicSection({ communities, spokenAt }: InPublicSectionProps)
       <div className="border-t border-rule pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-6 lg:gap-16 items-start">
         <figure className="m-0 order-2 lg:order-1">
           <div className="relative w-full h-[200px] sm:h-[300px] lg:h-[400px]">
-            <Image
+            <Photo
               src="/images/osday-audience.webp"
               alt="The audience at Open Source Day, rows of people with lanyards watching a talk"
-              fill
               sizes="(min-width: 1024px) 620px, 100vw"
-              className="object-cover grayscale contrast-[1.05]"
             />
           </div>
           <figcaption className="font-mono text-[13px] text-fg-subtle pt-2.5">

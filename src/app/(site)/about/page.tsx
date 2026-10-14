@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { Marker } from "../../../components/ui/Marker";
+import { Photo } from "../../../components/ui/Photo";
 import { Tape } from "../../../components/ui/Tape";
 import { getAllProjects } from "../../../lib/content";
 import {
@@ -214,13 +214,12 @@ export default function AboutPage() {
         </div>
         {/* The portrait stretches to the height of the text beside it. */}
         <figure className="relative m-0 lg:mt-1 w-full max-w-[360px] min-h-[320px] lg:min-h-[380px] aspect-[4/5] lg:aspect-auto">
-          <Image
+          <Photo
             src="/images/davide-about-profile.webp"
             alt="Davide at a lectern, laptop covered in community stickers"
-            fill
             sizes="360px"
             priority
-            className="object-cover object-[50%_18%] grayscale contrast-[1.05]"
+            position="object-[50%_18%]"
           />
         </figure>
       </header>
@@ -245,12 +244,11 @@ export default function AboutPage() {
           {creedImage && (
             <figure className="m-0 flex flex-col gap-2">
               <div className="relative w-full h-[236px]">
-                <Image
+                <Photo
                   src={creedImage.src}
                   alt={creedImage.caption}
-                  fill
                   sizes="420px"
-                  className="object-cover object-[center_45%] grayscale contrast-[1.05]"
+                  position="object-[center_45%]"
                 />
               </div>
               <figcaption className="font-mono text-[13px] text-fg-subtle">

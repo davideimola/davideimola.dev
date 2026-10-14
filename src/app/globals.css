@@ -148,6 +148,22 @@ body {
   stroke-dashoffset: 0;
 }
 
+/* ── A photo takes its colour back ──
+   The colour copy of a Photo sits over the black and white one under a clip
+   with a slanted leading edge; on hover the edge sweeps left to right in the
+   marker's timing, and back when the pointer leaves. Both polygons have the
+   same four points so the browser can interpolate between them. */
+.photo-colour {
+  clip-path: polygon(0 0, 0 0, -14% 100%, 0 100%);
+  transition: clip-path 650ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+@media (hover: hover) {
+  .group\/photo:hover .photo-colour {
+    clip-path: polygon(0 0, 114% 0, 100% 100%, 0 100%);
+  }
+}
+
 /* ── The cover draws itself ──
    A post's cover traces in the first time it scrolls into view (DrawnCover):
    the ink lines run their dash from 0 to 1 together, the ink fills fade in

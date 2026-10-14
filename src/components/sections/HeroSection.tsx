@@ -1,10 +1,10 @@
-import Image from "next/image";
 import type { BlogPost, Project } from "../../lib/content";
 import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
 import type { RotatingCard } from "../../lib/home-cards";
 import { ButtonLink } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { Marker } from "../ui/Marker";
+import { Photo } from "../ui/Photo";
 import { Tape } from "../ui/Tape";
 
 interface HeroSectionProps {
@@ -108,13 +108,12 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
         </div>
 
         <figure className="relative m-0 lg:mt-1.5 w-full max-w-[340px] min-h-[340px] aspect-[4/5] lg:aspect-auto">
-          <Image
+          <Photo
             src="/images/davide-about-profile.webp"
             alt="Davide at a lectern giving a talk, laptop covered in community stickers"
-            fill
             sizes="340px"
             priority
-            className="object-cover object-[50%_20%] grayscale contrast-[1.05]"
+            position="object-[50%_20%]"
           />
           <Tape size="lg" tilt={0} className="absolute -left-3 lg:-left-[26px] bottom-[30px]">
             That&apos;s me, mid-talk
