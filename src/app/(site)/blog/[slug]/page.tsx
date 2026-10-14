@@ -27,6 +27,7 @@ import {
   getRelatedPosts,
 } from "../../../../lib/content";
 import { formatDate } from "../../../../lib/dates";
+import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -177,7 +178,11 @@ export default async function BlogPostPage({ params }: Props) {
                 options={{
                   mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkGithubAlerts],
-                    rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
+                    rehypePlugins: [
+                      rehypeSlug,
+                      rehypeCodeTitle,
+                      [rehypePrism, { ignoreMissing: true }],
+                    ],
                   },
                 }}
                 components={{ pre: CodeBlock as React.ComponentType<object> }}
