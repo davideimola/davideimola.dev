@@ -1,107 +1,150 @@
 "use client";
 
+import { IconSearch } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Mark, Wordmark } from "../ui/BrandMark";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 interface NavLink {
   label: string;
   href: string;
 }
 
-const NAV_LINKS: NavLink[] = [
-  { label: "about", href: "/about" },
-  { label: "sharing", href: "/sharing" },
-  { label: "projects", href: "/projects" },
-  { label: "blog", href: "/blog" },
-  { label: "contact", href: "/contact" },
+export const NAV_LINKS: NavLink[] = [
+  { label: "About", href: "/about" },
+  { label: "Sharing", href: "/sharing" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
+
+export function isActiveLink(pathname: string | null, href: string): boolean {
+  if (!pathname) return false;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 interface NavBarProps {
   onSearchOpen?: () => void;
 }
 
+// S mark plus the bold wordmark, links in sans, the current page in ink with a
+// 2px underline (docs/brand.md, "Site").
 export function NavBar({ onSearchOpen }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     // data-print-hide: site chrome is screen-only, so it never reaches paper.
     <nav
       data-print-hide=""
-      className="fixed top-0 left-0 right-0 z-50 border-b border-border-mid bg-[rgba(8,8,7,0.85)] backdrop-blur-md"
+      aria-label="Main"
+      className="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur-md"
     >
-      <div className="relative z-10 max-w-[1024px] mx-auto px-4 sm:px-8 flex items-center justify-between h-[52px]">
-        {/* Logo */}
+      <div className="max-w-[1136px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-6 h-16 md:h-[76px]">
         <a
           href="/"
-          className="font-mono text-[15px] font-bold text-text-1 no-underline tracking-[-0.03em] flex items-center"
+          aria-label="davide imola, home"
+          className="flex items-center gap-2.5 text-fg no-underline"
         >
-          davideimola
-          <span
-            aria-hidden="true"
-            className="inline-block w-[2.5px] h-[0.9em] bg-accent ml-[3px]"
-          />
+          <Mark cut="s" size={34} className="w-[30px] h-[30px] md:w-[34px] md:h-[34px]" />
+          <Wordmark weight="bold" width={172} className="w-[136px] md:w-[172px] h-auto" />
         </a>
 
-        {/* Desktop: Nav links + search */}
-        <ul className="hidden md:flex items-center gap-7 list-none m-0 p-0">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="font-mono text-[12px] font-normal text-text-2 no-underline tracking-[0.04em] lowercase transition-colors duration-150 hover:text-text-1"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
+        {/* Desktop: links, search, theme */}
+        <div className="hidden md:flex items-center gap-8">
+          <ul className="flex items-center gap-7 list-none m-0 p-0">
+            {NAV_LINKS.map((link) => {
+              const active = isActiveLink(pathname, link.href);
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`font-sans text-[15px] no-underline pb-[3px] border-b-2 transition-colors duration-150 ${
+                      active
+                        ? "text-fg font-semibold border-fg"
+                        : "text-fg-muted border-transparent hover:text-fg"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="flex items-center gap-1">
             <button
               type="button"
               onClick={onSearchOpen}
-              className="flex items-center gap-1.5 font-mono text-[10px] text-text-3 bg-bg-card border border-border rounded-[4px] px-2 py-1 cursor-pointer transition-[border-color,color] duration-150 hover:border-border-mid hover:text-text-2"
-              aria-label="Open command palette"
+              className="flex items-center gap-2 h-9 px-2.5 text-fg-muted border border-border cursor-pointer transition-colors duration-150 hover:border-fg hover:text-fg"
+              aria-label="Open search"
             >
-              <span>⌘K</span>
-              <kbd className="text-[10px] opacity-60">search</kbd>
+              <IconSearch size={15} stroke={1.75} aria-hidden="true" />
+              <kbd className="font-mono text-[12px]">⌘K</kbd>
             </button>
-          </li>
-        </ul>
+            <ThemeToggle />
+          </div>
+        </div>
 
-        {/* Mobile: hamburger */}
-        <button
-          type="button"
-          onClick={() => setMenuOpen((v) => !v)}
-          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 cursor-pointer"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          <span
-            className={`block h-px bg-text-2 transition-transform duration-200 origin-center ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
-          />
-          <span
-            className={`block h-px bg-text-2 transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block h-px bg-text-2 transition-transform duration-200 origin-center ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
-          />
-        </button>
+        {/* Mobile: theme + hamburger */}
+        <div className="md:hidden flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 cursor-pointer"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+          >
+            <span
+              className={`block w-5 h-[2px] bg-fg transition-transform duration-200 origin-center ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block w-5 h-[2px] bg-fg transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block w-5 h-[2px] bg-fg transition-transform duration-200 origin-center ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu dropdown */}
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-border bg-[rgba(8,8,7,0.95)] backdrop-blur-md">
-          <ul className="max-w-[1024px] mx-auto px-4 py-4 flex flex-col gap-0 list-none m-0">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="block font-mono text-[13px] font-normal text-text-2 no-underline tracking-[0.04em] lowercase py-3 border-b border-border last:border-0 transition-colors duration-150 hover:text-text-1"
-                >
-                  <span className="text-accent mr-2">{"// "}</span>
-                  {link.label}
-                </a>
-              </li>
-            ))}
+        <div id="mobile-menu" className="md:hidden border-t border-border bg-bg">
+          <ul className="max-w-[1136px] mx-auto px-4 py-2 flex flex-col list-none m-0">
+            {NAV_LINKS.map((link) => {
+              const active = isActiveLink(pathname, link.href);
+              return (
+                <li key={link.href} className="border-b border-border last:border-0">
+                  <a
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className="block py-3.5 font-sans text-[20px] font-semibold tracking-[-0.02em] text-fg no-underline"
+                  >
+                    <span className={active ? "border-b-2 border-fg pb-0.5" : ""}>
+                      {link.label}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onSearchOpen?.();
+                }}
+                className="flex items-center gap-2 py-3.5 font-mono text-[14px] text-fg-muted cursor-pointer"
+              >
+                <IconSearch size={15} stroke={1.75} aria-hidden="true" />
+                Search
+              </button>
+            </li>
           </ul>
         </div>
       )}

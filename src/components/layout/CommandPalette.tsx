@@ -1,5 +1,6 @@
 "use client";
 
+import { IconSearch } from "@tabler/icons-react";
 import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -153,47 +154,52 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
         tabIndex={-1}
         aria-label="Close search"
         onClick={onClose}
-        className="absolute inset-0 bg-[rgba(8,8,7,0.80)] backdrop-blur-sm cursor-default"
+        className="absolute inset-0 bg-fg/40 backdrop-blur-sm cursor-default"
       />
 
       {/* Palette */}
-      <div className="relative w-full max-w-[600px] border border-border rounded-sm overflow-hidden shadow-2xl">
-        <Command className="bg-bg-card font-mono" loop>
+      <div className="relative w-full max-w-[600px] border border-fg overflow-hidden shadow-2xl">
+        <Command className="bg-surface font-sans" loop>
           {/* Input */}
           <div className="flex items-center gap-3 px-4 border-b border-border">
-            <span className="text-accent text-[13px] shrink-0">❯</span>
+            <IconSearch
+              size={16}
+              stroke={1.75}
+              className="text-fg-subtle shrink-0"
+              aria-hidden="true"
+            />
             <Command.Input
               ref={inputRef}
-              placeholder="search..."
+              placeholder="Search posts, talks, projects..."
               value={inputValue}
               onValueChange={setInputValue}
-              className="flex-1 bg-transparent py-3.5 text-[13px] text-text-1 placeholder:text-text-3 outline-none"
+              className="flex-1 bg-transparent py-3.5 text-[16px] text-fg placeholder:text-fg-subtle outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Escape") onClose();
               }}
             />
-            <kbd className="text-[10px] text-text-3 border border-border rounded px-1.5 py-0.5 shrink-0">
+            <kbd className="font-mono text-[11px] text-fg-subtle border border-border px-1.5 py-0.5 shrink-0">
               esc
             </kbd>
           </div>
 
           {/* Results */}
           <Command.List className="max-h-[360px] overflow-y-auto py-2">
-            <Command.Empty className="px-4 py-8 text-[12px] text-text-3 text-center">
+            <Command.Empty className="px-4 py-8 text-[12px] text-fg-subtle text-center">
               No results for this query.
             </Command.Empty>
 
             {activeEasterEgg && (
               <Command.Group
-                heading="// system"
-                className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:text-accent [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:font-mono"
+                heading="System"
+                className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:text-fg [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:font-mono"
               >
                 <Command.Item
                   value={`__easter_egg__${inputValue}`}
                   onSelect={() => handleEasterEggSelect(activeEasterEgg)}
-                  className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[13px] text-text-2 data-[selected=true]:bg-bg-hover data-[selected=true]:text-text-1 transition-colors duration-75 group"
+                  className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[15px] text-fg-muted data-[selected=true]:bg-surface-inline data-[selected=true]:text-fg transition-colors duration-75 group"
                 >
-                  <span className="text-accent text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
+                  <span className="text-fg text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
                     →
                   </span>
                   <span className="flex-1 font-mono">{activeEasterEgg.output}</span>
@@ -208,21 +214,23 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
                 <Command.Group
                   key={type}
                   heading={TYPE_LABELS[type]}
-                  className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:text-text-3 [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:uppercase"
+                  className="[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:text-fg-subtle [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:font-mono"
                 >
                   {group.map((item) => (
                     <Command.Item
                       key={item.id}
                       value={`${item.title} ${item.description} ${item.meta ?? ""}`}
                       onSelect={() => navigate(item.href)}
-                      className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[13px] text-text-2 data-[selected=true]:bg-bg-hover data-[selected=true]:text-text-1 transition-colors duration-75 group"
+                      className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-[15px] text-fg-muted data-[selected=true]:bg-surface-inline data-[selected=true]:text-fg transition-colors duration-75 group"
                     >
-                      <span className="text-accent text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
+                      <span className="text-fg text-[10px] opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-75">
                         →
                       </span>
                       <span className="flex-1 truncate">{item.title}</span>
                       {item.meta && (
-                        <span className="text-[10px] text-text-3 shrink-0">{item.meta}</span>
+                        <span className="font-mono text-[12px] text-fg-subtle shrink-0">
+                          {item.meta}
+                        </span>
                       )}
                     </Command.Item>
                   ))}
@@ -233,16 +241,16 @@ export function CommandPalette({ open, onClose, items }: CommandPaletteProps) {
 
           {/* Footer */}
           <div className="border-t border-border px-4 py-2 flex items-center gap-4">
-            <span className="text-[10px] text-text-3">
-              <kbd className="border border-border rounded px-1 py-0.5 mr-1">↑↓</kbd>
+            <span className="font-mono text-[11px] text-fg-subtle">
+              <kbd className="border border-border px-1 py-0.5 mr-1">↑↓</kbd>
               navigate
             </span>
-            <span className="text-[10px] text-text-3">
-              <kbd className="border border-border rounded px-1 py-0.5 mr-1">↵</kbd>
+            <span className="font-mono text-[11px] text-fg-subtle">
+              <kbd className="border border-border px-1 py-0.5 mr-1">↵</kbd>
               open
             </span>
-            <span className="text-[10px] text-text-3">
-              <kbd className="border border-border rounded px-1 py-0.5 mr-1">esc</kbd>
+            <span className="font-mono text-[11px] text-fg-subtle">
+              <kbd className="border border-border px-1 py-0.5 mr-1">esc</kbd>
               close
             </span>
           </div>
