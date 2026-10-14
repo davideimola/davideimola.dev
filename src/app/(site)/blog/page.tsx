@@ -4,7 +4,7 @@ import { BlogList, type StartHerePick } from "../../../components/sections/BlogL
 import { ButtonLink } from "../../../components/ui/Button";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
-import { categoryCounts, START_HERE, topTags } from "../../../lib/blog-index";
+import { START_HERE, topicCounts } from "../../../lib/blog-index";
 import { getAllPosts } from "../../../lib/content";
 
 export const metadata: Metadata = {
@@ -74,12 +74,7 @@ export default function BlogPage() {
           </p>
         }
       >
-        <BlogList
-          posts={posts}
-          tags={topTags(posts)}
-          categories={categoryCounts(posts)}
-          startHere={startHere}
-        />
+        <BlogList posts={posts} topics={topicCounts(posts)} startHere={startHere} />
       </Suspense>
     </div>
   );

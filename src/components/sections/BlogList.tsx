@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { archiveByYear, type Count, tagSlug } from "../../lib/blog-index";
+import { archiveByYear, type TopicCount, tagSlug } from "../../lib/blog-index";
 import type { BlogPost } from "../../lib/content";
 import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
+import { topicOf } from "../../lib/topics";
 import { PostCover } from "../ui/PostCover";
 import { Tape } from "../ui/Tape";
 
@@ -15,8 +16,7 @@ export interface StartHerePick {
 
 interface BlogListProps {
   posts: BlogPost[];
-  tags: Count[];
-  categories: Count[];
+  topics: TopicCount[];
   startHere: StartHerePick[];
 }
 
@@ -32,78 +32,79 @@ function minutes(readingTime: string): string {
   return readingTime.replace(" read", "");
 }
 
-// /blog below its header: the topic and category filters, then (unfiltered)
-// the latest post as a feature and the START HERE picks, then the archive by
-// year. Filters live in the URL (?tag=, ?category=) so they can be shared.
-export function BlogList({ posts, tags, categories, startHere }: BlogListProps) {
+// /blog below its header: one filter row (the three editorial topics, the
+// same ones as the home "By topic" block), then (unfiltered) the latest post
+// as a feature and the START HERE picks, then the archive by year. Filters
+// live in the URL so they can be shared: ?topic= from the row, ?tag= from the
+// tags on a post page, and ?category= still honoured for old links. A tag or
+// a category gets a line of its own instead of a second row of controls.
+export function BlogList({ posts, topics, startHere }: BlogListProps) {
   const searchParams = useSearchParams();
-  const activeTag = searchParams.get("tag") ?? undefined;
-  const activeCategory = searchParams.get("category") ?? undefined;
-  const hasFilter = !!(activeTag || activeCategory);
+  const activeTopic = searchParams.get("topic") ?? undefined;
+  const activeTag = searchParams.get("tag")?.toLowerCase();
+  const activeCategory = searchParams.get("category")?.toLowerCase();
+  const hasFilter = !!(activeTopic || activeTag || activeCategory);
 
   const filtered = posts.filter((p) => {
-    if (activeTag) return p.tags.some((t) => tagSlug(t) === activeTag.toLowerCase());
-    if (activeCategory) return p.category.toLowerCase() === activeCategory.toLowerCase();
+    if (activeTopic) return topicOf(p) === activeTopic;
+    if (activeTag) return p.tags.some((t) => tagSlug(t) === activeTag);
+    if (activeCategory) return p.category.toLowerCase() === activeCategory;
     return true;
   });
 
   const [featured] = posts;
   const groups = archiveByYear(filtered);
 
-  const categoryLink = (label: string, count: number, href: string, active: boolean) => (
+  // What a tag or category filter says about itself, since neither has a
+  // control in the row.
+  const narrowedBy = activeTag
+    ? `Posts tagged #${activeTag.replace(/\s+/g, "")}`
+    : activeCategory
+      ? `${activeCategory[0].toUpperCase()}${activeCategory.slice(1)} posts`
+      : null;
+
+  const topicLink = (label: string, count: number, href: string, active: boolean) => (
     <Link
       key={label}
       href={href}
       scroll={false}
       aria-current={active ? "true" : undefined}
-      className={`no-underline pb-0.5 border-b-2 transition-colors duration-150 ${
+      className={`no-underline pb-1 border-b-2 whitespace-nowrap transition-colors duration-150 ${
         active
           ? "font-semibold text-fg border-fg"
           : "text-fg-muted border-transparent hover:text-accent"
       }`}
     >
-      {label} {count}
+      {label} <span className="font-mono text-[13px] font-normal text-fg-subtle">{count}</span>
     </Link>
   );
 
   return (
     <>
-      {/* Filters */}
-      <div className="mt-8 md:mt-10 py-[18px] border-t border-rule border-b border-b-border flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-4 lg:gap-8">
-        <div className="flex flex-wrap items-baseline gap-x-[22px] gap-y-2">
-          <span className="font-mono text-[13px] text-fg-subtle mr-1.5">Topics</span>
-          {tags.map((tag) => {
-            const active = activeTag === tagSlug(tag.label);
-            return (
-              <Link
-                key={tag.label}
-                href={active ? "/blog" : `/blog?tag=${encodeURIComponent(tagSlug(tag.label))}`}
-                scroll={false}
-                aria-current={active ? "true" : undefined}
-                className={`font-sans font-semibold text-[16px] no-underline transition-colors duration-150 hover:text-accent ${
-                  active ? "text-fg border-b-2 border-fg" : "text-fg"
-                }`}
-              >
-                {tag.label}{" "}
-                <span className="font-mono text-[12px] font-normal text-fg-subtle">
-                  {tag.count}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-        <div className="flex flex-wrap lg:flex-nowrap gap-[18px] font-sans text-[15px] whitespace-nowrap lg:shrink-0">
-          {categoryLink(`All`, posts.length, "/blog", !hasFilter)}
-          {categories.map((c) =>
-            categoryLink(
-              c.label,
-              c.count,
-              `/blog?category=${encodeURIComponent(c.label)}`,
-              activeCategory?.toLowerCase() === c.label.toLowerCase()
-            )
-          )}
-        </div>
-      </div>
+      {/* The one filter row */}
+      <nav
+        aria-label="Filter by topic"
+        className="mt-8 md:mt-10 pt-[18px] border-t border-rule flex flex-wrap gap-x-7 gap-y-3 font-sans text-[16px] md:text-[17px]"
+      >
+        {topicLink("All", posts.length, "/blog", !activeTopic && !narrowedBy)}
+        {topics.map((t) =>
+          topicLink(t.label, t.count, `/blog?topic=${t.slug}`, activeTopic === t.slug)
+        )}
+      </nav>
+
+      {narrowedBy && (
+        <p className="mt-6 mb-0 flex flex-wrap items-baseline gap-x-4 gap-y-1 font-sans text-[17px] text-fg">
+          <span className="font-semibold">{narrowedBy}</span>
+          <span className="font-mono text-[13px] text-fg-subtle">{filtered.length}</span>
+          <Link
+            href="/blog"
+            scroll={false}
+            className="text-[15px] text-fg-muted border-b border-fg-subtle no-underline hover:text-accent hover:border-accent"
+          >
+            Show all
+          </Link>
+        </p>
+      )}
 
       {!hasFilter && featured && (
         <>

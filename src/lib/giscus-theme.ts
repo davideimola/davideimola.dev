@@ -1,23 +1,49 @@
-/*
- * Giscus theme for davideimola.dev, light (paper).
- * The dark theme (giscus-theme-dark.css) imports this file and swaps the
- * --di-* values, so the rules live once. Values mirror the brand tokens
- * (github.com/davideimola/brand): giscus renders in its own iframe and cannot
- * read the site's CSS variables.
- */
-:root {
-  --di-bg: #f7f5f0;
-  --di-surface: #ffffff;
-  --di-surface-inline: #edeae3;
-  --di-border: #dedcd5;
-  --di-fg: #1c2233;
-  --di-fg-body: #2a3042;
-  --di-fg-muted: #3b4152;
-  --di-fg-subtle: #5b6070;
-  --di-accent: #c91f37;
-  --di-code-string: #2f5d3a;
+// The giscus theme, built from the brand tokens. Giscus renders in its own
+// iframe on giscus.app, so it cannot read the site's CSS variables or fonts:
+// the theme is a stylesheet the widget fetches by URL, served by the
+// /giscus-theme.css and /giscus-theme-dark.css routes. Building it here from
+// tokens.json means it never drifts from the brand the way a copied file did.
+import tokens from "@davideimola/brand/tokens.json";
 
-  --color-canvas-default: var(--di-surface);
+type Mode = "light" | "dark";
+
+// Iframes do not inherit the page's fonts, so the theme loads its own.
+const FONTS =
+  "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;600;700&display=swap";
+
+const TOKENS = [
+  "bg",
+  "surface",
+  "surface-inline",
+  "border",
+  "rule",
+  "fg",
+  "fg-body",
+  "fg-muted",
+  "fg-subtle",
+  "accent",
+  "code-string",
+] as const;
+
+export function giscusThemeCss(mode: Mode): string {
+  const palette = tokens.color[mode] as Record<string, string>;
+  const values = TOKENS.map((name) => `  --di-${name}: ${palette[name]};`).join("\n");
+  return `@import url("${FONTS}");
+
+:root {
+${values}
+
+${VARIABLES}
+}
+
+${RULES}
+`;
+}
+
+// GitHub's Primer variables mapped onto the brand. The rules below carry
+// !important on fonts because giscus links its own stylesheet after this one,
+// and at equal specificity the later file wins.
+const VARIABLES = `  --color-canvas-default: var(--di-surface);
   --color-canvas-subtle: var(--di-bg);
   --color-canvas-inset: var(--di-bg);
   --color-canvas-overlay: var(--di-surface);
@@ -112,11 +138,10 @@
   --color-prettylights-syntax-invalid-illegal-bg: var(--di-accent);
   --color-prettylights-syntax-carriage-return-text: var(--di-bg);
   --color-prettylights-syntax-carriage-return-bg: var(--di-fg);
-  --color-prettylights-syntax-markup-list: var(--di-fg);
-}
+  --color-prettylights-syntax-markup-list: var(--di-fg);`;
 
-body {
-  font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+const RULES = `body {
+  font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif !important;
   font-size: 15px;
   line-height: 1.6;
   color: var(--di-fg-body);
@@ -127,10 +152,9 @@ body {
 .gsc-comment-author,
 .gsc-left-header,
 .gsc-right-header,
-.gsc-reactions-count,
 .gsc-reply-count,
 .gsc-timeline-item time {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-family: "IBM Plex Mono", ui-monospace, monospace !important;
   font-size: 13px;
 }
 
@@ -167,7 +191,7 @@ body {
   background-color: var(--di-surface-inline);
   border-radius: 3px;
   padding: 0.1em 0.35em;
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-family: "IBM Plex Mono", ui-monospace, monospace !important;
   font-size: 13px;
 }
 
@@ -194,10 +218,29 @@ body {
   color: var(--di-fg) !important;
 }
 
+/* One frame: a hairline around the box, ink only on the field itself */
 .gsc-comment-box {
-  border-color: var(--di-fg) !important;
+  border-color: var(--di-border) !important;
   border-radius: 0 !important;
   background-color: var(--di-surface) !important;
+}
+
+.gsc-comment-box-textarea-extras {
+  border-top: 1px solid var(--di-border) !important;
+}
+
+/* Reactions and counts sit on the left, like everything else on the page */
+.gsc-reactions {
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.gsc-reactions-count,
+.gsc-comments-count {
+  font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  color: var(--di-fg) !important;
 }
 
 .gsc-comment-box-tabs {
@@ -213,7 +256,7 @@ body {
 .gsc-comment-box-textarea {
   background-color: var(--di-surface) !important;
   color: var(--di-fg) !important;
-  font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif !important;
   font-size: 15px;
 }
 
@@ -230,4 +273,4 @@ body {
 
 .gsc-reply-count:hover {
   color: var(--di-accent) !important;
-}
+}`;

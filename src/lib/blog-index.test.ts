@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { archiveByYear, categoryCounts, topTags } from "./blog-index";
+import { archiveByYear, topicCounts } from "./blog-index";
 
 const p = (slug: string, date: string, tags: string[] = [], category = "Technical") => ({
   slug,
@@ -8,26 +8,16 @@ const p = (slug: string, date: string, tags: string[] = [], category = "Technica
   category,
 });
 
-describe("topTags", () => {
-  it("counts tags, most used first, ties alphabetical, capped", () => {
-    const posts = [p("a", "2026-01-01", ["Go", "AI"]), p("b", "2025-01-01", ["AI", "Git"])];
-    expect(topTags(posts, 2)).toEqual([
-      { label: "AI", count: 2 },
-      { label: "Git", count: 1 },
-    ]);
-  });
-});
-
-describe("categoryCounts", () => {
-  it("counts each category", () => {
+describe("topicCounts", () => {
+  it("counts the posts in each topic, in the fixed order, empty topics left out", () => {
     const posts = [
-      p("a", "2026-01-01"),
-      p("b", "2026-01-01", [], "Personal"),
-      p("c", "2026-01-01"),
+      { topic: "engineering", category: "Technical", tags: ["Go"] },
+      { topic: "ai-security", category: "Technical", tags: ["AI"] },
+      { category: "Technical", tags: ["Security"] },
     ];
-    expect(categoryCounts(posts)).toEqual([
-      { label: "Technical", count: 2 },
-      { label: "Personal", count: 1 },
+    expect(topicCounts(posts)).toEqual([
+      { slug: "ai-security", label: "AI and security", count: 2 },
+      { slug: "engineering", label: "Engineering and Go", count: 1 },
     ]);
   });
 });

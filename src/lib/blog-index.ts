@@ -1,34 +1,27 @@
-// The shape of /blog, derived from the posts: the tag list with counts, the
-// category counts, the archive grouped by year, and the START HERE picks.
+// The shape of /blog, derived from the posts: the topic counts, the archive
+// grouped by year, and the START HERE picks.
 // Import-free apart from types, so the client list can use it.
 import type { BlogPost } from "./content";
+import { TOPICS, type TopicSlug, topicOf } from "./topics";
 
 type PostLike = Pick<BlogPost, "slug" | "tags" | "category" | "date">;
 
-export interface Count {
+export interface TopicCount {
+  slug: TopicSlug;
   label: string;
   count: number;
 }
 
-/** The most used tags, most used first, ties alphabetical. */
-export function topTags(posts: Pick<BlogPost, "tags">[], limit = 8): Count[] {
-  const counts = new Map<string, number>();
-  for (const post of posts) {
-    for (const tag of post.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .map(([label, count]) => ({ label, count }))
-    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
-    .slice(0, limit);
-}
-
-/** Every category with its count, biggest first. */
-export function categoryCounts(posts: Pick<BlogPost, "category">[]): Count[] {
-  const counts = new Map<string, number>();
-  for (const post of posts) counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
-  return [...counts.entries()]
-    .map(([label, count]) => ({ label, count }))
-    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+/**
+ * The three editorial topics with how many posts each holds, in the fixed
+ * order the home "By topic" block uses. The one filter row on /blog.
+ */
+export function topicCounts(posts: Pick<BlogPost, "topic" | "category" | "tags">[]): TopicCount[] {
+  return TOPICS.map(({ slug, label }) => ({
+    slug,
+    label,
+    count: posts.filter((post) => topicOf(post) === slug).length,
+  })).filter((topic) => topic.count > 0);
 }
 
 export interface YearGroup<T> {

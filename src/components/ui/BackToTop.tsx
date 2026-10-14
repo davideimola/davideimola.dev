@@ -1,7 +1,11 @@
 "use client";
 
+import { IconArrowUp } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
+// The floating way back up on long pages: a 44px square framed in ink, the
+// same shape as the NavBar's mobile menu button, filling with ink on hover
+// like a ghost Button. An icon, not a mono "top" label.
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
 
@@ -25,9 +29,9 @@ export function BackToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-8 right-6 z-50 font-mono text-[13px] text-fg border border-border bg-surface hover:border-fg hover:text-accent px-3 py-2 transition-colors duration-150 cursor-pointer"
+      className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-50 flex items-center justify-center w-11 h-11 border border-fg bg-bg text-fg hover:bg-fg hover:text-bg transition-colors duration-150 cursor-pointer"
     >
-      ↑ top
+      <IconArrowUp size={20} stroke={1.75} aria-hidden="true" />
     </button>
   );
 }

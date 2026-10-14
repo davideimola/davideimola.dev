@@ -28,8 +28,14 @@ export function TopicsSection({ groups }: TopicsSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
           {groups.map((group) => (
             <div key={group.slug} className="flex flex-col">
-              <h3 className="m-0 mb-2 font-sans font-bold text-[18px] md:text-[20px] tracking-[-0.02em] text-fg">
-                {group.label}
+              {/* The column heading opens /blog on the same topic. */}
+              <h3 className="m-0 mb-2 font-sans font-bold text-[18px] md:text-[20px] tracking-[-0.02em]">
+                <a
+                  href={`/blog?topic=${group.slug}`}
+                  className="text-fg no-underline hover:text-accent transition-colors duration-150"
+                >
+                  {group.label}
+                </a>
               </h3>
               {group.posts.map((post) => (
                 <a
