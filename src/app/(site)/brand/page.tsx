@@ -1,5 +1,6 @@
+import tokens from "@davideimola/brand/tokens.json";
 import type { Metadata } from "next";
-import Image from "next/image";
+import type { ReactNode } from "react";
 import { PageHero } from "../../../components/ui/PageHero";
 import { ScrollReveal } from "../../../components/ui/ScrollReveal";
 import { SectionHeader } from "../../../components/ui/SectionHeader";
@@ -7,17 +8,20 @@ import { SectionHeader } from "../../../components/ui/SectionHeader";
 export const metadata: Metadata = {
   title: "Brand",
   description:
-    "Logo, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
+    "Mark, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
   openGraph: {
     title: "Brand · Davide Imola",
     description:
-      "Logo, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
+      "Mark, wordmark, and brand assets for Davide Imola, free to use as-is in conference programs, event pages, and articles.",
     url: "https://davideimola.dev/brand",
     images: [
       { url: "https://davideimola.dev/og?title=Brand&category=assets", width: 1200, height: 630 },
     ],
   },
 };
+
+const BRAND_REPO = "https://github.com/davideimola/brand";
+const palette = tokens.color.palette;
 
 interface Download {
   label: string;
@@ -32,7 +36,7 @@ function DownloadRow({ downloads }: { downloads: Download[] }) {
           key={d.href}
           href={d.href}
           download
-          className="font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
+          className="font-mono text-[13px] text-fg-muted no-underline hover:text-accent transition-colors duration-150"
         >
           ↓ {d.label}
         </a>
@@ -41,216 +45,257 @@ function DownloadRow({ downloads }: { downloads: Download[] }) {
   );
 }
 
+// The assets are shown on the ground they were drawn for, whatever the site's
+// theme: a paper tile for the default files, a night tile for the -dark ones.
+function AssetTile({
+  ground,
+  caption,
+  downloads,
+  children,
+}: {
+  ground: "paper" | "night";
+  caption: string;
+  downloads: Download[];
+  children: ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div
+        className={`border border-border h-[180px] flex items-center justify-center px-8 ${
+          ground === "paper" ? "bg-[var(--di-color-paper)]" : "bg-[var(--di-color-night)]"
+        }`}
+      >
+        {children}
+      </div>
+      <p className="font-sans text-[15px] text-fg-muted m-0">{caption}</p>
+      <DownloadRow downloads={downloads} />
+    </div>
+  );
+}
+
+const COLORS = [
+  { name: "Paper", hex: palette.paper, note: "the ground" },
+  { name: "Ink", hex: palette.ink, note: "titles, tape, rules" },
+  { name: "Akane", hex: palette.akane, note: "the knot and the marker" },
+  { name: "Night", hex: palette.night, note: "the dark ground" },
+  { name: "Chalk", hex: palette.chalk, note: "ink on night" },
+  { name: "Akane night", hex: palette["akane-night"], note: "the knot on night" },
+];
+
+const TYPE = [
+  {
+    role: "Sans",
+    family: "Schibsted Grotesk",
+    use: "Titles and all running text",
+    className: "font-sans font-bold",
+  },
+  {
+    role: "Mono",
+    family: "IBM Plex Mono",
+    use: "Code, metadata, dates, small labels",
+    className: "font-mono",
+  },
+  {
+    role: "Label",
+    family: "Barlow Condensed",
+    use: "Tape labels only, bold, uppercase",
+    className: "font-label font-bold uppercase tracking-[0.12em]",
+  },
+];
+
+const RULES = [
+  "Use the assets as-is to refer to me: conference programs, event pages, talk announcements, articles.",
+  "The knot is always red. Only the mono files drop it, and only where colour is impossible.",
+  "Never put the mark behind a photo or behind text, and never redraw or crop the lockups.",
+  "Switch cut instead of shrinking: S below 40px, M from 40 to 95px, L from 96px. Minimum 16px.",
+  "The wordmark is never typeset in a font. Use the SVG.",
+];
+
 export default function BrandPage() {
   return (
     <div className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-12 md:pt-16 pb-20">
       <PageHero
         label="Brand"
         title="Brand"
-        description="The mark is the end state of this site's hero: the name has just been typed, the red cursor is still there. Use these assets as-is to refer to me in conference programs, event pages, articles."
-      />
+        description={
+          <>
+            A <span className="font-semibold text-fg">d</span> and an{" "}
+            <span className="font-semibold text-fg">i</span> drawn as a git graph: the bowl is a
+            commit, the stem a branch that merges into the i, tied with a red knot, the knot of a
+            martial arts belt. Use these assets as-is to refer to me in conference programs, event
+            pages and articles.
+          </>
+        }
+      >
+        <p className="font-mono text-meta text-fg-subtle mt-5">
+          Source of truth:{" "}
+          <a
+            href={BRAND_REPO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-fg-muted hover:text-accent transition-colors duration-150"
+          >
+            github.com/davideimola/brand
+          </a>
+        </p>
+      </PageHero>
 
       {/* Mark */}
-      <section className="mb-16">
+      <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Mark" />
-          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
-            The primary mark: <span className="font-mono text-fg">di</span> plus the cursor. For
-            avatars, favicons, and stickers. Minimum size 16&nbsp;px.
-          </p>
+          <SectionHeader title="Mark" tilt={1} className="mb-8" />
         </ScrollReveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ScrollReveal>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border overflow-hidden w-[160px]">
-                <Image
-                  src="/brand/mark.svg"
-                  alt="Davide Imola mark, dark"
-                  width={160}
-                  height={160}
-                  unoptimized
-                />
-              </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/mark.svg" },
-                  { label: "PNG 512", href: "/brand/mark-512.png" },
-                  { label: "PNG 1024", href: "/brand/mark-1024.png" },
-                ]}
-              />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <AssetTile
+            ground="paper"
+            caption="Large cut, for 96px and up."
+            downloads={[
+              { label: "SVG", href: "/brand/mark-l.svg" },
+              { label: "PNG 1024", href: "/brand/mark-l-1024.png" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img src="/brand/mark-l.svg" alt="The mark, large cut" width={128} height={128} />
+          </AssetTile>
+          <AssetTile
+            ground="night"
+            caption="On night: chalk strokes, the knot lifted."
+            downloads={[
+              { label: "SVG", href: "/brand/mark-l-dark.svg" },
+              { label: "PNG 1024", href: "/brand/mark-l-dark-1024.png" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img
+              src="/brand/mark-l-dark.svg"
+              alt="The mark on a dark ground"
+              width={128}
+              height={128}
+            />
+          </AssetTile>
+          <AssetTile
+            ground="paper"
+            caption="Three cuts of one drawing: L, M, S."
+            downloads={[
+              { label: "M SVG", href: "/brand/mark-m.svg" },
+              { label: "S SVG", href: "/brand/mark-s.svg" },
+              { label: "Mono SVG", href: "/brand/mark-l-mono.svg" },
+            ]}
+          >
+            <div className="flex items-end gap-6">
+              {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+              <img src="/brand/mark-l.svg" alt="Large cut" width={96} height={96} />
+              {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+              <img src="/brand/mark-m.svg" alt="Medium cut" width={56} height={56} />
+              {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+              <img src="/brand/mark-s.svg" alt="Small cut" width={28} height={28} />
             </div>
-          </ScrollReveal>
-          <ScrollReveal delay={60}>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border overflow-hidden w-[160px]">
-                <Image
-                  src="/brand/mark-light.svg"
-                  alt="Davide Imola mark, light"
-                  width={160}
-                  height={160}
-                  unoptimized
-                />
-              </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/mark-light.svg" },
-                  { label: "PNG 512", href: "/brand/mark-light-512.png" },
-                  { label: "PNG 1024", href: "/brand/mark-light-1024.png" },
-                ]}
-              />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={120}>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border w-[160px] h-[160px] flex items-center justify-center text-fg-muted">
-                {/* mark-mono.svg inherits currentColor — shown here in text-2 */}
-                <Image
-                  src="/brand/mark-mono.svg"
-                  alt="Davide Imola mark, single color"
-                  width={120}
-                  height={120}
-                  unoptimized
-                />
-              </div>
-              <DownloadRow
-                downloads={[{ label: "SVG (currentColor)", href: "/brand/mark-mono.svg" }]}
-              />
-            </div>
-          </ScrollReveal>
+          </AssetTile>
         </div>
       </section>
 
-      {/* Wordmark */}
+      {/* Wordmark and lockups */}
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Wordmark" />
-          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
-            For horizontal contexts: slide headers, covers, signatures. Minimum width ~120&nbsp;px.
-          </p>
+          <SectionHeader title="Wordmark" tilt={2} className="mb-8" />
         </ScrollReveal>
-        <div className="flex flex-col gap-6">
-          <ScrollReveal>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border bg-bg px-8 py-7">
-                <Image
-                  src="/brand/wordmark.svg"
-                  alt="davide imola wordmark, light ink"
-                  width={376}
-                  height={48}
-                  unoptimized
-                  className="w-full max-w-[376px] h-auto"
-                />
-              </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/wordmark.svg" },
-                  { label: "PNG 1200", href: "/brand/wordmark-1200.png" },
-                ]}
-              />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={60}>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border bg-[#F0EDE9] px-8 py-7">
-                <Image
-                  src="/brand/wordmark-dark.svg"
-                  alt="davide imola wordmark, dark ink"
-                  width={376}
-                  height={48}
-                  unoptimized
-                  className="w-full max-w-[376px] h-auto"
-                />
-              </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/wordmark-dark.svg" },
-                  { label: "PNG 1200", href: "/brand/wordmark-dark-1200.png" },
-                ]}
-              />
-            </div>
-          </ScrollReveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <AssetTile
+            ground="paper"
+            caption="The lockup: large mark plus the regular wordmark."
+            downloads={[
+              { label: "SVG", href: "/brand/lockup.svg" },
+              { label: "PNG 1200", href: "/brand/lockup-1200.png" },
+              { label: "Small SVG", href: "/brand/lockup-small.svg" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img src="/brand/lockup.svg" alt="The lockup" className="w-full max-w-[360px] h-auto" />
+          </AssetTile>
+          <AssetTile
+            ground="night"
+            caption="The lockup on night."
+            downloads={[
+              { label: "SVG", href: "/brand/lockup-dark.svg" },
+              { label: "PNG 1200", href: "/brand/lockup-dark-1200.png" },
+              { label: "Small SVG", href: "/brand/lockup-small-dark.svg" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img
+              src="/brand/lockup-dark.svg"
+              alt="The lockup on a dark ground"
+              className="w-full max-w-[360px] h-auto"
+            />
+          </AssetTile>
+          <AssetTile
+            ground="paper"
+            caption="Wordmark, regular (300px wide and up) and bold (small sizes)."
+            downloads={[
+              { label: "Regular SVG", href: "/brand/wordmark.svg" },
+              { label: "Bold SVG", href: "/brand/wordmark-bold.svg" },
+              { label: "Mono SVG", href: "/brand/wordmark-mono.svg" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img
+              src="/brand/wordmark.svg"
+              alt="The wordmark"
+              className="w-full max-w-[320px] h-auto"
+            />
+          </AssetTile>
+          <AssetTile
+            ground="paper"
+            caption="Avatar, for profiles and speaker pages."
+            downloads={[
+              { label: "SVG", href: "/brand/avatar.svg" },
+              { label: "PNG 512", href: "/brand/avatar-512.png" },
+              { label: "PNG 1024", href: "/brand/avatar-1024.png" },
+            ]}
+          >
+            {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+            <img src="/brand/avatar.svg" alt="The avatar" width={128} height={128} />
+          </AssetTile>
         </div>
       </section>
 
-      {/* Domain lockup */}
+      {/* Colours */}
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Domain lockup" />
-          <p className="font-sans text-[14px] text-fg-muted -mt-6 mb-8">
-            The URL as a mark, for contexts where the address itself is the signature.{" "}
-            <span className="font-mono text-fg-muted">
-              davideimola<span className="text-fg">.dev</span>
-            </span>
-            , only the <span className="font-mono text-fg">.dev</span> is red.
+          <SectionHeader title="Colour" tilt={0} className="mb-8" />
+          <p className="font-sans text-[16px] text-fg-muted max-w-[42rem] -mt-2 mb-8">
+            Two inks on a light ground, plus a night theme. Red belongs to the knot and the marker,
+            nothing else.
           </p>
         </ScrollReveal>
-        <div className="flex flex-col gap-6">
-          <ScrollReveal>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border bg-bg px-8 py-7">
-                <Image
-                  src="/brand/domain.svg"
-                  alt="davideimola.dev domain lockup, light ink"
-                  width={454}
-                  height={48}
-                  unoptimized
-                  className="w-full max-w-[454px] h-auto"
-                />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {COLORS.map((c) => (
+            <div key={c.name} className="border border-border bg-surface">
+              <div className="h-16 border-b border-border" style={{ background: c.hex }} />
+              <div className="px-3 py-2.5 flex flex-col gap-0.5">
+                <span className="font-mono text-[13px] text-fg">{c.hex}</span>
+                <span className="font-sans text-[13px] text-fg-subtle">
+                  {c.name}, {c.note}
+                </span>
               </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/domain.svg" },
-                  { label: "PNG 1200", href: "/brand/domain-1200.png" },
-                ]}
-              />
             </div>
-          </ScrollReveal>
-          <ScrollReveal delay={60}>
-            <div className="flex flex-col gap-3">
-              <div className="border border-border bg-[#F0EDE9] px-8 py-7">
-                <Image
-                  src="/brand/domain-dark.svg"
-                  alt="davideimola.dev domain lockup, dark ink"
-                  width={454}
-                  height={48}
-                  unoptimized
-                  className="w-full max-w-[454px] h-auto"
-                />
-              </div>
-              <DownloadRow
-                downloads={[
-                  { label: "SVG", href: "/brand/domain-dark.svg" },
-                  { label: "PNG 1200", href: "/brand/domain-dark-1200.png" },
-                ]}
-              />
-            </div>
-          </ScrollReveal>
+          ))}
         </div>
       </section>
 
-      {/* Colors */}
+      {/* Type */}
       <section className="mb-16 border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Colors" />
+          <SectionHeader title="Type" tilt={1} className="mb-8" />
         </ScrollReveal>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {[
-            { name: "Akane Red", hex: "#C91F37", note: "the cursor, always" },
-            { name: "Background", hex: "#080807", note: "dark surfaces" },
-            { name: "Ink on dark", hex: "#EAE5DF", note: "glyphs, dark surfaces" },
-            { name: "Ink on light", hex: "#1A1816", note: "glyphs, light surfaces" },
-          ].map((c, i) => (
-            <ScrollReveal key={c.hex} delay={i * 40}>
-              <div className="border border-border overflow-hidden">
-                <div className="h-16" style={{ background: c.hex }} />
-                <div className="px-3 py-2.5 flex flex-col gap-0.5">
-                  <span className="font-mono text-[12px] text-fg">{c.hex}</span>
-                  <span className="font-mono text-[10px] text-fg-subtle tracking-[0.04em]">
-                    {c.name} · {c.note}
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {TYPE.map((t) => (
+            <div key={t.role} className="border-t border-fg pt-4 flex flex-col gap-2">
+              <span className={`text-[28px] text-fg leading-tight ${t.className}`}>{t.family}</span>
+              <span className="font-mono text-meta text-fg-subtle">
+                {t.role} · {t.use}
+              </span>
+            </div>
           ))}
         </div>
       </section>
@@ -258,41 +303,51 @@ export default function BrandPage() {
       {/* Usage + license */}
       <section className="border-t border-border pt-10">
         <ScrollReveal>
-          <SectionHeader title="Usage & license" />
-          <ul className="flex flex-col gap-2 mb-8">
-            {[
-              "Use the assets as-is to refer to me: conference programs, event pages, talk announcements, articles.",
-              "Don't recolor them: the cursor is always Akane Red.",
-              "Don't restyle or remove the cursor, don't change the typeface, don't crop the lockups.",
-              "In animated contexts the cursor may blink (1.1s step-end), respecting prefers-reduced-motion.",
-            ].map((rule) => (
-              <li key={rule} className="font-sans text-[14px] text-fg-muted flex gap-2">
-                <span aria-hidden="true" className="inline-block w-[6px] h-[6px] bg-fg shrink-0" />
+          <SectionHeader title="Usage & license" tilt={2} className="mb-8" />
+          <ul className="flex flex-col gap-2.5 mb-8 list-none m-0 p-0">
+            {RULES.map((rule) => (
+              <li
+                key={rule}
+                className="font-sans text-[16px] text-fg-muted flex items-baseline gap-3"
+              >
+                <span
+                  aria-hidden="true"
+                  className="inline-block w-[6px] h-[6px] bg-fg shrink-0 -translate-y-0.5"
+                />
                 {rule}
               </li>
             ))}
           </ul>
-          <p className="font-sans text-[14px] text-fg-muted">
+          <p className="font-sans text-[16px] text-fg-muted">
             All brand assets are licensed under{" "}
             <a
               href="https://creativecommons.org/licenses/by-nd/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline hover:text-accent transition-colors duration-150"
             >
               CC BY-ND 4.0
             </a>
             {"; see the "}
             <a
               href="/brand/LICENSE.md"
-              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline hover:text-accent transition-colors duration-150"
             >
               full license
             </a>
-            . Need a different format or something not covered here?{" "}
+            . The guidelines live in the{" "}
+            <a
+              href={`${BRAND_REPO}/blob/main/docs/brand.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fg underline hover:text-accent transition-colors duration-150"
+            >
+              brand repo
+            </a>
+            . Need a different format?{" "}
             <a
               href="/contact"
-              className="text-fg underline decoration-border hover:text-accent hover:decoration-accent transition-colors duration-150"
+              className="text-fg underline hover:text-accent transition-colors duration-150"
             >
               Get in touch
             </a>
