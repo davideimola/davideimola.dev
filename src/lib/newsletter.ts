@@ -54,3 +54,14 @@ export function getIssueBySlug(slug: string): NewsletterIssue | null {
 export function getLatestIssue(): NewsletterIssue | null {
   return getAllIssues()[0] ?? null;
 }
+
+/** The subject without its "Issue #N: " prefix, for places that show the number apart. */
+export function issueTitle(subject: string): string {
+  return subject.replace(/^Issue\s*#\d+\s*:\s*/i, "");
+}
+
+/** Issues go out at the start of each month: the next one is next month's. */
+export function nextIssueMonth(today: Date): string {
+  const next = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  return next.toLocaleDateString("en-GB", { month: "long" });
+}

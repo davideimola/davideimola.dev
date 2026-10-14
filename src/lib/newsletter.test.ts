@@ -151,3 +151,17 @@ describe("getLatestIssue", () => {
     expect(getLatestIssue()).toBeNull();
   });
 });
+
+describe("issueTitle and nextIssueMonth", () => {
+  it("strips the issue prefix", async () => {
+    const { issueTitle } = await import("./newsletter");
+    expect(issueTitle("Issue #1: I shipped one tool")).toBe("I shipped one tool");
+    expect(issueTitle("No prefix")).toBe("No prefix");
+  });
+
+  it("names next month, across the year end", async () => {
+    const { nextIssueMonth } = await import("./newsletter");
+    expect(nextIssueMonth(new Date(2026, 9, 14))).toBe("November");
+    expect(nextIssueMonth(new Date(2026, 11, 20))).toBe("January");
+  });
+});
