@@ -49,31 +49,36 @@ const NEXT_BIN = path.join(ROOT, "node_modules", ".bin", "next");
 const math = Math as typeof Math & { sumPrecise?: (values: Iterable<number>) => number };
 math.sumPrecise ??= (values) => [...values].reduce((total, value) => total + value, 0);
 
-// The two brand families, renamed so they cannot be confused with the
+// The three brand families, renamed so they cannot be confused with the
 // identically named @font-face sets next/font emits for the screen. A distinct
 // name is what makes "the PDF used the repo's own TTFs" provable rather than
 // probable: if a face below fails to load, nothing silently falls back to a
 // same-named web font.
-const SANS = "CV IBM Plex Sans";
-const MONO = "CV JetBrains Mono";
+const SANS = "CV Schibsted Grotesk";
+const MONO = "CV IBM Plex Mono";
+const LABEL = "CV Barlow Condensed";
 
-// Exactly the faces /cv renders text with, measured off the page rather than
-// guessed: mono 400 (body labels and the terminal prompt), 500 (section
-// headings), 700 (the name); sans 400 (every prose line). `font-semibold` (600)
-// on the organisation names has no 600 face on screen either, so it resolves to
-// 700 in the PDF exactly as it does in the browser.
+// The faces /cv can render text with: sans 400 to 700 (prose, the organisation
+// names, the name), mono 400 and 500 (dates, labels, section headings), and the
+// label family's single bold face (the tape above the name). Schibsted Grotesk
+// is a variable font upstream; the four static instances in public/fonts were
+// cut from the official google/fonts file so the PDF embeds designed outlines
+// at every weight it asks for rather than a synthesised bold.
 const FONT_FACES = [
-  { family: SANS, weight: 400, file: "IBMPlexSans-Regular.ttf" },
-  { family: MONO, weight: 400, file: "JetBrainsMono-Regular.ttf" },
-  { family: MONO, weight: 500, file: "JetBrainsMono-Medium.ttf" },
-  { family: MONO, weight: 700, file: "JetBrainsMono-Bold.ttf" },
+  { family: SANS, weight: 400, file: "SchibstedGrotesk-Regular.ttf" },
+  { family: SANS, weight: 500, file: "SchibstedGrotesk-Medium.ttf" },
+  { family: SANS, weight: 600, file: "SchibstedGrotesk-SemiBold.ttf" },
+  { family: SANS, weight: 700, file: "SchibstedGrotesk-Bold.ttf" },
+  { family: MONO, weight: 400, file: "IBMPlexMono-Regular.ttf" },
+  { family: MONO, weight: 500, file: "IBMPlexMono-Medium.ttf" },
+  { family: LABEL, weight: 700, file: "BarlowCondensed-Bold.ttf" },
 ];
 
-// Redefining the two font tokens re-types the whole page with no second copy of
-// the markup, the same way `print:light-ground` re-themes it: globals.css
-// declares them with `@theme inline`, so every `font-mono` / `font-sans` utility
-// compiles down to `var(--font-mono)` / `var(--font-sans)`. This block is
-// unlayered and arrives after the stylesheet, so it wins on :root.
+// Redefining the brand's family tokens re-types the whole page with no second
+// copy of the markup: the brand's Tailwind mapping declares `font-sans`,
+// `font-mono` and `font-label` with `@theme inline`, so every utility compiles
+// down to `var(--di-font-family-*)`. This block is unlayered and arrives after
+// the stylesheet, so it wins on :root.
 const FONT_CSS = `
 ${FONT_FACES.map(
   ({ family, weight, file }) => `@font-face {
@@ -86,8 +91,9 @@ ${FONT_FACES.map(
 ).join("\n")}
 
 :root {
-  --font-sans: "${SANS}", sans-serif;
-  --font-mono: "${MONO}", monospace;
+  --di-font-family-sans: "${SANS}", sans-serif;
+  --di-font-family-mono: "${MONO}", monospace;
+  --di-font-family-label: "${LABEL}", sans-serif;
 }
 `;
 
@@ -210,7 +216,7 @@ interface FontProof {
 // came from the TTFs in public/fonts and from nothing else. Three things have to
 // hold, and each one is a way of embedding the wrong outlines:
 //
-//   1. every visible run of text resolves to one of the two families above;
+//   1. every visible run of text resolves to one of the families above;
 //   2. every face declared above actually loaded;
 //   3. no family is asked for bold it has no face for, because CSS then
 //      synthesises the bold and the PDF embeds a mechanically distorted outline
@@ -261,7 +267,10 @@ async function assertLocalFontsAreUsed(page: Page): Promise<FontProof> {
           .map(({ family, weight }) => `${family} ${weight}`),
       };
     },
-    { families: [SANS, MONO], faces: FONT_FACES.map(({ family, weight }) => ({ family, weight })) }
+    {
+      families: [SANS, MONO, LABEL],
+      faces: FONT_FACES.map(({ family, weight }) => ({ family, weight })),
+    }
   );
 
   if (report.stray.length > 0) {

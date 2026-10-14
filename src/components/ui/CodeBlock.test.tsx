@@ -42,14 +42,18 @@ describe("CodeBlock", () => {
       expect(screen.getByText("~/blog-examples/adk")).toBeInTheDocument();
     });
 
-    it("strips the $ prompt and keeps the output as its own lines", () => {
+    it("draws the $ prompt as decoration and keeps the output as its own lines", () => {
       const { container } = render(
         <CodeBlock>
           <code className="language-console">{session}</code>
         </CodeBlock>
       );
 
-      expect(container.textContent).not.toContain("$ go run");
+      // The prompt from the source is replaced by a muted, unselectable one that
+      // screen readers skip, so selecting a line copies the command alone.
+      const prompts = container.querySelectorAll('[aria-hidden="true"].select-none');
+      expect(prompts).toHaveLength(2);
+      for (const prompt of prompts) expect(prompt.textContent?.trim()).toBe("$");
       expect(screen.getByText("go run .")).toBeInTheDocument();
       expect(screen.getByText("Delete returned no error.")).toBeInTheDocument();
     });

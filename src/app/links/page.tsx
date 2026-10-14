@@ -85,7 +85,9 @@ const PROFILE_JSON_LD = {
 function CommandLine({ command, className = "" }: { command: string; className?: string }) {
   return (
     <p className={`font-mono text-[13px] text-fg-subtle ${className}`}>
-      <span className="text-fg mr-2">❯</span>
+      <span className="text-fg mr-2" aria-hidden="true">
+        ❯
+      </span>
       {command}
     </p>
   );
@@ -108,7 +110,7 @@ export default async function LinksPage() {
   }));
 
   return (
-    <div className="max-w-[520px] mx-auto px-4 sm:px-6 pt-14 sm:pt-20 pb-12">
+    <div className="max-w-[520px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
       <JsonLd data={PROFILE_JSON_LD} />
 
       {/* ❯ whoami — identity block, rendered like command output */}
@@ -173,7 +175,7 @@ export default async function LinksPage() {
                       <p className="font-mono text-[11px] text-fg tracking-[0.15em] uppercase mb-2">
                         Just saw me speak?
                       </p>
-                      <p className="font-mono text-[15px] font-semibold text-fg leading-snug">
+                      <p className="font-sans text-[18px] font-bold tracking-[-0.02em] text-fg leading-snug">
                         {talk.session?.title ?? talk.event}
                       </p>
                       <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-2">
@@ -221,7 +223,7 @@ export default async function LinksPage() {
                 })}{" "}
                 · {latestPost.category}
               </p>
-              <p className="font-mono text-[15px] font-semibold text-fg leading-snug">
+              <p className="font-sans text-[18px] font-bold tracking-[-0.02em] text-fg leading-snug">
                 {latestPost.title}
               </p>
               <p className="font-sans text-[13px] text-fg-muted leading-relaxed mt-2 line-clamp-2">
@@ -332,27 +334,19 @@ export default async function LinksPage() {
         </ScrollReveal>
       )}
 
-      {/* Idle prompt — the session stays open */}
-      <p className="font-mono text-[13px] text-fg-subtle mb-10" aria-hidden="true">
-        <span className="text-fg mr-2">❯</span>
-        <span className="inline-block w-[7px] h-[0.95em] bg-fg align-middle animate-[blink_1.1s_steps(1)_infinite]" />
-      </p>
-
-      {/* Minimal footer — the global one is hidden on this route */}
-      <footer className="border-t border-border pt-6 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
-        <p className="font-mono text-[11px] text-fg-subtle">
-          © {year} <span className="text-fg">Davide Imola</span>
-        </p>
+      {/* Minimal footer: the global one is not on this route */}
+      <footer className="border-t border-fg pt-6 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
+        <p className="font-mono text-[12px] text-fg-subtle">© {year} Davide Imola</p>
         <nav className="flex gap-5">
           <a
             href="/"
-            className="font-mono text-[11px] text-fg-subtle no-underline transition-colors duration-150 hover:text-fg-muted"
+            className="font-mono text-[12px] text-fg-subtle no-underline transition-colors duration-150 hover:text-accent"
           >
             davideimola.dev
           </a>
           <a
             href="/privacy"
-            className="font-mono text-[11px] text-fg-subtle no-underline transition-colors duration-150 hover:text-fg-muted"
+            className="font-mono text-[12px] text-fg-subtle no-underline transition-colors duration-150 hover:text-accent"
           >
             privacy
           </a>

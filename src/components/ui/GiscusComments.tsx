@@ -1,6 +1,7 @@
 "use client";
 
 import Giscus from "@giscus/react";
+import { useResolvedTheme } from "./ThemeToggle";
 
 // Configure via environment variables:
 //   NEXT_PUBLIC_GISCUS_REPO_ID   — from https://giscus.app
@@ -8,10 +9,15 @@ import Giscus from "@giscus/react";
 const REPO_ID = process.env.NEXT_PUBLIC_GISCUS_REPO_ID ?? "";
 const CATEGORY_ID = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID ?? "";
 
-// Custom theme CSS served from the same origin — works in both dev and prod.
-const CUSTOM_THEME = `${typeof window !== "undefined" ? window.location.origin : "https://davideimola.dev"}/giscus-theme.css`;
+// Custom theme CSS served from the same origin, one file per site theme. The
+// widget lives in its own iframe, so it follows the toggle through this prop.
+function themeUrl(theme: "light" | "dark"): string {
+  const origin = typeof window !== "undefined" ? window.location.origin : "https://davideimola.dev";
+  return `${origin}/giscus-theme${theme === "dark" ? "-dark" : ""}.css`;
+}
 
 export function GiscusComments() {
+  const theme = useResolvedTheme();
   if (!REPO_ID || !CATEGORY_ID) return null;
 
   return (
@@ -26,7 +32,7 @@ export function GiscusComments() {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={CUSTOM_THEME}
+        theme={themeUrl(theme ?? "light")}
         lang="en"
         loading="lazy"
       />

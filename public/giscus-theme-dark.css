@@ -1,0 +1,18 @@
+/*
+ * Giscus theme for davideimola.dev, dark (night). Same rules as the light
+ * theme, with the brand's dark token values.
+ */
+@import url("giscus-theme.css");
+
+:root {
+  --di-bg: #13151c;
+  --di-surface: #1b1e27;
+  --di-surface-inline: #262a35;
+  --di-border: #2c3040;
+  --di-fg: #ece9e2;
+  --di-fg-body: #d6d3cc;
+  --di-fg-muted: #b4b2ac;
+  --di-fg-subtle: #8e8c86;
+  --di-accent: #e0475c;
+  --di-code-string: #8fbf96;
+}
