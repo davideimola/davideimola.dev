@@ -66,3 +66,19 @@ export const NoLanguage: Story = {
     </CodeBlock>
   ),
 };
+
+export const Console: Story = {
+  render: () => (
+    <CodeBlock>
+      <code
+        className="language-console"
+        data-title="~/blog-examples/agent-sessions/adk"
+      >{`$ go run .
+== default DSN (file:adk-default.db)
+Delete returned no error. Rows left for session 7f3c: sessions=0 events=1
+
+$ sqlite3 adk-default.db 'select count(*) from events;'
+1`}</code>
+    </CodeBlock>
+  ),
+};

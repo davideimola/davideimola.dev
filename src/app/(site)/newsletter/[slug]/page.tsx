@@ -13,6 +13,7 @@ import { JsonLd } from "../../../../components/ui/JsonLd";
 import { SubscribeForm } from "../../../../components/ui/SubscribeForm";
 import { formatDate } from "../../../../lib/dates";
 import { getAllIssues, getIssueBySlug } from "../../../../lib/newsletter";
+import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -91,7 +92,11 @@ export default async function NewsletterIssuePage({ params }: Props) {
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm, remarkGithubAlerts],
-                  rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
+                  rehypePlugins: [
+                    rehypeSlug,
+                    rehypeCodeTitle,
+                    [rehypePrism, { ignoreMissing: true }],
+                  ],
                 },
               }}
               components={{
