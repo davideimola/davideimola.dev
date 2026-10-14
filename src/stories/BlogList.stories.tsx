@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BlogList } from "../components/sections/BlogList";
+import { categoryCounts, topTags } from "../lib/blog-index";
 
 const meta: Meta<typeof BlogList> = {
   title: "Sections/BlogList",
@@ -48,28 +49,48 @@ const mockPosts = [
 ];
 
 export const Default: Story = {
-  args: { posts: mockPosts },
+  args: {
+    posts: mockPosts,
+    tags: topTags(mockPosts),
+    categories: categoryCounts(mockPosts),
+    startHere: [{ post: mockPosts[0], why: "Where to begin." }],
+  },
   parameters: {
     nextjs: { navigation: { searchParams: {} } },
   },
 };
 
 export const FilteredByTag: Story = {
-  args: { posts: mockPosts },
+  args: {
+    posts: mockPosts,
+    tags: topTags(mockPosts),
+    categories: categoryCounts(mockPosts),
+    startHere: [{ post: mockPosts[0], why: "Where to begin." }],
+  },
   parameters: {
     nextjs: { navigation: { searchParams: { tag: "security" } } },
   },
 };
 
 export const FilteredByCategory: Story = {
-  args: { posts: mockPosts },
+  args: {
+    posts: mockPosts,
+    tags: topTags(mockPosts),
+    categories: categoryCounts(mockPosts),
+    startHere: [{ post: mockPosts[0], why: "Where to begin." }],
+  },
   parameters: {
     nextjs: { navigation: { searchParams: { category: "Technical" } } },
   },
 };
 
 export const NoResults: Story = {
-  args: { posts: mockPosts },
+  args: {
+    posts: mockPosts,
+    tags: topTags(mockPosts),
+    categories: categoryCounts(mockPosts),
+    startHere: [{ post: mockPosts[0], why: "Where to begin." }],
+  },
   parameters: {
     nextjs: { navigation: { searchParams: { tag: "typescript" } } },
   },

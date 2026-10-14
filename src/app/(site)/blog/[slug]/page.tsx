@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type React from "react";
@@ -12,6 +11,7 @@ import { BackToTop } from "../../../../components/ui/BackToTop";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
 import { GiscusComments } from "../../../../components/ui/GiscusComments";
 import { JsonLd } from "../../../../components/ui/JsonLd";
+import { PostCover } from "../../../../components/ui/PostCover";
 import { PostNavigation } from "../../../../components/ui/PostNavigation";
 import { ReadingProgress } from "../../../../components/ui/ReadingProgress";
 import { RelatedPosts } from "../../../../components/ui/RelatedPosts";
@@ -152,15 +152,12 @@ export default async function BlogPostPage({ params }: Props) {
           <article className="min-w-0">
             {/* Hero image */}
             {post.heroImage && (
-              <div className="relative w-full aspect-2/1 mb-10 overflow-hidden border border-border">
-                <Image
-                  src={post.heroImage}
-                  alt={post.heroImageAlt ?? post.title}
-                  fill
-                  className="object-cover grayscale-[0.6] transition-[filter] duration-500 hover:grayscale-0"
-                  priority
-                />
-              </div>
+              <PostCover
+                src={post.heroImage}
+                alt={post.heroImageAlt ?? post.title}
+                priority
+                className="mb-10"
+              />
             )}
 
             {/* Content */}
