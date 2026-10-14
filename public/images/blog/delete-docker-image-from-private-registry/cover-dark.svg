@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <rect width="1600" height="900" fill="#13151C"/>
+  <g fill="none" stroke="#ECE9E2" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 770 H1380"/>
+    <rect x="330" y="650" width="250" height="110" rx="4"/>
+    <path d="M380 672 V738 M430 672 V738 M480 672 V738 M530 672 V738"/>
+    <rect x="600" y="650" width="250" height="110" rx="4"/>
+    <path d="M650 672 V738 M700 672 V738 M750 672 V738 M800 672 V738"/>
+    <rect x="870" y="650" width="250" height="110" rx="4"/>
+    <path d="M920 672 V738 M970 672 V738 M1020 672 V738 M1070 672 V738"/>
+    <rect x="1140" y="650" width="250" height="110" rx="4"/>
+    <path d="M1190 672 V738 M1240 672 V738 M1290 672 V738 M1340 672 V738"/>
+    <rect x="330" y="530" width="250" height="110" rx="4"/>
+    <path d="M380 552 V618 M430 552 V618 M480 552 V618 M530 552 V618"/>
+    <rect x="600" y="530" width="250" height="110" rx="4"/>
+    <path d="M650 552 V618 M700 552 V618 M750 552 V618 M800 552 V618"/>
+    <rect x="870" y="530" width="250" height="110" rx="4" stroke-dasharray="4 20"/>
+    <rect x="1140" y="530" width="250" height="110" rx="4"/>
+    <path d="M1190 552 V618 M1240 552 V618 M1290 552 V618 M1340 552 V618"/>
+    <rect x="330" y="410" width="250" height="110" rx="4"/>
+    <path d="M380 432 V498 M430 432 V498 M480 432 V498 M530 432 V498"/>
+    <path d="M995 0 V150"/>
+    <path d="M995 150 V178 A22 22 0 1 1 973 200"/>
+    <path d="M995 200 L885 280 M995 200 L1105 280"/>
+  </g>
+  <g stroke="#ECE9E2" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="870" y="280" width="250" height="110" rx="4" fill="#E0475C"/>
+    <path d="M920 302 V368 M970 302 V368 M1020 302 V368 M1070 302 V368" fill="none"/>
+  </g>
+</svg>

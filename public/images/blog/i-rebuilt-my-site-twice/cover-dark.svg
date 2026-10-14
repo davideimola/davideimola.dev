@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <rect width="1600" height="900" fill="#13151C"/>
+  <g fill="none" stroke="#ECE9E2" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="rotate(-5 640 400)" stroke-dasharray="4 22">
+      <rect x="300" y="170" width="680" height="460" rx="10"/>
+      <path d="M300 220 H980"/>
+      <path d="M350 280 H700 M380 330 H620"/>
+      <rect x="340" y="400" width="180" height="150" rx="6"/>
+      <rect x="560" y="420" width="140" height="170" rx="6"/>
+    </g>
+    <rect x="600" y="260" width="700" height="480" rx="10" fill="#13151C"/>
+    <path d="M600 316 H1300"/>
+    <circle cx="640" cy="288" r="8"/>
+    <circle cx="672" cy="288" r="8"/>
+    <circle cx="704" cy="288" r="8"/>
+    <path d="M660 380 H1000 M660 426 H880"/>
+    <rect x="660" y="490" width="180" height="190" rx="6"/>
+    <rect x="860" y="490" width="180" height="190" rx="6"/>
+    <rect x="1060" y="490" width="180" height="190" rx="6"/>
+  </g>
+  <g fill="none" stroke="#E0475C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1150 220 L1150 460 L1390 460 Z"/>
+    <path d="M1186 306 L1186 424 L1304 424 Z"/>
+  </g>
+</svg>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { darkCover } from "../../lib/covers";
 
 interface PostCoverProps {
   src: string;
@@ -11,7 +12,9 @@ interface PostCoverProps {
 
 // A post's cover (16:9), shown as it is: covers are monoline ink illustrations on
 // paper (CLAUDE.md, "Blog covers"), so no filter and no hover reveal. SVG
-// covers skip the image optimiser, which does not rasterise vectors.
+// covers skip the image optimiser, which does not rasterise vectors. In the
+// dark theme an SVG cover swaps to its night twin (cover-dark.svg), so a paper
+// rectangle never glares out of a dark page.
 export function PostCover({
   src,
   alt,
@@ -20,9 +23,10 @@ export function PostCover({
   className = "",
 }: PostCoverProps) {
   const isSvg = src.split("?")[0].toLowerCase().endsWith(".svg");
+  const darkSrc = darkCover(src);
   return (
     <div
-      className={`relative w-full aspect-video overflow-hidden border border-border bg-[var(--di-color-paper)] ${className}`}
+      className={`relative w-full aspect-video overflow-hidden border border-border bg-[var(--di-color-paper)] dark:bg-[var(--di-color-night)] ${className}`}
     >
       <Image
         src={src}
@@ -31,8 +35,19 @@ export function PostCover({
         sizes={sizes}
         priority={priority}
         unoptimized={isSvg}
-        className="object-cover"
+        className={`object-cover ${darkSrc ? "dark:hidden" : ""}`}
       />
+      {darkSrc && (
+        <Image
+          src={darkSrc}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          unoptimized
+          className="object-cover hidden dark:block"
+        />
+      )}
     </div>
   );
 }

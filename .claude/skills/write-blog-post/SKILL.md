@@ -157,11 +157,14 @@ Every post gets a cover, and you draw it yourself as an SVG. Don't hand Davide a
 - Format: `viewBox="0 0 1600 900"` (16:9) with the paper `rect` as the first element, hand-written clean SVG (paths, circles, lines), no embedded rasters, no fonts, under about 20 KB.
 - The article page crops the hero to 2:1, so keep everything between y 108 and y 803.
 
-**Files:** write `public/images/blog/<slug>/cover.svg`, then render the PNG next to it, which crawlers and social cards need:
+**Files:** write `public/images/blog/<slug>/cover.svg`, then render the PNG next to it (crawlers and social cards need it) and the dark-theme twin (the site shows it in dark mode, so the paper ground never glares):
 
 ```bash
 pnpm dlx @resvg/resvg-js-cli --fit-width 1600 public/images/blog/<slug>/cover.svg public/images/blog/<slug>/cover.png
+pnpm covers:dark
 ```
+
+Use only the three brand colours in the SVG (paper, ink, akane), written as hex: `covers:dark` swaps exactly those, and `pnpm test` fails on any other colour or a missing `cover-dark.svg`.
 
 **Look at it before you show it.** Read the PNG yourself. Check that it reads at card size (about 400px wide in the blog list), that there is exactly one red element, that nothing is cropped, and that the stroke weight matches the other covers. Redraw until it passes, then show it to Davide.
 
@@ -200,7 +203,7 @@ Then give your own take first: point out what you think works, what feels weaker
 This is bidirectional. Iterate until Davide is happy.
 
 Once the post is approved, run the pre-PR checklist before opening the PR:
-- [ ] `cover.svg` and `cover.png` exist in `public/images/blog/<slug>/`, Davide approved the drawing, and `heroImage` points at the SVG
+- [ ] `cover.svg`, `cover.png` and `cover-dark.svg` exist in `public/images/blog/<slug>/`, Davide approved the drawing, and `heroImage` points at the SVG
 - [ ] No `TODO` comments left in the MDX
 - [ ] No `#` h1 headings in content
 - [ ] `draft: true` removed from frontmatter
