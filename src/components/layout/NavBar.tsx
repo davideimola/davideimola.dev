@@ -11,12 +11,12 @@ interface NavLink {
   href: string;
 }
 
+// Contact lives in the footer and on /about; the route stays.
 export const NAV_LINKS: NavLink[] = [
+  { label: "Writing", href: "/blog" },
+  { label: "Built", href: "/projects" },
+  { label: "Talks", href: "/sharing" },
   { label: "About", href: "/about" },
-  { label: "Sharing", href: "/sharing" },
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export function isActiveLink(pathname: string | null, href: string): boolean {
@@ -93,7 +93,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 cursor-pointer"
+            className="flex flex-col justify-center items-center gap-[5px] w-11 h-11 border border-fg cursor-pointer"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"

@@ -1,67 +1,95 @@
+// Read as a JSON import, not through lib/cv.ts: that module reads the
+// filesystem, and the Footer also renders in Storybook.
+import cvRecord from "../../content/cv.json";
 import { SOCIAL_PROFILES } from "../../lib/social";
 import { Mark } from "../ui/BrandMark";
-import { SubscribeForm } from "../ui/SubscribeForm";
 
-const SITE_LINKS = [
-  { label: "Newsletter", href: "/newsletter" },
+// The personal pages and the profiles sit here rather than in the NavBar,
+// which carries only Writing, Built, Talks and About.
+export const FOOTER_PAGES = [
   { label: "Now", href: "/now" },
   { label: "Uses", href: "/uses" },
   { label: "Shelf", href: "/shelf" },
+  { label: "CV", href: "/cv" },
+  { label: "Contact", href: "/contact" },
+];
+
+const SOCIAL_LINKS = [
+  ...SOCIAL_PROFILES.map((profile) => ({
+    label: profile.label === "BlueSky" ? "Bluesky" : profile.label,
+    href: profile.url,
+  })),
+  { label: "RSS", href: "/rss.xml" },
+];
+
+const SITE_LINKS = [
+  { label: "Newsletter", href: "/newsletter" },
   { label: "Terminal", href: "/terminal" },
   { label: "Brand", href: "/brand" },
-  { label: "RSS", href: "/rss.xml" },
   { label: "Privacy", href: "/privacy" },
   { label: "Source", href: "https://github.com/davideimola/davideimola.dev" },
 ];
 
 const linkClasses =
-  "font-mono text-[14px] text-fg-muted no-underline transition-colors duration-150 hover:text-accent";
+  "font-mono text-[13px] sm:text-[14px] text-fg no-underline transition-colors duration-150 hover:text-accent";
 
-// S mark with the motto, the newsletter signup, links in mono (docs/brand.md,
-// "Site"). An ink hairline opens it: the rule is the only divider.
+function LinkRow({ links, label }: { links: { label: string; href: string }[]; label: string }) {
+  return (
+    <nav aria-label={label} className="flex flex-wrap gap-x-[18px] sm:gap-x-6 gap-y-2">
+      {links.map((link) => {
+        const external = link.href.startsWith("http");
+        return (
+          <a
+            key={link.href}
+            href={link.href}
+            className={linkClasses}
+            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
+  );
+}
+
+// An ink hairline, the S mark with the name and the place, the personal pages
+// and the profiles in mono. The newsletter form lives on the pages, not here.
 export function Footer() {
+  const { name, location } = cvRecord.identity;
+  const place = location.split("·")[0].trim();
   const year = new Date().getFullYear();
 
   return (
     // data-print-hide: site chrome is screen-only, so it never reaches paper.
-    <footer data-print-hide="" className="mt-auto">
+    <footer data-print-hide="" className="mt-auto pt-16 md:pt-24">
       <div className="max-w-[1136px] mx-auto px-4 sm:px-8">
-        <div className="border-t border-fg pt-8 pb-10 flex flex-col gap-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div className="flex items-center gap-3.5">
-              <Mark cut="s" size={28} className="text-fg" />
-              <p className="font-sans font-bold text-[18px] tracking-[-0.02em] text-fg m-0">
-                Everything I learn, I share.
-              </p>
+        <div className="border-t border-fg pt-6 sm:pt-8 pb-7 sm:pb-12 flex flex-col gap-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-10">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <Mark cut="s" size={26} className="text-fg" />
+              <span className="font-sans text-[14px] sm:text-[15px] text-fg-muted">
+                {name} · {place}
+              </span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-3.5">
-              <p className="font-sans text-[15px] text-fg-muted m-0 sm:leading-[44px] shrink-0">
-                One email a month
-              </p>
-              <SubscribeForm mode="inline" className="w-full sm:w-auto" />
-            </div>
+            <LinkRow links={FOOTER_PAGES} label="Pages" />
+            <LinkRow links={SOCIAL_LINKS} label="Elsewhere" />
           </div>
-
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-            <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-2">
-              {SOCIAL_PROFILES.map((profile) => (
-                <a
-                  key={profile.url}
-                  href={profile.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClasses}
-                >
-                  {profile.label}
-                </a>
-              ))}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <nav aria-label="Site" className="flex flex-wrap gap-x-5 gap-y-1.5">
               {SITE_LINKS.map((link) => (
-                <a key={link.href} href={link.href} className={linkClasses}>
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="font-mono text-[12px] text-fg-subtle no-underline hover:text-accent transition-colors duration-150"
+                >
                   {link.label}
                 </a>
               ))}
             </nav>
-            <p className="font-mono text-[13px] text-fg-subtle m-0">© {year} Davide Imola</p>
+            <p className="font-mono text-[12px] text-fg-subtle m-0">
+              © {year} {name}
+            </p>
           </div>
         </div>
       </div>
