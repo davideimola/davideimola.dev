@@ -21,7 +21,11 @@ export const metadata: Metadata = {
       "An interactive shell for davideimola.dev. Type 'help' to get started. A few commands are undocumented.",
     url: "https://davideimola.dev/terminal",
     images: [
-      { url: "https://davideimola.dev/og?title=Terminal&category=shell", width: 1200, height: 630 },
+      {
+        url: "https://davideimola.dev/og?title=Terminal&category=terminal",
+        width: 1200,
+        height: 630,
+      },
     ],
   },
 };

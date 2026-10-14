@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category)}`;
+  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category)}&path=%2Fblog`;
 
   return {
     title: post.title,

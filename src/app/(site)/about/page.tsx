@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About · Davide Imola",
     images: [
-      { url: "https://davideimola.dev/og?title=About&category=whoami", width: 1200, height: 630 },
+      { url: "https://davideimola.dev/og?title=About&category=about", width: 1200, height: 630 },
     ],
     description: DESCRIPTION,
     url: "https://davideimola.dev/about",

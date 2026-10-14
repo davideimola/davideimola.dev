@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const issue = getIssueBySlug(slug);
   if (!issue) return {};
 
-  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(issue.subject)}&category=newsletter`;
+  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(issue.subject)}&category=newsletter&path=%2Fnewsletter`;
 
   return {
     title: issue.subject,

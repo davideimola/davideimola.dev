@@ -36,9 +36,7 @@ export const metadata: Metadata = {
     title: "CV · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/cv",
-    images: [
-      { url: "https://davideimola.dev/og?title=CV&category=whoami", width: 1200, height: 630 },
-    ],
+    images: [{ url: "https://davideimola.dev/og?title=CV&category=cv", width: 1200, height: 630 }],
   },
 };
 
