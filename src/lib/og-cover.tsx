@@ -1,10 +1,13 @@
-import { OG_COLORS, OgMark, OgWordmark } from "./og";
+import { OG_COLORS, OgMark, OgMarker } from "./og";
 
 // The profile banner shared by the LinkedIn and Bluesky covers. Both platforms
 // lay the profile photo over the bottom-left corner, so everything sits on the
-// right. Light ground, the lockup, the short line, the URL.
+// right. The name is already printed under the banner, so the banner says what
+// the headline cannot: the line, with the marker on the word that matters, then
+// the S mark and the URL as the signature.
 export function ProfileCover({ width, height }: { width: number; height: number }) {
   const scale = height / 500;
+  const titleSize = Math.round(62 * scale);
   return (
     <div
       style={{
@@ -20,30 +23,42 @@ export function ProfileCover({ width, height }: { width: number; height: number 
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: `${Math.round(28 * scale)}px` }}>
-          <OgMark cut="l" size={Math.round(150 * scale)} />
-          <OgWordmark width={Math.round(560 * scale)} />
+        <div
+          style={{
+            display: "flex",
+            fontSize: `${titleSize}px`,
+            fontWeight: 700,
+            letterSpacing: "-0.035em",
+            lineHeight: 1.1,
+          }}
+        >
+          <span>I build AI agents for&nbsp;</span>
+          <OgMarker fontSize={titleSize}>cybersecurity</OgMarker>
+          <span>.</span>
         </div>
         <div
           style={{
             display: "flex",
-            marginTop: `${Math.round(30 * scale)}px`,
+            marginTop: `${Math.round(22 * scale)}px`,
             fontSize: `${Math.round(30 * scale)}px`,
             color: OG_COLORS["fg-muted"],
             letterSpacing: "-0.01em",
           }}
         >
-          I build AI agents for security, mostly in Go. Everything I learn, I share.
+          Mostly in Go. Everything I learn, I share.
         </div>
         <div
           style={{
             display: "flex",
-            marginTop: `${Math.round(14 * scale)}px`,
+            alignItems: "center",
+            gap: `${Math.round(14 * scale)}px`,
+            marginTop: `${Math.round(40 * scale)}px`,
             fontFamily: "IBM Plex Mono",
             fontSize: `${Math.round(22 * scale)}px`,
             color: OG_COLORS["fg-subtle"],
           }}
         >
+          <OgMark cut="s" size={Math.round(44 * scale)} />
           davideimola.dev
         </div>
       </div>
