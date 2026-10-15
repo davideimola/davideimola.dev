@@ -273,7 +273,7 @@ export default function SharingPage() {
             <details className="mt-[22px] group">
               <summary className="cursor-pointer list-none font-sans font-semibold text-[16px] text-fg self-start">
                 <span className="border-b border-fg pb-0.5 hover:text-accent hover:border-accent">
-                  {chats.length} interviews and streams, in Italian
+                  {chats.length} interviews and streams
                 </span>
               </summary>
               <ul className="m-0 mt-4 p-0 list-none flex flex-col">
