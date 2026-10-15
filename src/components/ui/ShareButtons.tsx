@@ -37,7 +37,7 @@ export function ShareButtons({ slug, title }: ShareButtonsProps) {
         rel="noopener noreferrer"
         className="font-mono text-[13px] text-fg border border-border hover:border-fg hover:text-accent px-3 py-1.5 transition-colors duration-150"
       >
-        BlueSky
+        Bluesky
       </a>
       <a
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`}

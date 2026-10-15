@@ -1,4 +1,4 @@
-import { SOCIAL_PROFILES } from "./social";
+import { ALL_PROFILES } from "./social";
 
 // Shared JSON-LD Person entity so structured data stays consistent
 // between the pages that describe the site author.
@@ -11,5 +11,5 @@ export const PERSON_SCHEMA = {
   worksFor: { "@type": "Organization", name: "RedCarbon" },
   description:
     "Tech Lead at RedCarbon, building AI agents for cybersecurity. Open source builder and conference speaker on AI, security, and Go.",
-  sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
+  sameAs: ALL_PROFILES.map((profile) => profile.url),
 };

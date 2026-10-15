@@ -12,7 +12,7 @@ import {
 import { formatDayMonth } from "../../lib/dates";
 import { city, eventName } from "../../lib/sharing";
 import { getShowcase } from "../../lib/shelf";
-import { CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
+import { ALL_PROFILES, CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 
 // Regenerate hourly so the time-based blocks turn over without a deploy. The
 // rating block has to light up on the conference morning: this page is what
@@ -47,7 +47,7 @@ const PROFILE_JSON_LD = {
     "@type": "Person",
     name: "Davide Imola",
     url: SITE,
-    sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
+    sameAs: ALL_PROFILES.map((profile) => profile.url),
   },
 };
 
@@ -220,7 +220,7 @@ export default async function LinksPage() {
               rel="noopener noreferrer"
               className="text-fg no-underline hover:text-accent"
             >
-              {profile.label === "BlueSky" ? "Bluesky" : profile.label}
+              {profile.label}
             </a>
           ))}
         </div>

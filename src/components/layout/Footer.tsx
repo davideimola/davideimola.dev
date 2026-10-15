@@ -16,7 +16,7 @@ export const FOOTER_PAGES = [
 
 const SOCIAL_LINKS = [
   ...SOCIAL_PROFILES.map((profile) => ({
-    label: profile.label === "BlueSky" ? "Bluesky" : profile.label,
+    label: profile.label,
     href: profile.url,
   })),
   { label: "RSS", href: "/rss.xml" },

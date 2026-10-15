@@ -88,7 +88,7 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="text-fg no-underline hover:text-accent"
               >
-                {profile.label === "BlueSky" ? "Bluesky" : profile.label}
+                {profile.label}
               </a>
             ))}
           </div>
