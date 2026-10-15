@@ -60,8 +60,8 @@ const HARDWARE = [
           "Split mechanical keyboard, Cherry MX Brown switches. Takes a week to adapt, worth it.",
       },
       {
-        name: "Logitech MX Vertical",
-        description: "Ergonomic vertical mouse. Saved my wrist.",
+        name: "ProtoArc EM11",
+        description: "Ergonomic vertical mouse. Still vertical, because it saved my wrist.",
       },
     ],
   },
@@ -71,6 +71,10 @@ const HARDWARE = [
       {
         name: "Audio-Technica ATH-M50x",
         description: "Professional monitor headphones. Daily driver for focus work and calls.",
+      },
+      {
+        name: "AirPods 5",
+        description: "Noise cancelling for when the desk is not a quiet one.",
       },
       {
         name: "Elgato Wave:3",

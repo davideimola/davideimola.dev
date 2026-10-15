@@ -19,7 +19,7 @@ import {
 export const revalidate = 3600;
 
 const DESCRIPTION =
-  "What I am reading and playing, what I finished or put down, and the pile of what I take on next.";
+  "What I am reading and playing, what I finished or put down, and how big the pile has grown.";
 
 export const metadata: Metadata = {
   title: "Shelf",
@@ -64,7 +64,6 @@ export default async function ShelfPage() {
     },
   };
 
-  const pad = (n: number) => String(n).padStart(2, "0");
   const queuedTypes = showcase.pile.byType.filter((entry) => entry.count > 0);
 
   return (
@@ -73,7 +72,7 @@ export default async function ShelfPage() {
       <header className="flex flex-col gap-5 max-w-[920px]">
         <Tape tilt={0}>Shelf</Tape>
         <h1 className="m-0 font-sans font-bold text-fg text-[42px] sm:text-[56px] lg:text-[72px] leading-[0.98] tracking-[-0.045em]">
-          What I'm <Marker>reading</Marker>, and what comes next.
+          What I'm <Marker>reading</Marker>, and what's still waiting.
         </h1>
         <p className="m-0 font-sans text-[18px] sm:text-[19px] leading-[1.55] text-fg-muted">
           Books, comics and games, straight from{" "}
@@ -86,7 +85,7 @@ export default async function ShelfPage() {
             tsundoku
           </a>
           , the library I built for myself: what's open now, the verdicts on what I finished or put
-          down, and the queue of what to take on next.
+          down, and how big the pile has grown.
         </p>
         <p className="m-0 font-mono text-[13px] text-fg-subtle">
           {source === "live"
@@ -150,50 +149,32 @@ export default async function ShelfPage() {
         </section>
       )}
 
-      {/* 3. The pile: what to take on next, a queue and not a heap of unread
-          purchases. It holds videogames as readily as manga, and things not
-          owned yet, so the copy never calls it volumes or purchases. */}
+      {/* 3. The pile, as a number. The rows tsundoku sends are the most recently
+          added, not what comes next, so listing them would promise an order the
+          library does not keep. It holds videogames as readily as manga, and
+          things not owned yet, so the copy never calls it volumes or purchases. */}
       <section className="mt-14 pt-7 border-t border-rule grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-14">
-        <div className="flex flex-col items-start gap-2">
-          <Tape as="h2" tilt={0}>
-            Up next
-          </Tape>
-          <p className="m-0 mt-1 font-sans text-[15px] leading-[1.5] text-fg-muted">
-            A queue, not a heap: what I pinned first, then what my open series and wants put next.
-          </p>
-          <span className="font-mono font-medium text-[34px] leading-none text-fg mt-2">
-            {showcase.pile.count}
-          </span>
-          <span className="font-mono text-[13px] text-fg-subtle">queued</span>
-          {queuedTypes.length > 0 && (
-            <span className="font-mono text-[12px] leading-[1.6] text-fg-subtle">
-              {queuedTypes.map((entry) => `${entry.type.label} ${entry.count}`).join(" · ")}
+        <Tape as="h2" tilt={0} className="self-start">
+          The pile
+        </Tape>
+        <div className="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-10">
+          <div className="flex flex-col gap-1.5 shrink-0">
+            <span className="font-mono font-medium text-[34px] leading-none text-fg">
+              {showcase.pile.count}
             </span>
-          )}
-        </div>
-        {showcase.pile.recent.length > 0 && (
-          <div className="flex flex-col gap-4">
-            {/* A dozen rows, every one a different kind of thing and no filter to
-                say which is which, so the Type is worth a Badge here. */}
-            <ol className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-2 md:gap-x-12">
-              {showcase.pile.recent.map((entry, i) => (
-                <li
-                  key={entry.id}
-                  className="grid grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-3 py-[11px] border-b border-border"
-                >
-                  <span className="font-mono text-[13px] text-fg-subtle">{pad(i + 1)}</span>
-                  <span className="font-sans font-semibold text-[16px] text-fg">{entry.title}</span>
-                  <Badge variant="outline">{entry.type.label}</Badge>
-                </li>
-              ))}
-            </ol>
-            {showcase.pile.count > showcase.pile.recent.length && (
-              <span className="font-mono text-[13px] text-fg-subtle">
-                Showing {showcase.pile.recent.length} of {showcase.pile.count} queued
+            <span className="font-mono text-[13px] text-fg-subtle">waiting</span>
+            {queuedTypes.length > 0 && (
+              <span className="font-mono text-[12px] leading-[1.6] text-fg-subtle">
+                {queuedTypes.map((entry) => `${entry.type.label} ${entry.count}`).join(" · ")}
               </span>
             )}
           </div>
-        )}
+          <p className="m-0 max-w-[560px] font-sans text-[16px] leading-[1.6] text-fg-muted">
+            Everything still waiting for me: the series I have started, the reading routes I am on,
+            what I want to read or play, and the next part missing from a run. Some of it I do not
+            own yet. It only ever grows.
+          </p>
+        </div>
       </section>
     </div>
   );
