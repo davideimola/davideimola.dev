@@ -11,12 +11,12 @@ interface SectionHeaderProps {
 }
 
 // A section opens with a tape (docs/brand.md, "The tape"); a subsection with a
-// plain h3. The "see all" link is mono and turns red on hover only.
+// plain h3. The "see all" link is mono, underlined, and turns red on hover only.
 export function SectionHeader({
   title,
   variant = "section",
   seeAllHref,
-  seeAllLabel = "See all →",
+  seeAllLabel = "See all",
   tilt = 0,
   className = "mb-12",
 }: SectionHeaderProps) {
@@ -32,7 +32,7 @@ export function SectionHeader({
       {seeAllHref && (
         <a
           href={seeAllHref}
-          className="font-mono text-meta text-fg-muted no-underline transition-colors duration-150 hover:text-accent shrink-0"
+          className="font-mono text-meta text-fg-muted underline underline-offset-4 decoration-1 transition-colors duration-150 hover:text-accent shrink-0"
         >
           {seeAllLabel}
         </a>

@@ -17,7 +17,7 @@ export const WithSeeAll: Story = {
   args: {
     title: "Projects",
     seeAllHref: "/projects",
-    seeAllLabel: "All projects →",
+    seeAllLabel: "All projects",
   },
 };
 
@@ -31,7 +31,7 @@ export const LatestWriting: Story = {
   args: {
     title: "Latest writing",
     seeAllHref: "/blog",
-    seeAllLabel: "All posts →",
+    seeAllLabel: "All posts",
   },
 };
 
@@ -39,7 +39,7 @@ export const RecentTalks: Story = {
   args: {
     title: "Recent talks",
     seeAllHref: "/speaking",
-    seeAllLabel: "All talks →",
+    seeAllLabel: "All talks",
   },
 };
 
@@ -55,7 +55,7 @@ export const SubsectionWithLink: Story = {
     title: "2024",
     variant: "subsection",
     seeAllHref: "#",
-    seeAllLabel: "See all →",
+    seeAllLabel: "See all",
   },
 };
 
@@ -63,14 +63,9 @@ export const SubsectionWithLink: Story = {
 export const AlternatingTilt: Story = {
   render: () => (
     <div className="flex flex-col gap-10">
-      <SectionHeader title="Latest writing" seeAllHref="/blog" seeAllLabel="All posts →" tilt={0} />
-      <SectionHeader title="Talks" seeAllHref="/sharing" seeAllLabel="All talks →" tilt={1} />
-      <SectionHeader
-        title="Projects"
-        seeAllHref="/projects"
-        seeAllLabel="All projects →"
-        tilt={2}
-      />
+      <SectionHeader title="Latest writing" seeAllHref="/blog" seeAllLabel="All posts" tilt={0} />
+      <SectionHeader title="Talks" seeAllHref="/sharing" seeAllLabel="All talks" tilt={1} />
+      <SectionHeader title="Projects" seeAllHref="/projects" seeAllLabel="All projects" tilt={2} />
     </div>
   ),
 };

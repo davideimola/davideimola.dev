@@ -33,15 +33,12 @@ export default function NotFound() {
           The link is old, or the page moved without leaving a forwarding address. These are still
           where they were.
         </p>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2 list-none m-0 p-0">
+        <ul className="flex flex-wrap gap-x-6 gap-y-3 list-none m-0 p-0">
           {SUGGESTIONS.map((s) => (
             <li key={s.href}>
-              <a
-                href={s.href}
-                className="font-mono text-[14px] text-fg no-underline hover:text-accent transition-colors duration-150"
-              >
-                {s.label} →
-              </a>
+              <ButtonLink variant="link" href={s.href}>
+                {s.label}
+              </ButtonLink>
             </li>
           ))}
         </ul>

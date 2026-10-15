@@ -35,7 +35,7 @@ export const Ghost: Story = {
   args: {
     variant: "ghost",
     size: "md",
-    children: "View talks →",
+    children: "View talks",
   },
 };
 
@@ -85,7 +85,7 @@ export const AllVariants: Story = {
           Primary SM
         </Button>
         <Button variant="primary" size="md">
-          Primary MD →
+          Primary MD
         </Button>
         <Button variant="primary" size="lg">
           Primary LG
@@ -96,7 +96,7 @@ export const AllVariants: Story = {
           Ghost SM
         </Button>
         <Button variant="ghost" size="md">
-          Ghost MD →
+          Ghost MD
         </Button>
         <Button variant="ghost" size="lg">
           Ghost LG

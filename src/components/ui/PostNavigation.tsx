@@ -15,7 +15,7 @@ export function PostNavigation({ prev, next }: PostNavigationProps) {
           href={`/blog/${prev.slug}`}
           className="group flex flex-col gap-1 p-4 border border-border bg-surface hover:border-fg transition-colors duration-150 no-underline"
         >
-          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">← OLDER</span>
+          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">OLDER</span>
           <span className="font-sans text-[17px] font-semibold tracking-[-0.01em] text-fg group-hover:text-accent transition-colors duration-150 line-clamp-2">
             {prev.title}
           </span>
@@ -28,7 +28,7 @@ export function PostNavigation({ prev, next }: PostNavigationProps) {
           href={`/blog/${next.slug}`}
           className="group flex flex-col gap-1 p-4 border border-border bg-surface hover:border-fg transition-colors duration-150 no-underline sm:text-right"
         >
-          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">NEWER →</span>
+          <span className="font-mono text-[12px] text-fg-subtle tracking-[0.06em]">NEWER</span>
           <span className="font-sans text-[17px] font-semibold tracking-[-0.01em] text-fg group-hover:text-accent transition-colors duration-150 line-clamp-2">
             {next.title}
           </span>

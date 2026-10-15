@@ -204,9 +204,9 @@ export default async function BlogPostPage({ params }: Props) {
               Are you an LLM? You&apos;d probably prefer the Markdown:{" "}
               <a
                 href={`/blog/${slug}.md`}
-                className="text-fg-muted hover:text-accent transition-colors duration-150"
+                className="text-fg-muted underline underline-offset-4 decoration-1 hover:text-accent transition-colors duration-150"
               >
-                {slug}.md →
+                {slug}.md
               </a>
             </p>
 

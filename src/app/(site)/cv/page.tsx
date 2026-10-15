@@ -215,15 +215,16 @@ function SelectedTalksSection() {
           </li>
         ))}
       </ul>
-      {/* An arrow points nowhere on paper, so print spells the destination out
-          instead. Same link, two words swapped: not a second Rendering. */}
+      {/* A link means nothing on paper, so print spells the destination out
+          instead. Same link, a few words added: not a second Rendering. The
+          underline is a text decoration, not a border, so the line keeps its
+          height and the sheet its fit. */}
       <Link
         href="/sharing"
-        className="inline-block mt-3 font-mono text-[11px] text-fg-subtle hover:text-accent transition-colors duration-150"
+        className="inline-block mt-3 font-mono text-[11px] text-fg-subtle underline underline-offset-4 decoration-1 print:no-underline hover:text-accent transition-colors duration-150"
       >
-        Full archive: {getTotalTalkCount()} talks and appearances{" "}
-        <span className="print:hidden">→</span>
-        <span className="hidden print:inline">at davideimola.dev/sharing</span>
+        Full archive: {getTotalTalkCount()} talks and appearances
+        <span className="hidden print:inline"> at davideimola.dev/sharing</span>
       </Link>
     </section>
   );
