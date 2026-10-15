@@ -531,6 +531,15 @@ export default function SharingPage() {
                 >
                   brand repo
                 </a>
+                , and the{" "}
+                <a
+                  href="https://github.com/davideimola/brand#why-this-mark"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fg-muted underline hover:text-accent transition-colors duration-150"
+                >
+                  story behind the mark
+                </a>
                 .
               </p>
             </div>
