@@ -34,7 +34,7 @@ export function ProfileCover({ width, height }: { width: number; height: number 
         >
           <span>I build AI agents for&nbsp;</span>
           <OgMarker fontSize={titleSize}>cybersecurity</OgMarker>
-          <span>.</span>
+          <span>, mostly in Go.</span>
         </div>
         <div
           style={{
@@ -45,7 +45,7 @@ export function ProfileCover({ width, height }: { width: number; height: number 
             letterSpacing: "-0.01em",
           }}
         >
-          Mostly in Go. Everything I learn, I share.
+          Everything I learn, I share.
         </div>
         <div
           style={{
