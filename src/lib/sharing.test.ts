@@ -4,6 +4,7 @@ import {
   city,
   describeKind,
   eventName,
+  hostedBy,
   listJoin,
   organisedByKind,
   organisedByYear,
@@ -130,5 +131,42 @@ describe("describeKind", () => {
   it("names a one-off after its event", () => {
     expect(hack).toEqual({ title: "Hack", line: "Turin, 2026." });
     expect(listJoin(["Florence", "Milan", "Verona"])).toBe("Florence, Milan and Verona");
+  });
+});
+
+describe("hostedBy", () => {
+  it("keeps the events organised for one host only", () => {
+    const talks = [
+      {
+        slug: "osday",
+        event: "Open Source Day 2026",
+        type: "Conference",
+        date: "2026-04-25",
+        location: "Florence",
+        tags: [],
+        organizer: true,
+        host: "schrodinger-hat",
+      },
+      {
+        slug: "hack",
+        event: "AI for Security Hackathon",
+        type: "Hackathon",
+        date: "2026-06-27",
+        location: "Turin",
+        tags: [],
+        organizer: true,
+        host: "redcarbon",
+      },
+      {
+        slug: "talk",
+        event: "GoLab 2026",
+        type: "Conference",
+        date: "2026-11-01",
+        location: "Bologna",
+        tags: [],
+        host: "schrodinger-hat",
+      },
+    ] as Talk[];
+    expect(hostedBy(talks, "schrodinger-hat").map((t) => t.slug)).toEqual(["osday"]);
   });
 });

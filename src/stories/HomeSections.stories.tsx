@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BuildingSection } from "../components/sections/BuildingSection";
+import { CommunitySection } from "../components/sections/CommunitySection";
 import { HeroSection } from "../components/sections/HeroSection";
-import { InPublicSection } from "../components/sections/InPublicSection";
 import { NewsletterSection } from "../components/sections/NewsletterSection";
+import { StageSection } from "../components/sections/StageSection";
 import { WritingSection } from "../components/sections/WritingSection";
 import type { BlogPost, Project, Talk } from "../lib/content";
 
@@ -112,48 +113,67 @@ export const Writing: Story = {
   ),
 };
 
-const communities = [
-  {
-    title: "Schrödinger Hat",
-    description: "International open source community I co-founded.",
-    href: "#",
-  },
-  {
-    title: "Open Source Day",
-    description: "The open source conference I co-organise in Florence.",
-    href: "#",
-  },
-];
+const stage = (upcoming: boolean[]) =>
+  [
+    talk(
+      "golab",
+      "2026-11-01",
+      "GoLab 2026",
+      "Securing Go for Production: Best Practices, Supply Chain, Testing",
+      "Bologna, Italy"
+    ),
+    talk(
+      "reactjsday",
+      "2026-11-19",
+      "reactjsday 2026",
+      "AI Won't Design Your System. You Have To.",
+      "Verona, Italy"
+    ),
+    talk(
+      "ctc",
+      "2026-09-26",
+      "ComeToCode 2026",
+      "Il security engineer che già AI",
+      "Pignola, Italy"
+    ),
+  ].map((t, i) => ({ talk: t, upcoming: upcoming[i] }));
 
-export const InPublic: Story = {
+export const OnStage: Story = {
   render: () => (
-    <InPublicSection
+    <StageSection
       quote="What you learn, you must share."
-      stage={[
-        {
-          talk: talk(
-            "golab",
-            "2026-11-01",
-            "GoLab 2026",
-            "Securing Go for Production",
-            "Bologna, Italy"
-          ),
-          upcoming: true,
-        },
-        {
-          talk: talk(
-            "ctc",
-            "2026-09-26",
-            "ComeToCode 2026",
-            "Il security engineer che già AI",
-            "Pignola, Italy"
-          ),
-          upcoming: false,
-        },
-      ]}
+      stage={stage([true, true, false])}
       spokenAt={["GoLab", "KCD Italy", "WeAreDevelopers World Congress"]}
-      communities={communities}
       talkCount={32}
+    />
+  ),
+};
+
+// Nothing scheduled: the same three cards, all from the archive.
+export const OnStageBetweenTalks: Story = {
+  render: () => (
+    <StageSection
+      quote="What you learn, you must share."
+      stage={stage([false, false, false])}
+      spokenAt={["ComeToCode", "GoLab"]}
+      talkCount={32}
+    />
+  ),
+};
+
+export const Community: Story = {
+  render: () => (
+    <CommunitySection
+      association={{
+        title: "Schrodinger Hat",
+        description:
+          "The non-profit open source association I co-founded and run. 20k+ people reached, 100+ speakers at events across Europe.",
+        href: "#",
+      }}
+      events={[
+        { title: "Open Source Day", line: "4 editions, 2023 to 2026, in Florence.", href: "#" },
+        { title: "Meetups", line: "10 since 2023, in Milan, Florence and Verona." },
+      ]}
     />
   ),
 };

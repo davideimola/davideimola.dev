@@ -49,6 +49,7 @@
     "event": "AI for Security Hackathon",
     "type": "Hackathon",
     "organizer": true,
+    "host": "redcarbon",
     "date": "2026-06-27",
     "location": "Turin, Italy",
     "tags": ["AI", "Security"]
@@ -58,6 +59,7 @@
     "event": "Open Source Day 2026",
     "type": "Conference",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2026-04-25",
     "eventDateRange": "Apr 24–25",
     "location": "Florence, Italy",
@@ -73,6 +75,7 @@
     "event": "SH meets Mollie",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2026-01-28",
     "location": "Milan, Italy",
     "tags": ["Open Source", "Community"]
@@ -82,6 +85,7 @@
     "event": "TDD - Test-Driven Development",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2025-11-26",
     "location": "Florence, Italy",
     "tags": ["TDD", "Testing"]
@@ -91,6 +95,7 @@
     "event": "Open Source Day 2025",
     "type": "Conference",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2025-03-21",
     "location": "Florence, Italy",
     "tags": ["Open Source", "Community"]
@@ -100,6 +105,7 @@
     "event": "Costruire Software Funzionante con approccio ATDD",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2024-11-27",
     "location": "Florence, Italy",
     "tags": ["TDD", "Testing", "ATDD"]
@@ -162,6 +168,7 @@
     "event": "Dev/DevRel nel 2024",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "mc": true,
     "date": "2024-04-10",
     "location": "Verona, Italy",
@@ -172,6 +179,7 @@
     "event": "Open Source Day 2024",
     "type": "Conference",
     "organizer": true,
+    "host": "schrodinger-hat",
     "mc": true,
     "date": "2024-03-07",
     "location": "Florence, Italy",
@@ -197,6 +205,7 @@
     "event": "Rust by Luca Palmieri",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2023-11-22",
     "location": "Florence, Italy",
     "tags": ["Rust", "Community"]
@@ -235,6 +244,7 @@
     "event": "TypeScript Meetup",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "mc": true,
     "date": "2023-10-26",
     "location": "Verona, Italy",
@@ -245,6 +255,7 @@
     "event": "Essential JS Design Patterns",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2023-10-23",
     "location": "Milan, Italy",
     "tags": ["JavaScript", "Design Patterns"]
@@ -282,6 +293,7 @@
     "event": "Kubernetes and Unicode",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "mc": true,
     "date": "2023-09-21",
     "location": "Verona, Italy",
@@ -292,6 +304,7 @@
     "event": "RusticGraph",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2023-09-07",
     "location": "Milan, Italy",
     "tags": ["Rust", "Graph"]
@@ -301,6 +314,7 @@
     "event": "Qwik by Miško Hevery",
     "type": "Meetup",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2023-06-14",
     "location": "Florence, Italy",
     "tags": ["JavaScript", "Qwik"]
@@ -310,6 +324,7 @@
     "event": "Open Source Day 2023",
     "type": "Conference",
     "organizer": true,
+    "host": "schrodinger-hat",
     "date": "2023-03-28",
     "location": "Florence, Italy",
     "tags": ["Open Source", "Community"]

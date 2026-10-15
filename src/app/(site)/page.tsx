@@ -1,8 +1,9 @@
 import {
   BuildingSection,
+  CommunitySection,
   HeroSection,
-  InPublicSection,
   NewsletterSection,
+  StageSection,
   WritingSection,
 } from "../../components/sections";
 import { JsonLd } from "../../components/ui/JsonLd";
@@ -12,15 +13,20 @@ import { loadDrawableCover } from "../../lib/cover-files";
 import { getAboutNarrative } from "../../lib/cv";
 import { pickBuildingProject, pickSpokenAt, pickStageTalks } from "../../lib/home-cards";
 import { PERSON_SCHEMA } from "../../lib/schema";
+import { describeKind, hostedBy, organisedByKind } from "../../lib/sharing";
 
-// Shown in IN PUBLIC, in this order, read from projects.json.
-const COMMUNITY_SLUGS = ["schrodinger-hat", "os-day"];
+// The association COMMUNITY presents, read from projects.json; its events are
+// the organised talks whose `host` is this slug.
+const ASSOCIATION = "schrodinger-hat";
+
+// How many talk cards ON STAGE shows, always that many.
+const STAGE_CARDS = 3;
 
 // How many of the latest posts WRITING lists.
 const LATEST_POSTS = 4;
 
-// Hourly: IN PUBLIC moves from "Next on stage" to "Recently on stage" on its
-// own when a talk passes, without a deploy.
+// Hourly: ON STAGE moves a talk from Next to the past on its own when its day
+// passes, without a deploy.
 export const revalidate = 3600;
 
 const WEBSITE_SCHEMA = {
@@ -32,9 +38,10 @@ const WEBSITE_SCHEMA = {
     "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go. Co-founder of Schrödinger Hat.",
 };
 
-// The home tells one story, the Record's creed in order: who I am (HERO), what
-// I build (BUILDING), what I write (WRITING), where I say it out loud (IN
-// PUBLIC), and one way to keep in touch (NEWSLETTER).
+// The home tells one story in order: who I am (HERO), what I build (BUILDING),
+// what I write (WRITING), where I say it out loud (ON STAGE, titled with the
+// Record's creed), the community I run (COMMUNITY), and one way to keep in
+// touch (NEWSLETTER).
 export default function HomePage() {
   const posts = getAllPosts();
   const talks = getAllTalks();
@@ -52,15 +59,14 @@ export default function HomePage() {
   const drawing = buildingPost?.heroImage ? loadDrawableCover(buildingPost.heroImage) : null;
   const buildingHref = building?.github ?? building?.url;
 
-  const communities = COMMUNITY_SLUGS.map((slug) => {
-    const project = projects.find((p) => p.slug === slug);
-    if (!project) throw new Error(`Home: unknown project "${slug}" in IN PUBLIC.`);
-    return {
-      title: project.title,
-      description: project.description,
-      href: project.url ?? "/projects",
-    };
-  });
+  const association = projects.find((p) => p.slug === ASSOCIATION);
+  if (!association?.url) throw new Error(`Home: the association "${ASSOCIATION}" needs a url.`);
+  // The conference links to its own site, the project that is part of the association.
+  const flagshipEvent = projects.find((p) => p.partOf === ASSOCIATION);
+  const events = organisedByKind(hostedBy(talks, ASSOCIATION)).map((kind) => ({
+    ...describeKind(kind),
+    ...(kind.kind === "Conference" && flagshipEvent?.url ? { href: flagshipEvent.url } : {}),
+  }));
 
   return (
     <>
@@ -86,12 +92,19 @@ export default function HomePage() {
         topics={topicCounts(posts)}
         total={posts.length}
       />
-      <InPublicSection
+      <StageSection
         quote={creed.quote}
-        stage={pickStageTalks(talks, today)}
+        stage={pickStageTalks(talks, today, STAGE_CARDS)}
         spokenAt={pickSpokenAt(talks, today)}
-        communities={communities}
         talkCount={talks.length}
+      />
+      <CommunitySection
+        association={{
+          title: association.title,
+          description: association.description,
+          href: association.url,
+        }}
+        events={events}
       />
       <NewsletterSection />
     </>

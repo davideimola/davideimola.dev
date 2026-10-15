@@ -40,6 +40,12 @@ export interface Talk {
   eventDateRange?: string;
   location: string;
   organizer?: boolean;
+  /**
+   * Who an organised event belongs to: a project slug ("schrodinger-hat") or
+   * an employer ("redcarbon"). The home COMMUNITY block lists only the events
+   * of the association it names.
+   */
+  host?: string;
   mc?: boolean;
   session?: TalkSession;
   /**
@@ -65,6 +71,8 @@ export interface Project {
   flagship?: boolean;
   /** The short mono label at the end of a /projects row ("live", "co-founder"). */
   note?: string;
+  /** The project this one belongs to: Open Source Day is Schrodinger Hat's. */
+  partOf?: string;
   /** Three short facts the home BUILDING block lists under the flagship. */
   highlights?: string[];
   /** A one-line way to try it, shown under the flagship. */

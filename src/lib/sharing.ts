@@ -80,6 +80,11 @@ export function sessionDetail(talk: Talk): string {
   return talk.session?.coSpeaker ? `${format}, with ${talk.session.coSpeaker}` : format;
 }
 
+/** The events Davide organised for one host, e.g. Schrodinger Hat's and not RedCarbon's. */
+export function hostedBy(talks: Talk[], host: string): Talk[] {
+  return talks.filter((t) => t.organizer && t.host === host);
+}
+
 export interface OrganisedKind {
   /** The talk type: "Conference", "Meetup", "Hackathon". */
   kind: string;

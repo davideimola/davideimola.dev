@@ -7,7 +7,7 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["Community", "Open Source"],
-    "description": "International open source community I co-founded. 20k+ people reached, 100+ speakers at events across Europe.",
+    "description": "The non-profit open source association I co-founded and run. 20k+ people reached, 100+ speakers at events across Europe.",
     "group": "community",
     "note": "co-founder"
   },
@@ -19,8 +19,9 @@
     "period": "2022–present",
     "featured": true,
     "tags": ["Conference", "Open Source"],
-    "description": "The open source conference I co-organise in Florence. A full day of talks, workshops and community.",
+    "description": "The open source conference Schrodinger Hat runs in Florence. A full day of talks, workshops and community.",
     "group": "community",
+    "partOf": "schrodinger-hat",
     "note": "co-organiser"
   },
   {
