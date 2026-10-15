@@ -158,12 +158,13 @@ export default function NowPage() {
       <Band tape="Community" tilt={2}>
         <div className="flex flex-col gap-2 max-w-[760px]">
           <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
-            Schrodinger Hat Branches
+            Open Source Day 2027
           </h2>
           <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
-            Schrodinger Hat's distributed arm: free local meetups, each run by people on the ground.
-            I lead the program, spinning up new chapters and keeping the active ones moving. Rome,
-            Verona, Milan, Florence launching now. Looking abroad next.
+            Schrodinger Hat's conference, every spring. The 2026 edition is behind us and work on
+            2027 has started. The Branches, our free local meetups, are on pause: time is short and
+            so are hands, so what we have goes into the events that happen in person. They will come
+            back.
           </p>
           <a
             href="https://schroedinger-hat.org"
