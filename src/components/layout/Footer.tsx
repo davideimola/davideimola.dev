@@ -24,7 +24,6 @@ const SOCIAL_LINKS = [
 
 const SITE_LINKS = [
   { label: "Newsletter", href: "/newsletter" },
-  { label: "Brand", href: "/brand" },
   { label: "Privacy", href: "/privacy" },
   { label: "Source", href: "https://github.com/davideimola/davideimola.dev" },
 ];

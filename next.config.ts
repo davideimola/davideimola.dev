@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // The brand page folded into the speaker kit, the one place event
+      // organisers look for logos. Exact path only: /brand/* still serves the files.
+      {
+        source: "/brand",
+        destination: "/sharing#speaker-kit",
+        permanent: true,
+      },
       // The case studies told the story /about and /sharing already tell,
       // with facts of their own that drifted; old links land on those.
       {

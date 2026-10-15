@@ -37,6 +37,40 @@ export const metadata: Metadata = {
 // opens and closes, without a deploy.
 export const revalidate = 86400;
 
+// What used to be /brand, cut to what an event program needs. The files come
+// from @davideimola/brand through `pnpm brand:sync`; the full set and the
+// guidelines live in the brand repo.
+const LOGO_DOWNLOADS = [
+  {
+    label: "Lockup",
+    files: [
+      { format: "SVG", href: "/brand/lockup.svg" },
+      { format: "PNG", href: "/brand/lockup-1200.png" },
+    ],
+  },
+  {
+    label: "On dark",
+    files: [
+      { format: "SVG", href: "/brand/lockup-dark.svg" },
+      { format: "PNG", href: "/brand/lockup-dark-1200.png" },
+    ],
+  },
+  {
+    label: "Mark",
+    files: [
+      { format: "SVG", href: "/brand/mark-l.svg" },
+      { format: "PNG", href: "/brand/mark-l-1024.png" },
+    ],
+  },
+  {
+    label: "Avatar",
+    files: [
+      { format: "SVG", href: "/brand/avatar.svg" },
+      { format: "PNG", href: "/brand/avatar-1024.png" },
+    ],
+  },
+];
+
 const TOPICS = [
   "AI × Security",
   "Go & Backend Engineering",
@@ -453,12 +487,53 @@ export default function SharingPage() {
             >
               Download the headshot
             </a>
-            <a
-              href="/brand"
-              className="self-start font-mono text-[13px] text-fg-subtle no-underline hover:text-accent"
-            >
-              Logos and wordmark on /brand
-            </a>
+            {/* The lockup shown on the paper it was drawn for, whatever the theme. */}
+            <div className="mt-3 flex flex-col gap-2.5">
+              <div className="border border-border bg-[var(--di-color-paper)] h-[96px] flex items-center justify-center px-6">
+                {/* biome-ignore lint/performance/noImgElement: a downloadable asset shown exactly as served */}
+                <img
+                  src="/brand/lockup.svg"
+                  alt="The Davide Imola lockup: the mark and the wordmark"
+                  className="w-full max-w-[220px] h-auto"
+                />
+              </div>
+              <ul className="m-0 p-0 list-none flex flex-col gap-1">
+                {LOGO_DOWNLOADS.map((d) => (
+                  <li key={d.label} className="flex flex-wrap items-baseline gap-x-3">
+                    <span className="font-sans text-[15px] text-fg-muted">{d.label}</span>
+                    {d.files.map((f) => (
+                      <a
+                        key={f.href}
+                        href={f.href}
+                        download
+                        className="font-mono text-[13px] text-fg-subtle no-underline hover:text-accent transition-colors duration-150"
+                      >
+                        ↓ {f.format}
+                      </a>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+              <p className="m-0 font-mono text-[12px] leading-[1.5] text-fg-subtle">
+                Use as-is,{" "}
+                <a
+                  href="/brand/LICENSE.md"
+                  className="text-fg-muted underline hover:text-accent transition-colors duration-150"
+                >
+                  CC BY-ND 4.0
+                </a>
+                . Guidelines in the{" "}
+                <a
+                  href="https://github.com/davideimola/brand/blob/main/docs/brand.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fg-muted underline hover:text-accent transition-colors duration-150"
+                >
+                  brand repo
+                </a>
+                .
+              </p>
+            </div>
             <a
               href="/contact"
               className="mt-1 bg-fg text-bg px-5 py-3.5 font-sans font-semibold text-[16px] text-center no-underline hover:bg-fg-body transition-colors duration-150"

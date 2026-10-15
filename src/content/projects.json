@@ -1,18 +1,5 @@
 [
   {
-    "slug": "redcarbon",
-    "title": "RedCarbon",
-    "role": "Tech Lead",
-    "status": "active",
-    "url": "https://redcarbon.ai",
-    "period": "2022–present",
-    "featured": true,
-    "tags": ["AI", "Security", "Startup"],
-    "description": "AI-powered threat detection platform. I lead platform engineering, making the technical calls across the whole stack and building the AI agents on top, as the company grows from seed to Series A.",
-    "group": "work",
-    "note": "Tech Lead"
-  },
-  {
     "slug": "schrodinger-hat",
     "title": "Schrodinger Hat",
     "status": "active",
@@ -73,5 +60,16 @@
     "note": "in progress",
     "tags": ["Next.js", "PostgreSQL", "MCP"],
     "description": "The same idea for wine and spirits: what I tasted, what is in the house and what is worth trying, for a sommelier that reads it over MCP."
+  },
+  {
+    "slug": "bindex",
+    "title": "bindex",
+    "status": "active",
+    "period": "2026–present",
+    "featured": false,
+    "group": "personal",
+    "note": "in progress",
+    "tags": ["Next.js", "PostgreSQL"],
+    "description": "A tracker for my Pokémon card collection, organised around the National Pokédex: not which cards I own, but which card I chose to represent each Pokémon."
   }
 ]

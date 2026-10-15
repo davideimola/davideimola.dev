@@ -64,7 +64,7 @@ const STATIC_PAGES: SearchItem[] = [
     id: "page-projects",
     type: "page",
     title: "Built",
-    description: "Open source tools, communities, and side projects.",
+    description: "Open source tools and side projects.",
     href: "/projects",
   },
   {
@@ -94,13 +94,6 @@ const STATIC_PAGES: SearchItem[] = [
     title: "Privacy",
     description: "Privacy policy for davideimola.dev.",
     href: "/privacy",
-  },
-  {
-    id: "page-brand",
-    type: "page",
-    title: "Brand",
-    description: "Logo, wordmark, and brand assets, free to use as-is.",
-    href: "/brand",
   },
 ];
 
