@@ -256,6 +256,41 @@ body {
   animation-delay: 1330ms;
 }
 
+/* Pointing at the home link ties the knot again, in the same gesture. Only
+   where there is a pointer that hovers, so a tap never leaves it half done. */
+@media (hover: hover) {
+  .knot-on-hover:hover [data-knot-hover] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: mark-knot 380ms cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  }
+}
+
+/* ── The knot as an end mark ──
+   The last paragraph of a post closes on the knot, the way a magazine closes
+   a piece on a small square (src/lib/rehype-end-mark.ts). Drawn in CSS to the
+   knot's own proportions and tilt; it is the mark's red, not a new one. */
+.end-mark {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.46em;
+  margin-left: 0.4em;
+  border-radius: 0.1em;
+  background: var(--di-accent);
+  transform: rotate(-6deg);
+}
+
+.end-mark-line {
+  margin-top: 0;
+}
+
+/* The reading line ties its knot when the reader reaches the last line */
+.progress-knot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-knot 380ms cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
 /* ── Prose (Tailwind Typography) ──
    The article column (docs/brand.md, "Site"): body 19/1.7 in fg-body, titles in
    sans, links in ink that turn red on hover only, quotes set large with a small

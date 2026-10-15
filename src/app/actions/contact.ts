@@ -44,7 +44,7 @@ export async function sendContactEmail(
   const message = formData.get("message")?.toString().trim();
 
   if (!name || !email || !message) {
-    return { status: "error", message: "All fields are required." };
+    return { status: "error", message: "I need all three: your name, your email and the message." };
   }
 
   if (!isValidEmail(email)) {
@@ -52,7 +52,7 @@ export async function sendContactEmail(
   }
 
   if (message.length < 10) {
-    return { status: "error", message: "Message must be at least 10 characters." };
+    return { status: "error", message: "A few more words, please: at least 10 characters." };
   }
 
   // Links are the most common spam pattern. Reject with an honest error so a
@@ -95,6 +95,6 @@ export async function sendContactEmail(
 
     return { status: "success" };
   } catch {
-    return { status: "error", message: "Failed to send message. Please try again." };
+    return { status: "error", message: "The message got stuck on my side. Try again in a moment." };
   }
 }

@@ -28,8 +28,8 @@ describe("darkCover", () => {
   });
 });
 
-describe("blog cover files", () => {
-  const blog = join(process.cwd(), "public/images/blog");
+describe.each(["blog", "pages"])("%s cover files", (dir) => {
+  const blog = join(process.cwd(), "public/images", dir);
   const { palette } = brandTokens.color;
   const light = [palette.paper, palette.ink, palette.akane].map((c) => c.toUpperCase());
   const dark = [palette.night, palette.chalk, palette["akane-night"]].map((c) => c.toUpperCase());

@@ -55,7 +55,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
         <a
           href="/"
           aria-label="davide imola, home"
-          className="flex items-center gap-2.5 text-fg no-underline"
+          className="knot-on-hover flex items-center gap-2.5 text-fg no-underline"
         >
           <Mark
             cut="s"

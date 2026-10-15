@@ -31,6 +31,7 @@ import { loadDrawableCover } from "../../../../lib/cover-files";
 import { rasterCover } from "../../../../lib/covers";
 import { formatDate } from "../../../../lib/dates";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
+import { rehypeEndMark } from "../../../../lib/rehype-end-mark";
 
 function absoluteUrl(src: string): string {
   return src.startsWith("http") ? src : `https://davideimola.dev${src}`;
@@ -190,6 +191,7 @@ export default async function BlogPostPage({ params }: Props) {
                       rehypeSlug,
                       rehypeCodeTitle,
                       [rehypePrism, { ignoreMissing: true }],
+                      rehypeEndMark,
                     ],
                   },
                 }}

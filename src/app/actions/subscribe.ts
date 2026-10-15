@@ -40,6 +40,9 @@ export async function subscribe(
     await createSubscriber(email);
     return { status: "success" };
   } catch {
-    return { status: "error", message: "Something went wrong. Please try again in a moment." };
+    return {
+      status: "error",
+      message: "That did not go through, and it is on my side. Try again in a moment.",
+    };
   }
 }

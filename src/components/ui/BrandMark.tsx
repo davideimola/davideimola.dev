@@ -65,8 +65,9 @@ export function Mark({
         {g.tail && <path d={g.tail.d} strokeWidth={g.tail.width} {...trace} />}
       </g>
       {/* The knot animates on a wrapper: a CSS transform on the rect itself
-          would replace its rotate() attribute. */}
-      <g {...(draw ? { "data-knot": "" } : {})}>
+          would replace its rotate() attribute. `data-knot-hover` is inert
+          until an ancestor carries `.knot-on-hover` (globals.css). */}
+      <g data-knot-hover="" {...(draw ? { "data-knot": "" } : {})}>
         <rect
           x={g.knot.x}
           y={g.knot.y}

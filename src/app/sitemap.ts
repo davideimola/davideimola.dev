@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   { url: `${BASE_URL}/contact`, priority: 0.5, changeFrequency: "yearly" as const },
   { url: `${BASE_URL}/newsletter`, priority: 0.6, changeFrequency: "monthly" as const },
   { url: `${BASE_URL}/links`, priority: 0.5, changeFrequency: "monthly" as const },
+  { url: `${BASE_URL}/colophon`, priority: 0.3, changeFrequency: "yearly" as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

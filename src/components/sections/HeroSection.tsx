@@ -1,16 +1,24 @@
 import type { BlogPost, Project } from "../../lib/content";
+import type { DrawableCover } from "../../lib/cover-files";
 import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
 import type { RotatingCard } from "../../lib/home-cards";
 import { ButtonLink } from "../ui/Button";
 import { Card } from "../ui/Card";
+import { DrawnCover } from "../ui/DrawnCover";
 import { Marker } from "../ui/Marker";
 import { Photo } from "../ui/Photo";
 import { Tape } from "../ui/Tape";
 
 interface HeroSectionProps {
   latestPost: BlogPost | null;
+  /** The latest post's SVG cover, prepared to draw itself; null for a raster one. */
+  latestCover?: DrawableCover | null;
   project: Project | null;
+  /** The cover of the post that introduces the project, prepared like latestCover. */
+  projectCover?: { drawable: DrawableCover; alt: string } | null;
   rotating: RotatingCard | null;
+  /** The drawing for the rotating slot: talks and books have no cover of their own. */
+  rotatingCover?: { drawable: DrawableCover; alt: string } | null;
 }
 
 interface HomeCard {
@@ -18,6 +26,7 @@ interface HomeCard {
   tape: string;
   href: string;
   title: string;
+  cover?: { drawable: DrawableCover; alt: string };
   /** One sans sentence under the title, written to stand on its own. */
   blurb?: string;
   /** The mono metadata line: a date, an event, a type. */
@@ -72,7 +81,14 @@ const GRID_COLS: Record<number, string> = {
 // marker on "security", the lead, one ink button plus one text link, the place
 // in mono, and the portrait on the right in black and white with its tape.
 // Under it three straight cards, each with a tape on its edge.
-export function HeroSection({ latestPost, project, rotating }: HeroSectionProps) {
+export function HeroSection({
+  latestPost,
+  latestCover,
+  project,
+  projectCover,
+  rotating,
+  rotatingCover,
+}: HeroSectionProps) {
   const cards: HomeCard[] = [];
   if (latestPost) {
     cards.push({
@@ -81,6 +97,9 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
       href: `/blog/${latestPost.slug}`,
       title: latestPost.title,
       meta: formatDayMonthYear(latestPost.date),
+      ...(latestCover && {
+        cover: { drawable: latestCover, alt: latestPost.heroImageAlt ?? latestPost.title },
+      }),
     });
   }
   if (project) {
@@ -90,9 +109,12 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
       href: project.url ?? project.github ?? "/projects",
       title: project.title,
       blurb: firstSentence(project.description),
+      ...(projectCover && { cover: projectCover }),
     });
   }
-  if (rotating) cards.push(rotatingCard(rotating));
+  if (rotating) {
+    cards.push({ ...rotatingCard(rotating), ...(rotatingCover && { cover: rotatingCover }) });
+  }
 
   return (
     <section className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-6 md:pt-14">
@@ -141,7 +163,15 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
               tapeTilt={(i % 3) as 0 | 1 | 2}
               className="px-[26px] pb-6 pt-[34px]"
             >
-              <span className="flex flex-col gap-2">
+              <span className="flex flex-col gap-2 h-full">
+                {card.cover && (
+                  <DrawnCover
+                    light={card.cover.drawable.light}
+                    dark={card.cover.drawable.dark}
+                    alt={card.cover.alt}
+                    className="mb-3"
+                  />
+                )}
                 <span className="font-sans font-bold text-[23px] leading-[1.2] tracking-[-0.025em] text-fg">
                   {card.title}
                 </span>
@@ -151,7 +181,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
                   </span>
                 )}
                 {card.meta && (
-                  <span className="font-mono text-[12px] md:text-[13px] text-fg-subtle">
+                  <span className="mt-auto pt-1 font-mono text-[12px] md:text-[13px] text-fg-subtle">
                     {card.meta}
                   </span>
                 )}

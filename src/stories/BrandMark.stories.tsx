@@ -68,6 +68,16 @@ export const DrawWithEcho: Story = {
   ),
 };
 
+// The NavBar's home link: pointing at it ties the knot again.
+export const KnotOnHover: Story = {
+  render: () => (
+    <a href="#top" className="knot-on-hover inline-flex items-center gap-3 text-fg no-underline">
+      <Mark cut="s" size={34} />
+      <Wordmark weight="bold" width={172} />
+    </a>
+  ),
+};
+
 export const Tonal: Story = {
   render: () => (
     <div className="text-border">

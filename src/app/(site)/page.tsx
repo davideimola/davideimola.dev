@@ -7,6 +7,7 @@ import {
 } from "../../components/sections";
 import { JsonLd } from "../../components/ui/JsonLd";
 import { getAllPosts, getAllProjects, getAllTalks, getPostBySlug } from "../../lib/content";
+import { loadDrawableCover } from "../../lib/cover-files";
 import { getAboutNarrative } from "../../lib/cv";
 import { pickBuildingProject, pickRotatingCard, pickSpokenAt } from "../../lib/home-cards";
 import { PERSON_SCHEMA } from "../../lib/schema";
@@ -19,6 +20,19 @@ const FAILURE_POST = "i-built-a-tool-i-dont-use";
 
 // Shown in IN PUBLIC, in this order, read from projects.json.
 const COMMUNITY_SLUGS = ["schrodinger-hat", "os-day"];
+
+// Talks and books carry no cover of their own, so the rotating card has one
+// drawing per kind, made for it like a post's (public/images/pages/).
+const ROTATING_COVERS = {
+  talk: {
+    src: "/images/pages/talk/cover.svg",
+    alt: "Line drawing of a lectern with a microphone facing a hanging screen, a red pointer dot on the slide",
+  },
+  reading: {
+    src: "/images/pages/reading/cover.svg",
+    alt: "Line drawing of an open book with a red ribbon bookmark",
+  },
+};
 
 // Hourly, like /now: the rotating card under the hero turns over on its own
 // when a talk passes or the reading changes, without a deploy.
@@ -41,7 +55,20 @@ export default async function HomePage() {
   const today = new Date();
   const { document: shelf } = await getShowcase();
   const rotating = pickRotatingCard({ talks, reading: shelf.now, today });
+  const rotatingArt = rotating && ROTATING_COVERS[rotating.kind === "reading" ? "reading" : "talk"];
+  const rotatingDrawing = rotatingArt ? loadDrawableCover(rotatingArt.src) : null;
   const { creed } = getAboutNarrative();
+
+  const building = pickBuildingProject(projects);
+  // The project's own post lends the card its drawing, as the latest post does.
+  const buildingPost = building?.post ? getPostBySlug(building.post) : null;
+  const buildingDrawing = buildingPost?.heroImage
+    ? loadDrawableCover(buildingPost.heroImage)
+    : null;
+  const projectCover =
+    buildingPost && buildingDrawing
+      ? { drawable: buildingDrawing, alt: buildingPost.heroImageAlt ?? buildingPost.title }
+      : null;
 
   const failure = getPostBySlug(FAILURE_POST);
   if (!failure) throw new Error(`Home: the post "${FAILURE_POST}" does not exist.`);
@@ -64,8 +91,15 @@ export default async function HomePage() {
       <JsonLd data={WEBSITE_SCHEMA} />
       <HeroSection
         latestPost={latestPost}
-        project={pickBuildingProject(projects)}
+        latestCover={latestPost?.heroImage ? loadDrawableCover(latestPost.heroImage) : null}
+        project={building}
+        projectCover={projectCover}
         rotating={rotating}
+        rotatingCover={
+          rotatingArt && rotatingDrawing
+            ? { drawable: rotatingDrawing, alt: rotatingArt.alt }
+            : null
+        }
       />
       <HowIWorkSection
         quote={creed.quote}

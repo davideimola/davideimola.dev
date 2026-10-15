@@ -24,6 +24,7 @@ const SOCIAL_LINKS = [
 
 const SITE_LINKS = [
   { label: "Newsletter", href: "/newsletter" },
+  { label: "Colophon", href: "/colophon" },
   { label: "Privacy", href: "/privacy" },
   { label: "Source", href: "https://github.com/davideimola/davideimola.dev" },
 ];
@@ -56,6 +57,7 @@ function LinkRow({ links, label }: { links: { label: string; href: string }[]; l
 export function Footer() {
   const { name, location } = cvRecord.identity;
   const place = location.split("·")[0].trim();
+  const city = place.split(",")[0].trim();
   const year = new Date().getFullYear();
 
   return (
@@ -86,7 +88,7 @@ export function Footer() {
               ))}
             </nav>
             <p className="font-mono text-[12px] text-fg-subtle m-0">
-              © {year} {name}
+              © {year} {name} · Built in {city}, one commit at a time
             </p>
           </div>
         </div>
