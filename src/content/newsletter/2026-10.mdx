@@ -1,0 +1,69 @@
+---
+issue: 2
+subject: "Issue #2: A second brain that works, and an agent that did not need to be one"
+previewText: "Two things I have been thinking about after a quiet summer, plus GoLab and reactjsday in November."
+sendDate: "2026-10-16"
+---
+
+This issue should have landed at the end of August. It did not, and neither did September's: I took a break, and the post I promised last time on the agent skills I use for security review went down with it. So this one covers three months, and it opens with two things I have been thinking about rather than with a list of what I shipped.
+
+<SectionHeader title="The second brain finally makes sense" />
+
+I never found the second brain useful. Notes apps, tagging systems, the whole idea of capturing everything so that future me could find it: I tried, and what I saved I never went back to. Filing was work, and finding was luck.
+
+That is changing, and the reason is AI. Not because it writes the notes for me, but because it closes the two gaps that always killed the habit. It helps me save things and keep them in order, so capturing costs almost nothing. And it helps me get them back: ask, and it remembers and finds what I put there months ago.
+
+The part I did not expect is what happens when the second brain is made of small tools built for one job. I keep my reading in tsundoku, a library I built for myself: what I have read, what I thought of it, what I would like to read next. My assistant reads it, so when I ask what to pick up next the answer comes from my own history instead of a bestseller list. Same with kanpai, which I use as a diary of what I drink because I want to learn more about wine and spirits. Every entry gives the assistant more to go on, and the advice gets better the more I write down.
+
+So the second brain is no longer a place where notes go to die. It is data that an assistant can actually use, and the tools I build are mostly ways of giving it better data. I have not figured out where this ends yet, which is why it is here and not on the blog.
+
+**Do you have a second brain that actually works?** Hit reply and tell me what it is made of. I am collecting answers before I write the long version.
+
+<SectionHeader title="Not everything has to be an agent" />
+
+After Argus went out I asked around, and one answer changed the project. Someone told me, more or less: if I have to pay for another AI's tokens, it is not in the budget. But if it were just an MCP server, a set of tools my own Claude can use, I would take it.
+
+That made me stop and look at what I had built. I had assumed the value of Argus was the agent: the model that reads the scanners' findings and reasons about them. For a lot of people it is not. They already pay for an assistant they trust, and what it is missing is the security tooling, not another brain.
+
+So Argus now runs both ways. The reasoning mode stays, because there are places where a model chosen and tuned for security review earns its cost. Next to it there is a toolbox mode: the scanners, served over MCP, for whatever AI you already use. It turned out to be the smoother of the two, and it does more than I expected, because your assistant brings everything else it knows to the findings.
+
+The lesson I keep coming back to: with AI, the default answer has become "build an agent", and sometimes the better product is just good tools. [Argus is on GitHub](https://github.com/argusappsec/argus).
+
+<SectionHeader title="New on the blog" />
+
+<PostCard
+  title="AI Agent Sessions Are a Data Store Nobody Designed"
+  url="/blog/ai-agent-sessions-data-store"
+  category="Technical"
+  description="Genkit and ADK save every turn of your agent's conversation in a store nobody designed. What ends up in there, and why fixing it is the framework's job."
+  meta="Oct 14, 2026 · 11 min read"
+/>
+
+<SectionHeader title="Also" />
+
+- **Back on stage.** At the end of September I spoke at ComeToCode in Pignola, after a year off, on security engineering with mainstream AI tools and no enterprise budget. The [slides are online](https://slides.davideimola.dev/ai-defense/1).
+- **This site has a new brand**, from the mark to the covers. Two new pages came with it: [/shelf](/shelf), my reading served live by tsundoku, and [/cv](/cv), generated from a single record.
+
+<SectionHeader title="Where to catch me" />
+
+<TalkRow
+  event="GoLab 2026"
+  date="Nov 1, 2026"
+  location="Bologna, Italy"
+  type="Conference"
+  sessionTitle="Securing Go for Production: Best Practices, Supply Chain, Testing"
+  url="/sharing#golab-2026"
+/>
+
+<TalkRow
+  event="reactjsday 2026"
+  date="Nov 19, 2026"
+  location="Verona, Italy"
+  type="Conference"
+  sessionTitle="AI Won't Design Your System. You Have To."
+  url="/sharing#reactjsday-2026"
+/>
+
+If you are at either one, come say hi. Next issue at the end of November, once both are behind me.
+
+<Cta href="/newsletter" variant="primary">Browse the archive →</Cta>
