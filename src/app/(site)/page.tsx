@@ -60,6 +60,8 @@ export default async function HomePage() {
   const { creed } = getAboutNarrative();
 
   const building = pickBuildingProject(projects);
+  const flagship = projects.find((p) => p.flagship);
+  const flagshipHref = flagship?.github ?? flagship?.url;
   // The project's own post lends the card its drawing, as the latest post does.
   const buildingPost = building?.post ? getPostBySlug(building.post) : null;
   const buildingDrawing = buildingPost?.heroImage
@@ -95,6 +97,7 @@ export default async function HomePage() {
         project={building}
         projectCover={projectCover}
         rotating={rotating}
+        flagship={flagship && flagshipHref ? { title: flagship.title, href: flagshipHref } : null}
         rotatingCover={
           rotatingArt && rotatingDrawing
             ? { drawable: rotatingDrawing, alt: rotatingArt.alt }

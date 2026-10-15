@@ -19,6 +19,8 @@ interface HeroSectionProps {
   rotating: RotatingCard | null;
   /** The drawing for the rotating slot: talks and books have no cover of their own. */
   rotatingCover?: { drawable: DrawableCover; alt: string } | null;
+  /** The flagship project, named under the lead as the proof of the headline. */
+  flagship?: { title: string; href: string } | null;
 }
 
 interface HomeCard {
@@ -78,8 +80,8 @@ const GRID_COLS: Record<number, string> = {
 };
 
 // The home hero (docs/brand.md, "Site"): display headline with the page's one
-// marker on "security", the lead, one ink button plus one text link, the place
-// in mono, and the portrait on the right in black and white with its tape.
+// marker on "security", the lead naming the flagship project, one ink button
+// (About is in the NavBar, so the hero does not repeat it), the place in mono, and the portrait on the right in black and white with its tape.
 // Under it three straight cards, each with a tape on its edge.
 export function HeroSection({
   latestPost,
@@ -88,6 +90,7 @@ export function HeroSection({
   projectCover,
   rotating,
   rotatingCover,
+  flagship,
 }: HeroSectionProps) {
   const cards: HomeCard[] = [];
   if (latestPost) {
@@ -123,15 +126,25 @@ export function HeroSection({
           <h1 className="m-0 font-sans font-bold text-fg text-[44px] sm:text-[64px] lg:text-display leading-[0.98] tracking-[-0.045em]">
             I build AI agents for <Marker>security</Marker>, and the tools I need along the way.
           </h1>
+          {/* The headline says what I build; the lead names it. */}
           <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
-            Tech Lead at RedCarbon. I write mostly Go, and I share everything I learn.
+            Tech Lead at RedCarbon
+            {flagship && (
+              <>
+                , and in the open I build{" "}
+                <a
+                  href={flagship.href}
+                  className="text-fg border-b border-fg no-underline hover:text-accent hover:border-accent transition-colors duration-150"
+                >
+                  {flagship.title}
+                </a>
+              </>
+            )}
+            . I write mostly Go, and I share everything I learn.
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink variant="primary" size="lg" href="/blog">
               Read the writing
-            </ButtonLink>
-            <ButtonLink variant="link" size="lg" href="/about">
-              More about me
             </ButtonLink>
             <span className="font-mono text-meta text-fg-subtle">Verona, Italy · Remote</span>
           </div>
