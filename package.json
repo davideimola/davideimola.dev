@@ -70,7 +70,7 @@
     "jsdom": "^29.1.1",
     "playwright": "^1.63.0",
     "react-email": "^6.9.5",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "storybook": "^10.6.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
