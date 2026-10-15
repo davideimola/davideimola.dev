@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Hand-written: change it with the lists below.
+const LAST_UPDATED = "October 2026";
+
 const HARDWARE = [
   {
     category: "Computing",
@@ -109,13 +112,13 @@ const SOFTWARE = [
     category: "Editor and terminal",
     items: [
       {
-        name: "Cursor",
-        description: "Primary code editor. Custom extensions, Vim keybindings.",
-      },
-      {
         name: "Claude Code",
         description:
-          "AI coding workflow. How this site was built. Changes how you think about development.",
+          "Where most of the code gets written now, from the terminal. Git too: commits, branches and rebases mostly go through it.",
+      },
+      {
+        name: "Visual Studio Code",
+        description: "To read what changed rather than to write it. Kept around, for now.",
       },
       {
         name: "iTerm2 + oh-my-zsh",
@@ -128,7 +131,8 @@ const SOFTWARE = [
     items: [
       {
         name: "Arc",
-        description: "Main browser. Spaces keep work and personal contexts separate.",
+        description:
+          "Main browser. Spaces keep work and personal apart. Tried Dia, its successor, and came back.",
       },
       {
         name: "Raycast",
@@ -140,12 +144,14 @@ const SOFTWARE = [
         description: "Password manager. Non-negotiable, especially working in security.",
       },
       {
-        name: "Notion",
-        description: "Notes, docs, project tracking. Everything that isn't code.",
+        name: "Obsidian",
+        description:
+          "Notes and everything I write, next to the second-brain tools I build for myself: tsundoku, bindex, kanpai.",
       },
       {
         name: "pgAdmin",
-        description: "Current PostgreSQL GUI. Looking for something better; suggestions welcome.",
+        description:
+          "For when I have to query a database by hand. Looking for something better; suggestions welcome.",
       },
     ],
   },
@@ -158,33 +164,6 @@ const SOFTWARE = [
       },
     ],
   },
-  {
-    category: "Git",
-    items: [
-      {
-        name: "GitKraken",
-        description:
-          "Visual Git client. GitKraken Ambassador. I use it for history and complex operations.",
-      },
-      {
-        name: "CLI + GitLens",
-        description:
-          "For day-to-day commits and quick operations. GitLens in Cursor for inline blame.",
-      },
-    ],
-  },
-];
-
-const CURSOR_EXTENSIONS = [
-  "Vim",
-  "GitLens",
-  "Go support",
-  "Tailwind CSS IntelliSense",
-  "Docker",
-  "Kubernetes",
-  "SonarQube for IDE",
-  "Material Icon Theme",
-  "JetBrains Keymap",
 ];
 
 const DEV_STACK = [
@@ -271,6 +250,7 @@ export default function UsesPage() {
           <p className="m-0 font-sans text-[18px] sm:text-[20px] leading-[1.5] text-fg-muted">
             Hardware, software, and tools I use daily to build and think.
           </p>
+          <p className="m-0 font-mono text-[14px] text-fg-subtle">Updated {LAST_UPDATED}</p>
         </div>
         {paper && (
           <p className="relative m-0 pl-5 font-sans font-semibold text-[20px] sm:text-[22px] leading-[1.3] tracking-[-0.02em] text-fg">
@@ -299,9 +279,6 @@ export default function UsesPage() {
             Software
           </Tape>
           <ItemList groups={SOFTWARE} />
-          <p className="m-0 font-mono text-[12px] leading-[1.6] text-fg-subtle">
-            Cursor extensions: {CURSOR_EXTENSIONS.join(" · ")}
-          </p>
         </div>
       </section>
 

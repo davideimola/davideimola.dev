@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 // Hand-written: change it with the prose below.
-const LAST_UPDATED = "July 2026";
+const LAST_UPDATED = "October 2026";
 
 // The prose here is updated by hand, but the shelf strip is read out of the
 // library on every revalidation, so the page follows /shelf's cadence.
@@ -38,20 +38,16 @@ const LEARNING = [
   {
     kicker: "Building for myself",
     title: "A second brain",
-    body: "tsundoku for the library, bindex for the Pokémon collection, an Obsidian vault for what I write. Systems an assistant can query.",
+    body: "tsundoku for the library, bindex for the Pokémon cards, kanpai for the wine, an Obsidian vault for what I write. In daily use and never finished, which is the point.",
   },
 ];
 
+// What I read and play comes from the library through ShelfNow, so it is not
+// restated here.
 const PERSONAL = [
   {
-    title: "D&D, playing and building",
-    body: "Playing Krug the Touchy, a half-orc barbarian who rages if you don't finish his food. Writing my own campaign to DM.",
-  },
-  { title: "Pokémon cards", body: "Building the Pokédex in rare and full-art. A long game." },
-  { title: "JuJutsu", body: "Hontai Yōshin-ryū. Yellow belt; training for orange next year." },
-  {
-    title: "Gaming",
-    body: "Lost in Crimson Desert, with Pokémon Pokopia as the cozy palate cleanser.",
+    title: "JuJutsu",
+    body: "Hontai Yōshin-ryū. Back on the mat after the summer break, yellow belt, working towards orange.",
   },
 ];
 
@@ -113,13 +109,13 @@ export default function NowPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             <div className="flex flex-col gap-2">
               <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
-                The Tech Lead transition
+                Learning to lead people
               </h2>
               <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
-                I'm navigating the hardest part of it: the duality between deep product work and
-                people work. When I'm building, I go full focus, and that makes it hard to
-                context-switch into mentoring mode. I haven't found the right balance yet. I'm
-                working on it.
+                Still a Tech Lead, and more and more of the job is people, even if nobody made it
+                official. I'm learning how to approach each person, how to split the work, and how
+                to understand what someone needs to do their best. Most of it I'm figuring out as I
+                go.
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -129,9 +125,10 @@ export default function NowPage() {
                 </Link>
               </h2>
               <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
-                Open-source AI agent for security code reviews, written in Go. It runs real scanners
-                (Semgrep, Gitleaks, OSV-Scanner), reads the findings, and reasons about them like an
-                analyst would. Early days, moving fast.
+                Open-source AI agent for security code reviews, written in Go. It now runs two ways:
+                as a colleague that runs real scanners and reasons about the findings, or as a
+                toolbox, an MCP server that hands those scanners to the AI you already use, so your
+                own Claude does the reasoning and Argus needs no model of its own.
               </p>
             </div>
           </div>

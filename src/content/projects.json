@@ -31,7 +31,7 @@
     "period": "2026–present",
     "featured": true,
     "tags": ["AI", "Security", "Go"],
-    "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner), reads their findings, and reasons about them like an analyst would.",
+    "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner) and reasons about their findings like an analyst would, or serves them over MCP as a toolbox for the AI you already use.",
     "group": "open",
     "flagship": true,
     "quickstart": "docker run -it -v argus-data:/data -p 8080:8080 ghcr.io/argusappsec/argus",
@@ -70,6 +70,6 @@
     "group": "personal",
     "note": "in progress",
     "tags": ["Next.js", "PostgreSQL"],
-    "description": "A tracker for my Pokémon card collection, organised around the National Pokédex: not which cards I own, but which card I chose to represent each Pokémon."
+    "description": "A tracker for my Pokémon card collection: where it stands, which cards I want and which I don't, and what is still missing to complete the Pokédex."
   }
 ]
