@@ -114,6 +114,7 @@ export function SubscribeForm({
           theme: theme ?? "auto",
           size: "flexible",
           appearance: "interaction-only",
+          language: "en",
         }}
       />
 

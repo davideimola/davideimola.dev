@@ -17,7 +17,7 @@ interface HowIWorkSectionProps {
 // each a ruled row. The motto and gloss are the Record's creed, not copy here.
 export function HowIWorkSection({ quote, gloss, principles }: HowIWorkSectionProps) {
   return (
-    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-16 md:mt-[120px]">
+    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-14 md:mt-20">
       <div className="border-t border-rule pt-7 md:pt-12 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-4 lg:gap-[72px]">
         <div className="flex flex-col items-start gap-4 md:gap-6">
           <Tape tilt={0}>How I work</Tape>

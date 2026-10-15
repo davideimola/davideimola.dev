@@ -14,35 +14,20 @@ interface SiteShellProps {
 export function SiteShell({ items, children }: SiteShellProps) {
   const [open, setOpen] = useState(false);
 
-  // Console easter egg for curious devs
+  // A note for whoever opens the console, in the brand's own colours: read
+  // from the tokens, so it follows the theme and never restates a hex value.
   useEffect(() => {
+    const tokens = getComputedStyle(document.documentElement);
+    const accent = tokens.getPropertyValue("--di-accent").trim();
+    const subtle = tokens.getPropertyValue("--di-fg-subtle").trim();
     console.log(
-      "%c\n" +
-        " ██████╗  █████╗ ██╗   ██╗██╗██████╗ ███████╗\n" +
-        " ██╔══██╗██╔══██╗██║   ██║██║██╔══██╗██╔════╝\n" +
-        " ██║  ██║███████║██║   ██║██║██║  ██║█████╗  \n" +
-        " ██║  ██║██╔══██║╚██╗ ██╔╝██║██║  ██║██╔══╝  \n" +
-        " ██████╔╝██║  ██║ ╚████╔╝ ██║██████╔╝███████╗\n" +
-        " ╚═════╝ ╚═╝  ╚═╝  ╚═══╝  ╚═╝╚═════╝ ╚══════╝\n" +
-        "  ██╗███╗   ███╗ ██████╗ ██╗      █████╗     \n" +
-        "  ██║████╗ ████║██╔═══██╗██║     ██╔══██╗    \n" +
-        "  ██║██╔████╔██║██║   ██║██║     ███████║    \n" +
-        "  ██║██║╚██╔╝██║██║   ██║██║     ██╔══██║    \n" +
-        "  ██║██║ ╚═╝ ██║╚██████╔╝███████╗██║  ██║    \n" +
-        "  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    \n",
-      "color: #C91F37; font-family: monospace;"
+      "%c■%c Hey, you found the console. Clearly one of us.",
+      `color: ${accent}; font-size: 14px;`,
+      "font-size: 14px; font-weight: bold;"
     );
     console.log(
-      "%c Hey, you found the console. Clearly one of us. 👾",
-      "color: #EAE5DF; font-size: 14px; font-weight: bold;"
-    );
-    console.log(
-      "%c → davideimola.dev  |  github.com/davideimola",
-      "color: #9A948E; font-family: monospace;"
-    );
-    console.log(
-      "%c Psst: try typing 'hire me' in the ⌘K palette.",
-      "color: #7E7874; font-family: monospace; font-style: italic;"
+      "%cThe source is open: github.com/davideimola/davideimola.dev",
+      `color: ${subtle}; font-family: monospace;`
     );
   }, []);
 

@@ -107,7 +107,12 @@ export function ContactForm() {
       <Turnstile
         key={theme ?? "pending"}
         siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-        options={{ theme: theme ?? "auto", size: "flexible", appearance: "interaction-only" }}
+        options={{
+          theme: theme ?? "auto",
+          size: "flexible",
+          appearance: "interaction-only",
+          language: "en",
+        }}
       />
 
       {state.status === "error" && (

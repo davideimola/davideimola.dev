@@ -18,9 +18,17 @@ interface HomeCard {
   tape: string;
   href: string;
   title: string;
+  /** One sans sentence under the title, written to stand on its own. */
+  blurb?: string;
+  /** The mono metadata line: a date, an event, a type. */
   meta?: string;
-  /** Mono date line instead of the sans meta line. */
-  date?: string;
+}
+
+// The card carries the description's first sentence whole, never a clamped
+// paragraph cut off mid-word.
+function firstSentence(text: string): string {
+  const end = text.search(/[.!?](\s|$)/);
+  return end === -1 ? text : text.slice(0, end + 1);
 }
 
 function rotatingCard(card: RotatingCard): HomeCard {
@@ -72,7 +80,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
       tape: "Writing",
       href: `/blog/${latestPost.slug}`,
       title: latestPost.title,
-      date: formatDayMonthYear(latestPost.date),
+      meta: formatDayMonthYear(latestPost.date),
     });
   }
   if (project) {
@@ -81,7 +89,7 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
       tape: "Building",
       href: project.url ?? project.github ?? "/projects",
       title: project.title,
-      meta: project.description,
+      blurb: firstSentence(project.description),
     });
   }
   if (rotating) cards.push(rotatingCard(rotating));
@@ -137,13 +145,13 @@ export function HeroSection({ latestPost, project, rotating }: HeroSectionProps)
                 <span className="font-sans font-bold text-[23px] leading-[1.2] tracking-[-0.025em] text-fg">
                   {card.title}
                 </span>
-                {card.date && (
-                  <span className="font-mono text-[12px] md:text-[13px] text-fg-subtle">
-                    {card.date}
+                {card.blurb && (
+                  <span className="font-sans text-[16px] leading-[1.5] text-fg-subtle">
+                    {card.blurb}
                   </span>
                 )}
                 {card.meta && (
-                  <span className="font-sans text-[16px] leading-[1.5] text-fg-subtle line-clamp-2">
+                  <span className="font-mono text-[12px] md:text-[13px] text-fg-subtle">
                     {card.meta}
                   </span>
                 )}

@@ -1,7 +1,6 @@
 export { AuthorBio } from "./AuthorBio";
 export { BackToTop } from "./BackToTop";
 export { Badge } from "./Badge";
-export { BookingPrompt } from "./BookingPrompt";
 export { Button, ButtonLink } from "./Button";
 export { Card } from "./Card";
 export { CodeBlock } from "./CodeBlock";

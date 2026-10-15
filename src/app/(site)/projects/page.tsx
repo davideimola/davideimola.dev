@@ -123,7 +123,7 @@ export default function ProjectsPage() {
           </div>
           <div className="flex flex-col gap-3 lg:pt-[34px]">
             {flagship.quickstart && (
-              <pre className="m-0 bg-surface border border-border px-5 py-[18px] font-mono text-[14px] leading-[1.6] text-fg whitespace-pre-wrap break-all">
+              <pre className="m-0 bg-surface border border-border px-5 py-[18px] font-mono text-[14px] leading-[1.6] text-fg whitespace-pre-wrap break-words">
                 <span className="text-fg-subtle select-none" aria-hidden="true">
                   ${" "}
                 </span>
