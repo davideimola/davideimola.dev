@@ -168,4 +168,4 @@ The newsletter's editorial planning is optional (per ADR-0002 / #70): the vault'
   - `<Cta href variant?>label</Cta>` - a button; `variant` is `"primary"` (default) or `"ghost"`.
   Web implementations live in `src/components/newsletter/`, email ones in `src/emails/components/`; the name→component wiring is `mdx-components.tsx` in each (web) / (`src/emails/`). Links are absolutized for email automatically.
 - **Cadence**: monthly, near end of month, covering the month just closing. Assisted send only.
-- **Tone**: Davide's voice for the intro/close (direct, first person, specific, self-aware); harvested sections are factual. English, no em dash, no AI tells. Same rules as write-blog-post / social-post.
+- **Tone**: Davide's voice for the intro/close (direct, first person, specific, self-aware); harvested sections are factual. English, no em dash, no AI tells. The rules are the **Voice** section of `node_modules/@davideimola/brand/docs/brand.md`, the same source write-blog-post and social-post read.

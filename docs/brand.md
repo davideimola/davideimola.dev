@@ -9,7 +9,7 @@ What the brand repo owns:
 
 - **Tokens:** `tokens/tokens.json`, built to `dist/css/tokens.css` (`--di-*` custom properties for light, dark and print) and `dist/css/tailwind.css` (the Tailwind v4 `@theme` mapping this site imports in `src/app/globals.css`).
 - **The mark and the wordmark:** a `d` and an `i` drawn as a git graph, tied with a red knot, in three cuts (L from 96px, M from 40 to 95px, S below 40px) and three colourways; the wordmark in regular and bold; lockups; avatar; favicon.
-- **The guidelines:** colour, typography, the three graphic elements (marker, tape, rule), photography, site, slides and social cards.
+- **The guidelines:** positioning and voice, colour, typography, the three graphic elements (marker, tape, rule), photography, site, slides and social cards.
 
 ## How this site uses it
 
@@ -20,7 +20,7 @@ What the brand repo owns:
 | `src/components/ui/BrandMark.tsx` | `Mark` and `Wordmark`, drawn inline so strokes follow the theme and the knot stays red |
 | `src/components/ui/Tape.tsx`, `Marker.tsx` | The tape and the marker |
 | `src/lib/og.tsx` | Satori versions of the tape, mark and wordmark for the image routes |
-| `public/brand/` | Every SVG and PNG, served for download on `/brand` |
+| `public/brand/` | Every SVG and PNG, served for download from the speaker kit (`/sharing#speaker-kit`; `/brand` redirects there) |
 | `src/app/icon.svg`, `src/app/apple-icon.png` | Favicon and iOS icon |
 
 ## Updating

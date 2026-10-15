@@ -117,6 +117,8 @@ heroImageAlt: ""
 
 ## Tone of voice
 
+The voice is defined once, in the brand guidelines: read the **Voice** section of `node_modules/@davideimola/brand/docs/brand.md` before writing. The rules below apply it to this channel; where they disagree, the brand wins and this file needs fixing.
+
 Davide's authentic writing style (from his manually written posts) sounds like he's explaining something to a colleague over coffee. It's direct, opinionated, and specific. He uses first person, states his opinions without hedging, and adds self-deprecating humor when appropriate.
 
 ### Never write these — they're AI tells:

@@ -226,6 +226,8 @@ If no Piece exists, ask in one line whether to create one. If yes, create `<vaul
 
 ## Tone rules
 
+The voice is defined once, in the brand guidelines: read the **Voice** section of `node_modules/@davideimola/brand/docs/brand.md` before writing. The rules below apply it to this channel; where they disagree, the brand wins and this file needs fixing.
+
 ### Never write:
 - "Excited to share..."
 - "I'm thrilled to announce..."
