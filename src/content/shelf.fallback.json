@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-12T22:16:48.985Z",
+  "generatedAt": "2026-10-15T09:38:01.256Z",
   "now": [
     {
-      "id": "f780bc5a-14c5-4b12-926b-c32b821e0d17",
-      "title": "Kingdom Come",
+      "id": "f4c5cc5f-8898-41d8-bbd7-b3a0b3ffeea1",
+      "title": "Slam Dunk",
       "type": {
-        "slug": "comic",
-        "label": "Comic",
+        "slug": "manga",
+        "label": "Manga",
         "verb": "read",
         "verbBase": "read"
       },
@@ -14,13 +14,47 @@
         "slug": "paper",
         "label": "Paper"
       },
-      "startedAt": "2026-09-12",
+      "startedAt": "2026-09-20",
+      "standsAt": {
+        "from": 1,
+        "to": 1,
+        "unit": "instalments"
+      },
+      "progress": {
+        "reached": 5,
+        "total": 20,
+        "unit": "instalments"
+      },
+      "cover": {
+        "url": "https://books.google.com/books/content?id=LZbxzQEACAAJ&printsec=frontcover&img=1&zoom=5",
+        "source": "looked-up",
+        "at": "https://books.google.com/books?id=LZbxzQEACAAJ&source=gbs_ViewAPI"
+      },
+      "series": {
+        "name": "Slam Dunk",
+        "tint": "oklch(0.39 0.06 246)"
+      }
+    },
+    {
+      "id": "735849da-5c95-4bec-8d35-a3efb923aed0",
+      "title": "Final Fantasy VII Rebirth",
+      "type": {
+        "slug": "videogame",
+        "label": "Videogame",
+        "verb": "played",
+        "verbBase": "play"
+      },
+      "medium": {
+        "slug": "playstation-5",
+        "label": "PlayStation 5"
+      },
+      "startedAt": "2026-09-16",
       "standsAt": null,
       "progress": null,
       "cover": {
-        "url": "https://books.google.com/books/content?id=ecwizgEACAAJ&printsec=frontcover&img=1&zoom=5",
-        "source": "looked-up",
-        "at": "https://books.google.com/books?id=ecwizgEACAAJ&source=gbs_ViewAPI"
+        "url": "https://images.igdb.com/igdb/image/upload/t_cover_big/cob9k6.webp",
+        "source": "owner",
+        "at": null
       },
       "series": null
     },
@@ -63,7 +97,11 @@
       "startedAt": null,
       "standsAt": null,
       "progress": null,
-      "cover": null,
+      "cover": {
+        "url": "https://books.google.com/books/content?id=0y3x0AEACAAJ&printsec=frontcover&img=1&zoom=5",
+        "source": "looked-up",
+        "at": "https://books.google.com/books?id=0y3x0AEACAAJ&source=gbs_ViewAPI"
+      },
       "series": null
     },
     {
@@ -99,8 +137,120 @@
     }
   ],
   "finished": {
-    "count": 6,
+    "count": 10,
     "recent": [
+      {
+        "id": "f780bc5a-14c5-4b12-926b-c32b821e0d17",
+        "title": "Kingdom Come",
+        "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "medium": {
+          "slug": "paper",
+          "label": "Paper"
+        },
+        "startedAt": "2026-09-12",
+        "standsAt": null,
+        "progress": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=ecwizgEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=ecwizgEACAAJ&source=gbs_ViewAPI"
+        },
+        "series": null,
+        "endedAt": "2026-09-19",
+        "outcome": "finished",
+        "rating": {
+          "score": 9
+        }
+      },
+      {
+        "id": "c9656718-6b23-42a1-928f-282c7cffe6cb",
+        "title": "LEGO Batman: Legacy of the Dark Knight",
+        "type": {
+          "slug": "videogame",
+          "label": "Videogame",
+          "verb": "played",
+          "verbBase": "play"
+        },
+        "medium": {
+          "slug": "nintendo-switch",
+          "label": "Nintendo Switch"
+        },
+        "startedAt": "2026-09-18",
+        "standsAt": null,
+        "progress": null,
+        "cover": {
+          "url": "https://images.igdb.com/igdb/image/upload/t_cover_big/coab09.webp",
+          "source": "owner",
+          "at": null
+        },
+        "series": null,
+        "endedAt": null,
+        "outcome": "finished",
+        "rating": {
+          "score": 8.5
+        }
+      },
+      {
+        "id": "21a818e4-057e-4f6c-8d4e-f341b19e04b4",
+        "title": "Baldur's Gate III",
+        "type": {
+          "slug": "videogame",
+          "label": "Videogame",
+          "verb": "played",
+          "verbBase": "play"
+        },
+        "medium": {
+          "slug": "pc",
+          "label": "PC"
+        },
+        "startedAt": null,
+        "standsAt": null,
+        "progress": null,
+        "cover": {
+          "url": "https://images.igdb.com/igdb/image/upload/t_cover_big/co670h.webp",
+          "source": "owner",
+          "at": null
+        },
+        "series": null,
+        "endedAt": null,
+        "outcome": "finished",
+        "rating": {
+          "score": 10
+        }
+      },
+      {
+        "id": "85a22195-0924-4b41-ab03-1fa1b0da64ac",
+        "title": "Marvel's Spider-Man 2",
+        "type": {
+          "slug": "videogame",
+          "label": "Videogame",
+          "verb": "played",
+          "verbBase": "play"
+        },
+        "medium": {
+          "slug": "playstation-5",
+          "label": "PlayStation 5"
+        },
+        "startedAt": null,
+        "standsAt": null,
+        "progress": null,
+        "cover": {
+          "url": "https://images.igdb.com/igdb/image/upload/t_cover_big/cobg1k.webp",
+          "source": "owner",
+          "at": null
+        },
+        "series": null,
+        "endedAt": null,
+        "outcome": "finished",
+        "rating": {
+          "score": 7
+        }
+      },
       {
         "id": "2b094a0f-22df-4065-b415-e3f75f69cbc8",
         "title": "Marvels",
@@ -272,7 +422,7 @@
     ]
   },
   "pile": {
-    "count": 41,
+    "count": 44,
     "byType": [
       {
         "type": {
@@ -281,7 +431,7 @@
           "verb": "read",
           "verbBase": "read"
         },
-        "count": 20
+        "count": 22
       },
       {
         "type": {
@@ -290,7 +440,7 @@
           "verb": "read",
           "verbBase": "read"
         },
-        "count": 11
+        "count": 10
       },
       {
         "type": {
@@ -299,7 +449,7 @@
           "verb": "read",
           "verbBase": "read"
         },
-        "count": 6
+        "count": 7
       },
       {
         "type": {
@@ -308,16 +458,7 @@
           "verb": "read",
           "verbBase": "read"
         },
-        "count": 3
-      },
-      {
-        "type": {
-          "slug": "videogame",
-          "label": "Videogame",
-          "verb": "played",
-          "verbBase": "play"
-        },
-        "count": 1
+        "count": 5
       },
       {
         "type": {
@@ -336,9 +477,103 @@
           "verbBase": "read"
         },
         "count": 0
+      },
+      {
+        "type": {
+          "slug": "videogame",
+          "label": "Videogame",
+          "verb": "played",
+          "verbBase": "play"
+        },
+        "count": 0
       }
     ],
     "recent": [
+      {
+        "id": "601ac1ed-4e97-4dff-9c21-49fb5f3a5914",
+        "title": "Superman: Identità Segreta",
+        "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=9Rdt0QEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=9Rdt0QEACAAJ&source=gbs_ViewAPI"
+        },
+        "series": null
+      },
+      {
+        "id": "a656e9de-0950-4ff6-a753-8ebf544bb080",
+        "title": "Batman: il Cavaliere",
+        "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=UFaTEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=UFaTEQAAQBAJ&source=gbs_ViewAPI"
+        },
+        "series": null
+      },
+      {
+        "id": "c19cc67d-4c71-4391-ae79-cb41555578be",
+        "title": "Il Signore degli Anelli: Il Ritorno del Re",
+        "type": {
+          "slug": "novel",
+          "label": "Novel",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=QCunEAAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3J8sl8v-PVOinZoAI5GoTKJpDmKQ&w=1280",
+          "source": "owner",
+          "at": null
+        },
+        "series": null
+      },
+      {
+        "id": "417c7db3-c56a-432e-8acc-28083f8d9d45",
+        "title": "Il Signore degli Anelli: Le Due Torri",
+        "type": {
+          "slug": "novel",
+          "label": "Novel",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=QCunEAAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3J8sl8v-PVOinZoAI5GoTKJpDmKQ&w=1280",
+          "source": "owner",
+          "at": null
+        },
+        "series": null
+      },
+      {
+        "id": "26e460b1-adff-4ada-b93a-b8325dc8986d",
+        "title": "Kintsukuroi",
+        "type": {
+          "slug": "non-fiction",
+          "label": "Non-fiction",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=8s2NEQAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3qc0STYRTbxRDPAiY6n_gCdw6bIA&w=1280",
+          "source": "owner",
+          "at": null
+        },
+        "series": null
+      },
       {
         "id": "0c06170f-6940-4814-a844-bb2817bac2cf",
         "title": "Daredevil: Cieco guida cieco",
@@ -408,23 +643,6 @@
         "series": null
       },
       {
-        "id": "f6ddc288-67fc-4f0e-9291-c973786603c0",
-        "title": "LEGO Batman: Legacy of the Dark Knight",
-        "type": {
-          "slug": "videogame",
-          "label": "Videogame",
-          "verb": "played",
-          "verbBase": "play"
-        },
-        "standsAt": null,
-        "cover": {
-          "url": "https://images.igdb.com/igdb/image/upload/t_cover_big/coab09.webp",
-          "source": "owner",
-          "at": null
-        },
-        "series": null
-      },
-      {
         "id": "16c009a0-575f-4a7a-be13-1104ce8a7614",
         "title": "Bushido. L'anima del Giappone",
         "type": {
@@ -443,7 +661,7 @@
       },
       {
         "id": "4761b9ec-a00c-424a-9188-f3bb440fcf88",
-        "title": "Il Signore degli Anelli",
+        "title": "Il Signore degli Anelli: La Compagnia dell'Anello",
         "type": {
           "slug": "novel",
           "label": "Novel",
@@ -451,7 +669,11 @@
           "verbBase": "read"
         },
         "standsAt": null,
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=QCunEAAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3J8sl8v-PVOinZoAI5GoTKJpDmKQ&w=1280",
+          "source": "owner",
+          "at": null
+        },
         "series": null
       },
       {
@@ -470,75 +692,11 @@
           "at": "https://books.google.com/books?id=KyqWzQEACAAJ&source=gbs_ViewAPI"
         },
         "series": null
-      },
-      {
-        "id": "7de3f722-42b5-4ff5-b6cd-b2c0ee97598f",
-        "title": "Guida galattica per gli autostoppisti",
-        "type": {
-          "slug": "novel",
-          "label": "Novel",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": null,
-        "cover": {
-          "url": "https://books.google.com/books/content?id=NjxIwgEACAAJ&printsec=frontcover&img=1&zoom=5",
-          "source": "looked-up",
-          "at": "https://books.google.com/books?id=NjxIwgEACAAJ&source=gbs_ViewAPI"
-        },
-        "series": null
-      },
-      {
-        "id": "7e9699c0-5c02-46a7-96a9-abc54a6c1c36",
-        "title": "The Phoenix Project",
-        "type": {
-          "slug": "non-fiction",
-          "label": "Non-fiction",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": null,
-        "cover": {
-          "url": "https://books.google.com/books/content?id=_EnZAQAACAAJ&printsec=frontcover&img=1&zoom=5",
-          "source": "looked-up",
-          "at": "https://books.google.com/books?id=_EnZAQAACAAJ&source=gbs_ViewAPI"
-        },
-        "series": null
-      },
-      {
-        "id": "8e398b6d-8c09-4e11-bec0-a98a23047bff",
-        "title": "Il Trono di Spade",
-        "type": {
-          "slug": "novel",
-          "label": "Novel",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": null,
-        "cover": null,
-        "series": null
-      },
-      {
-        "id": "9de3e526-a7bc-4f24-9240-b7edb5a1e5eb",
-        "title": "An Elegant Puzzle",
-        "type": {
-          "slug": "non-fiction",
-          "label": "Non-fiction",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": null,
-        "cover": {
-          "url": "https://books.google.com/books/content?id=2ZQrxQEACAAJ&printsec=frontcover&img=1&zoom=5",
-          "source": "looked-up",
-          "at": "https://books.google.com/books?id=2ZQrxQEACAAJ&source=gbs_ViewAPI"
-        },
-        "series": null
       }
     ]
   },
   "shelf": {
-    "total": 102,
+    "total": 105,
     "byType": [
       {
         "type": {
@@ -551,6 +709,15 @@
       },
       {
         "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "count": 15
+      },
+      {
+        "type": {
           "slug": "novel",
           "label": "Novel",
           "verb": "read",
@@ -560,21 +727,12 @@
       },
       {
         "type": {
-          "slug": "comic",
-          "label": "Comic",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "count": 13
-      },
-      {
-        "type": {
           "slug": "non-fiction",
           "label": "Non-fiction",
           "verb": "read",
           "verbBase": "read"
         },
-        "count": 9
+        "count": 10
       },
       {
         "type": {
@@ -605,6 +763,57 @@
       }
     ],
     "volumes": [
+      {
+        "id": "4a901ff6-cfa3-436b-9aad-a220ed325219",
+        "title": "Devil – L'Uomo Senza Paura",
+        "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://www.panini.it/media/catalog/product/m/m/mmaom001isbnr4_0.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700",
+          "source": "owner",
+          "at": null
+        },
+        "series": null
+      },
+      {
+        "id": "bc86c5f9-8566-4ebe-800c-df8ef69684a0",
+        "title": "Superman. Stagioni",
+        "type": {
+          "slug": "comic",
+          "label": "Comic",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=UINt0QEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=UINt0QEACAAJ&source=gbs_ViewAPI"
+        },
+        "series": null
+      },
+      {
+        "id": "bcdc5c24-5ebb-493a-b514-84748fb600dc",
+        "title": "Kintsukuroi",
+        "type": {
+          "slug": "non-fiction",
+          "label": "Non-fiction",
+          "verb": "read",
+          "verbBase": "read"
+        },
+        "standsAt": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=8s2NEQAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3qc0STYRTbxRDPAiY6n_gCdw6bIA&w=1280",
+          "source": "owner",
+          "at": null
+        },
+        "series": null
+      },
       {
         "id": "a8b34297-8e00-4797-aa20-b2e9cef3a458",
         "title": "Kingdom come",
@@ -643,7 +852,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -684,7 +893,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -708,7 +917,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -775,7 +984,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -792,10 +1001,14 @@
           "to": 6,
           "unit": "instalments"
         },
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=jf1SzQEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=jf1SzQEACAAJ&source=gbs_ViewAPI"
+        },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -815,7 +1028,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -848,7 +1061,7 @@
         "cover": null,
         "series": {
           "name": "Your Name",
-          "tint": "oklch(0.38 0.06 48)"
+          "tint": "oklch(0.39 0.06 48)"
         }
       },
       {
@@ -902,7 +1115,7 @@
         "cover": null,
         "series": {
           "name": "Berserk",
-          "tint": "oklch(0.38 0.06 231)"
+          "tint": "oklch(0.39 0.06 231)"
         }
       },
       {
@@ -922,7 +1135,7 @@
         "cover": null,
         "series": {
           "name": "La via del grembiule",
-          "tint": "oklch(0.38 0.06 240)"
+          "tint": "oklch(0.39 0.06 240)"
         }
       },
       {
@@ -946,7 +1159,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -966,7 +1179,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -986,7 +1199,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1010,7 +1223,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1037,9 +1250,9 @@
         },
         "standsAt": null,
         "cover": {
-          "url": "https://books.google.com/books/content?id=NjxIwgEACAAJ&printsec=frontcover&img=1&zoom=5",
-          "source": "looked-up",
-          "at": "https://books.google.com/books?id=NjxIwgEACAAJ&source=gbs_ViewAPI"
+          "url": "https://books.google.it/books/publisher/content?id=zN-lDwAAQBAJ&hl=it&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U3LTK8MpcyriR6TA0dab2F2bNP1Mg&w=1280",
+          "source": "owner",
+          "at": null
         },
         "series": null
       },
@@ -1060,7 +1273,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1080,7 +1293,7 @@
         "cover": null,
         "series": {
           "name": "La via del grembiule",
-          "tint": "oklch(0.38 0.06 240)"
+          "tint": "oklch(0.39 0.06 240)"
         }
       },
       {
@@ -1114,10 +1327,14 @@
           "to": 7,
           "unit": "instalments"
         },
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=kAmTzQEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=kAmTzQEACAAJ&source=gbs_ViewAPI"
+        },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1141,7 +1358,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1178,7 +1395,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1211,7 +1428,7 @@
         "cover": null,
         "series": {
           "name": "Fullmetal Alchemist",
-          "tint": "oklch(0.38 0.06 315)"
+          "tint": "oklch(0.39 0.06 315)"
         }
       },
       {
@@ -1252,7 +1469,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1272,7 +1489,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1289,10 +1506,14 @@
           "to": 5,
           "unit": "instalments"
         },
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=bp9SzQEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=bp9SzQEACAAJ&source=gbs_ViewAPI"
+        },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1327,7 +1548,7 @@
       },
       {
         "id": "79b849f2-1028-4fba-8688-6e9faaa3662b",
-        "title": "Luxastra - La verità perduta",
+        "title": "Luxastra. La verità perduta",
         "type": {
           "slug": "novel",
           "label": "Novel",
@@ -1335,7 +1556,11 @@
           "verbBase": "read"
         },
         "standsAt": null,
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=0y3x0AEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=0y3x0AEACAAJ&source=gbs_ViewAPI"
+        },
         "series": null
       },
       {
@@ -1365,7 +1590,11 @@
           "verbBase": "read"
         },
         "standsAt": null,
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.it/books/publisher/content?id=QCunEAAAQBAJ&hl=it&pg=PP1&img=1&zoom=3&bul=1&sig=ACfU3U3J8sl8v-PVOinZoAI5GoTKJpDmKQ&w=1280",
+          "source": "owner",
+          "at": null
+        },
         "series": null
       },
       {
@@ -1389,7 +1618,7 @@
         },
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1456,7 +1685,7 @@
         "cover": null,
         "series": {
           "name": "Death Note",
-          "tint": "oklch(0.38 0.06 147)"
+          "tint": "oklch(0.39 0.06 147)"
         }
       },
       {
@@ -1493,7 +1722,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1510,10 +1739,14 @@
           "to": 3,
           "unit": "instalments"
         },
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=pt9-zgEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=pt9-zgEACAAJ&source=gbs_ViewAPI"
+        },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1537,7 +1770,7 @@
         },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1557,7 +1790,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1577,7 +1810,7 @@
         "cover": null,
         "series": {
           "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
+          "tint": "oklch(0.39 0.06 95)"
         }
       },
       {
@@ -1631,7 +1864,7 @@
         "cover": null,
         "series": {
           "name": "Berserk",
-          "tint": "oklch(0.38 0.06 231)"
+          "tint": "oklch(0.39 0.06 231)"
         }
       },
       {
@@ -1648,10 +1881,14 @@
           "to": 4,
           "unit": "instalments"
         },
-        "cover": null,
+        "cover": {
+          "url": "https://books.google.com/books/content?id=rvkxzgEACAAJ&printsec=frontcover&img=1&zoom=5",
+          "source": "looked-up",
+          "at": "https://books.google.com/books?id=rvkxzgEACAAJ&source=gbs_ViewAPI"
+        },
         "series": {
           "name": "Slam Dunk",
-          "tint": "oklch(0.38 0.06 246)"
+          "tint": "oklch(0.39 0.06 246)"
         }
       },
       {
@@ -1671,64 +1908,7 @@
         "cover": null,
         "series": {
           "name": "La via del grembiule",
-          "tint": "oklch(0.38 0.06 240)"
-        }
-      },
-      {
-        "id": "9f3f760b-59a5-45dd-93a8-080f5fa4120f",
-        "title": "One-Punch Man 22",
-        "type": {
-          "slug": "manga",
-          "label": "Manga",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": {
-          "from": 22,
-          "to": 22,
-          "unit": "instalments"
-        },
-        "cover": null,
-        "series": {
-          "name": "One-Punch Man",
-          "tint": "oklch(0.38 0.06 95)"
-        }
-      },
-      {
-        "id": "9fe0ad31-ebac-4d3b-b50b-be1531feb69f",
-        "title": "The phoenix project",
-        "type": {
-          "slug": "non-fiction",
-          "label": "Non-fiction",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": null,
-        "cover": {
-          "url": "https://books.google.com/books/content?id=_EnZAQAACAAJ&printsec=frontcover&img=1&zoom=5",
-          "source": "looked-up",
-          "at": "https://books.google.com/books?id=_EnZAQAACAAJ&source=gbs_ViewAPI"
-        },
-        "series": null
-      },
-      {
-        "id": "a20f2cc6-f62f-4768-b994-2fd10235785f",
-        "title": "La via del grembiule – Lo yakuza casalingo 4",
-        "type": {
-          "slug": "manga",
-          "label": "Manga",
-          "verb": "read",
-          "verbBase": "read"
-        },
-        "standsAt": {
-          "from": 4,
-          "to": 4,
-          "unit": "instalments"
-        },
-        "cover": null,
-        "series": {
-          "name": "La via del grembiule",
-          "tint": "oklch(0.38 0.06 240)"
+          "tint": "oklch(0.39 0.06 240)"
         }
       }
     ]
