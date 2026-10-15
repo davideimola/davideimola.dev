@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Project, Talk } from "./content";
-import { pickBuildingProject, pickRotatingCard, pickSpokenAt, todayKey } from "./home-cards";
-import type { ShelfPass } from "./shelf";
+import { pickBuildingProject, pickSpokenAt, pickStageTalks, todayKey } from "./home-cards";
 
 function talk(slug: string, date: string, session?: Partial<NonNullable<Talk["session"]>>): Talk {
   return {
@@ -15,86 +14,58 @@ function talk(slug: string, date: string, session?: Partial<NonNullable<Talk["se
   };
 }
 
-function pass(id: string, verbBase: string): ShelfPass {
-  return {
-    id,
-    title: `Title ${id}`,
-    type: { slug: verbBase, label: verbBase, verb: verbBase, verbBase },
-    medium: { slug: "paper", label: "Paper" },
-    startedAt: null,
-    standsAt: null,
-    progress: null,
-    cover: null,
-    series: null,
-  } as ShelfPass;
-}
-
 const TODAY = new Date(2026, 9, 14); // 14 Oct 2026, local time
 
-describe("pickRotatingCard", () => {
-  it("prefers the next upcoming talk, soonest first", () => {
-    const card = pickRotatingCard({
-      talks: [
-        talk("later", "2026-12-01", {}),
+describe("pickStageTalks", () => {
+  const rows = (picked: ReturnType<typeof pickStageTalks>) =>
+    picked.map((r) => `${r.talk.slug}:${r.upcoming ? "next" : "past"}`);
+
+  it("lists the next talks, soonest first, today included, never more than the limit", () => {
+    const picked = pickStageTalks(
+      [
+        talk("later", "2026-11-19", {}),
+        talk("today", "2026-10-14", {}),
         talk("soon", "2026-11-01", {}),
-        talk("old", "2026-01-01", { video: "v" }),
       ],
-      reading: [pass("a", "read")],
-      today: TODAY,
-    });
-    expect(card).toEqual({ kind: "next-talk", talk: expect.objectContaining({ slug: "soon" }) });
+      TODAY
+    );
+    expect(rows(picked)).toEqual(["today:next", "soon:next"]);
   });
 
-  it("counts a talk happening today as upcoming", () => {
-    const card = pickRotatingCard({
-      talks: [talk("today", "2026-10-14", {})],
-      reading: [],
-      today: TODAY,
-    });
-    expect(card?.kind).toBe("next-talk");
-  });
-
-  it("ignores upcoming events where Davide gives no session", () => {
-    const card = pickRotatingCard({
-      talks: [talk("organising", "2026-11-01"), talk("recorded", "2026-03-01", { video: "v" })],
-      reading: [],
-      today: TODAY,
-    });
-    expect(card).toEqual({
-      kind: "last-recording",
-      talk: expect.objectContaining({ slug: "recorded" }),
-    });
-  });
-
-  it("falls back to the most recent past talk that has a recording", () => {
-    const card = pickRotatingCard({
-      talks: [
-        talk("no-video", "2026-09-01", {}),
-        talk("older-video", "2025-05-01", { video: "v1" }),
-        talk("newer-video", "2026-04-01", { video: "v2" }),
+  it("fills the rows with the latest talks given when fewer are scheduled", () => {
+    const picked = pickStageTalks(
+      [
+        talk("past", "2026-09-26", {}),
+        talk("older", "2026-04-25", {}),
+        talk("soon", "2026-11-01", {}),
       ],
-      reading: [pass("a", "read")],
-      today: TODAY,
-    });
-    expect(card).toEqual({
-      kind: "last-recording",
-      talk: expect.objectContaining({ slug: "newer-video" }),
-    });
+      TODAY
+    );
+    expect(rows(picked)).toEqual(["soon:next", "past:past"]);
   });
 
-  it("falls back to what is being read, skipping what is being played", () => {
-    const card = pickRotatingCard({
-      talks: [talk("no-video", "2026-09-01", {})],
-      reading: [pass("game", "play"), pass("book", "read")],
-      today: TODAY,
-    });
-    expect(card).toEqual({ kind: "reading", pass: expect.objectContaining({ id: "book" }) });
+  it("lists the latest talks given, newest first, when nothing is scheduled", () => {
+    const picked = pickStageTalks(
+      [
+        talk("old", "2025-03-01", {}),
+        talk("newer", "2026-09-26", {}),
+        talk("mid", "2026-04-25", {}),
+      ],
+      TODAY
+    );
+    expect(rows(picked)).toEqual(["newer:past", "mid:past"]);
   });
 
-  it("returns nothing when no slot has content, so the card is not rendered", () => {
-    expect(
-      pickRotatingCard({ talks: [], reading: [pass("game", "play")], today: TODAY })
-    ).toBeNull();
+  it("ignores events where Davide gives no session", () => {
+    const picked = pickStageTalks(
+      [talk("organised", "2026-11-01"), talk("mine", "2026-12-01", {})],
+      TODAY
+    );
+    expect(rows(picked)).toEqual(["mine:next"]);
+  });
+
+  it("returns no rows when there are no talks", () => {
+    expect(pickStageTalks([], TODAY)).toEqual([]);
   });
 });
 

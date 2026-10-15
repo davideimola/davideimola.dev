@@ -5,7 +5,7 @@ import { Tape } from "../ui/Tape";
 // the edge, the pitch on the left and the form on the right.
 export function NewsletterSection() {
   return (
-    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-14 md:mt-20">
+    <section className="max-w-[1136px] mx-auto px-4 sm:px-8 mt-12 md:mt-16">
       <div className="relative bg-surface border border-border px-[18px] pt-8 pb-6 md:p-14 lg:px-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_460px] gap-3 lg:gap-14 items-center">
         <Tape tilt={0} className="absolute -left-1.5 md:-left-2.5 -top-3.5">
           Newsletter

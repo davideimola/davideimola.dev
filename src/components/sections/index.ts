@@ -1,7 +1,7 @@
+export { BuildingSection } from "./BuildingSection";
 export { HeroSection } from "./HeroSection";
-export { HowIWorkSection } from "./HowIWorkSection";
 export { InPublicSection } from "./InPublicSection";
 export { NewsletterSection } from "./NewsletterSection";
 export { ShelfNow } from "./ShelfNow";
 export { ShelfWall } from "./ShelfWall";
-export { TopicsSection } from "./TopicsSection";
+export { WritingSection } from "./WritingSection";

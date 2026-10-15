@@ -18,7 +18,7 @@ export interface BlogPost {
   draft?: boolean;
   heroImage?: string;
   heroImageAlt?: string;
-  /** Editorial topic for the home "By topic" block and the blog; see src/lib/topics.ts. */
+  /** Editorial topic for the blog and the home WRITING block; see src/lib/topics.ts. */
   topic?: string;
   content: string;
 }
@@ -65,6 +65,8 @@ export interface Project {
   flagship?: boolean;
   /** The short mono label at the end of a /projects row ("live", "co-founder"). */
   note?: string;
+  /** Three short facts the home BUILDING block lists under the flagship. */
+  highlights?: string[];
   /** A one-line way to try it, shown under the flagship. */
   quickstart?: string;
   /** Slug of the post that introduces it. */

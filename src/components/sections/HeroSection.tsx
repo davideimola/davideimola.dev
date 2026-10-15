@@ -1,124 +1,19 @@
-import type { BlogPost, Project } from "../../lib/content";
-import type { DrawableCover } from "../../lib/cover-files";
-import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
-import type { RotatingCard } from "../../lib/home-cards";
 import { ButtonLink } from "../ui/Button";
-import { Card } from "../ui/Card";
-import { DrawnCover } from "../ui/DrawnCover";
 import { Marker } from "../ui/Marker";
 import { Photo } from "../ui/Photo";
 import { Tape } from "../ui/Tape";
 
 interface HeroSectionProps {
-  latestPost: BlogPost | null;
-  /** The latest post's SVG cover, prepared to draw itself; null for a raster one. */
-  latestCover?: DrawableCover | null;
-  project: Project | null;
-  /** The cover of the post that introduces the project, prepared like latestCover. */
-  projectCover?: { drawable: DrawableCover; alt: string } | null;
-  rotating: RotatingCard | null;
-  /** The drawing for the rotating slot: talks and books have no cover of their own. */
-  rotatingCover?: { drawable: DrawableCover; alt: string } | null;
-  /** The flagship project, named under the lead as the proof of the headline. */
+  /** The flagship project, named in the lead as the proof of the headline. */
   flagship?: { title: string; href: string } | null;
 }
 
-interface HomeCard {
-  key: string;
-  tape: string;
-  href: string;
-  title: string;
-  cover?: { drawable: DrawableCover; alt: string };
-  /** One sans sentence under the title, written to stand on its own. */
-  blurb?: string;
-  /** The mono metadata line: a date, an event, a type. */
-  meta?: string;
-}
-
-// The card carries the description's first sentence whole, never a clamped
-// paragraph cut off mid-word.
-function firstSentence(text: string): string {
-  const end = text.search(/[.!?](\s|$)/);
-  return end === -1 ? text : text.slice(0, end + 1);
-}
-
-function rotatingCard(card: RotatingCard): HomeCard {
-  switch (card.kind) {
-    case "next-talk":
-      return {
-        key: "talk",
-        tape: "Next talk",
-        href: `/sharing#${card.talk.slug}`,
-        title: card.talk.session?.title ?? card.talk.event,
-        meta: `${card.talk.event} · ${formatDayMonth(card.talk.date)}`,
-      };
-    case "last-recording":
-      return {
-        key: "talk",
-        tape: "Last talk",
-        href: card.talk.session?.video ?? `/sharing#${card.talk.slug}`,
-        title: card.talk.session?.title ?? card.talk.event,
-        meta: `${card.talk.event} · Watch the recording`,
-      };
-    case "reading":
-      return {
-        key: "reading",
-        tape: "Reading",
-        href: "/shelf",
-        title: card.pass.title,
-        meta: card.pass.type.label,
-      };
-  }
-}
-
-// The column count follows the cards that exist: the rotating slot never
-// renders empty, it disappears and the grid closes up.
-const GRID_COLS: Record<number, string> = {
-  1: "md:grid-cols-1 md:max-w-[33%]",
-  2: "md:grid-cols-2",
-  3: "md:grid-cols-3",
-};
-
 // The home hero (docs/brand.md, "Site"): display headline with the page's one
 // marker on "security", the lead naming the flagship project, one ink button
-// (About is in the NavBar, so the hero does not repeat it), the place in mono, and the portrait on the right in black and white with its tape.
-// Under it three straight cards, each with a tape on its edge.
-export function HeroSection({
-  latestPost,
-  latestCover,
-  project,
-  projectCover,
-  rotating,
-  rotatingCover,
-  flagship,
-}: HeroSectionProps) {
-  const cards: HomeCard[] = [];
-  if (latestPost) {
-    cards.push({
-      key: "writing",
-      tape: "Writing",
-      href: `/blog/${latestPost.slug}`,
-      title: latestPost.title,
-      meta: formatDayMonthYear(latestPost.date),
-      ...(latestCover && {
-        cover: { drawable: latestCover, alt: latestPost.heroImageAlt ?? latestPost.title },
-      }),
-    });
-  }
-  if (project) {
-    cards.push({
-      key: "building",
-      tape: "Building",
-      href: project.url ?? project.github ?? "/projects",
-      title: project.title,
-      blurb: firstSentence(project.description),
-      ...(projectCover && { cover: projectCover }),
-    });
-  }
-  if (rotating) {
-    cards.push({ ...rotatingCard(rotating), ...(rotatingCover && { cover: rotatingCover }) });
-  }
-
+// (About is in the NavBar, so the hero does not repeat it), the place in mono,
+// and the portrait on the right in black and white with its tape. What follows
+// is the story the headline promises: BUILDING, WRITING, IN PUBLIC.
+export function HeroSection({ flagship }: HeroSectionProps) {
   return (
     <section className="max-w-[1136px] mx-auto px-4 sm:px-8 pt-6 md:pt-14">
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-12 lg:gap-[72px] items-stretch">
@@ -163,46 +58,6 @@ export function HeroSection({
           </Tape>
         </figure>
       </div>
-
-      {cards.length > 0 && (
-        <div
-          className={`mt-10 md:mt-[72px] grid grid-cols-1 gap-[26px] md:gap-7 ${GRID_COLS[cards.length]}`}
-        >
-          {cards.map((card, i) => (
-            <Card
-              key={card.key}
-              href={card.href}
-              tape={card.tape}
-              tapeTilt={(i % 3) as 0 | 1 | 2}
-              className="px-[26px] pb-6 pt-[34px]"
-            >
-              <span className="flex flex-col gap-2 h-full">
-                {card.cover && (
-                  <DrawnCover
-                    light={card.cover.drawable.light}
-                    dark={card.cover.drawable.dark}
-                    alt={card.cover.alt}
-                    className="mb-3"
-                  />
-                )}
-                <span className="font-sans font-bold text-[23px] leading-[1.2] tracking-[-0.025em] text-fg">
-                  {card.title}
-                </span>
-                {card.blurb && (
-                  <span className="font-sans text-[16px] leading-[1.5] text-fg-subtle">
-                    {card.blurb}
-                  </span>
-                )}
-                {card.meta && (
-                  <span className="mt-auto pt-1 font-mono text-[12px] md:text-[13px] text-fg-subtle">
-                    {card.meta}
-                  </span>
-                )}
-              </span>
-            </Card>
-          ))}
-        </div>
-      )}
     </section>
   );
 }

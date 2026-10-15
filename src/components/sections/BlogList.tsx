@@ -33,7 +33,7 @@ function minutes(readingTime: string): string {
 }
 
 // /blog below its header: one filter row (the three editorial topics, the
-// same ones as the home "By topic" block), then (unfiltered) the latest post
+// same ones the home WRITING block links to), then (unfiltered) the latest post
 // as a feature and the START HERE picks, then the archive by year. Filters
 // live in the URL so they can be shared: ?topic= from the row, ?tag= from the
 // tags on a post page, and ?category= still honoured for old links. A tag or

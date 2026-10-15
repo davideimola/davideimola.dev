@@ -34,6 +34,11 @@
     "description": "Open-source AI security review agent written in Go. It runs real scanners (Semgrep, Gitleaks, OSV-Scanner) and reasons about their findings like an analyst would, or serves them over MCP as a toolbox for the AI you already use.",
     "group": "open",
     "flagship": true,
+    "highlights": [
+      "Semgrep, Gitleaks and OSV-Scanner, run as tools",
+      "In the terminal, on pull requests, over MCP",
+      "Go, Apache 2.0, early and honest about it"
+    ],
     "quickstart": "docker run -it -v argus-data:/data -p 8080:8080 ghcr.io/argusappsec/argus",
     "post": "introducing-argus"
   },

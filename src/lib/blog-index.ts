@@ -14,7 +14,8 @@ export interface TopicCount {
 
 /**
  * The three editorial topics with how many posts each holds, in the fixed
- * order the home "By topic" block uses. The one filter row on /blog.
+ * order: the one filter row on /blog, and the topic links above the home
+ * WRITING block.
  */
 export function topicCounts(posts: Pick<BlogPost, "topic" | "category" | "tags">[]): TopicCount[] {
   return TOPICS.map(({ slug, label }) => ({
