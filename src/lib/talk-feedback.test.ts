@@ -4,6 +4,7 @@ import {
   feedbackHost,
   feedbackWindow,
   isFeedbackOpen,
+  upcomingBesidesRated,
 } from "./talk-feedback";
 
 const talk = (feedback?: { url: string; from?: string; until?: string }) => ({
@@ -69,5 +70,20 @@ describe("feedbackHost", () => {
 
   it("yields an empty hint rather than throwing on junk", () => {
     expect(feedbackHost("not a url")).toBe("");
+  });
+});
+
+describe("upcomingBesidesRated", () => {
+  const t = (slug: string) => ({ slug });
+
+  it("skips the talk already on a rating card and keeps the order", () => {
+    expect(upcomingBesidesRated([t("golab"), t("react"), t("x")], [t("golab")], 2)).toEqual([
+      t("react"),
+      t("x"),
+    ]);
+  });
+
+  it("keeps the soonest ones when nothing is being rated", () => {
+    expect(upcomingBesidesRated([t("a"), t("b"), t("c")], [], 2)).toEqual([t("a"), t("b")]);
   });
 });

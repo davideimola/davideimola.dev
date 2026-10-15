@@ -73,3 +73,16 @@ export function feedbackHost(url: string): string {
     return "";
   }
 }
+
+/**
+ * The next talks to list beside the rating cards: on the day, the talk being
+ * rated is still upcoming, and the card already names it, so the list starts
+ * from the one after it. At most `limit`, in the order given (soonest first).
+ */
+export function upcomingBesidesRated<T extends { slug: string }>(
+  upcoming: T[],
+  rated: T[],
+  limit: number
+): T[] {
+  return upcoming.filter((t) => !rated.some((r) => r.slug === t.slug)).slice(0, limit);
+}
