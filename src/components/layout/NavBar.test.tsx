@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/blog/some-post" }));
 
-import { isActiveLink, NAV_LINKS, NavBar } from "./NavBar";
+import { isActiveLink, isHome, NAV_LINKS, NavBar } from "./NavBar";
 
 describe("NAV_LINKS", () => {
   it("carries Writing, Built, Talks and About, in that order", () => {
@@ -22,6 +22,15 @@ describe("isActiveLink", () => {
     expect(isActiveLink("/blog/post", "/blog")).toBe(true);
     expect(isActiveLink("/blogroll", "/blog")).toBe(false);
     expect(isActiveLink(null, "/blog")).toBe(false);
+  });
+});
+
+describe("isHome", () => {
+  it("reads the home under both the path it is visited at and the one ISR renders", () => {
+    expect(isHome("/")).toBe(true);
+    expect(isHome("/index")).toBe(true);
+    expect(isHome("/blog")).toBe(false);
+    expect(isHome(null)).toBe(false);
   });
 });
 

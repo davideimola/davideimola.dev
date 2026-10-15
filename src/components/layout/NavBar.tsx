@@ -24,6 +24,13 @@ export function isActiveLink(pathname: string | null, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+// Vercel's ISR regeneration renders the home as `/index`, so after the first
+// revalidation usePathname() reads "/index" rather than "/" and the mark
+// stopped drawing an hour after every deploy.
+export function isHome(pathname: string | null): boolean {
+  return pathname === "/" || pathname === "/index";
+}
+
 interface NavBarProps {
   onSearchOpen?: () => void;
 }
@@ -35,7 +42,7 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
   const pathname = usePathname();
   // The mark draws itself on the first load of the home page only: captured
   // once, so a client-side visit to / later does not replay it.
-  const [drawMark] = useState(() => pathname === "/");
+  const [drawMark] = useState(() => isHome(pathname));
 
   return (
     // data-print-hide: site chrome is screen-only, so it never reaches paper.
