@@ -14,7 +14,8 @@ export function AuthorBio() {
           Everything I learn, I share.
         </p>
         <p className="font-sans text-[16px] text-fg-muted leading-relaxed m-0">
-          Davide Imola, Tech Lead at RedCarbon. I build AI agents for security, mostly in Go.
+          Davide Imola, Tech Lead at RedCarbon. I build AI agents for security, and I write mostly
+          Go.
         </p>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2">
           {SOCIAL_PROFILES.map((social) => (

@@ -122,7 +122,7 @@ export default async function LinksPage() {
           <Wordmark weight="bold" width={180} title="davide imola" />
         </h1>
         <p className="m-0 font-sans text-[16px] leading-[1.45] text-fg-muted max-w-[300px]">
-          I build AI agents for security, mostly in Go. Everything I learn, I share.
+          I build AI agents for security. I write mostly Go, and I share everything I learn.
         </p>
       </header>
 
