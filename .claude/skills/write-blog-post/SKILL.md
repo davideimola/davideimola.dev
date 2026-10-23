@@ -178,6 +178,15 @@ For inline images, use your judgment:
 - Personal experience or event (team photo, conference, a trip): ask Davide if he has a photo, but only when it genuinely makes sense, not for every image.
 - Code or a tool: tell him to take a screenshot and describe exactly what to capture.
 - A concept that needs a picture: draw it with the same rules as the cover (an SVG in `public/images/blog/<slug>/`), or use a Mermaid diagram if it is a flow.
+- A number, a comparison or a timeline that carries the point (a table that is really one contrast, a lone figure that needs a scale): propose a **drawn figure**, a chart that draws itself when the reader reaches it. Pitch it in one sentence like the cover (what is drawn, and what the red detail is) and wait for the yes. The slides' "Same bug, two clocks" (`presentations/securing-go/src/public/drawings/two-clocks.svg`) is the reference: two timelines on one scale, thirteen months of ticks, then one red dot.
+
+**A drawn figure** lives at `public/images/blog/<slug>/figures/<name>.svg`, follows the cover's rules (three brand colours as hex, monoline, exactly one red detail) and puts its labels in `<text>` elements (they render in the mono face and fade in with their part). Wrap each part in `<g data-step="0">`, `<g data-step="1">`... when the point lands in a second beat: on the page the steps draw one after the other. Run `pnpm covers:dark` for its night twin, then place it in the MDX:
+
+```mdx
+<DrawnFigure src="/images/blog/post-slug/figures/two-clocks.svg" alt="what the chart shows, in words" caption="Same bug, two clocks." />
+```
+
+The build fails on a wrong path or a missing twin, and the Markdown and RSS versions of the post get it as a plain image with the alt, so write the alt as the full sentence a reader without the picture needs.
 
 In the MDX, leave placeholder comments where his photos and screenshots should go:
 
