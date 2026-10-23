@@ -2,22 +2,27 @@
 
 AI context for Claude Code and other AI assistants working on this codebase.
 
-## Editorial home: the Obsidian vault
+## Editorial home: Trilium
 
-Editorial planning (ideas, pieces, talks, channel decisions, lifecycle) lives in Davide's **Obsidian vault**, under the `[[Content]]` area hub, not here. It moved there from content-os (Supabase + MCP server) on 2026-10-09; content-os is deprecated and its MCP server must not be used.
+Editorial planning (ideas, content topics, talks, channel decisions, lifecycle) lives in Davide's **Trilium** (trilium.davideimola.dev), not here, read and written through the `trilium` MCP server. It moved there from content-os on 2026-10-09 and from the Obsidian vault on 2026-10-19. Both are retired: never use the content-os MCP server, and never read or write the old Obsidian vault.
 
-- **Vault root:** `/Users/davideimola/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/` (called `<vault>` below). Read and write its notes as plain Markdown files.
-- **Hub:** `<vault>/Notes/Content.md` explains the system (Flag/Side, cadence floor) and holds the Bases views. The vault's own `<vault>/CLAUDE.md` holds the schema.
-- **Idea** (`type: idea`, `status: live | archived`, body = the spark verbatim): captured into `<vault>/Inbox/` by the `/idea` skill.
-- **Piece** (`type: piece`): one blog article or LinkedIn post, a note in `<vault>/Notes/` named `<title> (Blog)` or `<title> (LinkedIn)`, frontmatter `channel` (`blog` | `linkedin`), `flag_side` (`flag` | `side`), `state` (`proposed → slotted → ready → published`, or `declined`), `publish_date`, `ideas` (wikilinks to the source Ideas), `artifact` (where the work lives, e.g. the PR URL), `url` (the published URL). Template: `<vault>/Templates/Piece.md`.
+- **Conventions:** the Trilium note "Convenzioni per Claude" (`kg6Nk6GFhfZK`, under Sistema) is the authoritative schema. Read it before creating or moving notes. Note bodies are in Italian unless already in English. Never delete a note: move it to Archivio.
+- **Content note** (`#type=content`, relation `~template` = Content Item `HtMZvVGrddyG`): **one note per topic**, not per channel, in the Contenuti collection (`l78292msrPRH`), titled by the topic (no channel suffix). The body opens with the original spark verbatim.
+  - `#status`: `idea → in-progress → published` (or `archived`).
+  - `#flagSide`: `flag | side`.
+  - `#channels`: one label per channel, `blog | linkedin | talk`. Per channel a date (`#blogDate`, `#linkedinDate`, `#talkDate`, ISO) and a published URL (`#blog`, `#linkedin`, `#talk`). **A channel is published when its URL is set.** A second output on the same channel becomes its own note.
+  - `#queue`: position in the writing queue (1 = next). `#artifact`: links to drafts, PRs, carousels (one label each, multi-valued).
+- **Ideas**: `/idea` captures a spark into the Inbox (`oI6dJqP0hGHG`) as a content note with `#status=idea`; it moves to Contenuti once triaged.
+- **Metrics**: "Metriche contenuti" (`W2z88t8D6i5L`). Hub: "Pipeline contenuti" (`I78vgbZLZnde`, Flag/Side, cadence floor).
+- **MCP gotchas:** `edit_note_content` does not work on text notes: to change a body, `get_note_content`, edit the Markdown, and write it back whole with `set_note_content`, preserving everything else (links included). `set_attribute` **overwrites** an existing attribute with the same name (verified 2026-10-20), so it cannot add a second value to a multi-valued label (`#artifact`, `#channels`). Check `get_note` first: if the label is absent, set it; if it already has a different value, never call `set_attribute` on it. For `#artifact`, add the link instead to a `## Artifact` list at the end of the body. For `#channels`, ask Davide to add the label by hand in Trilium. Either way, tell him the exact `label=value`. A link to a missing note becomes a dead link: link only to notes that exist.
 
-This repo is the **blog Factory**: it holds the **artifacts** (posts in `src/content/blog/`, the blog PRs, the `.carousel/` social copy) and the owning Piece note links to them through `artifact`. The writing skills (`write-blog-post`, `social-post`, `newsletter-digest`) read the Piece and its Ideas for context and hand the artifact back by editing the Piece's frontmatter. **Do not open editorial or content-planning issues on this repo**: capture them in the vault with the `/idea` skill.
+This repo is the **blog Factory**: it holds the **artifacts** (posts in `src/content/blog/`, the blog PRs, the `.carousel/` social copy) and the owning content note links to them through `#artifact`. The writing skills (`write-blog-post`, `social-post`, `newsletter-digest`) read the content note for context and hand the artifact back by setting its attributes. **Do not open editorial or content-planning issues on this repo**: capture them in Trilium with the `/idea` skill.
 
 ## Agent skills
 
 ### Issue tracker
 
-Engineering issues (site code, bugs, features) live on GitHub Issues at `davideimola/davideimola.dev` via the `gh` CLI. Editorial / content-planning work goes to the Obsidian vault (see above), not here. See `docs/agents/issue-tracker.md`.
+Engineering issues (site code, bugs, features) live on GitHub Issues at `davideimola/davideimola.dev` via the `gh` CLI. Editorial / content-planning work goes to Trilium (see above), not here. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

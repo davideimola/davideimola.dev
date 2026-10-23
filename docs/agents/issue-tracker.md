@@ -2,7 +2,7 @@
 
 Engineering issues and PRDs for this repo — bugs, features, and refactors on the **site code** — live as GitHub issues on `davideimola/davideimola.dev`. Use the `gh` CLI for all operations.
 
-> **Editorial exception.** Content-planning work (ideas, the Pipeline, channel and lifecycle decisions) does **not** live here: it lives in Davide's Obsidian vault under the `[[Content]]` hub (see "Editorial home" in `CLAUDE.md`; content-os is deprecated). This repo is the blog Factory; its writing skills (`write-blog-post`, `social-post`, `newsletter-digest`) read and update Piece notes in the vault, and a blog PR stays in this repo referencing the owning Piece note by name. The conventions below apply only to engineering issues on this repo.
+> **Editorial exception.** Content-planning work (ideas, the content pipeline, channel and lifecycle decisions) does **not** live here: it lives in Davide's Trilium, in the Contenuti collection (see "Editorial home" in `CLAUDE.md`; the Obsidian vault and content-os are retired). This repo is the blog Factory; its writing skills (`write-blog-post`, `social-post`, `newsletter-digest`) read and update content notes in Trilium, and a blog PR stays in this repo referencing the owning content note by title. The conventions below apply only to engineering issues on this repo.
 
 ## Conventions
 

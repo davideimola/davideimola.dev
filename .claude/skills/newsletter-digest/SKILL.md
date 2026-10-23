@@ -1,7 +1,7 @@
 ---
 name: newsletter-digest
 description: >
-  Drafts the monthly newsletter digest for davideimola.dev for the author to review. Harvests the month's window (blog posts published, upcoming talks, optional projects) via harvestWindow plus the cross-channel view from the Content Pieces in Davide's Obsidian vault, writes a frozen .mdx issue file (harvested sections snapshotted + a suggested intro to rewrite), generates the email HTML, and creates a Kit broadcast DRAFT (never sends) with the on-site "read on web" link, then stops for human review and a manual send. Same philosophy as write-blog-post / social-post: it drafts, Davide reviews the intro and triggers the send by hand. Use when Davide wants to draft, assemble, or prepare the monthly newsletter issue ("prepara la newsletter del mese", "draft the digest", "newsletter di luglio").
+  Drafts the monthly newsletter digest for davideimola.dev for the author to review. Harvests the month's window (blog posts published, upcoming talks, optional projects) via harvestWindow plus the cross-channel view from the content notes in Davide's Trilium, writes a frozen .mdx issue file (harvested sections snapshotted + a suggested intro to rewrite), generates the email HTML, and creates a Kit broadcast DRAFT (never sends) with the on-site "read on web" link, then stops for human review and a manual send. Same philosophy as write-blog-post / social-post: it drafts, Davide reviews the intro and triggers the send by hand. Use when Davide wants to draft, assemble, or prepare the monthly newsletter issue ("prepara la newsletter del mese", "draft the digest", "newsletter di luglio").
 ---
 
 You assemble Davide's monthly newsletter digest for davideimola.dev. The model is a **harvest**: an issue is ~90% auto-assembled from content that already exists in the repo (blog posts in the window, upcoming talks, optionally projects) plus a short hand-written intro. So an issue costs minutes and is worth publishing even at a small list. You **draft**; Davide rewrites the intro in his own voice, reviews, and triggers the send himself from Kit. You never send.
@@ -48,7 +48,7 @@ Gather the raw material, then let the engine select:
    - `upcomingTalks` - scheduled after the window end, soonest-first.
    - `projects` - featured active projects (optional highlight).
    - `skippable` - true when there are no posts AND no upcoming talks.
-2. **From the Obsidian vault** (`/Users/davideimola/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/`, schema in "Editorial home" in the repo `CLAUDE.md`; content-os is deprecated) - read the cross-channel view for context: the `type: piece` notes in `Notes/` whose `publish_date` falls in the window or just after it (what shipped or is scheduled across blog and LinkedIn), the `type: talk` notes, and `Notes/Metriche contenuti.md` if useful. This is context to enrich the intro and to cross-reference (e.g. a talk announced, a companion LinkedIn post), not content to dump in.
+2. **From Trilium** (the `trilium` MCP server; schema in "Editorial home" in the repo `CLAUDE.md`; the Obsidian vault and content-os are retired) - read the cross-channel view for context: the `#type=content` notes whose `#blogDate`, `#linkedinDate` or `#talkDate` falls in the window or just after it (what shipped or is scheduled across blog, LinkedIn and talks; e.g. `search_notes` with `#type=content #linkedinDate >= YYYY-MM-01`), the talk engagements in their bodies, and "Metriche contenuti" (`W2z88t8D6i5L`) if useful. This is context to enrich the intro and to cross-reference (e.g. a talk announced, a companion LinkedIn post), not content to dump in.
 
 **Empty month = skippable.** If `harvestWindow` reports `skippable`, do **not** produce a hollow issue. Tell Davide plainly: "No new posts and no upcoming talks for `<month>` - I'd skip this issue rather than send a thin one." Stop there unless he insists on sending anyway (e.g. a talk-only or announcement issue), in which case proceed with what exists.
 
@@ -153,7 +153,7 @@ git push -u origin newsletter/YYYY-MM
 gh pr create --title "Newsletter issue #<n>: <subject>" --body "<one-line summary>"
 ```
 
-The newsletter's editorial planning is optional (per ADR-0002 / #70): the vault's Pieces carry no newsletter channel today, so the committed `.mdx` + the Kit draft are the deliverable. If Davide has made a Piece note for this issue anyway, set its `artifact` to the PR URL and leave the rest of the note alone.
+The newsletter's editorial planning is optional (per ADR-0002 / #70): Trilium's content notes carry no newsletter channel today, so the committed `.mdx` + the Kit draft are the deliverable. If Davide has made a content note for this issue anyway, record the PR URL as its `#artifact` (never overwriting an existing one, see `CLAUDE.md`) and leave the rest of the note alone.
 
 ---
 
