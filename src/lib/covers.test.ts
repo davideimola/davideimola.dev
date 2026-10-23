@@ -36,12 +36,24 @@ describe.each(["blog", "pages"])("%s cover files", (dir) => {
   const colours = (svg: string) =>
     new Set((svg.match(/#[0-9a-f]{6}\b/gi) ?? []).map((c) => c.toUpperCase()));
 
-  for (const slug of readdirSync(blog).filter((s) => existsSync(join(blog, s, "cover.svg")))) {
-    it(`${slug}: light cover uses only the brand inks, with a matching dark twin`, () => {
-      const cover = readFileSync(join(blog, slug, "cover.svg"), "utf8");
-      for (const c of colours(cover)) expect(light).toContain(c);
-      expect(existsSync(join(blog, slug, "cover-dark.svg")), "run pnpm covers:dark").toBe(true);
-      const twin = readFileSync(join(blog, slug, "cover-dark.svg"), "utf8");
+  const drawings = readdirSync(blog).flatMap((slug) => {
+    const covers = existsSync(join(blog, slug, "cover.svg")) ? [join(slug, "cover.svg")] : [];
+    const dir = join(blog, slug, "figures");
+    const figures = existsSync(dir)
+      ? readdirSync(dir)
+          .filter((f) => f.endsWith(".svg") && !f.endsWith("-dark.svg"))
+          .map((f) => join(slug, "figures", f))
+      : [];
+    return [...covers, ...figures];
+  });
+
+  for (const file of drawings) {
+    it(`${file}: uses only the brand inks, with a matching dark twin`, () => {
+      const drawing = readFileSync(join(blog, file), "utf8");
+      for (const c of colours(drawing)) expect(light).toContain(c);
+      const twinPath = join(blog, file.replace(/\.svg$/, "-dark.svg"));
+      expect(existsSync(twinPath), "run pnpm covers:dark").toBe(true);
+      const twin = readFileSync(twinPath, "utf8");
       for (const c of colours(twin)) expect(dark).toContain(c);
     });
   }

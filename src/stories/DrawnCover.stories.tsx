@@ -1,6 +1,6 @@
+import { prepareDrawSvg } from "@davideimola/brand/draw";
 import type { Meta, StoryObj } from "@storybook/react";
 import { DrawnCover } from "../components/ui/DrawnCover";
-import { prepareCoverSvg } from "../lib/cover-draw";
 
 // A small monoline cover in the shape of the real ones (public/images/blog),
 // prepared the way the post page prepares them.
@@ -15,7 +15,7 @@ const SAMPLE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
   <circle cx="1060" cy="260" r="26" fill="#C91F37"/>
 </svg>`;
 
-const light = prepareCoverSvg(SAMPLE, ["#C91F37"], "#F7F5F0");
+const light = prepareDrawSvg(SAMPLE, ["#C91F37"], "#F7F5F0");
 
 const meta: Meta<typeof DrawnCover> = {
   title: "UI/DrawnCover",

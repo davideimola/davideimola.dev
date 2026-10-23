@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 // A post's cover that draws itself the first time it scrolls into view: the
 // ink lines trace in (~1.2s) and the one red detail lands last, like a
 // signature. Same frame as PostCover (16:9, hairline), same night twin in the
-// dark theme. The SVGs arrive prepared by src/lib/cover-draw.ts, read from the
-// site's own public/ covers, never from user input. The timing lives in
-// globals.css (`.cover-draw`): reduced motion shows it drawn at once, and so
-// do print and the <noscript> rule in the root layout.
+// dark theme. The SVGs arrive prepared by the brand's prepareDrawSvg, read from
+// the site's own public/ covers, never from user input. The timing lives in
+// the brand's draw.css (`.draw`): reduced motion shows it drawn at once, and
+// so do print and the <noscript> rule in the root layout.
 
 interface DrawnCoverProps {
   /** The prepared light cover. */
@@ -49,12 +49,12 @@ export function DrawnCover({ light, dark, alt, className = "" }: DrawnCoverProps
       role="img"
       aria-label={alt}
       data-drawn={drawn ? "" : undefined}
-      className={`cover-draw relative w-full aspect-video overflow-hidden border border-border bg-[var(--di-color-paper)] dark:bg-[var(--di-color-night)] ${className}`}
+      className={`draw relative w-full aspect-video overflow-hidden border border-border bg-[var(--di-color-paper)] dark:bg-[var(--di-color-night)] ${className}`}
     >
       <div
         aria-hidden="true"
         className={`${svgClasses} ${dark ? "dark:hidden" : ""}`}
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: the site's own cover SVG from public/, prepared by cover-draw
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: the site's own cover SVG from public/, prepared by prepareDrawSvg
         dangerouslySetInnerHTML={{ __html: light }}
       />
       {dark && (

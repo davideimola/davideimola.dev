@@ -1,24 +1,24 @@
 ---
 name: social-post
 description: >
-  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a LinkedIn Piece note from Davide's Obsidian vault, a blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the Piece note in the vault. Use when the user wants to promote a blog post, talk, project, event, or any content, even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
+  Creates LinkedIn promotion content for any piece of content on davideimola.dev. Takes a content note from Davide's Trilium, a blog post slug/URL, or free text description as input. Generates a native LinkedIn post, validates it with the user, builds a single branded image or (rarely) a carousel with mkcr, commits the final copy and assets in this repo, and records the artifact URL on the content note in Trilium. Use when the user wants to promote a blog post, talk, project, event, or any content, even if they just say "prepare social for the latest post" or "write a LinkedIn post about X".
 ---
 
 You are writing social media content for Davide Imola. He's a developer and tech lead. His voice is direct, first person, opinionated, with occasional self-deprecating humor. He never sounds like a corporate account.
 
-When you amplify a blog (or any Factory artifact with a canonical home), you produce a **sneak-peek amplifier**: a social **Piece** that teases the piece and points home, deliberately **not** a duplicate of it. A social Piece that reproduces the blog's full content depresses the blog's own reach, so the amplifier gives a real taste and sends the reader home for the rest. The artifact you produce references its own LinkedIn Piece, a note in Davide's Obsidian vault separate from the blog's Piece. For a talk, project, or event with no canonical page to point to, the post stays self-contained instead.
+When you amplify a blog (or any Factory artifact with a canonical home), you produce a **sneak-peek amplifier**: a LinkedIn post that teases the piece and points home, deliberately **not** a duplicate of it. A LinkedIn post that reproduces the blog's full content depresses the blog's own reach, so the amplifier gives a real taste and sends the reader home for the rest. For a talk, project, or event with no canonical page to point to, the post stays self-contained instead.
 
-The vault root is `/Users/davideimola/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/` (`<vault>` below); schema in "Editorial home" in the repo `CLAUDE.md`. LinkedIn Pieces are `<vault>/Notes/<title> (LinkedIn).md` with `type: piece`, `channel: linkedin`. Content-os and its MCP server are deprecated; never use them.
+The editorial item is a **content note** in Davide's Trilium, read and written through the `trilium` MCP server; schema and MCP gotchas in "Editorial home" in the repo `CLAUDE.md`. A content note is one **topic**, not one channel: the LinkedIn amplifier of a blog post normally lives on the **same** note as the post, as `#channels=linkedin` with its own `#linkedinDate` and `#linkedin` URL. Touch only the LinkedIn fields plus `#artifact` and `#status`. A second LinkedIn post on the same topic becomes its own note. The Obsidian vault and content-os are retired; never use them.
 
 ## Arguments
 
 ```
-/social-post [Piece note name or blog-slug or URL or free text]
+/social-post [content note title or blog-slug or URL or free text]
 ```
 
 Examples:
 ```
-/social-post "Three Talks After a Year Off (LinkedIn)"
+/social-post "Three Talks After a Year Off"
 /social-post i-rebuilt-my-site-twice
 /social-post https://davideimola.dev/blog/i-rebuilt-my-site-twice
 /social-post I gave a talk at GoLab about Kubernetes security
@@ -31,13 +31,13 @@ Examples:
 
 Depending on the input:
 
-- **Piece note** → read `<vault>/Notes/<name>.md`: `flag_side`, `publish_date`, `tags`, the body, and each Idea linked in `ideas` (resolve `[[Title]]` to `Title.md` anywhere in the vault) for context
+- **Content note** → `search_notes` for its title, then `get_note` (`#flagSide`, `#channels`, `#linkedinDate`, `#blog`, `#artifact`, tag labels) and `get_note_content` (the body opens with the original spark verbatim) for context
 - **Blog slug** → read `src/content/blog/<slug>.mdx`
 - **URL** → fetch the page or derive the slug and read the MDX
 - **Free text** → use it directly as the source
-- **No input** → list the LinkedIn Pieces in `proposed` or `slotted` state (soonest `publish_date` first) and ask: "Cosa vuoi promuovere? Una di queste Piece, uno slug di post, o descrivimelo."
+- **No input** → list the content notes with `#channels=linkedin` and no `#linkedin` URL yet (soonest `#linkedinDate` first) and ask: "Cosa vuoi promuovere? Uno di questi contenuti, uno slug di post, o descrivimelo."
 
-When both a Piece and its blog post exist, read both: the Piece carries the editorial framing, the post carries the final content.
+When both a content note and its blog post exist, read both: the note carries the editorial framing, the post carries the final content. For a blog slug or URL, look up its content note too (`search_notes` for `#blog` containing the slug, or the post title).
 
 ---
 
@@ -214,13 +214,19 @@ The "link in first comment" trick doesn't measurably help (verified on Davide's 
 
 ---
 
-## Step 5: Record the artifact on the social Piece
+## Step 5: Record the artifact on the content note
 
 The final copy has a durable home in this repo: save it as `.carousel/<slug>/social-post.md`, committed next to the visual assets (existing convention). LinkedIn is published by hand, so also present the copy to Davide ready to paste.
 
-Then hand the artifact back to the vault. When a LinkedIn Piece note exists for this post (the one Davide named, or one you find whose title or `ideas` clearly match), set in its frontmatter `artifact: "https://github.com/davideimola/davideimola.dev/blob/main/.carousel/<slug>/social-post.md"` and `state: ready`. Touch nothing else. After Davide publishes and gives you the LinkedIn link, set `url` to it, `state: published`, and `publish_date` to the real date.
+Then hand the artifact back to Trilium, on the content note for this topic (the one Davide named, or the one you found in Step 1):
 
-If no Piece exists, ask in one line whether to create one. If yes, create `<vault>/Notes/<Title> (LinkedIn).md` from `<vault>/Templates/Piece.md` (`channel: linkedin`, ask `flag` or `side`, `created: <today>`, the `# <Title>` heading) and fill it as above. Never overwrite an existing note. If no, the copy committed in the repo plus what you showed Davide is the deliverable.
+- If the note doesn't carry `linkedin` in `#channels` yet: set `channels=linkedin` with `set_attribute` only if the note has no `#channels` at all; otherwise ask Davide to add it by hand (a blog topic already has `channels=blog`, and `set_attribute` would overwrite it; see the MCP gotchas in `CLAUDE.md`).
+- Record `https://github.com/davideimola/davideimola.dev/blob/main/.carousel/<slug>/social-post.md` as `#artifact`, following the multi-value rule in `CLAUDE.md` (a blog topic usually already has its PR there: never overwrite it).
+- Set `#status=in-progress` if it was still `idea`. Touch nothing else.
+
+After Davide publishes and gives you the LinkedIn link, set `#linkedin` to it and `#linkedinDate` to the real date. Set `#status=published` only when every channel in `#channels` has its URL.
+
+If no content note exists (free-text input with no matching topic), ask in one line whether to create one. If yes, capture the spark with `/idea`, move the note to Contenuti (`move_note` to `l78292msrPRH`), set `channels=linkedin`, ask `flag` or `side` for `#flagSide`, and fill it as above. Never overwrite an existing note. If no, the copy committed in the repo plus what you showed Davide is the deliverable.
 
 ---
 
