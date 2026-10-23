@@ -90,7 +90,7 @@ export default function RootLayout({
           // biome-ignore lint/security/noDangerouslySetInnerHtml: a constant style rule, no user input
           dangerouslySetInnerHTML={{
             __html:
-              "<style>.marker-stroke,.cover-draw [data-draw]{stroke-dashoffset:0}.cover-draw [data-fill]{opacity:1}</style>",
+              "<style>.marker-stroke,.draw [data-draw]{stroke-dashoffset:0}.draw [data-fill]{opacity:1}</style>",
           }}
         />
       </head>

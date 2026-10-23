@@ -1,4 +1,5 @@
 import { getAllPosts } from "../../lib/content";
+import { figuresToMarkdown } from "../../lib/figures";
 
 const BASE_URL = "https://davideimola.dev";
 const AUTHOR = "Davide Imola";
@@ -29,7 +30,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.excerpt)}</description>
-      <content:encoded><![CDATA[${post.content}]]></content:encoded>
+      <content:encoded><![CDATA[${figuresToMarkdown(post.content)}]]></content:encoded>
       <pubDate>${pubDate}</pubDate>
       <author>noreply@davideimola.dev (${AUTHOR})</author>
       ${tags}

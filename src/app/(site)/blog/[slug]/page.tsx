@@ -10,6 +10,7 @@ import { AuthorBio } from "../../../../components/ui/AuthorBio";
 import { BackToTop } from "../../../../components/ui/BackToTop";
 import { CodeBlock } from "../../../../components/ui/CodeBlock";
 import { DrawnCover } from "../../../../components/ui/DrawnCover";
+import { DrawnFigure } from "../../../../components/ui/DrawnFigure";
 import { GiscusComments } from "../../../../components/ui/GiscusComments";
 import { JsonLd } from "../../../../components/ui/JsonLd";
 import { PostCover } from "../../../../components/ui/PostCover";
@@ -27,7 +28,7 @@ import {
   getPrevNextPosts,
   getRelatedPosts,
 } from "../../../../lib/content";
-import { loadDrawableCover } from "../../../../lib/cover-files";
+import { loadDrawableCover, loadFigure } from "../../../../lib/cover-files";
 import { rasterCover } from "../../../../lib/covers";
 import { formatDate } from "../../../../lib/dates";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
@@ -35,6 +36,13 @@ import { rehypeEndMark } from "../../../../lib/rehype-end-mark";
 
 function absoluteUrl(src: string): string {
   return src.startsWith("http") ? src : `https://davideimola.dev${src}`;
+}
+
+// `<DrawnFigure src alt caption />` in a post body: a figure that draws
+// itself, read from public/ at build time (loadFigure throws on a bad path).
+function PostFigure({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
+  const figure = loadFigure(src);
+  return <DrawnFigure light={figure.light} dark={figure.dark} alt={alt} caption={caption} />;
 }
 
 interface Props {
@@ -195,7 +203,10 @@ export default async function BlogPostPage({ params }: Props) {
                     ],
                   },
                 }}
-                components={{ pre: CodeBlock as React.ComponentType<object> }}
+                components={{
+                  pre: CodeBlock as React.ComponentType<object>,
+                  DrawnFigure: PostFigure,
+                }}
               />
             </div>
 
