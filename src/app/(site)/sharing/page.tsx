@@ -18,6 +18,7 @@ import {
   sessionsByYear,
   sharingStats,
 } from "../../../lib/sharing";
+import { talkSkillsLinks } from "../../../lib/skills";
 import { feedbackHost, isFeedbackOpen } from "../../../lib/talk-feedback";
 
 export const metadata: Metadata = {
@@ -86,9 +87,24 @@ const LONG_BIO =
 
 const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
 
+// The skills a talk ships with, from the `talk` slugs in src/content/skills.json,
+// so the link is declared once, on the skills side.
+const SKILLS_BY_TALK = talkSkillsLinks();
+
 function Material({ talk, today }: { talk: Talk; today: Date }) {
+  const skills = SKILLS_BY_TALK.get(talk.slug);
+  const skillsLink = skills && (
+    <a href={skills} className={inlineLink}>
+      Skills
+    </a>
+  );
   if (isUpcoming(talk, today)) {
-    return <span className="text-fg">upcoming</span>;
+    return (
+      <span className="flex flex-wrap gap-x-3 gap-y-1">
+        <span className="text-fg">upcoming</span>
+        {skillsLink}
+      </span>
+    );
   }
   const links: { label: string; href: string }[] = [];
   if (talk.feedback && isFeedbackOpen(talk, today)) {
@@ -96,7 +112,8 @@ function Material({ talk, today }: { talk: Talk; today: Date }) {
   }
   if (talk.session?.slides) links.push({ label: "Slides", href: talk.session.slides });
   if (talk.session?.video) links.push({ label: "Recording", href: talk.session.video });
-  if (links.length === 0) return <span className="text-fg-subtle">no recording</span>;
+  if (links.length === 0 && !skillsLink)
+    return <span className="text-fg-subtle">no recording</span>;
   return (
     <span className="flex flex-wrap gap-x-3 gap-y-1">
       {links.map((link) => (
@@ -111,6 +128,7 @@ function Material({ talk, today }: { talk: Talk; today: Date }) {
           {link.label}
         </a>
       ))}
+      {skillsLink}
     </span>
   );
 }

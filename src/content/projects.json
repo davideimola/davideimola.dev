@@ -44,6 +44,17 @@
     "post": "introducing-argus"
   },
   {
+    "slug": "agent-skills",
+    "title": "Agent Skills",
+    "status": "active",
+    "url": "/skills",
+    "period": "2026–present",
+    "featured": false,
+    "tags": ["AI", "Go", "Security"],
+    "description": "The skills I write for coding agents: Go security checks from my GoLab talk, to install in your repo, and the ones I run my writing and speaking with, to read.",
+    "group": "open"
+  },
+  {
     "slug": "tsundoku",
     "title": "tsundoku",
     "status": "active",
