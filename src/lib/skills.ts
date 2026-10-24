@@ -73,10 +73,16 @@ function githubHeaders(): Record<string, string> {
 
 /**
  * Reads every `skills/<name>/SKILL.md` on the default branch of `repo`, sorted
- * by name. Throws on anything unexpected (a non-2xx, a SKILL.md whose
- * frontmatter is not the format's), so the caller decides what a failure means.
+ * by name. Throws when the repo itself cannot be listed, so the caller decides
+ * what that means. One SKILL.md that cannot be read (a non-2xx, frontmatter
+ * that is not valid YAML or lacks a description) is skipped with a warning,
+ * so it never takes its siblings down with it; `strict` throws instead, which
+ * is what the snapshot script wants.
  */
-export async function fetchRepoSkills(repo: string): Promise<Skill[]> {
+export async function fetchRepoSkills(
+  repo: string,
+  { strict = false }: { strict?: boolean } = {}
+): Promise<Skill[]> {
   const treeResponse = await fetch(
     `https://api.github.com/repos/${repo}/git/trees/HEAD?recursive=1`,
     { headers: githubHeaders(), next: { revalidate: 3600 } }
@@ -88,19 +94,28 @@ export async function fetchRepoSkills(repo: string): Promise<Skill[]> {
   const files = (tree.tree ?? []).map((entry) => entry.path).filter((p) => SKILL_FILE.test(p));
 
   const skills = await Promise.all(
-    files.map(async (file) => {
-      const response = await fetch(`https://raw.githubusercontent.com/${repo}/HEAD/${file}`, {
-        next: { revalidate: 3600 },
-      });
-      if (!response.ok) {
-        throw new Error(`${repo}/${file} answered ${response.status}`);
+    files.map(async (file): Promise<Skill | null> => {
+      try {
+        const response = await fetch(`https://raw.githubusercontent.com/${repo}/HEAD/${file}`, {
+          next: { revalidate: 3600 },
+        });
+        if (!response.ok) {
+          throw new Error(`answered ${response.status}`);
+        }
+        const frontmatter = frontmatterSchema.parse(matter(await response.text()).data);
+        return { ...frontmatter, path: file.replace(/\/SKILL\.md$/, "") };
+      } catch (error) {
+        const message = `${repo}/${file} could not be read: ${(error as Error).message}`;
+        if (strict) throw new Error(message);
+        console.warn(`[skills] ${message}`);
+        return null;
       }
-      const frontmatter = frontmatterSchema.parse(matter(await response.text()).data);
-      return { ...frontmatter, path: file.replace(/\/SKILL\.md$/, "") };
     })
   );
 
-  return skills.sort((a, b) => a.name.localeCompare(b.name));
+  return skills
+    .filter((skill): skill is Skill => skill !== null)
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ── The fallback ───────────────────────────────────────────────────────────

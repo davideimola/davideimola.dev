@@ -9,7 +9,8 @@
 // GITHUB_TOKEN is optional (loaded from .env.local when present); without it
 // the unauthenticated rate limit applies. Every repo named in
 // src/content/skills.json is read through the same fetchRepoSkills() the page
-// uses, and nothing is written unless every repo was read: a broken run must
+// uses, in strict mode, and nothing is written unless every skill of every
+// repo was read: a broken run must
 // never replace a good snapshot with a partial one.
 //
 // Exit code 0 means src/content/skills.fallback.json was rewritten.
@@ -29,7 +30,7 @@ const run = promisify(execFile);
 const snapshot: SkillsSnapshot = {};
 for (const { repo } of getSkillCollectionEntries()) {
   try {
-    snapshot[repo] = await fetchRepoSkills(repo);
+    snapshot[repo] = await fetchRepoSkills(repo, { strict: true });
   } catch (error) {
     console.error(`✗ ${(error as Error).message}`);
     console.error("  src/content/skills.fallback.json was NOT written.");

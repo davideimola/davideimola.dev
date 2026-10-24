@@ -71,13 +71,31 @@ describe("fetchRepoSkills", () => {
     ]);
   });
 
-  it("throws when a SKILL.md has no description", async () => {
+  it("skips a SKILL.md that is not valid YAML and keeps its siblings", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url.includes("/git/trees/")) {
+        return json({ tree: [{ path: "skills/good/SKILL.md" }, { path: "skills/bad/SKILL.md" }] });
+      }
+      return url.includes("bad")
+        ? text('---\nname: bad\ndescription: Does a thing ("note: this"), badly.\n---\n')
+        : text("---\nname: good\ndescription: Does good.\n---\n");
+    });
+
+    expect(await fetchRepoSkills("o/r")).toEqual([
+      { name: "good", description: "Does good.", path: "skills/good" },
+    ]);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("skills/bad/SKILL.md"));
+    warn.mockRestore();
+  });
+
+  it("throws on a SKILL.md with no description in strict mode", async () => {
     fetchMock.mockImplementation(async (url: string) =>
       url.includes("/git/trees/")
         ? json({ tree: [{ path: "skills/a/SKILL.md" }] })
         : text("---\nname: a\n---\n")
     );
-    await expect(fetchRepoSkills("o/r")).rejects.toThrow();
+    await expect(fetchRepoSkills("o/r", { strict: true })).rejects.toThrow("skills/a/SKILL.md");
   });
 });
 
