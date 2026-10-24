@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 // A private repository has nowhere public to point, so its row is not a link.
+// A page of this site (`url: "/skills"`) opens in place, anything else in a new tab.
 function hrefOf(project: Project): string | undefined {
   return project.url ?? project.github;
 }
@@ -44,7 +45,11 @@ function ProjectRow({ project, last }: { project: Project; last: boolean }) {
   const Row = href ? "a" : "div";
   return (
     <Row
-      {...(href ? { href, target: "_blank", rel: "noopener noreferrer" } : {})}
+      {...(href
+        ? href.startsWith("/")
+          ? { href }
+          : { href, target: "_blank", rel: "noopener noreferrer" }
+        : {})}
       className={`group grid grid-cols-1 md:grid-cols-[240px_minmax(0,1fr)_auto] gap-x-8 gap-y-1.5 py-[22px] border-t border-border items-baseline no-underline ${
         last ? "border-b" : ""
       }`}
@@ -64,7 +69,8 @@ function ProjectRow({ project, last }: { project: Project; last: boolean }) {
   );
 }
 
-// Only what I build: the flagship in the open, then what I build for myself,
+// Only what I build: the flagship and the rest of what I build in the open,
+// then what I build for myself,
 // then upstream contributions. The day job lives on /cv and /about, the
 // communities on /sharing, so neither is restated here.
 export default function ProjectsPage() {
@@ -73,6 +79,7 @@ export default function ProjectsPage() {
   const flagship = projects.find((p) => p.flagship);
   const byGroup = (group: Project["group"]) =>
     projects.filter((p) => p.group === group && p !== flagship);
+  const open = byGroup("open");
   const personal = byGroup("personal");
   const flagshipPost = flagship?.post ? getPostBySlug(flagship.post) : null;
   if (flagship?.post && !flagshipPost) {
@@ -135,6 +142,14 @@ export default function ProjectsPage() {
             </span>
           </div>
         </section>
+      )}
+
+      {open.length > 0 && (
+        <Group tape="In the open" tilt={2}>
+          {open.map((p, i) => (
+            <ProjectRow key={p.slug} project={p} last={i === open.length - 1} />
+          ))}
+        </Group>
       )}
 
       {personal.length > 0 && (

@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "davideimola/go-security-skills",
+    "tape": "Install",
+    "title": "Go security",
+    "intro": "The practices of my GoLab talk, packaged so your agent can apply them to your repo: security CI, an audit that reports findings with evidence, and fuzz tests that prove a logic bug before anyone fixes it. Every file a skill writes is tested in CI against a real Go module first.",
+    "install": "npx skills add davideimola/go-security-skills",
+    "talk": "golab-2026"
+  },
+  {
+    "repo": "davideimola/skills",
+    "tape": "Read",
+    "title": "How I work",
+    "intro": "The skills I run my writing and my speaking with. They are wired to my own setup (my notes, my queue, my voice), so they will not work for you as they are: read them, take what fits, change the rest."
+  }
+]

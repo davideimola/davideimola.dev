@@ -1,0 +1,36 @@
+{
+  "davideimola/go-security-skills": [
+    {
+      "name": "go-security-audit",
+      "description": "Security audit of a Go repo or service. Use when the user asks to audit or check the security of Go code, or whether its dependencies or Go version have known vulnerabilities.",
+      "path": "skills/go-security-audit"
+    },
+    {
+      "name": "go-security-setup",
+      "description": "Go security CI setup for a Go repo. Use when the user wants security CI set up in a Go repo (govulncheck, fuzzing, Dependabot, a patched toolchain, a security policy), or its schedule, fuzzing or failure policy changed, or where the audit gets govulncheck and gosec from.",
+      "path": "skills/go-security-setup"
+    },
+    {
+      "name": "verify-with-fuzz",
+      "description": "Verifies a security hypothesis about Go code by writing a fuzz property and named test cases that fail on today's code and stay as regression tests. Use when the user suspects an authorization or trust bug in Go code (who may do what, which input is trusted) and wants it proven with a failing test, or when go-security-audit needs evidence for a logic finding.",
+      "path": "skills/verify-with-fuzz"
+    }
+  ],
+  "davideimola/skills": [
+    {
+      "name": "conference",
+      "description": "Run my Conference companion on Trilium, from any repo. Use when I want to plan which Sessions to follow at a conference, capture a takeaway during one (\"takeaway: …\", \"cosa vedo dopo?\"), or write the recap afterwards.",
+      "path": "skills/conference"
+    },
+    {
+      "name": "idea",
+      "description": "Capture a raw content spark as an idea note in my Trilium Inbox, from any repo. Use when I want to jot down a content idea or spark and file it fast — capture first, judge later.",
+      "path": "skills/idea"
+    },
+    {
+      "name": "tweets",
+      "description": "Propose a few short posts for my X + Bluesky queue from what I already make (Trilium ideas, blog posts, Argus activity, upcoming talks), then save the approved ones as planned drafts in Typefully. Use when I want tweets, short posts, or to fill the queue (\"proponimi dei tweet\", \"riempi la coda\", \"/tweets\"), from any repo.",
+      "path": "skills/tweets"
+    }
+  ]
+}
