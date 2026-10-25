@@ -1,10 +1,10 @@
 [
   {
-    "repo": "davideimola/go-security-skills",
+    "repo": "davideimola/appsec-skills",
     "tape": "Install",
-    "title": "Go security",
-    "intro": "The practices of my GoLab talk, packaged so your agent can apply them to your repo: security CI, an audit that reports findings with evidence, and fuzz tests that prove a logic bug before anyone fixes it. Every file a skill writes is tested in CI against a real Go module first.",
-    "install": "npx skills add davideimola/go-security-skills",
+    "title": "Application security",
+    "intro": "The practices of my GoLab talk, packaged so your agent can apply them to your repo: security CI, an audit that reports findings with evidence, and fuzz tests that prove a logic bug before anyone fixes it. Go is the first pack and TypeScript is next; every file a skill writes is tested in CI against a real project first.",
+    "install": "npx skills add davideimola/appsec-skills",
     "talk": "golab-2026"
   },
   {
