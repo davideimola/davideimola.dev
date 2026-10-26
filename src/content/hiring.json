@@ -1,0 +1,21 @@
+{
+  "org": "RedCarbon",
+  "until": "2027-01-31",
+  "roles": [
+    {
+      "title": "Frontend engineer",
+      "hint": "The screens where analysts and AI agents work",
+      "url": "https://www.redcarbon.ai/careers/frontend-engineer"
+    },
+    {
+      "title": "Backend engineer",
+      "hint": "Go services that carry security alerts",
+      "url": "https://www.redcarbon.ai/careers/backend-engineer"
+    },
+    {
+      "title": "AI engineer",
+      "hint": "Agent harnesses, fine-tuning, evals",
+      "url": "https://www.redcarbon.ai/careers/ai-engineer"
+    }
+  ]
+}

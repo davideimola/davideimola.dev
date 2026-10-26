@@ -16,7 +16,9 @@ import {
   getUpcomingTalks,
   type Talk,
 } from "../../lib/content";
+import { readContentJson } from "../../lib/content-json";
 import { formatDayMonth } from "../../lib/dates";
+import { type Hiring, openHiring } from "../../lib/hiring";
 import { city, eventName, hostedBy, organisedByKind } from "../../lib/sharing";
 import { ALL_PROFILES, CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 import { upcomingBesidesRated } from "../../lib/talk-feedback";
@@ -168,6 +170,8 @@ export default function LinksPage() {
   const flagship = projects.find((p) => p.flagship && p.status === "active");
   const flagshipPost = flagship?.post ? getPostBySlug(flagship.post) : null;
   const association = projects.find((p) => p.slug === ASSOCIATION);
+  // Gone on its own past `until`, or once every role is filled.
+  const hiring = openHiring(readContentJson<Hiring>("hiring.json"));
   // "Open Source Day, meetups": what the association organises, from the archive.
   const organises = organisedByKind(hostedBy(talks, ASSOCIATION))
     .map((kind, i) => {
@@ -282,6 +286,16 @@ export default function LinksPage() {
               }
             />
           )}
+        </Group>
+      )}
+
+      {/* Open roles, one row each. The group goes when the last role is
+          filled, or past `until` if nobody remembers to take it down. */}
+      {hiring && (
+        <Group tape={`Hiring at ${hiring.org}`} tilt={2}>
+          {hiring.roles.map((role) => (
+            <Row key={role.url} href={role.url} title={role.title} hint={role.hint} />
+          ))}
         </Group>
       )}
 
