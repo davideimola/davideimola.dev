@@ -23,7 +23,11 @@
     "session": {
       "title": "Securing Go for Production: Best Practices, Supply Chain, Testing",
       "format": "Talk",
-      "abstract": "Why Go security matters now, starting from a one-line auth bypass caught by testing. Best practices, fuzzing, govulncheck, and supply chain hygiene, with offline-friendly demos."
+      "abstract": "Why Go security matters now, starting from a one-line auth bypass caught by testing. Best practices, fuzzing, govulncheck, and supply chain hygiene, with offline-friendly demos.",
+      "slides": "https://slides.davideimola.dev/securing-go/1"
+    },
+    "feedback": {
+      "url": "https://emblema.live/feedback/talk/TduZFjzkFOatnAYZ5cUTjZsQjQI2/6ae1ec06389cbe514e919a85/6ae1ec74389cbe514e919a86"
     }
   },
   {
