@@ -1,7 +1,7 @@
 "use server";
 
 import { isValidEmail } from "../../lib/email";
-import { createSubscriber } from "../../lib/kit";
+import { InvalidEmailError, subscribeEmail } from "../../lib/newsletter-api";
 import { verifyTurnstile } from "../../lib/turnstile";
 
 export interface SubscribeState {
@@ -14,7 +14,7 @@ export async function subscribe(
   formData: FormData
 ): Promise<SubscribeState> {
   // Honeypot: bots fill this, humans don't. Pretend success so bots move on, and
-  // never call Kit for them.
+  // never call newsletter-svc for them.
   const honeypot = formData.get("website")?.toString();
   if (honeypot) {
     return { status: "success" };
@@ -35,11 +35,16 @@ export async function subscribe(
   }
 
   try {
-    // Triggers Kit's double opt-in confirmation email; the subscriber stays pending
-    // until they click it, then lands on /newsletter/confirmed.
-    await createSubscriber(email);
+    // newsletter-svc mails the confirmation link; the address stays pending until it is
+    // clicked, then lands on /newsletter/confirmed.
+    await subscribeEmail(email);
     return { status: "success" };
-  } catch {
+  } catch (err) {
+    // The service checks addresses more strictly than isValidEmail (no display names, a
+    // dotted domain), so a few that pass here are refused there.
+    if (err instanceof InvalidEmailError) {
+      return { status: "error", message: "Please enter a valid email address." };
+    }
     return {
       status: "error",
       message: "That did not go through, and it is on my side. Try again in a moment.",

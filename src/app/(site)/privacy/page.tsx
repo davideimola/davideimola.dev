@@ -46,18 +46,12 @@ export default function PrivacyPage() {
             Newsletter
           </Tape>
           <p>
-            If you subscribe to the newsletter, your email address is stored by{" "}
-            <a
-              href="https://kit.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-fg hover:text-accent transition-colors duration-150"
-            >
-              Kit
-            </a>
-            , the service that sends it, on my behalf. It is used only to send you the newsletter.
-            Subscribing takes two steps: you only start receiving issues after clicking the link in
-            the confirmation email. The form is protected from bots by{" "}
+            If you subscribe to the newsletter, your email address is stored on a server I run
+            myself, in Germany, together with when you asked to subscribe and when you confirmed.
+            The issues are sent from that same server, and no other service sees the list. It is
+            used only to send you the newsletter. Subscribing takes two steps: you only start
+            receiving issues after clicking the link in the confirmation email, and an address that
+            never confirms is deleted after 30 days. The form is protected from bots by{" "}
             <a
               href="https://www.cloudflare.com/products/turnstile/"
               target="_blank"
@@ -69,24 +63,24 @@ export default function PrivacyPage() {
             .
           </p>
           <p>
-            Today the issues still carry Kit's tracking pixel, which records whether and when you
-            open one, and the links go through Kit, which counts the clicks. Kit offers no way to
-            switch this off, so the newsletter is moving to a server I run, where issues will carry
-            no pixel and no tracked links. Until then, blocking remote images in your mail client
-            stops the pixel.
-          </p>
-          <p>
-            Every issue has an unsubscribe link. Unsubscribing removes you from the list at once,
-            and you can ask me to delete your address entirely. See{" "}
+            The issues carry no tracking pixel and no tracked links: I do not know whether you open
+            an issue or what you click in it. Until October 2026 the newsletter was sent by{" "}
             <a
-              href="https://kit.com/privacy"
+              href="https://kit.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-fg hover:text-accent transition-colors duration-150"
             >
-              Kit's privacy policy
-            </a>{" "}
-            for how Kit handles the data it stores.
+              Kit
+            </a>
+            , whose emails do count opens and clicks and offer no way to switch it off. If you
+            subscribed before then, your address is moving to my server, and Kit's copy will be
+            deleted.
+          </p>
+          <p>
+            Every issue has an unsubscribe link, and mail apps that support it show an Unsubscribe
+            button too: either removes you at once. After that I keep your address only so that
+            nothing reaches you again. Write to me and I will delete it entirely.
           </p>
         </section>
 

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NewsletterIssue } from "./newsletter";
-import { draftIssueBroadcast, renderIssueEmail } from "./newsletter-email";
+import { draftIssue, renderIssueEmail } from "./newsletter-email";
 
 const issue: NewsletterIssue = {
   slug: "2026-07",
@@ -18,12 +18,25 @@ describe("renderIssueEmail", () => {
     expect(html).toContain("Intro");
   });
 
-  it("is content-only: a fragment with no <html>/<body> wrapper or footer chrome", async () => {
+  it("is the whole email: document, lockup header, preview text and footer", async () => {
     const html = await renderIssueEmail(issue);
-    // The Kit template supplies the <html>/<body>, the header, and the footer/unsubscribe.
-    expect(html).not.toMatch(/<html/i);
-    expect(html).not.toMatch(/<body/i);
-    expect(html).not.toContain("Unsubscribe");
+    expect(html).toMatch(/<html/i);
+    expect(html).toMatch(/<body/i);
+    expect(html).toContain("https://www.davideimola.dev/brand/lockup-1200.png");
+    expect(html).toContain("What I shipped in July.");
+    expect(html).toContain("https://davideimola.dev/privacy");
+  });
+
+  it("leaves the unsubscribe link as the placeholder newsletter-svc fills per reader", async () => {
+    const html = await renderIssueEmail(issue);
+    expect(html).toContain('href="{{ unsubscribe_url }}"');
+  });
+
+  it("carries no image but the lockup, so nothing in it can tell who opened it", async () => {
+    const html = await renderIssueEmail(issue);
+    const images = html.match(/<img\b[^>]*>/gi) ?? [];
+    expect(images).toHaveLength(1);
+    expect(images[0]).toContain("lockup-1200.png");
   });
 
   it("points the read-on-web link at the on-site issue URL", async () => {
@@ -70,30 +83,37 @@ describe("renderIssueEmail", () => {
   });
 });
 
-describe("draftIssueBroadcast", () => {
+describe("draftIssue", () => {
   const fetchMock = vi.fn();
   vi.stubGlobal("fetch", fetchMock);
+  const state = {
+    slug: "2026-07",
+    subject: "July digest",
+    status: "draft",
+    tested: true,
+    adminUrl: "https://news.example.com/admin/issues/2026-07",
+  };
 
   beforeEach(() => {
-    vi.stubEnv("KIT_API_KEY", "test-key");
-    fetchMock
-      .mockReset()
-      .mockResolvedValue({ ok: true, status: 201, json: async () => ({ broadcast: { id: 7 } }) });
+    vi.stubEnv("NEWSLETTER_API_URL", "https://news.example.com");
+    vi.stubEnv("NEWSLETTER_API_KEY", "test-key");
+    fetchMock.mockReset().mockResolvedValue({ ok: true, status: 200, json: async () => state });
   });
 
   afterEach(() => vi.unstubAllEnvs());
 
-  it("creates a draft whose subject is the issue subject and content is the rendered email", async () => {
-    const id = await draftIssueBroadcast(issue);
+  it("saves the rendered email, then test-sends it, and never sends to the list", async () => {
+    const result = await draftIssue(issue);
 
-    expect(id).toBe(7);
-    const [url, init] = fetchMock.mock.calls[0];
-    expect(url).toBe("https://api.kit.com/v4/broadcasts");
-    const body = JSON.parse(init.body);
+    expect(result.adminUrl).toBe(state.adminUrl);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const [saveUrl, saveInit] = fetchMock.mock.calls[0];
+    expect(saveUrl).toBe("https://news.example.com/api/issues/2026-07");
+    expect(saveInit.method).toBe("PUT");
+    const body = JSON.parse(saveInit.body);
     expect(body.subject).toBe(issue.subject);
-    expect(body.public).toBe(false);
-    // content is the rendered email HTML: carries the issue content + read-on-web link
-    expect(body.content).toContain("Intro");
-    expect(body.content).toContain("https://davideimola.dev/newsletter/2026-07");
+    expect(body.html).toContain("Intro");
+    expect(body.html).toContain("{{ unsubscribe_url }}");
+    expect(fetchMock.mock.calls[1][0]).toBe("https://news.example.com/api/issues/2026-07/test");
   });
 });

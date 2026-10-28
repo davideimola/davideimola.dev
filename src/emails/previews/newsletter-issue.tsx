@@ -1,21 +1,18 @@
-import { Body, Container, Head, Html, Img, Section, Text } from "@react-email/components";
+import { Text } from "@react-email/components";
 import type { NewsletterIssue } from "../../lib/newsletter";
 import { CtaButton } from "../components/CtaButton";
 import { PostCard } from "../components/PostCard";
 import { SectionHeader } from "../components/SectionHeader";
 import { TalkRow } from "../components/TalkRow";
+import { NewsletterEmail } from "../layout";
 import { NewsletterIssueBody } from "../newsletter-issue";
 import { emailColors as c, emailFonts as f } from "../theme";
 
-// Preview harness for `pnpm email:dev`. Shows the FULL digest email - the NewsletterIssueBody
-// chrome (read-on-web, meta, subject, rule) plus a representative body built from the email
-// components - inside a light mock of the Kit wrapper template (wordmark header + footer),
-// so colors and spacing are judged in the real email context. In production the body is the
-// issue's compiled MDX (renderIssueEmail); here it is hand-authored JSX so the preview stays
-// synchronous. Preview-only; not shipped.
-
-// The same hosted lockup the Kit wrapper uses (public/brand/lockup-1200.png).
-const LOCKUP_URL = "https://www.davideimola.dev/brand/lockup-1200.png";
+// Preview harness for `pnpm email:dev`. Shows the FULL digest email as it is sent: the
+// NewsletterEmail layout (lockup header, footer with the unsubscribe placeholder) around the
+// NewsletterIssueBody chrome and a representative body built from the email components. In
+// production the body is the issue's compiled MDX (renderIssueEmail); here it is
+// hand-authored JSX so the preview stays synchronous. Preview-only; not shipped.
 
 const SAMPLE: NewsletterIssue = {
   slug: "2026-07",
@@ -89,50 +86,12 @@ function SampleBody() {
 
 export default function NewsletterIssuePreview() {
   return (
-    <Html lang="en">
-      <Head />
-      <Body style={{ margin: 0, padding: 0, backgroundColor: c.bg, fontFamily: f.sans }}>
-        <Container style={{ maxWidth: "600px", margin: "0 auto", backgroundColor: c.bg }}>
-          {/* Mock Kit wrapper header: the hosted lockup, as in kit-email-template.html */}
-          <Section
-            style={{
-              padding: "40px 20px 30px",
-              textAlign: "center",
-              borderBottom: `1px solid ${c.border}`,
-            }}
-          >
-            <Img
-              src={LOCKUP_URL}
-              width="180"
-              height="35"
-              alt="Davide Imola"
-              style={{ margin: "0 auto" }}
-            />
-          </Section>
-
-          {/* The actual content-only body ({{ message_content }}) */}
-          <Section style={{ padding: "30px 20px" }}>
-            <NewsletterIssueBody
-              issue={SAMPLE}
-              webUrl="https://davideimola.dev/newsletter/2026-07"
-              body={<SampleBody />}
-            />
-          </Section>
-
-          {/* Mock Kit wrapper footer */}
-          <Section
-            style={{
-              padding: "30px 20px",
-              borderTop: `1px solid ${c.border}`,
-              textAlign: "center",
-            }}
-          >
-            <Text style={{ fontFamily: f.sans, fontSize: "12px", color: c.text1, margin: 0 }}>
-              GitHub · LinkedIn · Website · Unsubscribe · Privacy
-            </Text>
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+    <NewsletterEmail previewText={SAMPLE.previewText}>
+      <NewsletterIssueBody
+        issue={SAMPLE}
+        webUrl="https://davideimola.dev/newsletter/2026-07"
+        body={<SampleBody />}
+      />
+    </NewsletterEmail>
   );
 }

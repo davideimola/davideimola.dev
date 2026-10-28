@@ -214,7 +214,7 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 
 ## What NOT to do
 
-- The newsletter is now built per ADR-0002 (hybrid model, Kit delivery, in-repo content): the `/newsletter` archive + subscribe form, the `SubscribeForm` component, the subscribe action, and the Kit client all exist. Do NOT reintroduce a "no newsletter UI" assumption. (Historically this repo banned newsletter UI; ADR-0002 lifted that.)
+- The newsletter is built per ADR-0002 (in-repo content) and ADR-0006 (sent by newsletter-svc on Davide's own server, through Kannon, with no pixel and no tracked links): the `/newsletter` archive + subscribe form, the `SubscribeForm` component, the subscribe action, and the `src/lib/newsletter-api.ts` client all exist. Do NOT reintroduce a "no newsletter UI" assumption, and do NOT add open or click tracking of any kind to the email: no pixel, no redirecting links, no per-reader image. The site renders the whole email (`src/emails/layout.tsx`), and its unsubscribe link must stay the `{{ unsubscribe_url }}` placeholder. `docs/newsletter/README.md` says how it is sent.
 - Do NOT use tRPC — use Server Actions for mutations
 - Do NOT set `ignoreBuildErrors: true` in `next.config.ts`
 - Do NOT use npm or yarn — always pnpm
@@ -237,6 +237,8 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=  # from https://giscus.app
 NEXT_PUBLIC_UMAMI_WEBSITE_ID=    # from https://cloud.umami.is (Settings → Websites → Edit); empty = no analytics
 TSUNDOKU_API_URL=                # origin of the tsundoku instance behind /shelf; empty = committed snapshot
 TSUNDOKU_BEARER_TOKEN=           # tsundoku read-only API token; server-side only, never NEXT_PUBLIC_
+NEWSLETTER_API_URL=              # newsletter-svc origin (https://news.davideimola.dev); server-side only
+NEWSLETTER_API_KEY=              # newsletter-svc API key; server-side only, never NEXT_PUBLIC_
 GITHUB_TOKEN=                    # optional, read-only: lifts GitHub's unauthenticated rate limit for /skills
                                  # both are also what `pnpm shelf:snapshot` reads to refresh the committed snapshot
 ```

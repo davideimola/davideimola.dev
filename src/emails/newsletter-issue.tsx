@@ -4,19 +4,18 @@ import { formatDate } from "../lib/dates";
 import type { NewsletterIssue } from "../lib/newsletter";
 import { emailColors as c, emailFonts as f } from "./theme";
 
-// CONTENT-ONLY body for the digest email. It is injected into the Kit account template's
-// {{ message_content }} slot, which already provides the wordmark header, the footer, and
-// the page background (see docs/newsletter/kit-email-template.html) - so this must NOT
-// repeat any of that chrome, or the sent email would have a doubled header/footer.
+// The issue part of the digest email: read-on-web link, issue meta, subject, rule, then the
+// body. It sits inside NewsletterEmail (layout.tsx), which supplies the document, the
+// lockup header and the footer with the unsubscribe link, so it must not repeat any of
+// that chrome.
 //
-// This renders only the issue CHROME (read-on-web link, issue meta, subject, rule). The
-// issue body itself is the MDX compiled by renderIssueEmail (newsletter-email.mts) with
+// The issue body itself is the MDX compiled by renderIssueEmail (newsletter-email.mts) with
 // the email component map (mdx-components.tsx) and passed in as `body` - same authored
 // .mdx that the on-site archive renders, so prose + <PostCard/>/<TalkRow/>/<Cta/> match.
 //
-// The brand's light palette, like the Kit wrapper (src/emails/theme.ts). The subject is a
-// sans bold title like an article h1 on the site; the issue meta is mono. Email clients
-// often strip custom fonts, so both fall back to a system face.
+// The brand's light palette (src/emails/theme.ts). The subject is a sans bold title like
+// an article h1 on the site; the issue meta is mono. Email clients often strip custom
+// fonts, so both fall back to a system face.
 
 interface NewsletterIssueBodyProps {
   issue: NewsletterIssue;
