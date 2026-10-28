@@ -6,16 +6,23 @@ import { formatDayMonthYear } from "../../../lib/dates";
 import { getAllIssues, issueTitle, nextIssueMonth } from "../../../lib/newsletter";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
+const DESCRIPTION = "Once a month, what actually happened: what I found, tried, built and killed.";
+
 export const metadata: Metadata = {
   title: "Newsletter",
-  description: "Once a month, what actually happened: what I found, tried, built and killed.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Newsletter · Davide Imola",
-    description: "Once a month, what actually happened: what I found, tried, built and killed.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/newsletter",
     images: [
       {
-        url: ogImageUrl({ title: "Newsletter", category: "newsletter" }),
+        url: ogImageUrl({
+          title: "Newsletter",
+          category: "newsletter",
+          path: "/newsletter",
+          lead: DESCRIPTION,
+        }),
         ...OG_SIZE,
       },
     ],

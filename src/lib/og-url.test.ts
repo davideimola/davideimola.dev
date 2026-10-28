@@ -21,9 +21,16 @@ describe("ogImageUrl", () => {
     expect(params.get("path")).toBe("/blog");
   });
 
+  it("carries the lead so a page card can print its description", () => {
+    const params = new URL(ogImageUrl({ title: "Now", lead: "What I'm on, right now." }))
+      .searchParams;
+    expect(params.get("lead")).toBe("What I'm on, right now.");
+  });
+
   it("leaves out the parameters it was not given", () => {
     const params = new URL(ogImageUrl({ title: "Davide Imola" })).searchParams;
     expect(params.has("category")).toBe(false);
     expect(params.has("path")).toBe(false);
+    expect(params.has("lead")).toBe(false);
   });
 });

@@ -7,16 +7,23 @@ import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../../lib/social";
 import { ContactForm } from "./ContactForm";
 
+const DESCRIPTION = "Get in touch for talks, workshops, collaborations, or just to say hello.";
+
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Contact · Davide Imola",
-    description: "Get in touch for talks, workshops, collaborations, or just to say hello.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/contact",
     images: [
       {
-        url: ogImageUrl({ title: "Contact", category: "contact" }),
+        url: ogImageUrl({
+          title: "Contact",
+          category: "contact",
+          path: "/contact",
+          lead: DESCRIPTION,
+        }),
         ...OG_SIZE,
       },
     ],

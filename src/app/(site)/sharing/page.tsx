@@ -22,14 +22,21 @@ import {
 import { talkSkillsLinks } from "../../../lib/skills";
 import { feedbackHost, isFeedbackOpen } from "../../../lib/talk-feedback";
 
+const DESCRIPTION = "Talks, workshops, and events on AI, security, Go, and open source.";
+
 export const metadata: Metadata = {
   title: "Talks",
-  description: "Talks, workshops, and events on AI, security, Go, and open source.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Talks · Davide Imola",
-    description: "Talks, workshops, and events on AI, security, Go, and open source.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/sharing",
-    images: [{ url: ogImageUrl({ title: "Talks", category: "talks" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "Talks", category: "talks", path: "/sharing", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

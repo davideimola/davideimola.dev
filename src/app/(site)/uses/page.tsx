@@ -3,14 +3,21 @@ import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
+const DESCRIPTION = "Hardware, software, and tools I use daily to build and think.";
+
 export const metadata: Metadata = {
   title: "Uses",
-  description: "Hardware, software, and tools I use daily to build and think.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Uses · Davide Imola",
-    description: "Hardware, software, and tools I use daily to build and think.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/uses",
-    images: [{ url: ogImageUrl({ title: "Uses", category: "tools" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "Uses", category: "tools", path: "/uses", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

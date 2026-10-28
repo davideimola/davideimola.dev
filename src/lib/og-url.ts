@@ -29,10 +29,13 @@ export function ogImageUrl({
   title,
   category,
   path,
+  lead,
 }: {
   title: string;
   category?: string;
   path?: string;
+  /** The page's description, set under the title. */
+  lead?: string;
 }): string {
   // URLSearchParams would write spaces as `+`, which some unfurlers re-encode
   // as a literal plus ("Davide+Imola" on the card): spell them %20 instead.
@@ -40,6 +43,7 @@ export function ogImageUrl({
     `title=${encodeURIComponent(title)}`,
     category && `category=${encodeURIComponent(category)}`,
     path && `path=${encodeURIComponent(path)}`,
+    lead && `lead=${encodeURIComponent(lead)}`,
     `v=${OG_VERSION}`,
   ].filter(Boolean);
   return `https://davideimola.dev/og?${params.join("&")}`;

@@ -26,7 +26,12 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   openGraph: {
     title: "About · Davide Imola",
-    images: [{ url: ogImageUrl({ title: "About", category: "about" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "About", category: "about", path: "/about", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
     description: DESCRIPTION,
     url: "https://davideimola.dev/about",
   },

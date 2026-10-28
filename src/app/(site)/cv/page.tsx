@@ -37,7 +37,12 @@ export const metadata: Metadata = {
     title: "CV · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/cv",
-    images: [{ url: ogImageUrl({ title: "CV", category: "cv" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "CV", category: "cv", path: "/cv", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

@@ -5,14 +5,26 @@ import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import type { SkillCollection } from "../../../lib/skills";
 import { collectionAnchor, getSkillCollections, skillSummary, skillUrl } from "../../../lib/skills";
 
+const DESCRIPTION = "The Agent Skills I write: some to install in your repo, some to read.";
+
 export const metadata: Metadata = {
   title: "Skills",
-  description: "The Agent Skills I write: some to install in your repo, some to read.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Skills · Davide Imola",
-    description: "The Agent Skills I write: some to install in your repo, some to read.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/skills",
-    images: [{ url: ogImageUrl({ title: "Skills", category: "skills" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({
+          title: "Skills",
+          category: "skills",
+          path: "/skills",
+          lead: DESCRIPTION,
+        }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

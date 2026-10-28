@@ -8,16 +8,23 @@ import { START_HERE, topicCounts } from "../../../lib/blog-index";
 import { getAllPosts } from "../../../lib/content";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
+const DESCRIPTION = "Long-form notes on AI agents, security, Go and the craft around them.";
+
 export const metadata: Metadata = {
   title: "Writing",
-  description: "Long-form notes on AI agents, security, Go and the craft around them.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Writing · Davide Imola",
-    description: "Long-form notes on AI agents, security, Go and the craft around them.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/blog",
     images: [
       {
-        url: ogImageUrl({ title: "Writing", category: "writing" }),
+        url: ogImageUrl({
+          title: "Writing",
+          category: "writing",
+          path: "/blog",
+          lead: DESCRIPTION,
+        }),
         ...OG_SIZE,
       },
     ],

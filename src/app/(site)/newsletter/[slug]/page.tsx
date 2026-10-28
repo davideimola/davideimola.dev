@@ -30,7 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const issue = getIssueBySlug(slug);
   if (!issue) return {};
 
-  const ogImage = ogImageUrl({ title: issue.subject, category: "newsletter", path: "/newsletter" });
+  // The tape carries the issue number, so the card's title is the subject without it.
+  const ogImage = ogImageUrl({
+    title: issue.subject.replace(/^Issue #\d+:\s*/, ""),
+    category: `Newsletter · Issue #${issue.issue}`,
+    path: "/newsletter",
+    lead: issue.previewText,
+  });
 
   return {
     title: issue.subject,

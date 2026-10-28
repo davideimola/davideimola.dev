@@ -15,7 +15,12 @@ export const metadata: Metadata = {
     url: "https://davideimola.dev/colophon",
     images: [
       {
-        url: ogImageUrl({ title: "Colophon", category: "site", path: "/colophon" }),
+        url: ogImageUrl({
+          title: "Colophon",
+          category: "site",
+          path: "/colophon",
+          lead: DESCRIPTION,
+        }),
         ...OG_SIZE,
       },
     ],

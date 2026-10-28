@@ -7,14 +7,26 @@ import type { Project } from "../../../lib/content";
 import { getAllProjects, getOssContributions, getPostBySlug } from "../../../lib/content";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
+const DESCRIPTION = "What I build, in the open and for myself.";
+
 export const metadata: Metadata = {
   title: "Built",
-  description: "What I build, in the open and for myself.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Built · Davide Imola",
-    description: "What I build, in the open and for myself.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/projects",
-    images: [{ url: ogImageUrl({ title: "Built", category: "projects" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({
+          title: "Built",
+          category: "projects",
+          path: "/projects",
+          lead: DESCRIPTION,
+        }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

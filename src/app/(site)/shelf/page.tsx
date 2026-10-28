@@ -29,7 +29,12 @@ export const metadata: Metadata = {
     title: "Shelf · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/shelf",
-    images: [{ url: ogImageUrl({ title: "Shelf", category: "library" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "Shelf", category: "library", path: "/shelf", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 

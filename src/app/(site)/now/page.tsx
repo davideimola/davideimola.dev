@@ -5,14 +5,21 @@ import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
+const DESCRIPTION = "What I'm working on, learning, and thinking about right now.";
+
 export const metadata: Metadata = {
   title: "Now",
-  description: "What I'm working on, learning, and thinking about right now.",
+  description: DESCRIPTION,
   openGraph: {
     title: "Now · Davide Imola",
-    description: "What I'm working on, learning, and thinking about right now.",
+    description: DESCRIPTION,
     url: "https://davideimola.dev/now",
-    images: [{ url: ogImageUrl({ title: "Now", category: "now" }), ...OG_SIZE }],
+    images: [
+      {
+        url: ogImageUrl({ title: "Now", category: "now", path: "/now", lead: DESCRIPTION }),
+        ...OG_SIZE,
+      },
+    ],
   },
 };
 
