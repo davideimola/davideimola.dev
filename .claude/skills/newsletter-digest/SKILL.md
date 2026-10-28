@@ -1,17 +1,17 @@
 ---
 name: newsletter-digest
 description: >
-  Drafts the monthly newsletter digest for davideimola.dev for the author to review. Harvests the month's window (blog posts published, upcoming talks, optional projects) via harvestWindow plus the cross-channel view from the content notes in Davide's Trilium, writes a frozen .mdx issue file (harvested sections snapshotted + a suggested intro to rewrite), generates the email HTML, and creates a Kit broadcast DRAFT (never sends) with the on-site "read on web" link, then stops for human review and a manual send. Same philosophy as write-blog-post / social-post: it drafts, Davide reviews the intro and triggers the send by hand. Use when Davide wants to draft, assemble, or prepare the monthly newsletter issue ("prepara la newsletter del mese", "draft the digest", "newsletter di luglio").
+  Drafts the monthly newsletter digest for davideimola.dev for the author to review. Harvests the month's window (blog posts published, upcoming talks, optional projects) via harvestWindow plus the cross-channel view from the content notes in Davide's Trilium, writes a frozen .mdx issue file (harvested sections snapshotted + a suggested intro to rewrite), generates the email HTML, saves it on newsletter-svc and test-sends it to Davide (never to the list) with the on-site "read on web" link, then stops for human review and a manual send. Same philosophy as write-blog-post / social-post: it drafts, Davide reviews the intro and triggers the send by hand. Use when Davide wants to draft, assemble, or prepare the monthly newsletter issue ("prepara la newsletter del mese", "draft the digest", "newsletter di luglio").
 ---
 
-You assemble Davide's monthly newsletter digest for davideimola.dev. The model is a **harvest**: an issue is ~90% auto-assembled from content that already exists in the repo (blog posts in the window, upcoming talks, optionally projects) plus a short hand-written intro. So an issue costs minutes and is worth publishing even at a small list. You **draft**; Davide rewrites the intro in his own voice, reviews, and triggers the send himself from Kit. You never send.
+You assemble Davide's monthly newsletter digest for davideimola.dev. The model is a **harvest**: an issue is ~90% auto-assembled from content that already exists in the repo (blog posts in the window, upcoming talks, optionally projects) plus a short hand-written intro. So an issue costs minutes and is worth publishing even at a small list. You **draft**; Davide rewrites the intro in his own voice, reviews, and triggers the send himself from newsletter-svc's admin page. You never send.
 
-Architecture (ADR-0002): the site owns the content, the archive, and the subscribe form; Kit owns delivery + double opt-in + unsubscribe. Each issue is a **frozen** `.mdx` in `src/content/newsletter/` - the single source for both the sent email and the on-site archive page, snapshotted at draft time ("photograph, not mirror").
+Architecture (ADR-0002, delivery per ADR-0006): the site owns the content, the archive, the subscribe form and the whole email HTML; newsletter-svc, on Davide's own server, owns the list, double opt-in, unsubscribe and the send through Kannon, with no tracking. Each issue is a **frozen** `.mdx` in `src/content/newsletter/` - the single source for both the sent email and the on-site archive page, snapshotted at draft time ("photograph, not mirror").
 
 You orchestrate three things that already exist and are tested:
 - `harvestWindow({ from, to, posts, talks, projects? })` in `src/lib/harvest.ts` - the selection engine.
-- `renderIssueEmail(issue)` / `draftIssueBroadcast(issue)` in `src/lib/newsletter-email.mts` - compiles the issue MDX with the email component map and creates the Kit draft. Runnable as `pnpm newsletter:draft [slug]`.
-- The Kit wrapper template (`docs/newsletter/kit-email-template.html`) supplies the header, footer, and unsubscribe - so the issue body stays content-only.
+- `renderIssueEmail(issue)` / `draftIssue(issue)` in `src/lib/newsletter-email.mts` - renders the whole email (layout from `src/emails/layout.tsx`: header, footer, the `{{ unsubscribe_url }}` placeholder) around the issue MDX, saves it on newsletter-svc and test-sends it. Runnable as `pnpm newsletter:draft [slug]`.
+- `docs/newsletter/README.md` - how the email and the send work.
 
 ## Arguments
 
@@ -123,26 +123,26 @@ Propose the `subject` and `previewText` too, and iterate with Davide on the intr
 
 ---
 
-## Step 4 - Generate the email + Kit broadcast draft
+## Step 4 - Generate the email, save it, test-send it
 
-Once the `.mdx` is written, its `subject` and `previewText` frontmatter are filled (not empty), and Davide is happy with the intro, produce the reviewable draft. The Kit broadcast subject IS `issue.subject`, so an empty subject ships an empty-subject draft:
+Once the `.mdx` is written, its `subject` and `previewText` frontmatter are filled (not empty), and Davide is happy with the intro, produce the reviewable draft. The email subject IS `issue.subject`, so an empty subject ships an empty-subject email:
 
 ```bash
 pnpm newsletter:draft YYYY-MM
 ```
 
-This renders the issue to content-only email HTML (`renderIssueEmail`) and creates a Kit **broadcast draft** (`createBroadcastDraft`, `public:false`) - it **never sends**. The "read on web" link is set automatically to `https://davideimola.dev/newsletter/YYYY-MM`, and the header/footer/unsubscribe come from the Kit account template. It prints the broadcast id.
+This renders the whole email (`renderIssueEmail`), saves it on newsletter-svc as the issue's draft, and mails a **test** to Davide only - it **never sends to the list**, and the API cannot. The "read on web" link is set automatically to `https://davideimola.dev/newsletter/YYYY-MM`. It prints the issue's admin URL.
 
-If it errors on a missing key, `KIT_API_KEY` is not in `.env.local` (server-side only, never `NEXT_PUBLIC_`).
+If it errors on a missing variable, `NEWSLETTER_API_URL` or `NEWSLETTER_API_KEY` is not in `.env.local` (server-side only, never `NEXT_PUBLIC_`). A 409 means the issue was already sent and cannot change.
 
 ---
 
 ## Step 5 - Stop for review, commit, and hand off the send
 
 You stop here. Tell Davide the three review actions that are his:
-1. Rewrite the intro in his own voice in the `.mdx`. Re-running `pnpm newsletter:draft YYYY-MM` after edits creates a **new** draft each time (Kit has no update path), so delete the previous draft in Kit to avoid stale duplicates.
-2. In Kit: open the broadcast draft, preview it (wrapped in the account template), and use "Send test email" to check it in his inbox.
-3. Trigger the actual send from Kit by hand when he's ready. **The skill never sends.**
+1. Rewrite the intro in his own voice in the `.mdx`. Re-running `pnpm newsletter:draft YYYY-MM` after edits replaces the saved version and sends a new test.
+2. Check the test in his inbox.
+3. Send it by hand from the admin URL the script printed (`https://news.davideimola.dev/admin/issues/YYYY-MM`): type the slug, press Send to everyone. The button unlocks only after a test of the latest version. **The skill never sends.**
 
 Commit the frozen issue and open the PR on this repo (the `.mdx` is a davideimola.dev artifact):
 
@@ -153,7 +153,7 @@ git push -u origin newsletter/YYYY-MM
 gh pr create --title "Newsletter issue #<n>: <subject>" --body "<one-line summary>"
 ```
 
-The newsletter's editorial planning is optional (per ADR-0002 / #70): Trilium's content notes carry no newsletter channel today, so the committed `.mdx` + the Kit draft are the deliverable. If Davide has made a content note for this issue anyway, record the PR URL as its `#artifact` (never overwriting an existing one, see `CLAUDE.md`) and leave the rest of the note alone.
+The newsletter's editorial planning is optional (per ADR-0002 / #70): Trilium's content notes carry no newsletter channel today, so the committed `.mdx` + the saved, test-sent issue are the deliverable. If Davide has made a content note for this issue anyway, record the PR URL as its `#artifact` (never overwriting an existing one, see `CLAUDE.md`) and leave the rest of the note alone.
 
 ---
 

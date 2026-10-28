@@ -4,12 +4,11 @@ import tokens from "@davideimola/brand/tokens.json";
 // palette (ADR-0004) so the inbox never drifts from the site. Email is always light: a
 // dark body does not survive mail clients (iCloud strips it and auto-inverts). No hover,
 // no motion, and custom fonts are often stripped, so every stack falls back to a system
-// face. The red rule holds here too: nothing is red at rest. The Kit wrapper template
-// (docs/newsletter/kit-email-template.html) repeats these values as literals.
+// face. The red rule holds here too: nothing is red at rest.
 const light = tokens.color.light;
 
 export const emailColors = {
-  /** Paper: the page ground, set by the Kit wrapper. */
+  /** Paper: the page ground, set by the layout. */
   bg: light.bg,
   /** White: buttons' text on ink, chips. */
   surface: light.surface,

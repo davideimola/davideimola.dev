@@ -1,6 +1,6 @@
 # ADR-0002: Monthly newsletter — hybrid model with Kit for delivery, content owned in-repo
 
-- **Status:** Accepted
+- **Status:** Accepted; the delivery layer (Kit, decisions 4, 8 and 10) is superseded by [ADR-0006](0006-newsletter-delivery-on-own-server.md)
 - **Date:** 2026-07-22
 - **Research:** [Free-tier newsletter/email tool comparison](../research/newsletter-free-tier-comparison.md) (all numbers and API surfaces verified against primary sources on 2026-07-22)
 

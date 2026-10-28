@@ -5,9 +5,8 @@ import { PageHero } from "../../../../components/ui/PageHero";
 export const metadata: Metadata = {
   title: "You're in",
   description: "Your newsletter subscription is confirmed.",
-  // Post-confirmation landing: not meant to be indexed or shared. The Kit double-opt-in
-  // form must be configured to redirect here (https://davideimola.dev/newsletter/confirmed)
-  // after a subscriber clicks the confirmation link.
+  // Post-confirmation landing: not meant to be indexed or shared. newsletter-svc redirects
+  // here after a subscriber clicks the confirmation link (its SITE_URL + this path).
   robots: { index: false, follow: false },
 };
 
