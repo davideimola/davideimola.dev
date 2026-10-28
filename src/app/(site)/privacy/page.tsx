@@ -22,8 +22,9 @@ export default function PrivacyPage() {
             Data collected
           </Tape>
           <p>
-            This site does not collect personal data directly. No account, no login, no tracking
-            pixel.
+            This site collects as little personal data as it can. No account, no login, no tracking
+            pixel on its pages. The only personal data it takes is what you type into the contact
+            form or the newsletter form.
           </p>
           <p>
             The contact form sends your name, email address, and message to me via{" "}
@@ -42,6 +43,55 @@ export default function PrivacyPage() {
 
         <section className="flex flex-col gap-3">
           <Tape as="h2" tilt={1} className="mb-6">
+            Newsletter
+          </Tape>
+          <p>
+            If you subscribe to the newsletter, your email address is stored by{" "}
+            <a
+              href="https://kit.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fg hover:text-accent transition-colors duration-150"
+            >
+              Kit
+            </a>
+            , the service that sends it, on my behalf. It is used only to send you the newsletter.
+            Subscribing takes two steps: you only start receiving issues after clicking the link in
+            the confirmation email. The form is protected from bots by{" "}
+            <a
+              href="https://www.cloudflare.com/products/turnstile/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fg hover:text-accent transition-colors duration-150"
+            >
+              Cloudflare Turnstile
+            </a>
+            .
+          </p>
+          <p>
+            Today the issues still carry Kit's tracking pixel, which records whether and when you
+            open one, and the links go through Kit, which counts the clicks. Kit offers no way to
+            switch this off, so the newsletter is moving to a server I run, where issues will carry
+            no pixel and no tracked links. Until then, blocking remote images in your mail client
+            stops the pixel.
+          </p>
+          <p>
+            Every issue has an unsubscribe link. Unsubscribing removes you from the list at once,
+            and you can ask me to delete your address entirely. See{" "}
+            <a
+              href="https://kit.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fg hover:text-accent transition-colors duration-150"
+            >
+              Kit's privacy policy
+            </a>{" "}
+            for how Kit handles the data it stores.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <Tape as="h2" tilt={2} className="mb-6">
             Comments
           </Tape>
           <p>
@@ -68,7 +118,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <Tape as="h2" tilt={2} className="mb-6">
+          <Tape as="h2" tilt={0} className="mb-6">
             Hosting
           </Tape>
           <p>
@@ -96,7 +146,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <Tape as="h2" tilt={0} className="mb-6">
+          <Tape as="h2" tilt={1} className="mb-6">
             Analytics
           </Tape>
           <p>
@@ -127,7 +177,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <Tape as="h2" tilt={1} className="mb-6">
+          <Tape as="h2" tilt={2} className="mb-6">
             Cookies
           </Tape>
           <p>
@@ -137,7 +187,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <Tape as="h2" tilt={2} className="mb-6">
+          <Tape as="h2" tilt={0} className="mb-6">
             Contact
           </Tape>
           <p>
@@ -152,7 +202,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <p className="font-mono text-[11px] text-fg-subtle">Last updated: July 2026</p>
+        <p className="font-mono text-[11px] text-fg-subtle">Last updated: October 2026</p>
       </div>
     </div>
   );
