@@ -14,6 +14,7 @@ import { SubscribeCTA } from "../../../../components/ui/SubscribeCTA";
 import { Tape } from "../../../../components/ui/Tape";
 import { formatDate } from "../../../../lib/dates";
 import { getAllIssues, getIssueBySlug } from "../../../../lib/newsletter";
+import { OG_SIZE, ogImageUrl } from "../../../../lib/og-url";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
 
 interface Props {
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const issue = getIssueBySlug(slug);
   if (!issue) return {};
 
-  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(issue.subject)}&category=newsletter&path=%2Fnewsletter`;
+  const ogImage = ogImageUrl({ title: issue.subject, category: "newsletter", path: "/newsletter" });
 
   return {
     title: issue.subject,
@@ -41,13 +42,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://davideimola.dev/newsletter/${slug}`,
       type: "article",
       publishedTime: issue.date,
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: issue.subject }],
+      images: [{ url: ogImage, ...OG_SIZE, alt: issue.subject }],
     },
     twitter: {
       card: "summary_large_image",
       title: issue.subject,
       description: issue.previewText,
-      images: [ogImageUrl],
+      images: [ogImage],
     },
   };
 }

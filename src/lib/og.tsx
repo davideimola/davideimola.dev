@@ -10,7 +10,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import tokens from "@davideimola/brand/tokens.json";
-import type { ReactNode } from "react";
+import { ImageResponse } from "next/og";
+import type { ReactElement, ReactNode } from "react";
 import {
   MARK_CUTS,
   MARK_VIEWBOX,
@@ -22,6 +23,9 @@ import {
   WORDMARK_VIEWBOX,
   type WordmarkWeight,
 } from "../components/ui/brand-geometry";
+import { OG_CARD, OG_SCALE, OG_SIZE } from "./og-url";
+
+export { OG_CARD, OG_SCALE, OG_SIZE } from "./og-url";
 
 export const OG_COLORS = {
   ...tokens.color.light,
@@ -59,6 +63,34 @@ export async function loadOgFonts(): Promise<OgFont[]> {
     ];
   }
   return fontCache;
+}
+
+// Satori hands an inline SVG to the rasteriser as a bitmap at its layout size,
+// before the card's scale(OG_SCALE), so a mark laid out at 320px would come out
+// a blurred 320px image blown up twice. The SVG is drawn at its served size
+// instead and scaled back down inside a box of its layout size.
+function OgVector({
+  width,
+  height,
+  children,
+}: {
+  width: number;
+  height: number;
+  children: ReactNode;
+}) {
+  return (
+    <div style={{ display: "flex", width: `${width}px`, height: `${height}px` }}>
+      <div
+        style={{
+          display: "flex",
+          transform: `scale(${1 / OG_SCALE})`,
+          transformOrigin: "top left",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
 }
 
 /** Flat ink tape with paper letters, slightly tilted. Never red. */
@@ -100,36 +132,43 @@ export function OgMark({
 }) {
   const g = MARK_CUTS[cut];
   return (
-    <svg viewBox={MARK_VIEWBOX} width={size} height={size} aria-hidden="true">
-      <path d={g.i} fill="none" stroke={color} strokeWidth={g.stroke} strokeLinecap="round" />
-      <path d={g.stem} fill="none" stroke={color} strokeWidth={g.stroke} strokeLinecap="round" />
-      <circle
-        cx={g.bowl.cx}
-        cy={g.bowl.cy}
-        r={g.bowl.r}
-        fill="none"
-        stroke={color}
-        strokeWidth={g.stroke}
-      />
-      {g.tail && (
-        <path
-          d={g.tail.d}
+    <OgVector width={size} height={size}>
+      <svg
+        viewBox={MARK_VIEWBOX}
+        width={size * OG_SCALE}
+        height={size * OG_SCALE}
+        aria-hidden="true"
+      >
+        <path d={g.i} fill="none" stroke={color} strokeWidth={g.stroke} strokeLinecap="round" />
+        <path d={g.stem} fill="none" stroke={color} strokeWidth={g.stroke} strokeLinecap="round" />
+        <circle
+          cx={g.bowl.cx}
+          cy={g.bowl.cy}
+          r={g.bowl.r}
           fill="none"
           stroke={color}
-          strokeWidth={g.tail.width}
-          strokeLinecap="round"
+          strokeWidth={g.stroke}
         />
-      )}
-      <rect
-        x={g.knot.x}
-        y={g.knot.y}
-        width={g.knot.w}
-        height={g.knot.h}
-        rx={g.knot.rx}
-        transform={`rotate(${g.knot.rotate})`}
-        fill={tonal ? color : OG_COLORS.akane}
-      />
-    </svg>
+        {g.tail && (
+          <path
+            d={g.tail.d}
+            fill="none"
+            stroke={color}
+            strokeWidth={g.tail.width}
+            strokeLinecap="round"
+          />
+        )}
+        <rect
+          x={g.knot.x}
+          y={g.knot.y}
+          width={g.knot.w}
+          height={g.knot.h}
+          rx={g.knot.rx}
+          transform={`rotate(${g.knot.rotate})`}
+          fill={tonal ? color : OG_COLORS.akane}
+        />
+      </svg>
+    </OgVector>
   );
 }
 
@@ -147,46 +186,49 @@ export function OgWordmark({
   const [, , vw, vh] = viewBox.split(" ").map(Number);
   const stroke = WORDMARK_STROKE[weight];
   const lift = WORDMARK_KNOT_LIFT[weight];
+  const height = Math.round((width * vh) / vw);
   return (
-    <svg viewBox={viewBox} width={width} height={Math.round((width * vh) / vw)} aria-hidden="true">
-      {WORDMARK_STROKES.map((s) =>
-        "circle" in s ? (
-          <circle
-            key={`c${s.circle.cx}`}
-            cx={s.circle.cx}
-            cy={s.circle.cy}
-            r={s.circle.r}
-            fill="none"
-            stroke={color}
-            strokeWidth={stroke}
-          />
-        ) : (
-          <path
-            key={s.d}
-            d={s.d}
-            fill="none"
-            stroke={color}
-            strokeWidth={stroke}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )
-      )}
-      <g transform={`translate(0 ${lift})`}>
-        {WORDMARK_KNOTS.map((k) => (
-          <rect
-            key={k.x}
-            x={k.x}
-            y={k.y}
-            width={k.w}
-            height={k.h}
-            rx={k.rx}
-            transform={`rotate(${k.rotate})`}
-            fill={OG_COLORS.akane}
-          />
-        ))}
-      </g>
-    </svg>
+    <OgVector width={width} height={height}>
+      <svg viewBox={viewBox} width={width * OG_SCALE} height={height * OG_SCALE} aria-hidden="true">
+        {WORDMARK_STROKES.map((s) =>
+          "circle" in s ? (
+            <circle
+              key={`c${s.circle.cx}`}
+              cx={s.circle.cx}
+              cy={s.circle.cy}
+              r={s.circle.r}
+              fill="none"
+              stroke={color}
+              strokeWidth={stroke}
+            />
+          ) : (
+            <path
+              key={s.d}
+              d={s.d}
+              fill="none"
+              stroke={color}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )
+        )}
+        <g transform={`translate(0 ${lift})`}>
+          {WORDMARK_KNOTS.map((k) => (
+            <rect
+              key={k.x}
+              x={k.x}
+              y={k.y}
+              width={k.w}
+              height={k.h}
+              rx={k.rx}
+              transform={`rotate(${k.rotate})`}
+              fill={OG_COLORS.akane}
+            />
+          ))}
+        </g>
+      </svg>
+    </OgVector>
   );
 }
 
@@ -256,6 +298,73 @@ export function OgMarker({ children, fontSize }: { children: ReactNode; fontSize
         }}
       />
       <div style={{ display: "flex", textShadow: shadow }}>{children}</div>
+    </div>
+  );
+}
+
+/** Renders a card laid out at OG_CARD, at OG_SIZE: the vectors scale, nothing is upsampled. */
+export async function ogImageResponse(card: ReactElement): Promise<ImageResponse> {
+  return new ImageResponse(
+    <div style={{ display: "flex", width: `${OG_SIZE.width}px`, height: `${OG_SIZE.height}px` }}>
+      <div
+        style={{
+          display: "flex",
+          width: `${OG_CARD.width}px`,
+          height: `${OG_CARD.height}px`,
+          transform: `scale(${OG_SCALE})`,
+          transformOrigin: "top left",
+        }}
+      >
+        {card}
+      </div>
+    </div>,
+    { ...OG_SIZE, fonts: await loadOgFonts() }
+  );
+}
+
+/**
+ * The anatomy every social card shares (docs/brand.md, "Social cards"): light
+ * ground, the tape on top, the body, then the wordmark and the URL at the
+ * bottom, with the tone-on-tone mark as the only decoration.
+ */
+export function OgCard({
+  tape,
+  url,
+  children,
+}: {
+  tape?: string | null;
+  url: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        width: `${OG_CARD.width}px`,
+        height: `${OG_CARD.height}px`,
+        background: OG_COLORS.bg,
+        color: OG_COLORS.fg,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "56px 64px 44px",
+        fontFamily: "Schibsted Grotesk",
+        position: "relative",
+      }}
+    >
+      {/* Tone-on-tone watermark: the knot too, so the title stays the loudest thing */}
+      <div style={{ position: "absolute", top: "36px", right: "40px", display: "flex" }}>
+        <OgMark cut="l" size={220} color={OG_COLORS.border} tonal />
+      </div>
+      <div style={{ display: "flex", minHeight: "34px" }}>{tape && <OgTape>{tape}</OgTape>}</div>
+      {children}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <OgWordmark width={320} />
+        <span
+          style={{ fontFamily: "IBM Plex Mono", fontSize: "20px", color: OG_COLORS["fg-muted"] }}
+        >
+          {url}
+        </span>
+      </div>
     </div>
   );
 }

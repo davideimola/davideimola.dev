@@ -5,6 +5,7 @@ import { Marker } from "../../../components/ui/Marker";
 import { Tape, type TapeTilt } from "../../../components/ui/Tape";
 import type { Project } from "../../../lib/content";
 import { getAllProjects, getOssContributions, getPostBySlug } from "../../../lib/content";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 export const metadata: Metadata = {
   title: "Built",
@@ -13,9 +14,7 @@ export const metadata: Metadata = {
     title: "Built · Davide Imola",
     description: "What I build, in the open and for myself.",
     url: "https://davideimola.dev/projects",
-    images: [
-      { url: "https://davideimola.dev/og?title=Built&category=projects", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Built", category: "projects" }), ...OG_SIZE }],
   },
 };
 

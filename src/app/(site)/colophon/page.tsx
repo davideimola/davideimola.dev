@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 const DESCRIPTION = "The type, the drawings and the code behind these pages.";
 
@@ -14,9 +15,8 @@ export const metadata: Metadata = {
     url: "https://davideimola.dev/colophon",
     images: [
       {
-        url: "https://davideimola.dev/og?title=Colophon&category=site&path=/colophon",
-        width: 1200,
-        height: 630,
+        url: ogImageUrl({ title: "Colophon", category: "site", path: "/colophon" }),
+        ...OG_SIZE,
       },
     ],
   },

@@ -2,6 +2,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Barlow_Condensed, IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { UmamiAnalytics } from "@/components/analytics/UmamiAnalytics";
+import { HOME_OG_IMAGE, OG_SIZE } from "@/lib/og-url";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -45,9 +46,8 @@ export const metadata: Metadata = {
     siteName: "Davide Imola",
     images: [
       {
-        url: "https://davideimola.dev/og?title=Davide+Imola",
-        width: 1200,
-        height: 630,
+        url: HOME_OG_IMAGE,
+        ...OG_SIZE,
         alt: "Davide Imola · Tech Lead, AI agents for security",
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@davideimola",
-    images: ["https://davideimola.dev/og?title=Davide+Imola"],
+    images: [HOME_OG_IMAGE],
   },
   alternates: {
     types: {

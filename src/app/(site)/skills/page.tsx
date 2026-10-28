@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape, type TapeTilt } from "../../../components/ui/Tape";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import type { SkillCollection } from "../../../lib/skills";
 import { collectionAnchor, getSkillCollections, skillSummary, skillUrl } from "../../../lib/skills";
 
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
     title: "Skills · Davide Imola",
     description: "The Agent Skills I write: some to install in your repo, some to read.",
     url: "https://davideimola.dev/skills",
-    images: [
-      { url: "https://davideimola.dev/og?title=Skills&category=skills", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Skills", category: "skills" }), ...OG_SIZE }],
   },
 };
 

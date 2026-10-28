@@ -21,6 +21,7 @@ import {
   getTotalTalkCount,
 } from "../../../lib/cv";
 import { CV_PDF_URL_PATH, downloadFileName } from "../../../lib/cv-pdf";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
 const DESCRIPTION =
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     title: "CV · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/cv",
-    images: [{ url: "https://davideimola.dev/og?title=CV&category=cv", width: 1200, height: 630 }],
+    images: [{ url: ogImageUrl({ title: "CV", category: "cv" }), ...OG_SIZE }],
   },
 };
 

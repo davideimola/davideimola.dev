@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ShelfNow } from "../../../components/sections/ShelfNow";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 export const metadata: Metadata = {
   title: "Now",
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
     title: "Now · Davide Imola",
     description: "What I'm working on, learning, and thinking about right now.",
     url: "https://davideimola.dev/now",
-    images: [
-      { url: "https://davideimola.dev/og?title=Now&category=now", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Now", category: "now" }), ...OG_SIZE }],
   },
 };
 

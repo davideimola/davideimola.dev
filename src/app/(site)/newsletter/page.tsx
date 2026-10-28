@@ -4,6 +4,7 @@ import { SubscribeForm } from "../../../components/ui/SubscribeForm";
 import { Tape } from "../../../components/ui/Tape";
 import { formatDayMonthYear } from "../../../lib/dates";
 import { getAllIssues, issueTitle, nextIssueMonth } from "../../../lib/newsletter";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 export const metadata: Metadata = {
   title: "Newsletter",
@@ -14,9 +15,8 @@ export const metadata: Metadata = {
     url: "https://davideimola.dev/newsletter",
     images: [
       {
-        url: "https://davideimola.dev/og?title=Newsletter&category=newsletter",
-        width: 1200,
-        height: 630,
+        url: ogImageUrl({ title: "Newsletter", category: "newsletter" }),
+        ...OG_SIZE,
       },
     ],
   },

@@ -6,6 +6,7 @@ import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
 import { START_HERE, topicCounts } from "../../../lib/blog-index";
 import { getAllPosts } from "../../../lib/content";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -16,9 +17,8 @@ export const metadata: Metadata = {
     url: "https://davideimola.dev/blog",
     images: [
       {
-        url: "https://davideimola.dev/og?title=Writing&category=writing",
-        width: 1200,
-        height: 630,
+        url: ogImageUrl({ title: "Writing", category: "writing" }),
+        ...OG_SIZE,
       },
     ],
   },

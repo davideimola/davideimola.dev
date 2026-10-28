@@ -31,6 +31,7 @@ import {
 import { loadDrawableCover, loadFigure } from "../../../../lib/cover-files";
 import { rasterCover } from "../../../../lib/covers";
 import { formatDate } from "../../../../lib/dates";
+import { OG_SIZE, ogImageUrl } from "../../../../lib/og-url";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
 import { rehypeEndMark } from "../../../../lib/rehype-end-mark";
 
@@ -58,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const ogImageUrl = `https://davideimola.dev/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.category)}&path=%2Fblog`;
+  const ogImage = ogImageUrl({ title: post.title, category: post.category, path: "/blog" });
 
   return {
     title: post.title,
@@ -76,13 +77,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
+      images: [{ url: ogImage, ...OG_SIZE, alt: post.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [ogImageUrl],
+      images: [ogImage],
     },
   };
 }

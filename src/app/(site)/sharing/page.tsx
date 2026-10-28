@@ -6,6 +6,7 @@ import { Photo } from "../../../components/ui/Photo";
 import { Tape } from "../../../components/ui/Tape";
 import { getAllProjects, getAllTalks, type Talk } from "../../../lib/content";
 import { formatDayMonth, formatMonthYear } from "../../../lib/dates";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import {
   city,
   describeKind,
@@ -28,9 +29,7 @@ export const metadata: Metadata = {
     title: "Talks · Davide Imola",
     description: "Talks, workshops, and events on AI, security, Go, and open source.",
     url: "https://davideimola.dev/sharing",
-    images: [
-      { url: "https://davideimola.dev/og?title=Talks&category=talks", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Talks", category: "talks" }), ...OG_SIZE }],
   },
 };
 

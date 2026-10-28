@@ -205,7 +205,7 @@ Only add `"use client"` when the component needs interactivity (event handlers, 
 
 ## SEO & Metadata
 
-- Dynamic OG images: `/og?title=…&category=…&path=…` via `src/app/og/route.tsx` (light card: tape with the category, title, wordmark and URL, tone-on-tone mark). The shared satori pieces (fonts, tape, mark, wordmark) live in `src/lib/og.tsx` and read the TTFs in `public/fonts/`; the LinkedIn/Bluesky covers use `src/lib/og-cover.tsx`
+- Dynamic OG images: `/og?title=…&category=…&path=…` via `src/app/og/route.tsx` (light card: tape with the category, title, wordmark and URL, tone-on-tone mark). The home card (and the fallback for pages without one) is `/og/home`: the line with its marker and the lead. Pages never write a card URL by hand: they call `ogImageUrl()` / `HOME_OG_IMAGE` from `src/lib/og-url.ts`, which spells spaces as `%20` (a `+` reached one card as a literal plus) and appends `v=OG_VERSION`. **Bump `OG_VERSION` whenever the cards change look**: Telegram and LinkedIn cache the picture by its URL, so a redrawn card under an old URL keeps showing the old one. Every card is laid out on a 1200x630 grid and served at 2x (`OG_SIZE`, 2400x1260) through `ogImageResponse()` and `OgCard` in `src/lib/og.tsx`; SVGs go through `OgVector`, because satori rasterises them at their layout size and the scale would blur them. The shared satori pieces (fonts, tape, mark, wordmark) live in `src/lib/og.tsx` and read the TTFs in `public/fonts/`; the LinkedIn/Bluesky covers use `src/lib/og-cover.tsx`
 - Sitemap: `src/app/sitemap.ts`
 - Robots: `src/app/robots.ts`
 - RSS feed: `src/app/rss.xml/route.ts`

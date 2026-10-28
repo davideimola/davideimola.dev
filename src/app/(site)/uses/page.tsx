@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 
 export const metadata: Metadata = {
   title: "Uses",
@@ -9,9 +10,7 @@ export const metadata: Metadata = {
     title: "Uses · Davide Imola",
     description: "Hardware, software, and tools I use daily to build and think.",
     url: "https://davideimola.dev/uses",
-    images: [
-      { url: "https://davideimola.dev/og?title=Uses&category=tools", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Uses", category: "tools" }), ...OG_SIZE }],
   },
 };
 

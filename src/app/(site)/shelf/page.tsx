@@ -5,6 +5,7 @@ import { JsonLd } from "../../../components/ui/JsonLd";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
 import { formatDate, formatDayMonth, formatMonthYear } from "../../../lib/dates";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import {
   getShowcase,
   groupPassesByVerb,
@@ -28,9 +29,7 @@ export const metadata: Metadata = {
     title: "Shelf · Davide Imola",
     description: DESCRIPTION,
     url: "https://davideimola.dev/shelf",
-    images: [
-      { url: "https://davideimola.dev/og?title=Shelf&category=library", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "Shelf", category: "library" }), ...OG_SIZE }],
   },
 };
 

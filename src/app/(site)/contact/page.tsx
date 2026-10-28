@@ -3,6 +3,7 @@ import { ButtonLink } from "../../../components/ui/Button";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape } from "../../../components/ui/Tape";
 import { getIdentity } from "../../../lib/cv";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import { CAL_COM_URL, SOCIAL_PROFILES } from "../../../lib/social";
 import { ContactForm } from "./ContactForm";
 
@@ -15,9 +16,8 @@ export const metadata: Metadata = {
     url: "https://davideimola.dev/contact",
     images: [
       {
-        url: "https://davideimola.dev/og?title=Contact&category=contact",
-        width: 1200,
-        height: 630,
+        url: ogImageUrl({ title: "Contact", category: "contact" }),
+        ...OG_SIZE,
       },
     ],
   },

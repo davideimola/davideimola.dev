@@ -15,6 +15,7 @@ import {
   type ResolvedPhase,
   shortOrg,
 } from "../../../lib/cv";
+import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import { PERSON_SCHEMA } from "../../../lib/schema";
 
 const DESCRIPTION =
@@ -25,9 +26,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   openGraph: {
     title: "About · Davide Imola",
-    images: [
-      { url: "https://davideimola.dev/og?title=About&category=about", width: 1200, height: 630 },
-    ],
+    images: [{ url: ogImageUrl({ title: "About", category: "about" }), ...OG_SIZE }],
     description: DESCRIPTION,
     url: "https://davideimola.dev/about",
   },
