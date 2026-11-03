@@ -1,4 +1,10 @@
-import { IconBrandGithub, IconBrandLinkedin, IconWorld } from "@tabler/icons-react";
+import {
+  IconBrandBluesky,
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconBrandX,
+  IconWorld,
+} from "@tabler/icons-react";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Mark, Wordmark } from "../../components/ui/BrandMark";
@@ -20,6 +26,7 @@ import { readContentJson } from "../../lib/content-json";
 import { formatDayMonth } from "../../lib/dates";
 import { type Hiring, openHiring } from "../../lib/hiring";
 import { city, eventName, hostedBy, organisedByKind } from "../../lib/sharing";
+import { collectionAnchor, getSkillCollectionEntries } from "../../lib/skills";
 import { ALL_PROFILES, CAL_COM_URL, SOCIAL_PROFILES } from "../../lib/social";
 import { upcomingBesidesRated } from "../../lib/talk-feedback";
 
@@ -51,6 +58,9 @@ const SITE = "https://davideimola.dev";
 // The association COMMUNITY presents, read from projects.json.
 const ASSOCIATION = "schrodinger-hat";
 
+// The skills pack NOW presents beside the flagship, read from skills.json.
+const SECURITY_SKILLS = "davideimola/appsec-skills";
+
 const PROFILE_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
@@ -67,9 +77,11 @@ const PROFILE_JSON_LD = {
 const PROFILE_ICONS: Record<string, typeof IconWorld> = {
   LinkedIn: IconBrandLinkedin,
   GitHub: IconBrandGithub,
+  X: IconBrandX,
+  Bluesky: IconBrandBluesky,
 };
-// LinkedIn first: it is where he posts most.
-const PROFILE_ORDER = ["LinkedIn", "GitHub"];
+// LinkedIn first: it is where he posts most. X before Bluesky, which mirrors it.
+const PROFILE_ORDER = ["LinkedIn", "GitHub", "X", "Bluesky"];
 
 const newTab = { target: "_blank", rel: "noopener noreferrer" } as const;
 const opensElsewhere = (href: string) => href.startsWith("http") && !href.startsWith(SITE);
@@ -150,11 +162,21 @@ function CalendarLeaf({ talk }: { talk: Talk }) {
   );
 }
 
+// A skill is a file: a leaf the size of a cover, named like one.
+function SkillLeaf() {
+  return (
+    <span className="relative w-full aspect-video border border-border bg-surface flex items-center justify-center">
+      <span className="absolute top-0 inset-x-0 h-[7px] bg-fg" aria-hidden="true" />
+      <span className="font-mono text-[13px] text-fg pt-1">SKILL.md</span>
+    </span>
+  );
+}
+
 // The link-in-bio, built for a phone first: the mark, the wordmark and the
 // profiles as icons; the conference-day rating card while a talk's window is
-// open; then NOW (the latest post, the flagship), ON STAGE (the next talks,
-// and always the invitation), COMMUNITY (the association) and KEEP IN TOUCH
-// (the newsletter, a call). Every group opens with a tape.
+// open; then WRITING (the latest post), BUILDING (the flagship and the
+// security skills), ON STAGE (the next talks, and always the invitation),
+// COMMUNITY (the association) and KEEP IN TOUCH (the newsletter, a call). Every group opens with a tape.
 export default function LinksPage() {
   const latestPost = getAllPosts()[0];
   const talks = getAllTalks();
@@ -170,6 +192,7 @@ export default function LinksPage() {
   const flagship = projects.find((p) => p.flagship && p.status === "active");
   const flagshipPost = flagship?.post ? getPostBySlug(flagship.post) : null;
   const association = projects.find((p) => p.slug === ASSOCIATION);
+  const securitySkills = getSkillCollectionEntries().find((c) => c.repo === SECURITY_SKILLS);
   // Gone on its own past `until`, or once every role is filled.
   const hiring = openHiring(readContentJson<Hiring>("hiring.json"));
   // "Open Source Day, meetups": what the association organises, from the archive.
@@ -255,28 +278,33 @@ export default function LinksPage() {
         ))}
       </div>
 
-      {(latestPost || flagship) && (
-        <Group tape="Now" tilt={0}>
-          {latestPost && (
-            <ThumbRow
-              href={`${SITE}/blog/${latestPost.slug}`}
-              kicker="Writing"
-              title={latestPost.title}
-              thumb={
-                latestPost.heroImage ? (
-                  <PostCover src={latestPost.heroImage} alt="" sizes="112px" />
-                ) : (
-                  <span />
-                )
-              }
-            />
-          )}
+      {latestPost && (
+        <Group tape="Writing" tilt={0}>
+          <ThumbRow
+            href={`${SITE}/blog/${latestPost.slug}`}
+            kicker="Latest post"
+            title={latestPost.title}
+            thumb={
+              latestPost.heroImage ? (
+                <PostCover src={latestPost.heroImage} alt="" sizes="112px" />
+              ) : (
+                <span />
+              )
+            }
+          />
+        </Group>
+      )}
+
+      {/* The two things he builds in the open: the flagship and the skills
+          pack that carries the GoLab talk into a repo. */}
+      {(flagship || securitySkills) && (
+        <Group tape="Building" tilt={2}>
           {flagship && (
             <ThumbRow
               href={flagship.github ?? flagship.url ?? `${SITE}/projects`}
-              kicker="Building"
+              kicker="AI security agent"
               title={flagship.title}
-              meta="AI security agent, in Go"
+              meta="Open source, in Go"
               thumb={
                 flagshipPost?.heroImage ? (
                   <PostCover src={flagshipPost.heroImage} alt="" sizes="112px" />
@@ -286,13 +314,22 @@ export default function LinksPage() {
               }
             />
           )}
+          {securitySkills && (
+            <ThumbRow
+              href={`${SITE}/skills#${collectionAnchor(securitySkills.repo)}`}
+              kicker="Agent skills"
+              title={`${securitySkills.title} skills`}
+              meta="Go security for your coding agent"
+              thumb={<SkillLeaf />}
+            />
+          )}
         </Group>
       )}
 
       {/* Open roles, one row each. The group goes when the last role is
           filled, or past `until` if nobody remembers to take it down. */}
       {hiring && (
-        <Group tape={`Hiring at ${hiring.org}`} tilt={2}>
+        <Group tape={`Hiring at ${hiring.org}`} tilt={0}>
           {hiring.roles.map((role) => (
             <Row key={role.url} href={role.url} title={role.title} hint={role.hint} />
           ))}

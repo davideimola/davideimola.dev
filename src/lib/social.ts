@@ -18,12 +18,13 @@ export const ALL_PROFILES: SocialProfile[] = [
     url: "https://www.linkedin.com/in/davideimola/",
     active: true,
   },
-  // Kept for sameAs: the account exists, but nothing is posted there.
+  // X is home for short posts, Bluesky mirrors it (both since 2026-10).
+  { label: "X", handle: "@DavideImola", url: "https://x.com/DavideImola", active: true },
   {
     label: "Bluesky",
     handle: "@davideimola.dev",
     url: "https://bsky.app/profile/davideimola.dev",
-    active: false,
+    active: true,
   },
 ];
 
