@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 // Hand-written: change it with the prose below.
-const LAST_UPDATED = "October 2026";
+const LAST_UPDATED = "November 2026";
 
 // The prose here is updated by hand, but the shelf strip is read out of the
 // library on every revalidation, so the page follows /shelf's cadence.
@@ -44,7 +44,7 @@ const LEARNING = [
   {
     kicker: "Building for myself",
     title: "A second brain",
-    body: "tsundoku for the library, bindex for the Pokémon cards, kanpai for the wine, an Obsidian vault for what I write. In daily use and never finished, which is the point.",
+    body: "tsundoku for the library, bindex for the Pokémon cards, kanpai for the wine, Trilium for what I write. In daily use and never finished, which is the point.",
   },
 ];
 
@@ -135,6 +135,20 @@ export default function NowPage() {
                 as a colleague that runs real scanners and reasons about the findings, or as a
                 toolbox, an MCP server that hands those scanners to the AI you already use, so your
                 own Claude does the reasoning and Argus needs no model of its own.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 md:col-span-2 max-w-[760px]">
+              <h2 className="m-0 font-sans font-bold text-[22px] md:text-[24px] tracking-[-0.025em] text-fg">
+                <Link href="/skills" className="no-underline text-fg hover:text-accent">
+                  Agent Skills
+                </Link>
+              </h2>
+              <p className="m-0 font-sans text-[17px] leading-[1.6] text-fg-body">
+                The practices from my GoLab talk, packaged so your agent can apply them to your
+                repo: it sets up security CI, audits the code with evidence for every finding, and
+                proves a suspected logic bug with a failing test before anyone fixes it. Go is the
+                first pack and TypeScript is on its way, starting with the proofs. Next to them I
+                publish the skills I run my writing and speaking with, to read and borrow from.
               </p>
             </div>
           </div>

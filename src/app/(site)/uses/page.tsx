@@ -22,9 +22,12 @@ export const metadata: Metadata = {
 };
 
 // Hand-written: change it with the lists below.
-const LAST_UPDATED = "October 2026";
+const LAST_UPDATED = "November 2026";
 
-const HARDWARE = [
+type Item = { name: string; description: string; href?: string };
+type Group = { category: string; items: Item[] };
+
+const HARDWARE: Group[] = [
   {
     category: "Computing",
     items: [
@@ -117,18 +120,19 @@ const HARDWARE = [
   },
 ];
 
-const SOFTWARE = [
+const SOFTWARE: Group[] = [
   {
     category: "Editor and terminal",
     items: [
       {
         name: "Claude Code",
         description:
-          "Where most of the code gets written now, from the terminal. Git too: commits, branches and rebases mostly go through it.",
+          "Where most of the code gets written now. Git too: commits, branches and rebases mostly go through it.",
       },
       {
-        name: "Visual Studio Code",
-        description: "To read what changed rather than to write it. Kept around, for now.",
+        name: "T3 Code",
+        description:
+          "Where the agents run: one thread per task, side by side, with the diff to read next to the conversation. It replaced VS Code, which I was only keeping to review what changed.",
       },
       {
         name: "iTerm2 + oh-my-zsh",
@@ -140,9 +144,9 @@ const SOFTWARE = [
     category: "Browser and productivity",
     items: [
       {
-        name: "Arc",
+        name: "Zen",
         description:
-          "Main browser. Spaces keep work and personal apart. Tried Dia, its successor, and came back.",
+          "Trying it since Arc was wound down. Workspaces keep work and personal apart, the way Arc's spaces did. Dia, Arc's successor, did not stick.",
       },
       {
         name: "Raycast",
@@ -154,9 +158,9 @@ const SOFTWARE = [
         description: "Password manager. Non-negotiable, especially working in security.",
       },
       {
-        name: "Obsidian",
+        name: "Trilium",
         description:
-          "Notes and everything I write, next to the second-brain tools I build for myself: tsundoku, bindex, kanpai.",
+          "Notes and everything I write, self-hosted, next to the second-brain tools I build for myself: tsundoku, bindex, kanpai. It took over from Obsidian.",
       },
       {
         name: "pgAdmin",
@@ -171,6 +175,17 @@ const SOFTWARE = [
       {
         name: "diagrams.net",
         description: "Go-to for architecture diagrams, flows, and system design sketches.",
+      },
+    ],
+  },
+  {
+    category: "Slides",
+    items: [
+      {
+        name: "Slidev",
+        description:
+          "Every deck is Markdown and Vue, with a theme built on the same brand as this site. A talk starts as a brief and becomes slides through a few Claude Code skills. All of it is public.",
+        href: "https://github.com/davideimola/presentations",
       },
     ],
   },
@@ -215,8 +230,6 @@ const DEV_STACK = [
   },
 ];
 
-type Group = (typeof HARDWARE)[number];
-
 function ItemList({ groups }: { groups: Group[] }) {
   return (
     <>
@@ -235,6 +248,16 @@ function ItemList({ groups }: { groups: Group[] }) {
                 <span className="font-sans text-[14px] leading-[1.45] text-fg-muted">
                   {item.description}
                 </span>
+              )}
+              {item.href && (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[12px] text-fg-subtle underline underline-offset-2 hover:text-accent"
+                >
+                  {item.href.replace(/^https:\/\//, "")}
+                </a>
               )}
             </div>
           ))}
