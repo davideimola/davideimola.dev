@@ -6,7 +6,6 @@ import {
   groupPassesByVerb,
   resetShowcaseCache,
   shelfDocumentSchema,
-  shelfTypes,
   showcaseEndpoint,
   verbLabel,
 } from "./shelf";
@@ -122,14 +121,6 @@ describe("shelfDocumentSchema", () => {
   it("accepts a volume that has not been catalogued into a Type", () => {
     const untyped = shelfFixture.shelf.volumes.filter((volume) => volume.type === null);
     expect(untyped.length).toBeGreaterThan(0);
-    expect(shelfTypes(shelfFixture).every((type) => type.slug)).toBe(true);
-    expect(shelfTypes(shelfFixture).map((type) => type.slug)).toEqual(["manga", "novel"]);
-  });
-
-  it("drops a Type counting no volumes, because filtering on it lands on an empty wall", () => {
-    const doc = shelfFixture;
-    expect(doc.shelf.byType.some((entry) => entry.count === 0)).toBe(true);
-    expect(shelfTypes(doc).map((type) => type.slug)).not.toContain("videogame");
   });
 
   it("carries a cover-less entry so the Series tile branch is exercised", () => {

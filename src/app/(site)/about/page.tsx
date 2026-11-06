@@ -271,11 +271,8 @@ export default function AboutPage() {
         <div className="flex flex-col items-start gap-3.5">
           <Tape tilt={1}>Off the clock</Tape>
           <p className="m-0 font-sans text-[15px] leading-[1.55] text-fg-muted">
-            Outside the story, because they are not part of the job. What I'm reading lives on{" "}
-            <Link href="/shelf" className={inlineLink}>
-              the shelf
-            </Link>
-            ; what I'm up to this month, on{" "}
+            Outside the story, because they are not part of the job. What I'm up to this month,
+            reading included, lives on{" "}
             <Link href="/now" className={inlineLink}>
               now
             </Link>

@@ -64,7 +64,7 @@
     "group": "personal",
     "note": "live",
     "tags": ["Next.js", "PostgreSQL", "MCP"],
-    "description": "A single-owner library of what I have read, what I thought of it and what comes next, readable by Claude and ChatGPT over MCP. It also feeds the Shelf on this site."
+    "description": "A single-owner library of what I have read, what I thought of it and what comes next, readable by Claude and ChatGPT over MCP. It also feeds the reading strip on my /now page."
   },
   {
     "slug": "kanpai",

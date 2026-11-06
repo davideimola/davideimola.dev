@@ -24,7 +24,7 @@ export default async function Image() {
           Every place you can find me, in one page.
         </div>
         <div style={{ display: "flex", fontSize: "26px", color: OG_COLORS["fg-muted"] }}>
-          Latest writing, upcoming talks, the newsletter and the shelf.
+          Latest writing, what I build, upcoming talks and the newsletter.
         </div>
       </div>
     </OgCard>
