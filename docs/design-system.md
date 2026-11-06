@@ -52,7 +52,7 @@ Scale (as Tailwind text utilities in `globals.css`): `text-display` 80/0.98, `te
 - **SectionHeader** — tape plus an optional mono "see all" link.
 - **PageHero** — tape `label`, h1, lead. Every page uses it.
 - **NavBar** — sticky, S mark plus bold wordmark, four sans links (Writing, Built, Talks, About), current page in ink with a 2px underline, search, theme toggle, mobile menu behind a 44px ink-framed button.
-- **Footer** — ink hairline, S mark with name and place, the personal pages (Now, Uses, Shelf, CV, Contact) and the profiles in mono, a quieter row of site links. No newsletter form.
+- **Footer** — ink hairline, S mark with name and place, the personal pages (Now, Uses, Skills, CV, Contact) and the profiles in mono, a quieter row of site links. No newsletter form.
 - **PostCover** — a post's cover at 16:9 in a hairline frame, unfiltered; SVG covers skip the optimiser.
 - **SubscribeForm** — `full` (the /newsletter hero), `inline` (joined field and button), `compact` (stacked). Its success state is a `Card` with an "Almost there" tape.
 - **SubscribeCTA** — the newsletter block at the end of a post or an issue: the home block's white card and edge tape, stacked to fit a reading column.

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const LAST_UPDATED = "November 2026";
 
 // The prose here is updated by hand, but the shelf strip is read out of the
-// library on every revalidation, so the page follows /shelf's cadence.
+// library on every revalidation, hourly.
 export const revalidate = 3600;
 
 const LEARNING = [

@@ -40,13 +40,6 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/uses",
   },
   {
-    id: "page-shelf",
-    type: "page",
-    title: "Shelf",
-    description: "What I'm reading and playing, the verdicts, and the pile.",
-    href: "/shelf",
-  },
-  {
     id: "page-sharing",
     type: "page",
     title: "Talks",

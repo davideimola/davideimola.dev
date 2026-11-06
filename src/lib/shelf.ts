@@ -360,22 +360,3 @@ export function groupPassesByVerb<T extends { type: ShelfType }>(passes: T[]): P
     passes: byVerb.get(verbBase) ?? [],
   }));
 }
-
-/**
- * The Types present anywhere on the shelf, deduplicated by slug, in the order
- * tsundoku sent them. The cover wall filter is built from this rather than from
- * a hardcoded list, so a new Type needs no change here. A volume with no Type
- * contributes nothing to the filter: it is a gap in the catalogue, not a Type.
- * A Type counting zero volumes is dropped too: tsundoku sends every Type it
- * knows, so filtering on one of those would land on an empty wall.
- */
-export function shelfTypes(document: ShelfDocument): ShelfType[] {
-  const seen = new Map<string, ShelfType>();
-  for (const { type, count } of document.shelf.byType) {
-    if (count > 0 && !seen.has(type.slug)) seen.set(type.slug, type);
-  }
-  for (const volume of document.shelf.volumes) {
-    if (volume.type && !seen.has(volume.type.slug)) seen.set(volume.type.slug, volume.type);
-  }
-  return [...seen.values()];
-}

@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { getShowcase, groupPassesByVerb } from "../../lib/shelf";
 import { CoverTile } from "../ui/CoverTile";
 
 /**
  * The open passes out of the personal library, as the reading strip on /now.
- * It reads the same seam /shelf reads, so the two can never disagree, and it is
- * deliberately not a second /shelf: covers and titles only, no verdicts, no pile.
+ * The library behind it is private; the site only shows what is open right now:
+ * covers and titles, no verdicts, no pile. /shelf, which showed the rest, was
+ * retired in November 2026.
  *
  * Grouped by the Type's bare verb, never the slug; a verb with nothing open gets
  * no strip, and with nothing open anywhere this renders nothing at all.
@@ -33,12 +33,6 @@ export async function ShelfNow({ limit = 4 }: { limit?: number }) {
           </ul>
         </div>
       ))}
-      <Link
-        href="/shelf"
-        className="self-start font-mono text-[14px] text-fg border-b border-fg no-underline hover:text-accent hover:border-accent"
-      >
-        The whole shelf
-      </Link>
     </div>
   );
 }

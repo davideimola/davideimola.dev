@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // The shelf page was retired: what is open right now stays on /now, the
+      // verdicts and the pile no longer leave the library.
+      {
+        source: "/shelf",
+        destination: "/now",
+        permanent: true,
+      },
       // The brand page folded into the speaker kit, the one place event
       // organisers look for logos. Exact path only: /brand/* still serves the files.
       {

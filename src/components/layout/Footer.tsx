@@ -9,7 +9,6 @@ import { Mark } from "../ui/BrandMark";
 export const FOOTER_PAGES = [
   { label: "Now", href: "/now" },
   { label: "Uses", href: "/uses" },
-  { label: "Shelf", href: "/shelf" },
   { label: "Skills", href: "/skills" },
   { label: "CV", href: "/cv" },
   { label: "Contact", href: "/contact" },
