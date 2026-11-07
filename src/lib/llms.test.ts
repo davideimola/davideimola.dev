@@ -59,6 +59,19 @@ describe("absolutizeUrls", () => {
 });
 
 describe("postToMarkdown", () => {
+  it("names the series a post belongs to, and nothing when it has none", () => {
+    const part = { number: 2, title: "Test Post", short: "Test", date: post.date, slug: post.slug };
+    const series = {
+      slug: "s",
+      title: "A Series",
+      parts: [{ ...part, number: 1 }, part, { ...part, number: 3 }],
+    };
+    expect(postToMarkdown(post, "https://example.com", { series, part, next: null })).toContain(
+      "- Series: A Series, part 2 of 3"
+    );
+    expect(postToMarkdown(post, "https://example.com")).not.toContain("- Series:");
+  });
+
   it("renders title, metadata, hero image, and absolutized content", () => {
     const md = postToMarkdown(post, "https://example.com");
     expect(md).toContain("# Test Post");

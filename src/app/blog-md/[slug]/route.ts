@@ -1,5 +1,6 @@
 import { getAllPosts, getPostBySlug } from "../../../lib/content";
-import { postToMarkdown } from "../../../lib/llms";
+import { postToMarkdown, SITE_URL } from "../../../lib/llms";
+import { getPostSeries } from "../../../lib/series";
 
 // Serves the raw-Markdown version of a post. Reached as /blog/<slug>.md via
 // the rewrite in next.config.ts; noindex keeps it out of search results as a
@@ -18,7 +19,7 @@ export async function GET(_req: Request, { params }: Props) {
   const post = getPostBySlug(slug);
   if (!post) return new Response("Not found", { status: 404 });
 
-  return new Response(postToMarkdown(post), {
+  return new Response(postToMarkdown(post, SITE_URL, getPostSeries(slug)), {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
       "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",

@@ -7,6 +7,7 @@ import { Tape } from "../../../components/ui/Tape";
 import { START_HERE, topicCounts } from "../../../lib/blog-index";
 import { getAllPosts } from "../../../lib/content";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
+import { getAllSeries } from "../../../lib/series";
 
 const DESCRIPTION = "Long-form notes on AI agents, security, Go and the craft around them.";
 
@@ -81,7 +82,12 @@ export default function BlogPage() {
           </p>
         }
       >
-        <BlogList posts={posts} topics={topicCounts(posts)} startHere={startHere} />
+        <BlogList
+          posts={posts}
+          topics={topicCounts(posts)}
+          startHere={startHere}
+          series={getAllSeries()}
+        />
       </Suspense>
     </div>
   );

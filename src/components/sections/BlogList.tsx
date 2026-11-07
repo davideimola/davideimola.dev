@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { archiveByYear, type TopicCount, tagSlug } from "../../lib/blog-index";
 import type { BlogPost } from "../../lib/content";
 import { formatDayMonth, formatDayMonthYear } from "../../lib/dates";
+import type { ResolvedSeries } from "../../lib/series";
 import { topicOf } from "../../lib/topics";
 import { PostCover } from "../ui/PostCover";
 import { Tape } from "../ui/Tape";
@@ -18,9 +19,16 @@ interface BlogListProps {
   posts: BlogPost[];
   topics: TopicCount[];
   startHere: StartHerePick[];
+  /** Every series, resolved: drives ?series= and the "Part n of m" on a row. */
+  series?: ResolvedSeries[];
 }
 
-function rowTags(post: BlogPost): string {
+function rowTags(post: BlogPost, part: string | undefined): string {
+  const tags = rowTagsOnly(post);
+  return part ? `${part} · ${tags}` : tags;
+}
+
+function rowTagsOnly(post: BlogPost): string {
   if (post.category === "Personal") return "Personal";
   return post.tags
     .slice(0, 2)
@@ -36,17 +44,28 @@ function minutes(readingTime: string): string {
 // same ones the home WRITING block links to), then (unfiltered) the latest post
 // as a feature and the START HERE picks, then the archive by year. Filters
 // live in the URL so they can be shared: ?topic= from the row, ?tag= from the
-// tags on a post page, and ?category= still honoured for old links. A tag or
-// a category gets a line of its own instead of a second row of controls.
-export function BlogList({ posts, topics, startHere }: BlogListProps) {
+// tags on a post page, ?series= from a series post's header, and ?category=
+// still honoured for old links. A tag, a series or a category gets a line of
+// its own instead of a second row of controls.
+export function BlogList({ posts, topics, startHere, series = [] }: BlogListProps) {
   const searchParams = useSearchParams();
   const activeTopic = searchParams.get("topic") ?? undefined;
   const activeTag = searchParams.get("tag")?.toLowerCase();
   const activeCategory = searchParams.get("category")?.toLowerCase();
-  const hasFilter = !!(activeTopic || activeTag || activeCategory);
+  const activeSeries = series.find((s) => s.slug === searchParams.get("series"));
+  const hasFilter = !!(activeTopic || activeTag || activeCategory || activeSeries);
+
+  // "Part 1 of 4", by post slug
+  const partOf = new Map<string, string>();
+  for (const s of series) {
+    for (const part of s.parts) {
+      if (part.slug) partOf.set(part.slug, `Part ${part.number} of ${s.parts.length}`);
+    }
+  }
 
   const filtered = posts.filter((p) => {
     if (activeTopic) return topicOf(p) === activeTopic;
+    if (activeSeries) return activeSeries.parts.some((part) => part.slug === p.slug);
     if (activeTag) return p.tags.some((t) => tagSlug(t) === activeTag);
     if (activeCategory) return p.category.toLowerCase() === activeCategory;
     return true;
@@ -57,11 +76,13 @@ export function BlogList({ posts, topics, startHere }: BlogListProps) {
 
   // What a tag or category filter says about itself, since neither has a
   // control in the row.
-  const narrowedBy = activeTag
-    ? `Posts tagged #${activeTag.replace(/\s+/g, "")}`
-    : activeCategory
-      ? `${activeCategory[0].toUpperCase()}${activeCategory.slice(1)} posts`
-      : null;
+  const narrowedBy = activeSeries
+    ? `The series: ${activeSeries.title}`
+    : activeTag
+      ? `Posts tagged #${activeTag.replace(/\s+/g, "")}`
+      : activeCategory
+        ? `${activeCategory[0].toUpperCase()}${activeCategory.slice(1)} posts`
+        : null;
 
   const topicLink = (label: string, count: number, href: string, active: boolean) => (
     <Link
@@ -214,7 +235,9 @@ export function BlogList({ posts, topics, startHere }: BlogListProps) {
                       >
                         {post.title}
                       </span>
-                      <span className="font-mono text-[12px] text-fg-subtle">{rowTags(post)}</span>
+                      <span className="font-mono text-[12px] text-fg-subtle">
+                        {rowTags(post, partOf.get(post.slug))}
+                      </span>
                     </span>
                     {/* The cover as a thumbnail on wide screens; on a phone the row
                         stays text only, the list is dense enough already. A post

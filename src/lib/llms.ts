@@ -1,6 +1,7 @@
 import type { BlogPost, Project, Talk } from "./content";
 import { rasterCover } from "./covers";
 import { figuresToMarkdown } from "./figures";
+import type { PostInSeries } from "./series";
 
 // Plain-Markdown views of the site for LLM consumers, following the
 // llms.txt convention (https://llmstxt.org): /llms.txt is a compact index,
@@ -29,7 +30,11 @@ export function absolutizeUrls(markdown: string, baseUrl = SITE_URL): string {
 }
 
 /** Render a blog post as a standalone Markdown document. */
-export function postToMarkdown(post: BlogPost, baseUrl = SITE_URL): string {
+export function postToMarkdown(
+  post: BlogPost,
+  baseUrl = SITE_URL,
+  series: PostInSeries | null = null
+): string {
   const lines = [
     `# ${post.title}`,
     "",
@@ -41,6 +46,10 @@ export function postToMarkdown(post: BlogPost, baseUrl = SITE_URL): string {
     `- Reading time: ${post.readingTime}`,
     `- Canonical: ${baseUrl}/blog/${post.slug}`,
   ];
+  if (series) {
+    const { part, series: s } = series;
+    lines.push(`- Series: ${s.title}, part ${part.number} of ${s.parts.length}`);
+  }
   if (post.heroImage) {
     lines.push(
       "",
@@ -107,8 +116,14 @@ export function buildLlmsTxt({ posts, talks, projects }: LlmsTxtInput, baseUrl =
 }
 
 /** Build the /llms-full.txt document with every post inlined. */
-export function buildLlmsFullTxt(posts: BlogPost[], baseUrl = SITE_URL): string {
+export function buildLlmsFullTxt(
+  posts: BlogPost[],
+  baseUrl = SITE_URL,
+  seriesOf: (slug: string) => PostInSeries | null = () => null
+): string {
   const header = ["# Davide Imola, full blog content", "", `> ${SITE_SUMMARY}`, ""].join("\n");
-  const body = posts.map((post) => postToMarkdown(post, baseUrl)).join("\n---\n\n");
+  const body = posts
+    .map((post) => postToMarkdown(post, baseUrl, seriesOf(post.slug)))
+    .join("\n---\n\n");
   return `${header}\n${body}`;
 }

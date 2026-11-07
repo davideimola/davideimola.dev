@@ -14,6 +14,8 @@ export { ReadingProgress } from "./ReadingProgress";
 export { RelatedPosts } from "./RelatedPosts";
 export { ScrollReveal } from "./ScrollReveal";
 export { SectionHeader } from "./SectionHeader";
+export { SeriesNext } from "./SeriesNext";
+export { SeriesParts } from "./SeriesParts";
 export { ShareButtons } from "./ShareButtons";
 export { SubscribeCTA } from "./SubscribeCTA";
 export { TableOfContents } from "./TableOfContents";

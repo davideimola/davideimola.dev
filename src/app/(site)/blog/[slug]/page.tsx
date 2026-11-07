@@ -17,6 +17,8 @@ import { PostCover } from "../../../../components/ui/PostCover";
 import { PostNavigation } from "../../../../components/ui/PostNavigation";
 import { ReadingProgress } from "../../../../components/ui/ReadingProgress";
 import { RelatedPosts } from "../../../../components/ui/RelatedPosts";
+import { SeriesNext } from "../../../../components/ui/SeriesNext";
+import { SeriesParts } from "../../../../components/ui/SeriesParts";
 import { ShareButtons } from "../../../../components/ui/ShareButtons";
 import { SubscribeCTA } from "../../../../components/ui/SubscribeCTA";
 import { TableOfContents } from "../../../../components/ui/TableOfContents";
@@ -34,6 +36,7 @@ import { formatDate } from "../../../../lib/dates";
 import { OG_SIZE, ogImageUrl } from "../../../../lib/og-url";
 import { rehypeCodeTitle } from "../../../../lib/rehype-code-title";
 import { rehypeEndMark } from "../../../../lib/rehype-end-mark";
+import { getPostSeries, partLabel } from "../../../../lib/series";
 
 function absoluteUrl(src: string): string {
   return src.startsWith("http") ? src : `https://davideimola.dev${src}`;
@@ -95,6 +98,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const toc = extractToc(post.content);
   const { prev, next } = getPrevNextPosts(slug);
+  const inSeries = getPostSeries(slug);
   const related = getRelatedPosts(slug);
 
   const breadcrumbSchema = {
@@ -150,6 +154,20 @@ export default async function BlogPostPage({ params }: Props) {
             <span aria-hidden="true">·</span>
             <span>{post.readingTime}</span>
             <span aria-hidden="true">·</span>
+            {inSeries && (
+              <>
+                <span>
+                  {partLabel(inSeries)} in{" "}
+                  <a
+                    href={`/blog?series=${inSeries.series.slug}`}
+                    className="text-fg underline underline-offset-4 decoration-1 hover:text-accent transition-colors duration-150"
+                  >
+                    {inSeries.series.title}
+                  </a>
+                </span>
+                <span aria-hidden="true">·</span>
+              </>
+            )}
             <span className="flex flex-wrap gap-x-2 gap-y-1">
               {post.tags.map((tag) => (
                 <a
@@ -165,6 +183,21 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         <div className="h-px bg-rule" />
+
+        {/* On a phone there is no rail: the series folds under the header */}
+        {inSeries && (
+          <details className="lg:hidden mt-8">
+            <summary className="font-mono text-[13px] text-fg-subtle cursor-pointer py-2">
+              The series · {inSeries.series.parts.length} parts
+            </summary>
+            <SeriesParts
+              series={inSeries.series}
+              current={inSeries.part.number}
+              label={false}
+              className="mt-2"
+            />
+          </details>
+        )}
 
         <div className="pt-10 md:pt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,700px)_240px] lg:justify-between gap-12">
           {/* Article: the 700px reading column (docs/brand.md, "Site") */}
@@ -225,15 +258,24 @@ export default async function BlogPostPage({ params }: Props) {
             <AuthorBio />
             <ShareButtons slug={post.slug} title={post.title} />
             <SubscribeCTA className="mt-12" />
-            <PostNavigation prev={prev} next={next} />
+            {/* A series post closes on its next part; the last part, like any
+                other post, on the chronological neighbours */}
+            {inSeries?.next ? (
+              <SeriesNext next={inSeries.next} total={inSeries.series.parts.length} />
+            ) : (
+              <PostNavigation prev={prev} next={next} />
+            )}
             <RelatedPosts posts={related} />
             <GiscusComments />
           </article>
 
           {/* Sticky ToC */}
-          {toc.length > 0 && (
+          {(toc.length > 0 || inSeries) && (
             <aside className="hidden lg:block pt-1.5">
-              <div className="sticky top-[110px]">
+              <div className="sticky top-[110px] flex flex-col gap-10">
+                {inSeries && (
+                  <SeriesParts series={inSeries.series} current={inSeries.part.number} />
+                )}
                 <TableOfContents items={toc} />
               </div>
             </aside>

@@ -1,8 +1,10 @@
 import { getAllPosts } from "../../lib/content";
-import { buildLlmsFullTxt } from "../../lib/llms";
+import { buildLlmsFullTxt, SITE_URL } from "../../lib/llms";
+import { getAllSeries, seriesOfPost } from "../../lib/series";
 
 export async function GET() {
-  const body = buildLlmsFullTxt(getAllPosts());
+  const series = getAllSeries();
+  const body = buildLlmsFullTxt(getAllPosts(), SITE_URL, (slug) => seriesOfPost(series, slug));
 
   return new Response(body, {
     headers: {
