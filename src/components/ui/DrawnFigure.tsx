@@ -11,8 +11,13 @@ import { useEffect, useRef } from "react";
 // arrive prepared by loadFigure (src/lib/cover-files.ts), read from the site's
 // own public/, never from user input; the timing lives in the brand's draw.css.
 
-/** One part's draw (1.2s) plus the red detail landing after it. */
-export const STEP_MS = 1700;
+/**
+ * A figure sits in the middle of a read, so it draws faster than a cover:
+ * each part traces in DRAW_MS instead of the brand's 1.2s, and the next part
+ * starts STEP_MS after it, when the line has landed.
+ */
+export const DRAW_MS = 600;
+export const STEP_MS = 900;
 
 interface DrawnFigureProps {
   /** The prepared light drawing. */
@@ -66,7 +71,7 @@ export function DrawnFigure({ light, dark, alt, caption, className = "" }: Drawn
           observer.disconnect();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.25 }
     );
     observer.observe(el);
     return () => {
@@ -78,7 +83,8 @@ export function DrawnFigure({ light, dark, alt, caption, className = "" }: Drawn
   const svgClasses = "[&>svg]:block [&>svg]:w-full [&>svg]:h-auto [&_text]:font-mono";
   return (
     <figure className={`my-10 ${className}`}>
-      <div ref={ref} role="img" aria-label={alt} className="draw">
+      {/* The class states DRAW_MS: Tailwind needs the literal. */}
+      <div ref={ref} role="img" aria-label={alt} className="draw [--di-draw-duration:600ms]">
         <div
           aria-hidden="true"
           className={`${svgClasses} ${dark ? "dark:hidden" : ""}`}
