@@ -217,7 +217,7 @@ Once the post is approved, run the pre-PR checklist before opening the PR:
 - [ ] `cover.svg`, `cover.png` and `cover-dark.svg` exist in `public/images/blog/<slug>/`, Davide approved the drawing, and `heroImage` points at the SVG
 - [ ] No `TODO` comments left in the MDX
 - [ ] No `#` h1 headings in content
-- [ ] `draft: true` removed from frontmatter
+- [ ] `draft: true` removed from frontmatter, and `publishDate` is the day it goes live: a future date keeps it hidden in production until that morning, so the PR can be merged early
 
 Then commit, push the branch, and open the PR on this site repo. The PR is a davideimola.dev artifact, so it stays on GitHub here. Carry the content note title in the body so the artifact traces back to it:
 ```bash

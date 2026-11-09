@@ -1,0 +1,55 @@
+name: Scheduled posts
+
+# A post merged before its publishDate stays hidden in production
+# (isPublished in src/lib/content.ts), but the pages are built ahead of time:
+# nothing shows it on its date until the site is built again. This job runs
+# every morning and, only when a post is due today in Rome, asks Vercel for a
+# fresh production deploy through a deploy hook. Days without a post cost a
+# checkout and a grep, never a deploy.
+#
+# Setup: create a Deploy Hook for the main branch in Vercel (Project Settings,
+# Git, Deploy Hooks) and save its URL as the VERCEL_DEPLOY_HOOK repository
+# secret. The URL triggers deploys by itself, so it lives only in the secret.
+
+on:
+  schedule:
+    # 05:00 UTC is 06:00 or 07:00 in Rome, and always the same calendar day.
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-due-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Find posts due today
+        id: due
+        run: |
+          today=$(TZ=Europe/Rome date +%F)
+          due=""
+          for f in src/content/blog/*.mdx; do
+            # Only the frontmatter, between the first two --- lines.
+            front=$(awk 'NR==1 && /^---$/ {open=1; next} open && /^---$/ {exit} open' "$f")
+            date=$(printf '%s\n' "$front" | sed -nE 's/^publishDate:[[:space:]]*"?([0-9]{4}-[0-9]{2}-[0-9]{2})"?.*/\1/p')
+            if [ "$date" = "$today" ] && ! printf '%s\n' "$front" | grep -qE '^draft:[[:space:]]*true'; then
+              due="$due $(basename "$f" .mdx)"
+            fi
+          done
+          echo "Today in Rome: $today. Due:${due:- none}"
+          echo "due=${due# }" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy
+        if: steps.due.outputs.due != ''
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::error::VERCEL_DEPLOY_HOOK is not set, so ${{ steps.due.outputs.due }} will not go live today."
+            exit 1
+          fi
+          curl --fail --silent --show-error --request POST "$HOOK" > /dev/null
+          echo "Deploy requested for: ${{ steps.due.outputs.due }}" >> "$GITHUB_STEP_SUMMARY"

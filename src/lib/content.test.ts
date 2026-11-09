@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   extractToc,
   getAllPosts,
@@ -288,6 +288,55 @@ describe("draft post filtering (development)", () => {
     mockFs.readFileSync.mockReturnValue(draftPost);
 
     expect(getPostBySlug("draft-post")).not.toBeNull();
+  });
+});
+
+// ── scheduled posts ───────────────────────────────────────────────────────
+
+describe("scheduled posts", () => {
+  const scheduled = mdx({
+    title: "Scheduled Post",
+    publishDate: "2026-11-26",
+    category: "Technical",
+    tags: [],
+  });
+
+  beforeEach(() => {
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(scheduled);
+    mockFs.readdirSync.mockReturnValue(["scheduled.mdx"] as never);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+  });
+
+  it("hides a post in production until its date in Rome", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    // 23:30 UTC on the 25th is already the 26th in Rome.
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-25T22:30:00Z"));
+    expect(getAllPosts()).toHaveLength(0);
+    expect(getPostBySlug("scheduled")).toBeNull();
+
+    vi.setSystemTime(new Date("2026-11-25T23:30:00Z"));
+    expect(getAllPosts()).toHaveLength(1);
+    expect(getPostBySlug("scheduled")).not.toBeNull();
+  });
+
+  it("shows a future post in development", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-09T12:00:00Z"));
+    expect(getAllPosts()).toHaveLength(1);
+  });
+
+  it("reads an unquoted YAML date as the same day", () => {
+    mockFs.readFileSync.mockReturnValue(
+      scheduled.replace('publishDate: "2026-11-26"', "publishDate: 2026-11-26")
+    );
+    expect(getPostBySlug("scheduled")?.date).toBe("2026-11-26");
   });
 });
 

@@ -135,7 +135,11 @@ function parsePost(slug: string): BlogPost {
     excerpt: data.excerpt ?? "",
     category: data.category ?? "General",
     tags: data.tags ?? [],
-    date: data.publishDate,
+    // An unquoted YAML date arrives as a Date: keep it the same YYYY-MM-DD string.
+    date:
+      data.publishDate instanceof Date
+        ? data.publishDate.toISOString().slice(0, 10)
+        : data.publishDate,
     readingTime: readingTimeLabel(content),
     draft: data.draft ?? false,
     heroImage: data.heroImage,
@@ -145,23 +149,36 @@ function parsePost(slug: string): BlogPost {
   };
 }
 
+/** Today's date in Rome as YYYY-MM-DD, the calendar the publish dates are written in. */
+export function romeToday(now: Date = new Date()): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(now);
+}
+
+/**
+ * Whether a post is on the site. Development shows every post; production
+ * hides drafts and every post whose publishDate is still ahead, so a post
+ * merged early goes live on its date. Pages are built ahead of time, so the
+ * scheduled-posts workflow redeploys the site on the morning a post is due.
+ */
+export function isPublished(post: BlogPost, now: Date = new Date()): boolean {
+  if (process.env.NODE_ENV === "development") return true;
+  return !post.draft && post.date <= romeToday(now);
+}
+
 export function getAllPosts(): BlogPost[] {
-  const isDev = process.env.NODE_ENV === "development";
   return fs
     .readdirSync(BLOG_DIR)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => parsePost(f.replace(".mdx", "")))
-    .filter((p) => isDev || !p.draft)
+    .filter((p) => isPublished(p))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
-  const isDev = process.env.NODE_ENV === "development";
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
   const post = parsePost(slug);
-  if (!isDev && post.draft) return null;
-  return post;
+  return isPublished(post) ? post : null;
 }
 
 export function getRecentPosts(count = 3): BlogPost[] {
