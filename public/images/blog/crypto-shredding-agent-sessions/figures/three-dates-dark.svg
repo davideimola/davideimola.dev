@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <g fill="none" stroke="#ECE9E2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="40">
+    <g data-step="0">
+    <path d="M90 200 H1110"/>
+    <path d="M90 180 V220"/>
+    <path d="M498 180 V220"/>
+    <path d="M1110 180 V220"/>
+    <path d="M90 290 V306 H498 V290"/>
+    <text x="294.0" y="360" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="34">restorable</text>
+    <text x="90.0" y="270" fill="#ECE9E2" stroke="none" text-anchor="start" font-size="32">day 0</text><text x="498.0" y="270" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="32">day 30</text><text x="1110.0" y="270" fill="#ECE9E2" stroke="none" text-anchor="end" font-size="32">by day 75</text>
+    <text x="498.0" y="140" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="36">key destroyed</text><text x="1110.0" y="140" fill="#ECE9E2" stroke="none" text-anchor="end" font-size="36">purged by Google</text>
+    </g>
+    <g data-step="1"><circle cx="90" cy="200" r="16" fill="#E0475C" stroke="none"/><text x="90.0" y="140" fill="#ECE9E2" stroke="none" text-anchor="start" font-size="36">unreadable</text></g>
+  </g>
+</svg>

@@ -1,0 +1,178 @@
+---
+title: "Crypto-shredding Agent Sessions: Deleting What Your Backups Remember"
+excerpt: "Agent frameworks are learning to delete a session, but a delete never reaches your backups and nobody is doing retention. How I made both work on Postgres with one Cloud KMS key per tenant, what happens if someone steals the key, and what it costs."
+category: "Technical"
+topic: "ai-security"
+publishDate: "2026-11-26"
+tags: ["AI", "Security", "Go", "PostgreSQL", "GDPR"]
+featured: false
+heroImage: "/images/blog/crypto-shredding-agent-sessions/cover.svg"
+heroImageAlt: "Line drawing of a stack of locked archive boxes, and on the floor in front of them a key broken in two, the only red thing in the picture"
+---
+
+Deleting data is one of the first things any compliance work asks of you. GDPR calls it [storage limitation](https://gdpr-info.eu/art-5-gdpr/), ISO 27001 has a control just for it (8.10, information deletion), and most B2B contracts say some version of the same thing: data has an expiry date, and when a customer leaves, everything that belongs to them goes with them. Deleting their rows from the live database is the easy part. What I never had a good answer for was everything else, because if a customer is gone but their data is still sitting in thirty days of snapshots, there's no way to open a snapshot and take one tenant out of it, since the whole point of a backup is that nobody can change it.
+
+The answer I ended up with is to stop trying to delete the data and make it unreadable instead, by destroying the key it was encrypted with. To check that it really works, I built a small demo for this post with two made-up tenants, acme and globex, took a real backup of their database and then deleted globex. When I restore that old backup now, every globex session comes back as bytes nobody can read, including the password one of their tools had read from a `.env` file, while acme's sessions are still there in clear. This post is how I got there, and the questions I had to answer along the way.
+
+## What the frameworks fixed
+
+The same question came back when I started looking at agent sessions. [Last month I wrote](/blog/ai-agent-sessions-data-store) that the frameworks store every turn of a conversation, tool output included, and that giving us a way to delete it was their job. Since then part of that has moved. My [fix for ADK's SQLite delete](https://github.com/google/adk-go/pull/1774) was merged on November 5, so when ADK deletes a session now its events go with it. On Genkit, a maintainer answered [my issue](https://github.com/genkit-ai/genkit/issues/6724) that you can already delete through the store, but that they had no objection to an API for it, and since then two PRs that add `Agent.DeleteSession` have been waiting for review, [one for JS](https://github.com/genkit-ai/genkit/pull/6857) and [one for Go](https://github.com/genkit-ai/genkit/pull/6858).
+
+What caught my eye in those PRs is what they leave out on purpose. The author writes that "Retention/TTL isn't in here" and that "Traces, logs and streams live outside the store and aren't touched", and I think they're right to draw the line there, because a framework can only delete what's in its own store. How long your data lives, and the copies your infrastructure makes of it, were never something a framework could reach. So I owe last month's post a correction: deleting a session is the framework's job, and the frameworks are doing it, while retention and copies belong to whoever runs the infrastructure.
+
+## Where a deleted session still lives
+
+If I follow a single agent session through a normal production setup on Postgres, the live table is only the first place it lands. Cloud SQL takes a daily backup of it, or, on Kubernetes, [CloudNativePG](https://cloudnative-pg.io) ships base backups and the WAL archive to a bucket through Barman, and point-in-time recovery exists precisely so you can go back to a moment when that row was still there. Then there's the export somebody set up to BigQuery for analytics, and the dump a colleague took before a risky migration and forgot in a bucket. A `DELETE` reaches the first of these and none of the others, and some of them can't be modified even if you go looking for them.
+
+## Encrypt per tenant, then destroy the key
+
+Crypto-shredding solves this by turning it around. If the content is never stored in clear, then every copy of the database, backups and dumps and exports included, only ever carries ciphertext. Each tenant gets its own key, everything they write is encrypted with it before it reaches Postgres, and when the tenant has to go I don't chase the copies at all: I destroy the key, and every copy becomes unreadable at the same moment, wherever it ended up.
+
+The keys live in [Cloud KMS](https://docs.cloud.google.com/kms/docs/key-management-service), which never hands them out. Calling KMS for every single message would be slow and would cost money on every read, so I use envelope encryption. Each tenant has a data key (a DEK) that does the actual work locally with AES-256-GCM, and KMS only ever encrypts that data key. The wrapped DEK is stored in Postgres, right next to the data it protects:
+
+```sql
+CREATE TABLE tenant_deks (
+    tenant_id   text  NOT NULL,
+    month       date  NOT NULL,
+    kms_version text  NOT NULL,
+    wrapped_dek bytea NOT NULL,
+    PRIMARY KEY (tenant_id, month)
+);
+```
+
+That table ends up in the backups along with everything else, and that's fine, because a wrapped DEK is useless without the KMS key version that wrapped it. The backup holds the locked boxes and the locks, while the only thing that opens them is in a place the backup can't reach.
+
+<DrawnFigure src="/images/blog/crypto-shredding-agent-sessions/figures/envelope.svg" alt="Cloud KMS holds one key per tenant, acme and globex. It wraps the data keys stored in Postgres next to the encrypted events, and Postgres is copied into backups. The globex key is crossed out in red: destroying it makes globex unreadable in Postgres and in every backup, while KMS itself is never copied." caption="KMS wraps the data keys, Postgres holds them with the events, and the backups copy Postgres but never KMS." />
+
+Writing an event goes through a small wrapper around the session store ([the full code is on GitHub](https://github.com/davideimola/blog-examples/tree/main/crypto-shredding)):
+
+```go title="store.go"
+func (s *Store) Append(ctx context.Context, e Event) error {
+	month := monthOf(e.At)
+	if err := s.ensurePartition(ctx, month); err != nil {
+		return err
+	}
+	dek, err := s.dek(ctx, e.Tenant, month, true)
+	if err != nil {
+		return err
+	}
+	ct, err := seal(dek, e.Content, eventAAD(e))
+	if err != nil {
+		return err
+	}
+	_, err = s.db.Exec(ctx,
+		`INSERT INTO session_events (tenant_id, session_id, seq, created_at, content)
+		 VALUES ($1, $2, $3, $4, $5)`,
+		e.Tenant, e.Session, e.Seq, e.At, ct)
+	return err
+}
+```
+
+I do the encryption in the application rather than in the database, because with `pgcrypto` the key has to travel inside the SQL statement, and from there it ends up in the statement logs and in any error message Postgres decides to print. `eventAAD` passes the tenant, the session and the position of the event as associated data, so if someone copies an encrypted row into another tenant's session, it simply fails to decrypt.
+
+The tenant, the session ID and the timestamps stay in clear, because I need them to partition the table and to find a session at all. A backup still tells you who talked to the agent and when, even if it can't tell you what they said, and I'd rather say that up front than let you discover it.
+
+I wrote the encryption with the standard library's AES-GCM because I wanted the code in the post to be readable. In production I'd use [Tink](https://developers.google.com/tink), which takes care of key formats and nonces for you and already knows how to talk to Cloud KMS.
+
+## Data that has to stay, and then go
+
+Offboarding a whole tenant is the easy case, because you destroy every key they have and you're done. The question I had next is the one that comes up more often in practice: how do you handle data that has to be deleted after a certain time, but also must not be deleted before it, because an auditor, a contract or an incident investigation might still need it?
+
+The answer turned out to be in how Cloud KMS handles keys. A key can have many versions, and every ciphertext remembers which version produced it, so instead of giving each tenant a single key I give each tenant one key with a new version every month. September's data key is wrapped by September's version and October's by October's, which means that when September falls out of retention I can destroy that one version and September becomes unreadable everywhere, backups included, while October is left alone.
+
+<DrawnFigure src="/images/blog/crypto-shredding-agent-sessions/figures/retention.svg" alt="Three months of data, September, October and November, each under its own key version. With two months of retention, September's version is broken in red and its data can no longer be read, while October and November keep their keys." caption="One key version per month: expiring September means destroying one version." />
+
+I choose the version explicitly every time I wrap a key, rather than letting KMS rotate on a schedule. With automatic rotation, which version ends up wrapping a month depends on when the rotation happened to run, and destroying one version could take part of the following month down with it.
+
+In the live database each month is its own Postgres partition, so expiring a month is a `DROP TABLE` instead of a huge `DELETE` that leaves the table full of dead rows for vacuum to deal with. The retention job destroys the key versions first and only then cleans up, because the versions are what reaches the backups, and the partition is just housekeeping:
+
+```go title="retention.go"
+for _, r := range expired {
+	if err := s.kms.Destroy(ctx, r.version); err != nil {
+		return nil, err
+	}
+}
+for _, m := range months {
+	if _, err := s.db.Exec(ctx, fmt.Sprintf(`DROP TABLE IF EXISTS %s`, partitionName(m))); err != nil {
+		return nil, err
+	}
+	if _, err := s.db.Exec(ctx, `DELETE FROM tenant_deks WHERE month = $1`, m); err != nil {
+		return nil, err
+	}
+}
+```
+
+The other half of the rule, the "not before", I enforce through who is allowed to destroy anything. The application can create a tenant's key, add a version each month, and encrypt and decrypt with it, but it has no permission to destroy a version. Only the retention job has that, and the job refuses to touch a month that's still inside the window. This is the part I wanted in infrastructure as code, so here is the split as two custom roles in Pulumi:
+
+```go title="infra/main.go"
+keyUser, err := projects.NewIAMCustomRole(ctx, "session-key-user", &projects.IAMCustomRoleArgs{
+	RoleId: pulumi.String("sessionKeyUser"),
+	Title:  pulumi.String("Session key user"),
+	Permissions: pulumi.ToStringArray([]string{
+		"cloudkms.cryptoKeys.create",
+		"cloudkms.cryptoKeys.get",
+		"cloudkms.cryptoKeyVersions.create",
+		"cloudkms.cryptoKeyVersions.useToEncrypt",
+		"cloudkms.cryptoKeyVersions.useToDecrypt",
+	}),
+})
+
+shredder, err := projects.NewIAMCustomRole(ctx, "session-key-shredder", &projects.IAMCustomRoleArgs{
+	RoleId: pulumi.String("sessionKeyShredder"),
+	Title:  pulumi.String("Session key shredder"),
+	Permissions: pulumi.ToStringArray([]string{
+		"cloudkms.cryptoKeys.list",
+		"cloudkms.cryptoKeyVersions.list",
+		"cloudkms.cryptoKeyVersions.get",
+		"cloudkms.cryptoKeyVersions.destroy",
+	}),
+})
+```
+
+Each role is bound on the key ring to its own service account, so a bug in the application, or someone holding the application's token, can't shred even a single month. The stack doesn't declare the tenants' keys themselves, since tenants come and go while the system is running and onboarding is what creates them. What I want the IaC to pin down is the rules those keys live under: who can do what to them, and where every operation gets logged.
+
+Cloud KMS also adds a safety net of its own. When you destroy a version it doesn't disappear on the spot but goes into a "scheduled for destruction" state for a period you choose when you create the key, anywhere from 24 hours to 120 days and [30 days by default](https://docs.cloud.google.com/kms/docs/key-states). During that period nobody can use the version, so the data is already unreadable, but you can still restore it, which means that if the retention job ever destroys the wrong month you have a few weeks to notice.
+
+That safety net is also why, when someone asks me when their data is actually deleted, I give them more than one date. It stops being readable the moment the version is destroyed, the key is gone for good when the waiting period ends, and after that Google takes [up to another 45 days](https://docs.cloud.google.com/kms/docs/destroy-restore) to remove the key material from its own systems and backups, so a customer who asks for proof of deletion should get all three dates.
+
+<DrawnFigure src="/images/blog/crypto-shredding-agent-sessions/figures/three-dates.svg" alt="A timeline of 75 days. On day 0 the key version is destroyed and the data becomes unreadable, marked with a red dot. Until day 30 the version can still be restored. On day 30 the key is destroyed for good, and by day 75 Google has purged it from its own systems and backups." caption="When is it deleted? It depends on which of the three dates you mean." />
+
+## What if someone steals the key?
+
+Once the design was on paper, this was the first thing I worried about, and the answer was not the one I expected. With KMS nobody can steal the key itself, because it never leaves KMS, not even for me. What an attacker can steal is the ability to use it, meaning the credentials of a service account that's allowed to call `Decrypt`, and with those they can decrypt everything, old months included, since the old versions have to stay usable for their data to stay readable.
+
+So rotating the keys every month doesn't protect you here, even though it's tempting to think that a stolen key is only worth one month. The attacker didn't steal a version, they stole an identity that can use every version you haven't destroyed yet. What actually helps is less exciting: no exported service account keys lying around (Workload Identity instead), decrypt permission only where it's really needed, and the KMS data access logs turned on, so that every decrypt leaves a trace and a sudden spike is visible. The Pulumi stack in the repo turns those logs on.
+
+Rotation still matters in this design, only for different reasons. It's what gives retention its granularity, and it limits the damage when a data key leaks, because the DEK does live in the application's memory, and if it ends up in a heap dump it opens one tenant's month and nothing more.
+
+## Why not keep the keys myself?
+
+The next question was whether I could do all this without KMS and keep the keys myself. You can, but it helps to look at what a key store for crypto-shredding has to guarantee. It has to be durable, because losing a key by accident means you've deleted that tenant by accident. At the same time it can't have copies you don't control, because a key that ends up in a backup can never really be destroyed, and then shredding destroys nothing.
+
+The most common way to get this wrong is to keep the keys in a table in the same Postgres. When you delete the tenant's key from the live database, the backup still has both the data and the key that opens it, and you've moved the problem without solving it. Vault running on your own infrastructure has the same tension one level down, because its storage needs backups too, and those backups hold the keys.
+
+What KMS sells you is exactly that combination: a key that is durable and replicated, and a destruction with a documented timeline and an entry in an audit log. When a customer asks you to prove their data is gone, being able to say "we destroyed version 12 on November 3, and here is the log" is a much better answer than "we ran `DELETE` on the keys table". In my setup I manage every key except one: the data keys live wrapped in Postgres and can go wherever the backups go, while the one key that really has to die lives somewhere it can.
+
+People often bring up Cloud SQL's [customer-managed encryption keys](https://docs.cloud.google.com/sql/docs/postgres/cmek) at this point, so it's worth saying that CMEK solves a different problem. It encrypts the instance's disk with your key, which is a good idea, but the database decrypts transparently for anyone who can run a query, and destroying that key takes down the whole instance rather than one tenant. CMEK protects you from someone walking off with a disk, and it has nothing to say about deleting a customer.
+
+## What it costs
+
+My first worry about performance was that decrypting every event on every read would be slow, and the benchmark put that to rest quickly. On my laptop, an Apple M5 Pro, encrypting a 4 KiB event takes about 1.2 µs and decrypting it about 1 µs, so somewhere around 3 to 4 GB/s, which is far less time than the query spent fetching the row.
+
+The expensive part would be KMS, since every call is a network round trip with its own quota and price, and that's why the unwrapped data keys stay in memory for a few minutes. With that cache, reading a 50-event session costs one KMS call instead of fifty, and there's a test in the repo that checks exactly that. The cache has a cost of its own that I want to be upfront about: a process that already had a data key in memory can keep using it until the cache expires, even after the key version has been destroyed. Shredding takes effect within the cache TTL rather than instantly, and five minutes is an acceptable delay for most of us, as long as you know it's there.
+
+Encryption also takes away some things you probably rely on. You can't filter, index or search on encrypted content, and Postgres can't compress it either, because ciphertext doesn't compress, so if size matters you have to compress before you encrypt. Each value also grows by 28 bytes of nonce and authentication tag.
+
+The bill turned out to be what settled how fine-grained the keys should be. Cloud KMS charges [$0.06 per active key version per month](https://cloud.google.com/kms/pricing) for software keys, plus $0.03 per 10,000 operations, so a tenant with twelve months of retention keeps twelve versions alive and costs 72 cents a month, and a thousand tenants cost $720. Last month I wrote that the most promising direction was one key per user, and running the same numbers on 100,000 users gives $72,000 a month. The cheaper version of per-user, with one data key per user wrapped by the tenant's key, doesn't work either: when you delete a user's wrapped key from the table it's still in the backups, next to the tenant key that opens it, which is the same key store problem from the previous section. For a B2B product the tenant is the right unit, and per-user keys make sense for consumer products or for a handful of users with unusually strict requirements.
+
+## What it doesn't reach
+
+All of this protects what goes through the wrapper and nothing else. If a prompt gets logged in clear before it's encrypted, or ends up in a trace, destroying the key doesn't touch it, and the only fix is upstream, by logging a `session_id` instead of the content. Embeddings have the same problem in a harder form, because a vector is derived from the text and a good part of the text can be reconstructed from it, but once you encrypt it you can no longer search it, which was the reason to compute it in the first place.
+
+Then there's the memory an agent builds about a user over time: the summaries, the facts it extracts, the notes it keeps across sessions. That's data about the tenant that no longer looks like the tenant's data, and I don't have a good answer for it yet. It's also where this series goes next, because what an agent remembers is only the first boundary, and the second one is what it sends out.
+
+## Try it
+
+The [code is on GitHub](https://github.com/davideimola/blog-examples/tree/main/crypto-shredding) and runs on your machine with Docker, without a cloud account. A local stand-in for KMS keeps its keys in a file of its own (never in the database), and `-kms gcp` switches to the real Cloud KMS. The demo writes sessions for two tenants, takes a real `pg_dump`, offboards one tenant, expires a month, restores the old backup and shows you what's left, and the Pulumi stack for the GCP side is in `infra/`.
+
+If you've found a way to make an agent's long-term memory forgettable per tenant, I'd really like to hear how you did it.

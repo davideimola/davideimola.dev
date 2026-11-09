@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620">
+  <g fill="none" stroke="#1C2233" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="40">
+    <g data-step="0">
+    <path d="M220 160 V205 M206 190 L220 205 L234 190"/>
+    <rect x="90" y="225" width="260" height="170" rx="6"/>
+    <path d="M125 275 H315 M125 310 H280 M125 345 H300"/>
+    <text x="220" y="460" fill="#1C2233" stroke="none" text-anchor="middle">sep</text>
+    <circle cx="540" cy="110" r="26" stroke="#1C2233"/><circle cx="540" cy="110" r="8" stroke="#1C2233"/><path stroke="#1C2233" d="M566 110 H670 M640 110 V128 M658 110 V132"/>
+    <path d="M600 160 V205 M586 190 L600 205 L614 190"/>
+    <rect x="470" y="225" width="260" height="170" rx="6"/>
+    <path d="M505 275 H695 M505 310 H660 M505 345 H680"/>
+    <text x="600" y="460" fill="#1C2233" stroke="none" text-anchor="middle">oct</text>
+    <circle cx="920" cy="110" r="26" stroke="#1C2233"/><circle cx="920" cy="110" r="8" stroke="#1C2233"/><path stroke="#1C2233" d="M946 110 H1050 M1020 110 V128 M1038 110 V132"/>
+    <path d="M980 160 V205 M966 190 L980 205 L994 190"/>
+    <rect x="850" y="225" width="260" height="170" rx="6"/>
+    <path d="M885 275 H1075 M885 310 H1040 M885 345 H1060"/>
+    <text x="980" y="460" fill="#1C2233" stroke="none" text-anchor="middle">nov</text>
+    <path d="M470 510 V528 H1110 V510"/>
+    <text x="790" y="585" fill="#1C2233" stroke="none" text-anchor="middle" font-size="34">retention: 2 months</text>
+    </g>
+    <g data-step="1"><circle cx="160" cy="110" r="26" stroke="#C91F37"/><circle cx="160" cy="110" r="8" stroke="#C91F37"/><path stroke="#C91F37" d="M186 110 H216 L222 103 M234 112 L240 106 L296 124 M268 115 L265 131 M284 120 L281 136"/></g>
+  </g>
+</svg>
