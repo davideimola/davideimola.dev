@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540">
+  <g fill="none" stroke="#1C2233" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="40">
+    <g data-step="0">
+    <rect x="60" y="120" width="250" height="300" rx="6"/>
+    <rect x="95" y="165" width="196" height="80" rx="4"/><text x="115" y="218" fill="#1C2233" stroke="none" text-anchor="start" font-size="36">acme</text>
+    <rect x="95" y="295" width="196" height="80" rx="4"/><text x="115" y="348" fill="#1C2233" stroke="none" text-anchor="start" font-size="36">globex</text>
+    <text x="185" y="490" fill="#1C2233" stroke="none" text-anchor="middle">Cloud KMS</text>
+    <path d="M330 270 H420 M402 256 L420 270 L402 284"/>
+    <rect x="440" y="120" width="320" height="300" rx="6"/>
+    <rect x="475" y="165" width="250" height="80" rx="4"/><text x="600" y="218" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">events</text>
+    <rect x="475" y="295" width="250" height="80" rx="4"/><text x="600" y="348" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">DEKs</text>
+    <text x="600" y="490" fill="#1C2233" stroke="none" text-anchor="middle">Postgres</text>
+    <path d="M780 270 H870 M852 256 L870 270 L852 284"/>
+    <rect x="930" y="160" width="220" height="260" rx="6"/>
+    <path d="M910 400 V140 H1130"/><path d="M890 380 V120 H1110"/>
+    <text x="1040" y="490" fill="#1C2233" stroke="none" text-anchor="middle">backups</text>
+    <text x="375" y="240" fill="#1C2233" stroke="none" text-anchor="middle" font-size="30">wraps</text><text x="825" y="240" fill="#1C2233" stroke="none" text-anchor="middle" font-size="30">copies</text>
+    </g>
+    <g data-step="1" stroke="#C91F37"><path d="M237 315 L271 355 M271 315 L237 355"/></g>
+  </g>
+</svg>

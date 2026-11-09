@@ -75,6 +75,8 @@ Propose:
 
 **Tags consistency check**: before proposing tags, scan existing posts in `src/content/blog/` and use tags that already exist where they fit. Only invent new tags when truly necessary. Consistent tags power the related posts algorithm.
 
+**Visuals**: name the figures, diagrams and photos you plan to add, and the section each one serves (see "Images inside the post" in Step 5). This is your plan, stated so Davide knows what's coming, not a question.
+
 **Internal linking**: scan existing posts and identify 1-3 that are genuinely relevant to link from within the new post. Mention them in the structure proposal so Davide can confirm they're worth linking.
 
 Be genuinely critical of your own proposal. If a section feels like filler, cut it. If the structure looks like every other blog post on the internet, say so and rethink it.
@@ -131,14 +133,33 @@ Davide's authentic writing style (from his manually written posts) sounds like h
 - Bullet lists that just repeat what was said in the paragraph above
 - Schematic, list-heavy structure in general: signpost triads ("it has to be X, Y, and Z"), definitional bullet lists, feature checklists. Prose is the default; reserve bullets for genuine short enumerations (a few features, a handful of commands), the way his manual posts do
 - The words: "delve", "leverage", "seamlessly", "game-changer", "it's worth noting"
+- Telegraphic chains: a run of short declarative sentences, each stating one fact, with nothing tying it to the one before. This is the tell Davide notices first, and it can hide in a paragraph that breaks no other rule:
+  > That backup was taken while globex was still a customer. Every one of their agent sessions is in it, including the password a tool read from a .env file. Then globex left, and I deleted them. I never touched the backup, and it can't read globex anymore.
+
+  Every sentence is true and none of them leads to the next. Tell it as a story, where each sentence picks up the previous one through cause, time or contrast (because, so, when, which, but, by the time):
+  > I took that backup while globex was still a customer, so every agent session they ever had is in there, including the password one of their tools read from a .env file. A few weeks later globex left and I deleted everything of theirs. I didn't touch the backup, and yet when I restore it, their sessions come back unreadable while acme's are still there in clear.
+- Fragments and one-word sentences used for effect: "Good.", "It isn't.", "Not anymore."
+- Punchline closers: a paragraph that ends on a quotable one-liner restating what it just said ("Deleted is three different dates."). End on the last real point instead
+- "Not X, it's Y" and "X isn't Y, it's Z" reframes, and colon reveals ("The answer: ...", "Here's the thing: ...")
+- Opening a post on a code or terminal block. Davide doesn't like a post that starts with a series of commands: open on prose, on the real moment or question behind the post, and let the code come in when the reasoning needs it
+- Code blocks for things that aren't code: program output, a transcript of a demo, quotes, lists, file trees used as illustration. Describe a result in prose, or draw it as a figure. A `console` block is for commands the reader is meant to run, and it belongs where they would run them (a "try it" section), not in the narrative
+- Announcers that promise instead of saying: "Here's...", "The trick is...", "That's what you're buying", "This is the detail that makes it work"
 
 ### What the style actually looks like:
-- Short paragraphs. 1-3 sentences for key points.
+- Short paragraphs, but each one is a connected thought, not a stack of one-liners. 1-3 sentences for a key point is fine when those sentences lead into each other.
 - Opinions stated directly: "I don't like ORMs in Go" not "Some developers prefer to avoid ORMs"
 - Real specificity: names, tools, events, mistakes. Not "a team I worked with" but "at RedCarbon, when we were onboarding..."
 - Humor that doesn't try too hard: "No DB were harmed in the making of this article, but a couple were truncated 🤫"
 - Connected prose over lists: ideas flow one sentence into the next instead of being chopped into bullets. When you catch yourself writing a triad or a definitional list, dissolve it into a paragraph. In Davide's words: "più umano, con sentence collegate tra loro"
 - If you read a paragraph back and it could have been written by any AI about any topic, rewrite it
+
+### Before you show the draft
+
+Reread the whole post once for the tells above, paragraph by paragraph, before Davide sees it:
+- Read each paragraph aloud in your head: if it sounds like a list of facts read one after the other, join the sentences with the cause, time or contrast that connects them.
+- Look at the last sentence of each paragraph: if it is a slogan that restates the paragraph, cut it or fold it into the reasoning.
+- Search for "Here's", "The trick", "isn't", "not just", one-word sentences and colons followed by a reveal, and rewrite each hit.
+- The post should read as one person telling how they worked something out, in the order they worked it out, not as a set of statements about a topic.
 
 ---
 
@@ -174,11 +195,14 @@ Use only the three brand colours in the SVG (paper, ink, akane), written as hex:
 
 ### Images inside the post
 
-For inline images, use your judgment:
+Pictures are your call, not Davide's: he expects you to decide where a figure, a diagram or a photo helps the reader understand or follow the post, and to put it there without waiting to be asked. A post with no visuals is a choice you should be able to defend, not the default. Go through the draft section by section and ask where a reader would have to hold a picture in their head to follow the prose: an architecture, a flow between systems, who holds what, a timeline, a before and after, a number that needs a scale. Those are the places that get a figure. List the visuals you added when you hand over the draft (what each one shows and why it is there), so Davide reviews them with the text instead of approving them one by one.
+
 - Personal experience or event (team photo, conference, a trip): ask Davide if he has a photo, but only when it genuinely makes sense, not for every image.
 - Code or a tool: tell him to take a screenshot and describe exactly what to capture.
-- A concept that needs a picture: draw it with the same rules as the cover (an SVG in `public/images/blog/<slug>/`), or use a Mermaid diagram if it is a flow.
-- A number, a comparison or a timeline that carries the point (a table that is really one contrast, a lone figure that needs a scale): propose a **drawn figure**, a chart that draws itself when the reader reaches it. Pitch it in one sentence like the cover (what is drawn, and what the red detail is) and wait for the yes. The slides' "Same bug, two clocks" (`presentations/securing-go/src/public/drawings/two-clocks.svg`) is the reference: two timelines on one scale, thirteen months of ticks, then one red dot.
+- An architecture, a flow or a concept (where data goes, which component holds which key, what a backup copies): draw it as a **drawn figure** (below). Use a Mermaid diagram only for a flow too large to draw by hand.
+- A number, a comparison or a timeline that carries the point (a table that is really one contrast, a lone figure that needs a scale): a **drawn figure**, a chart that draws itself when the reader reaches it. The slides' "Same bug, two clocks" (`presentations/securing-go/src/public/drawings/two-clocks.svg`, sample in `src/stories/DrawnFigure.stories.tsx`) is the reference: two timelines on one scale, thirteen months of ticks, then one red dot.
+
+Figures are read on phones as much as on desktops: keep the labels few and short, use a viewBox around 1200 wide with labels at 40 or more, and check the PNG render at 400px wide before calling it done.
 
 **A drawn figure** lives at `public/images/blog/<slug>/figures/<name>.svg`, follows the cover's rules (three brand colours as hex, monoline, exactly one red detail) and puts its labels in `<text>` elements (they render in the mono face and fade in with their part). Wrap each part in `<g data-step="0">`, `<g data-step="1">`... when the point lands in a second beat: on the page the steps draw one after the other. Run `pnpm covers:dark` for its night twin, then place it in the MDX:
 
