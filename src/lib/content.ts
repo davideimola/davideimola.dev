@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import readingTime from "reading-time";
 import { CONTENT_DIR, readContentJson } from "./content-json";
+import { readingTimeLabel } from "./reading-time";
 import { isFeedbackOpen, type TalkFeedback } from "./talk-feedback";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -129,7 +129,6 @@ export function extractToc(content: string): TocItem[] {
 function parsePost(slug: string): BlogPost {
   const raw = fs.readFileSync(path.join(BLOG_DIR, `${slug}.mdx`), "utf-8");
   const { data, content } = matter(raw);
-  const rt = readingTime(content);
   return {
     slug,
     title: data.title,
@@ -137,7 +136,7 @@ function parsePost(slug: string): BlogPost {
     category: data.category ?? "General",
     tags: data.tags ?? [],
     date: data.publishDate,
-    readingTime: rt.text,
+    readingTime: readingTimeLabel(content),
     draft: data.draft ?? false,
     heroImage: data.heroImage,
     heroImageAlt: data.heroImageAlt,
