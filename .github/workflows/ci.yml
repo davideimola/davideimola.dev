@@ -62,4 +62,12 @@ jobs:
         # token only lifts GitHub's unauthenticated rate limit for /skills.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm build
+        # next/font/google downloads the fonts from Google during the build, and
+        # a failed download on the runner surfaces as a Turbopack resolve error
+        # ("next/font/google queries have exactly one entry") that says nothing
+        # about the code. One retry tells a flaky network from a broken build.
+        run: |
+          pnpm build || {
+            echo "::warning title=Build retried::The first build failed; retrying once in case it was the Google Fonts download."
+            pnpm build
+          }
