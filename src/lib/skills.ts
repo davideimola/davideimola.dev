@@ -49,7 +49,7 @@ const collectionSchema = z.object({
   talk: z.string().min(1).optional(),
 });
 
-type CollectionEntry = z.infer<typeof collectionSchema>;
+export type CollectionEntry = z.infer<typeof collectionSchema>;
 
 export interface SkillCollection extends Omit<CollectionEntry, "talk"> {
   url: string;

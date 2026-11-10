@@ -33,6 +33,14 @@ const STATIC_PAGES: SearchItem[] = [
     href: "/now",
   },
   {
+    id: "page-ai-security",
+    type: "page",
+    title: "AI security",
+    description:
+      "Where to start on securing AI agents: the argument, the series, the tools, the talks.",
+    href: "/ai-security",
+  },
+  {
     id: "page-uses",
     type: "page",
     title: "Uses",

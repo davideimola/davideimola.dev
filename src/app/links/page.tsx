@@ -337,6 +337,11 @@ export default function LinksPage() {
               thumb={<SkillLeaf />}
             />
           )}
+          <Row
+            href={`${SITE}/ai-security`}
+            title="AI security, in one place"
+            hint="Where to start: the argument, the series, the tools, the talks"
+          />
         </Group>
       )}
 
