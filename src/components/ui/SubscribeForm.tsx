@@ -1,8 +1,9 @@
 "use client";
 
 import { Turnstile } from "@marsidev/react-turnstile";
-import { type ReactNode, useActionState, useId } from "react";
+import { type ReactNode, useActionState, useEffect, useId } from "react";
 import { subscribe } from "../../app/actions/subscribe";
+import { EVENTS, trackEvent } from "../../lib/analytics";
 import { Card } from "./Card";
 import { useResolvedTheme } from "./ThemeToggle";
 
@@ -38,6 +39,11 @@ export function SubscribeForm({
   const joined = mode !== "compact";
   const large = mode === "full";
   const labelText = label === undefined ? "Your email" : label;
+
+  // Counted on the outcome, not on the click: a refused address is not a subscriber.
+  useEffect(() => {
+    if (state.status === "success") trackEvent(EVENTS.newsletterSubscribe);
+  }, [state]);
 
   // Double opt-in: submitting only queues the confirmation email; the subscriber is
   // not done until they click it. The success copy says so; it never claims "subscribed".

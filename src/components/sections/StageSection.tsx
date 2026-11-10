@@ -1,3 +1,4 @@
+import { EVENTS, eventAttributes } from "../../lib/analytics";
 import { formatDayMonth } from "../../lib/dates";
 import type { StageRow } from "../../lib/home-cards";
 import { city, eventName } from "../../lib/sharing";
@@ -64,7 +65,11 @@ export function StageSection({ quote, stage, spokenAt, talkCount }: StageSection
             Spoken at {spokenAt.join(", ")}
           </p>
         )}
-        <ButtonLink variant="link" href="/sharing#speaker-kit">
+        <ButtonLink
+          variant="link"
+          href="/sharing#speaker-kit"
+          {...eventAttributes(EVENTS.speakingInvite, { from: "home" })}
+        >
           Invite me to speak
         </ButtonLink>
       </div>

@@ -156,8 +156,10 @@ export default function PrivacyPage() {
             to understand which pages get read, in aggregate. Umami is cookieless and privacy-first:
             it sets no cookies, does not follow you across sites, and collects no personally
             identifiable information. It records anonymous, aggregated data such as page views,
-            referrer, and approximate country, browser, and device type. The tracker is served
-            first-party from this domain. See{" "}
+            referrer, and approximate country, browser, and device type. It also counts a few
+            actions on the site, such as a newsletter sign-up, a sent contact message, a CV download
+            or a click on a talk's rating link, as a bare count with no address, name or message
+            attached. The tracker is served first-party from this domain. See{" "}
             <a
               href="https://umami.is/privacy"
               target="_blank"
@@ -196,7 +198,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <p className="font-mono text-[11px] text-fg-subtle">Last updated: October 2026</p>
+        <p className="font-mono text-[11px] text-fg-subtle">Last updated: November 2026</p>
       </div>
     </div>
   );

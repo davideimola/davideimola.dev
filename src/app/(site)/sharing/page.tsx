@@ -4,6 +4,7 @@ import { JsonLd } from "../../../components/ui/JsonLd";
 import { Marker } from "../../../components/ui/Marker";
 import { Photo } from "../../../components/ui/Photo";
 import { Tape } from "../../../components/ui/Tape";
+import { EVENTS, eventAttributes } from "../../../lib/analytics";
 import { getAllProjects, getAllTalks, type Talk } from "../../../lib/content";
 import { formatDayMonth, formatMonthYear } from "../../../lib/dates";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
@@ -129,6 +130,9 @@ function Material({ talk, today }: { talk: Talk; today: Date }) {
           target="_blank"
           rel="noopener noreferrer"
           title={link.label === "Rate this talk" ? feedbackHost(link.href) : undefined}
+          {...(link.label === "Rate this talk"
+            ? eventAttributes(EVENTS.talkRating, { talk: talk.slug, from: "sharing" })
+            : {})}
           className={inlineLink}
         >
           {link.label}
@@ -507,6 +511,7 @@ export default function SharingPage() {
             <a
               href="/images/davide-speaking-profile.webp"
               download
+              {...eventAttributes(EVENTS.speakerKitDownload, { file: "headshot" })}
               className={`self-start font-sans font-semibold text-[16px] ${inlineLink}`}
             >
               Download the headshot
@@ -530,6 +535,9 @@ export default function SharingPage() {
                         key={f.href}
                         href={f.href}
                         download
+                        {...eventAttributes(EVENTS.speakerKitDownload, {
+                          file: `${d.label} ${f.format}`,
+                        })}
                         className="font-mono text-[13px] text-fg-subtle no-underline hover:text-accent transition-colors duration-150"
                       >
                         ↓ {f.format}
@@ -569,6 +577,7 @@ export default function SharingPage() {
             </div>
             <a
               href="/contact"
+              {...eventAttributes(EVENTS.speakingInvite, { from: "speaker-kit" })}
               className="mt-1 bg-fg text-bg px-5 py-3.5 font-sans font-semibold text-[16px] text-center no-underline hover:bg-fg-body transition-colors duration-150"
             >
               Invite me to speak
