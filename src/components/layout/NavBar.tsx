@@ -98,7 +98,8 @@ export function NavBar({ onSearchOpen }: NavBarProps) {
               type="button"
               onClick={onSearchOpen}
               className="flex items-center gap-2 h-9 px-2.5 text-fg-muted border border-border cursor-pointer transition-colors duration-150 hover:border-fg hover:text-fg"
-              aria-label="Open search"
+              aria-label="Open search ⌘K"
+              aria-keyshortcuts="Meta+K Control+K"
             >
               <IconSearch size={15} stroke={1.75} aria-hidden="true" />
               <kbd className="font-mono text-[12px]">⌘K</kbd>

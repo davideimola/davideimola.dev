@@ -37,7 +37,11 @@ export const InCodeBlockHeader: Story = {
           code={'kubectl get pods -n production -o jsonpath="{.items[*].metadata.name}"'}
         />
       </div>
-      <pre className="px-4 py-3 bg-surface font-mono text-[12px] text-fg-muted overflow-x-auto">
+      <pre
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrolling code block must be reachable by keyboard, as in CodeBlock
+        tabIndex={0}
+        className="px-4 py-3 bg-surface font-mono text-[12px] text-fg-muted overflow-x-auto"
+      >
         {'kubectl get pods -n production -o jsonpath="{.items[*].metadata.name}"'}
       </pre>
     </div>
