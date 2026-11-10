@@ -19,7 +19,14 @@ export function HeroSection({ flagship }: HeroSectionProps) {
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-12 lg:gap-[72px] items-stretch">
         <div className="flex flex-col gap-7">
           <h1 className="m-0 font-sans font-bold text-fg text-[44px] sm:text-[64px] lg:text-display leading-[0.98] tracking-[-0.045em]">
-            I build AI agents for <Marker>security</Marker>, and the tools I need along the way.
+            I build AI agents for {/* The marked word is the way into the topic's own page. */}
+            <a
+              href="/ai-security"
+              className="text-fg no-underline hover:text-accent transition-colors duration-150"
+            >
+              <Marker>security</Marker>
+            </a>
+            , and the tools I need along the way.
           </h1>
           {/* The headline says what I build; the lead names it. */}
           <p className="m-0 font-sans text-[19px] sm:text-lead leading-[1.5] text-fg-muted">
