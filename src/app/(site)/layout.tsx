@@ -1,5 +1,5 @@
 import { Footer } from "../../components/layout";
-import { SiteShell } from "../../components/layout/SiteShell";
+import { MAIN_CONTENT_ID, SiteShell } from "../../components/layout/SiteShell";
 import { buildSearchIndex } from "../../lib/search";
 
 // Layout for the regular site: NavBar + ⌘K palette + Footer. Standalone
@@ -13,7 +13,9 @@ export default function SiteLayout({
 
   return (
     <SiteShell items={searchItems}>
-      <main className="flex-1">{children}</main>
+      <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1 focus:outline-none">
+        {children}
+      </main>
       <Footer />
     </SiteShell>
   );

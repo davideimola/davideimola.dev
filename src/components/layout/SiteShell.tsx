@@ -6,6 +6,9 @@ import type { SearchItem } from "../../lib/search";
 import { CommandPalette } from "./CommandPalette";
 import { NavBar } from "./NavBar";
 
+/** The id of the page <main>, the target of the skip link. */
+export const MAIN_CONTENT_ID = "main";
+
 interface SiteShellProps {
   items: SearchItem[];
   children: React.ReactNode;
@@ -45,6 +48,15 @@ export function SiteShell({ items, children }: SiteShellProps) {
 
   return (
     <MotionConfig reducedMotion="user">
+      {/* First focusable element of every page, so a keyboard or screen reader
+          user can jump past the NavBar. Hidden until it takes focus. */}
+      <a
+        href={`#${MAIN_CONTENT_ID}`}
+        data-print-hide
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-fg focus:text-bg focus:px-4 focus:py-2 focus:font-mono focus:text-[14px] focus:no-underline"
+      >
+        Skip to content
+      </a>
       <NavBar onSearchOpen={() => setOpen(true)} />
       <CommandPalette open={open} onClose={() => setOpen(false)} items={items} />
       {children}
