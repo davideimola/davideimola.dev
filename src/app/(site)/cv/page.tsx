@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ButtonLink } from "../../../components/ui/Button";
 import { JsonLd } from "../../../components/ui/JsonLd";
 import { Tape, type TapeTilt } from "../../../components/ui/Tape";
+import { EVENTS, eventAttributes } from "../../../lib/analytics";
 import {
   ENGAGEMENT_TYPES,
   type Engagement,
@@ -360,6 +361,7 @@ export default function CvPage() {
           download={downloadFileName(identity.name)}
           variant="primary"
           className="mt-2"
+          {...eventAttributes(EVENTS.cvDownload)}
         >
           <IconDownload size={14} stroke={1.5} />
           Download PDF

@@ -333,6 +333,10 @@ describe("scheduled posts", () => {
   });
 
   it("reads an unquoted YAML date as the same day", () => {
+    // Past the post's date, so the assertion reads the parsing and never the
+    // real clock: before the 26th the post would be hidden as scheduled.
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-12-01T12:00:00Z"));
     mockFs.readFileSync.mockReturnValue(
       scheduled.replace('publishDate: "2026-11-26"', "publishDate: 2026-11-26")
     );

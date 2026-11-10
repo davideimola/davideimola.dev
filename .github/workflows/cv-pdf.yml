@@ -136,6 +136,9 @@ jobs:
           if grep -q "private data reached the PDF" "$LOG"; then
             title="Private data reached the CV PDF"
             advice="The guard in src/lib/cv-pdf.ts matched, so nothing was written to public/cv.pdf and nothing leaked. The pattern and the text that matched are in this step's log: remove it from src/content/cv.json or from the /cv page."
+          elif grep -q "no longer fits one sheet" "$LOG"; then
+            title="The CV no longer fits one A4 sheet"
+            advice="The print Rendering spilled onto a second page, so nothing was written to public/cv.pdf. Trim what the sheet says (the Record, or what /cv prints) rather than shrinking the print zoom: see this step's log for the page count."
           elif grep -q "Refusing to write public/cv.pdf" "$LOG"; then
             title="The generated CV PDF failed its checks"
             advice="The PDF rendered but was refused: it is missing facts the CV Record holds, has no real text layer, or is too large to be parsed. The reasons are listed in this step's log. Nothing was written to public/cv.pdf."

@@ -51,7 +51,11 @@ function TerminalBlock({ text, title }: { text: string; title?: string }) {
         </span>
         {commands && <CopyButton code={commands} label="commands" />}
       </div>
-      <pre className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0">
+      <pre
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: a long line scrolls sideways, and a keyboard has to be able to reach it to scroll it (axe: scrollable-region-focusable)
+        tabIndex={0}
+        className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-fg"
+      >
         <code>
           {lines.map((line, i) => {
             const key = `${i}-${line}`;
@@ -93,7 +97,11 @@ export function CodeBlock({ children }: CodeBlockProps) {
         <CopyButton code={code} />
       </div>
       {/* Code */}
-      <pre className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0">
+      <pre
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: a long line scrolls sideways, and a keyboard has to be able to reach it to scroll it (axe: scrollable-region-focusable)
+        tabIndex={0}
+        className="m-0 overflow-x-auto px-5 py-4 bg-surface text-[14px] leading-[1.6] border-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-fg"
+      >
         {children}
       </pre>
     </div>

@@ -13,6 +13,7 @@ import { Photo } from "../../components/ui/Photo";
 import { PostCover } from "../../components/ui/PostCover";
 import { SubscribeForm } from "../../components/ui/SubscribeForm";
 import { Tape, type TapeTilt } from "../../components/ui/Tape";
+import { type AnalyticsEvent, EVENTS, type EventData, eventAttributes } from "../../lib/analytics";
 import {
   getAllPosts,
   getAllProjects,
@@ -98,11 +99,23 @@ function Group({ tape, tilt, children }: { tape: string; tilt: TapeTilt; childre
 }
 
 // A plain row: a title and a line under it.
-function Row({ href, title, hint }: { href: string; title: string; hint: string }) {
+function Row({
+  href,
+  title,
+  hint,
+  event,
+}: {
+  href: string;
+  title: string;
+  hint: string;
+  /** The Umami event a click on this row counts as, if any. */
+  event?: { name: AnalyticsEvent; data?: EventData };
+}) {
   return (
     <a
       href={href}
       {...(opensElsewhere(href) ? newTab : {})}
+      {...(event ? eventAttributes(event.name, event.data) : {})}
       className="group flex flex-col gap-0.5 py-3.5 border-b border-border no-underline"
     >
       <span className="font-sans font-semibold text-[17px] leading-[1.3] text-fg group-hover:text-accent transition-colors duration-150">
@@ -260,6 +273,7 @@ export default function LinksPage() {
               <a
                 href={talk.feedback.url}
                 {...newTab}
+                {...eventAttributes(EVENTS.talkRating, { talk: talk.slug, from: "links" })}
                 className="mt-1 flex items-center justify-center h-[52px] bg-fg text-bg font-sans font-semibold text-[17px] no-underline hover:bg-fg-body"
               >
                 Rate this talk
@@ -352,6 +366,7 @@ export default function LinksPage() {
           href={`${SITE}/sharing#speaker-kit`}
           title="Invite me to speak"
           hint="The speaker kit: bios, topics, headshot"
+          event={{ name: EVENTS.speakingInvite, data: { from: "links" } }}
         />
       </Group>
 

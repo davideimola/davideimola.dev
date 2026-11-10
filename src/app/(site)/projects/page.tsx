@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ButtonLink } from "../../../components/ui/Button";
 import { Marker } from "../../../components/ui/Marker";
 import { Tape, type TapeTilt } from "../../../components/ui/Tape";
+import { EVENTS, eventAttributes } from "../../../lib/analytics";
 import type { Project } from "../../../lib/content";
 import { getAllProjects, getOssContributions, getPostBySlug } from "../../../lib/content";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
@@ -126,6 +127,10 @@ export default function ProjectsPage() {
                   variant="primary"
                   size="lg"
                   href={flagship.github}
+                  {...eventAttributes(EVENTS.flagshipRepo, {
+                    project: flagship.slug,
+                    from: "projects",
+                  })}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

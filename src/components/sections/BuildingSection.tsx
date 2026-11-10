@@ -1,3 +1,4 @@
+import { EVENTS, eventAttributes } from "../../lib/analytics";
 import type { Project } from "../../lib/content";
 import type { DrawableCover } from "../../lib/cover-files";
 import { ButtonLink } from "../ui/Button";
@@ -66,7 +67,11 @@ export function BuildingSection({ project, cover, post, others }: BuildingSectio
           )}
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
             {repo && (
-              <ButtonLink variant="primary" href={repo}>
+              <ButtonLink
+                variant="primary"
+                href={repo}
+                {...eventAttributes(EVENTS.flagshipRepo, { project: project.slug, from: "home" })}
+              >
                 {project.github ? "View on GitHub" : "Visit the project"}
               </ButtonLink>
             )}

@@ -1,0 +1,65 @@
+name: CI
+
+# The checks every change has to pass before it reaches main: Biome, the unit
+# tests, the Storybook stories (which run axe on every story and fail on an
+# accessibility violation) and a production build, which is where a TypeScript
+# error or an unknown slug in the content breaks.
+#
+# Vercel builds every push too, but a red Vercel deploy says nothing about lint,
+# tests or accessibility, and Dependabot's auto-merge waits only for the checks
+# it is told to wait for: this job is the one to mark as required on main.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A newer push to the same branch makes the older run moot.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        # The version comes from packageManager in package.json.
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          # Must match [tools] node in .mise.toml.
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Install Chromium for the Storybook tests
+        # The browser build pinned by the playwright devDependency.
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Test (unit and Storybook, axe included)
+        run: pnpm test
+
+      - name: Build
+        # Without the tsundoku and newsletter variables the build renders the
+        # committed snapshots, which is exactly what it is designed to do. The
+        # token only lifts GitHub's unauthenticated rate limit for /skills.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm build

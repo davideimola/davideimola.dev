@@ -35,6 +35,7 @@ import {
   findMissingPhrases,
   findPrivateData,
   MAX_PDF_BYTES,
+  MAX_PDF_PAGES,
 } from "../src/lib/cv-pdf";
 import { SITE_URL } from "../src/lib/llms";
 
@@ -483,6 +484,15 @@ async function checkPdf(bytes: Uint8Array): Promise<{ pages: number; rejections:
       reason: "the PDF is too large to be parsed",
       details: [
         `${megabytes(bytes.byteLength)}, over the ${megabytes(MAX_PDF_BYTES)} ceiling above which Greenhouse stops parsing resumes.`,
+      ],
+    });
+  }
+
+  if (totalPages > MAX_PDF_PAGES) {
+    rejections.push({
+      reason: "the CV no longer fits one sheet",
+      details: [
+        `${totalPages} pages, over the ${MAX_PDF_PAGES} the print Rendering is laid out for. Trim what the sheet says rather than lowering the print zoom: under about 6pt the text stops being readable.`,
       ],
     });
   }

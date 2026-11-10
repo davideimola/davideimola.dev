@@ -4,6 +4,7 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { useActionState, useEffect, useRef } from "react";
 import { Card } from "../../../components/ui/Card";
 import { useResolvedTheme } from "../../../components/ui/ThemeToggle";
+import { EVENTS, trackEvent } from "../../../lib/analytics";
 import { sendContactEmail } from "../../actions/contact";
 
 const initialState = { status: "idle" as const };
@@ -18,6 +19,11 @@ export function ContactForm() {
       loadTimeRef.current.value = Date.now().toString();
     }
   }, []);
+
+  // Counted on the outcome, never with the message or the sender.
+  useEffect(() => {
+    if (state.status === "success") trackEvent(EVENTS.contactSent);
+  }, [state]);
 
   if (state.status === "success") {
     return (
