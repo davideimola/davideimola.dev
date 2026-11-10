@@ -23,6 +23,13 @@ export const CV_PDF_PUBLIC_FILE = CV_PDF_URL_PATH.slice(1);
 export const MAX_PDF_BYTES = 2.5 * 1024 * 1024;
 
 /**
+ * /cv is one A4 sheet, and it sits at the boundary: the print zoom of 0.66
+ * fits, 0.68 spills onto a second sheet. A second page is a regression to
+ * catch, never a file to publish: trim what the sheet says instead.
+ */
+export const MAX_PDF_PAGES = 1;
+
+/**
  * The saved copy is named after the person, so `cv.pdf` never lands anonymously
  * in a stranger's Downloads. Deliberately not `content.ts`'s private `slugify`,
  * which reproduces rehype-slug's heading-anchor rules: this has to fold
