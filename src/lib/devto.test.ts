@@ -93,6 +93,7 @@ describe("toDevtoArticle", () => {
       published: true,
       tags: ["ai", "security", "go", "postgresql"],
       canonical_url: "https://davideimola.dev/blog/my-post",
+      organization_id: 3314,
       main_image: "https://davideimola.dev/images/blog/my-post/cover.png",
       series: "The Four Boundaries",
     });

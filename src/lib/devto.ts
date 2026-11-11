@@ -13,6 +13,12 @@ export const SYNDICATION_START = "2026-11-12";
 /** Days between a post going live and its copy, so search engines meet the original first. */
 export const SYNDICATION_DELAY_DAYS = 3;
 
+/**
+ * Playful Programming, the dev.to organisation every copy is published under:
+ * its followers are the reach, and the copies the RSS import left were already there.
+ */
+export const DEVTO_ORGANIZATION_ID = 3314;
+
 const MAX_TAGS = 4;
 // dev.to refuses the whole article over a tag longer than this.
 const MAX_TAG_LENGTH = 30;
@@ -25,6 +31,7 @@ export interface DevtoArticle {
   published: boolean;
   tags: string[];
   canonical_url: string;
+  organization_id: number;
   main_image?: string;
   series?: string;
 }
@@ -81,6 +88,7 @@ export function toDevtoArticle(
     published: true,
     tags: devtoTags(post),
     canonical_url: `${baseUrl}/blog/${post.slug}`,
+    organization_id: DEVTO_ORGANIZATION_ID,
     ...(post.heroImage ? { main_image: `${baseUrl}${rasterCover(post.heroImage)}` } : {}),
     ...(series ? { series } : {}),
   };
