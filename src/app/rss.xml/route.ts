@@ -1,6 +1,9 @@
 import { getAllPosts } from "../../lib/content";
 import { figuresToMarkdown } from "../../lib/figures";
 
+// Hourly, so a scheduled post appears on its publishDate without a deploy.
+export const revalidate = 3600;
+
 const BASE_URL = "https://davideimola.dev";
 const AUTHOR = "Davide Imola";
 

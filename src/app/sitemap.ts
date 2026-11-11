@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "../lib/content";
 import { getAllIssues } from "../lib/newsletter";
 
+// Hourly, so a scheduled post appears on its publishDate without a deploy.
+export const revalidate = 3600;
+
 const BASE_URL = "https://davideimola.dev";
 
 const STATIC_ROUTES = [
