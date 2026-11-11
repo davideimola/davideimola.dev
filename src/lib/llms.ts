@@ -1,6 +1,6 @@
 import type { BlogPost, Project, Talk } from "./content";
 import { rasterCover } from "./covers";
-import { figuresToMarkdown } from "./figures";
+import { figuresToMarkdown, rasterFigures } from "./figures";
 import type { PostInSeries } from "./series";
 
 // Plain-Markdown views of the site for LLM consumers, following the
@@ -27,6 +27,22 @@ const PAGES: { title: string; path: string; description: string }[] = [
 /** Rewrite root-relative Markdown links/images to absolute URLs. */
 export function absolutizeUrls(markdown: string, baseUrl = SITE_URL): string {
   return markdown.replaceAll("](/", `](${baseUrl}/`);
+}
+
+// Drop MDX comments (the IMAGE placeholders a draft leaves behind), which plain
+// Markdown would print as text.
+export function stripMdxComments(markdown: string): string {
+  return markdown.replace(/\{\/\*[\s\S]*?\*\/\}\n?/g, "");
+}
+
+/**
+ * A post's MDX body as plain Markdown with absolute URLs, the starting point of
+ * every surface that hands a post to something other than the page. `raster`
+ * points figures at their PNG, for readers that will not show an SVG.
+ */
+export function postBodyMarkdown(content: string, baseUrl = SITE_URL, raster = false): string {
+  const markdown = figuresToMarkdown(stripMdxComments(content).trim());
+  return absolutizeUrls(raster ? rasterFigures(markdown) : markdown, baseUrl);
 }
 
 /** Render a blog post as a standalone Markdown document. */
@@ -56,7 +72,7 @@ export function postToMarkdown(
       `![${post.heroImageAlt ?? post.title}](${baseUrl}${rasterCover(post.heroImage)})`
     );
   }
-  lines.push("", "---", "", absolutizeUrls(figuresToMarkdown(post.content.trim()), baseUrl), "");
+  lines.push("", "---", "", postBodyMarkdown(post.content, baseUrl), "");
   return lines.join("\n");
 }
 

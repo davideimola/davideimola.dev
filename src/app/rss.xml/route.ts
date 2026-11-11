@@ -1,5 +1,5 @@
 import { getAllPosts } from "../../lib/content";
-import { figuresToMarkdown } from "../../lib/figures";
+import { postToFeedHtml } from "../../lib/feed-html";
 
 // Hourly, so a scheduled post appears on its publishDate without a deploy.
 export const revalidate = 3600;
@@ -14,6 +14,11 @@ function escapeXml(str: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
+}
+
+// A literal "]]>" in a post would close the CDATA section early: split it across two.
+function cdata(str: string): string {
+  return str.replaceAll("]]>", "]]]]><![CDATA[>");
 }
 
 export async function GET() {
@@ -33,7 +38,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.excerpt)}</description>
-      <content:encoded><![CDATA[${figuresToMarkdown(post.content)}]]></content:encoded>
+      <content:encoded><![CDATA[${cdata(postToFeedHtml(post.content, BASE_URL))}]]></content:encoded>
       <pubDate>${pubDate}</pubDate>
       <author>noreply@davideimola.dev (${AUTHOR})</author>
       ${tags}

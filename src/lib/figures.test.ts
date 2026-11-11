@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { figuresToMarkdown, isFigurePath } from "./figures";
+import { figuresToMarkdown, isFigurePath, rasterFigures } from "./figures";
 
 describe("isFigurePath", () => {
   it("accepts a figure kept with its post", () => {
@@ -29,5 +29,18 @@ describe("figuresToMarkdown", () => {
 
   it("leaves the rest of the post alone", () => {
     expect(figuresToMarkdown("## Title\n\n![x](/a.png)")).toBe("## Title\n\n![x](/a.png)");
+  });
+});
+
+describe("rasterFigures", () => {
+  it("points a figure's image at its PNG render", () => {
+    expect(rasterFigures("![a](/images/blog/p/figures/a.svg)")).toBe(
+      "![a](/images/blog/p/figures/a.png)"
+    );
+  });
+
+  it("leaves covers and other SVGs alone", () => {
+    const md = "![a](/images/blog/p/cover.svg) ![b](https://x.dev/figures/b.svg)";
+    expect(rasterFigures(md)).toBe(md);
   });
 });
