@@ -2,6 +2,9 @@ import { getAllPosts, getPostBySlug } from "../../../lib/content";
 import { postToMarkdown, SITE_URL } from "../../../lib/llms";
 import { getPostSeries } from "../../../lib/series";
 
+// Hourly, so a scheduled post appears on its publishDate without a deploy.
+export const revalidate = 3600;
+
 // Serves the raw-Markdown version of a post. Reached as /blog/<slug>.md via
 // the rewrite in next.config.ts; noindex keeps it out of search results as a
 // duplicate of the canonical HTML page.

@@ -157,8 +157,9 @@ export function romeToday(now: Date = new Date()): string {
 /**
  * Whether a post is on the site. Development shows every post; production
  * hides drafts and every post whose publishDate is still ahead, so a post
- * merged early goes live on its date. Pages are built ahead of time, so the
- * scheduled-posts workflow redeploys the site on the morning a post is due.
+ * merged early goes live on its date. Every page and feed that lists posts
+ * revalidates hourly, so the post appears within the hour after midnight in
+ * Rome with no deploy.
  */
 export function isPublished(post: BlogPost, now: Date = new Date()): boolean {
   if (process.env.NODE_ENV === "development") return true;
