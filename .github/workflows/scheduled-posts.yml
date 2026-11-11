@@ -3,9 +3,11 @@ name: Scheduled posts
 # A post merged before its publishDate stays hidden in production
 # (isPublished in src/lib/content.ts), but the pages are built ahead of time:
 # nothing shows it on its date until the site is built again. This job runs
-# every morning and, only when a post is due today in Rome, asks Vercel for a
-# fresh production deploy through a deploy hook. Days without a post cost a
-# checkout and a grep, never a deploy.
+# just after midnight in Rome and, only when a post is due today and /blog
+# does not list it yet, asks Vercel for a fresh production deploy through a
+# deploy hook. GitHub can start a scheduled run hours late, so a second run in
+# the morning is the backup, and it finds the post already live when the first
+# one worked. Days without a post cost a checkout and a grep, never a deploy.
 #
 # Setup: create a Deploy Hook for the main branch in Vercel (Project Settings,
 # Git, Deploy Hooks) and save its URL as the VERCEL_DEPLOY_HOOK repository
@@ -13,7 +15,9 @@ name: Scheduled posts
 
 on:
   schedule:
-    # 05:00 UTC is 06:00 or 07:00 in Rome, and always the same calendar day.
+    # 23:15 UTC is 00:15 or 01:15 in Rome, already the day the post is due.
+    - cron: "15 23 * * *"
+    # The backup: 06:00 or 07:00 in Rome, the same calendar day.
     - cron: "0 5 * * *"
   workflow_dispatch:
 
@@ -40,7 +44,19 @@ jobs:
             fi
           done
           echo "Today in Rome: $today. Due:${due:- none}"
-          echo "due=${due# }" >> "$GITHUB_OUTPUT"
+
+          # /blog is static and changes only with a deploy (a post page can
+          # render on demand before one), so it says whether a deploy already
+          # took the post live today.
+          missing=""
+          if [ -n "$due" ]; then
+            index=$(curl --fail --silent --show-error --location https://davideimola.dev/blog || true)
+            for slug in $due; do
+              printf '%s' "$index" | grep -q "blog/$slug" || missing="$missing $slug"
+            done
+            echo "Not on /blog yet:${missing:- none}"
+          fi
+          echo "due=${missing# }" >> "$GITHUB_OUTPUT"
 
       - name: Deploy
         if: steps.due.outputs.due != ''
