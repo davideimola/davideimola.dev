@@ -13,7 +13,7 @@ export function isFigurePath(src: string): boolean {
 const attr = (attrs: string, name: string) => attrs.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1];
 
 // The surfaces that hand a post to a machine (/blog/<slug>.md, llms-full.txt,
-// the RSS feed) carry the raw MDX, where a component tag means nothing. There
+// the RSS feed, the dev.to copy) start from the raw MDX, where a component tag means nothing. There
 // a figure becomes a plain Markdown image with its alt, and its caption on the
 // line below.
 export function figuresToMarkdown(markdown: string): string {
@@ -23,4 +23,10 @@ export function figuresToMarkdown(markdown: string): string {
     const caption = attr(attrs, "caption");
     return caption ? `![${alt}](${src})\n\n*${caption}*` : `![${alt}](${src})`;
   });
+}
+
+// Where an SVG will not do (dev.to, feed readers), a figure's image points at
+// its PNG render, written next to it by `pnpm figures:png`.
+export function rasterFigures(markdown: string): string {
+  return markdown.replace(/(\/images\/blog\/[a-z0-9-]+\/figures\/[a-z0-9-]+)\.svg\)/g, "$1.png)");
 }

@@ -56,5 +56,12 @@ describe.each(["blog", "pages"])("%s cover files", (dir) => {
       const twin = readFileSync(twinPath, "utf8");
       for (const c of colours(twin)) expect(dark).toContain(c);
     });
+
+    if (file.includes("/figures/")) {
+      it(`${file}: has its PNG render, for dev.to and feed readers`, () => {
+        const png = join(blog, file.replace(/\.svg$/, ".png"));
+        expect(existsSync(png), "run pnpm figures:png").toBe(true);
+      });
+    }
   }
 });

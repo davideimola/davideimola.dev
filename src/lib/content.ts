@@ -20,6 +20,10 @@ export interface BlogPost {
   heroImageAlt?: string;
   /** Editorial topic for the blog and the home WRITING block; see src/lib/topics.ts. */
   topic?: string;
+  /** `false` keeps the post off dev.to (ADR-0007). */
+  syndicate?: boolean;
+  /** The four dev.to tags, when the post's own tags would not pick them well. */
+  devtoTags?: string[];
   content: string;
 }
 
@@ -145,6 +149,8 @@ function parsePost(slug: string): BlogPost {
     heroImage: data.heroImage,
     heroImageAlt: data.heroImageAlt,
     topic: data.topic,
+    syndicate: data.syndicate ?? true,
+    devtoTags: data.devtoTags,
     content,
   };
 }

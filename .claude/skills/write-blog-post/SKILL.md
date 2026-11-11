@@ -109,6 +109,7 @@ heroImageAlt: ""
 - `publishDate`: today's date
 - `heroImage`: leave empty for now: you draw the cover in Step 5
 - `featured`: always `false` by default
+- `devtoTags`: optional. The post reaches dev.to on its own three days after it goes live (ADR-0007), tagged with its first four tags made lowercase and alphanumeric. When those would be poor dev.to tags (a multi-word tag, a tag nobody follows there), set four explicitly: `devtoTags: ["go", "security", "ai", "postgres"]`. `syndicate: false` keeps a post off dev.to.
 - `draft: true`: always set this while working — it prevents the post from going live before the PR is merged and reviewed. Remove it in the pre-PR checklist (Step 6).
 
 **Heading hierarchy:** Never use `#` (h1). Always start from `##`. The page template already renders the title as h1.
@@ -204,7 +205,7 @@ Pictures are your call, not Davide's: he expects you to decide where a figure, a
 
 Figures are read on phones as much as on desktops: keep the labels few and short, use a viewBox around 1200 wide with labels at 40 or more, and check the PNG render at 400px wide before calling it done.
 
-**A drawn figure** lives at `public/images/blog/<slug>/figures/<name>.svg`, follows the cover's rules (three brand colours as hex, monoline, exactly one red detail) and puts its labels in `<text>` elements (they render in the mono face and fade in with their part). Wrap each part in `<g data-step="0">`, `<g data-step="1">`... when the point lands in a second beat: on the page the steps draw one after the other. Run `pnpm covers:dark` for its night twin, then place it in the MDX:
+**A drawn figure** lives at `public/images/blog/<slug>/figures/<name>.svg`, follows the cover's rules (three brand colours as hex, monoline, exactly one red detail) and puts its labels in `<text>` elements (they render in the mono face and fade in with their part). Wrap each part in `<g data-step="0">`, `<g data-step="1">`... when the point lands in a second beat: on the page the steps draw one after the other. Run `pnpm covers:dark` for its night twin and `pnpm figures:png` for the PNG the dev.to copy and the feed show, then place it in the MDX:
 
 ```mdx
 <DrawnFigure src="/images/blog/post-slug/figures/two-clocks.svg" alt="what the chart shows, in words" caption="Same bug, two clocks." />

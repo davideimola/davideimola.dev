@@ -35,3 +35,9 @@ _Avoid_: timeline, career path, journey
 **Phase**:
 One step of the Trajectory: where he was, what it taught him, where it led. It references the engagements it covers instead of restating them, so its period is derived and only its prose is its own. Two Phases can cover the same engagement when a promotion changed the story.
 _Avoid_: chapter, stage, milestone, era
+
+## Blog
+
+**Syndicated copy**:
+A post republished on another platform (dev.to) to reach its readers. It says exactly what the post says, adapted only to what the platform can display, names the post as its original, and holds no words of its own: a fix to the post is a fix to every Syndicated copy.
+_Avoid_: cross-post, mirror, dev.to version, repost

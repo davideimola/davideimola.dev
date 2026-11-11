@@ -1,0 +1,49 @@
+name: dev.to sync
+
+# Brings posts to dev.to as Syndicated copies (ADR-0007): every day it creates the
+# copy of each post that went live three days ago and rewrites any published copy
+# whose post has changed since. It keeps no state: the copies are matched to their
+# posts by canonical URL, so a rerun never duplicates one. The archive before
+# SYNDICATION_START goes over by hand with `pnpm devto:push <slug>`.
+
+on:
+  schedule:
+    # 06:00 UTC, the morning in Rome, after the midnight that put the post live.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devto-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync to dev.to
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        # The version comes from packageManager in package.json.
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          # Must match [tools] node in .mise.toml.
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync
+        run: pnpm devto:sync
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
