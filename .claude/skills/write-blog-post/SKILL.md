@@ -262,6 +262,8 @@ Then hand the artifact back to Trilium: record the PR URL as `#artifact` on the 
 
 You own one channel: the blog. Stop at the blog. Whether this post earns a LinkedIn amplifier is Davide's editorial call, made on the Contenuti board: it adds `linkedin` to the same topic note, and `/social-post` produces its sneak-peek amplifier from the finished post. You neither add that channel nor propose it here.
 
+When you hand the PR back, close with one informational line naming what exists downstream, without recommending either: once the post is live, `/social-post` writes the LinkedIn amplifier if the note carries `linkedin`, and `/tweets` picks up new blog posts on its own for X and Bluesky.
+
 ---
 
 ## Blog categories reference
