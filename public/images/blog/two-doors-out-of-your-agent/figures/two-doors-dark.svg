@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540">
+  <g fill="none" stroke="#ECE9E2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="36">
+    <g data-step="0">
+    <rect x="60" y="110" width="270" height="340" rx="6"/>
+    <rect x="95" y="240" width="200" height="80" rx="4"/><text x="195" y="293" fill="#ECE9E2" stroke="none" text-anchor="middle">session</text>
+    <text x="195" y="505" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="40">agent</text>
+    <path d="M330 170 H430 M412 156 L430 170 L412 184"/>
+    <rect x="450" y="120" width="250" height="100" rx="6"/><text x="575" y="183" fill="#ECE9E2" stroke="none" text-anchor="middle">AI gateway</text>
+    <path d="M700 170 H800 M782 156 L800 170 L782 184"/>
+    <rect x="820" y="120" width="320" height="100" rx="6"/><text x="980" y="183" fill="#ECE9E2" stroke="none" text-anchor="middle">model</text>
+    </g>
+    <g data-step="1">
+    <path d="M330 320 H800 M782 306 L800 320 L782 334"/>
+    <rect x="820" y="280" width="320" height="80" rx="6"/><text x="980" y="333" fill="#ECE9E2" stroke="none" text-anchor="middle">tickets</text>
+    <rect x="820" y="390" width="320" height="80" rx="6"/><text x="980" y="443" fill="#ECE9E2" stroke="none" text-anchor="middle">collector</text>
+    </g>
+    <g data-step="2" stroke="#E0475C"><path d="M330 430 H800 M782 416 L800 430 L782 444"/></g>
+  </g>
+</svg>

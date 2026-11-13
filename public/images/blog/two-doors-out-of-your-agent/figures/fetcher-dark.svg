@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540">
+  <g fill="none" stroke="#ECE9E2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="36">
+    <g data-step="0">
+    <rect x="60" y="110" width="270" height="340" rx="6"/>
+    <rect x="95" y="300" width="200" height="80" rx="4"/><text x="195" y="353" fill="#ECE9E2" stroke="none" text-anchor="middle">session</text>
+    <text x="195" y="505" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="40">agent</text>
+    <path d="M330 180 H450 M432 166 L450 180 L432 194"/>
+    <rect x="470" y="110" width="250" height="340" rx="6"/>
+    <text x="595" y="505" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="40">fetcher</text>
+    <path d="M720 180 H840 M822 166 L840 180 L822 194"/>
+    <rect x="860" y="140" width="290" height="80" rx="6"/><text x="1005" y="193" fill="#ECE9E2" stroke="none" text-anchor="middle">advisory</text>
+    <rect x="860" y="340" width="290" height="80" rx="6"/><text x="1005" y="393" fill="#ECE9E2" stroke="none" text-anchor="middle">collector</text>
+    <text x="1005" y="505" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="40">internet</text>
+    <text x="595" y="300" fill="#ECE9E2" stroke="none" text-anchor="middle" font-size="30">GET ?d=</text>
+    </g>
+    <g data-step="1" stroke="#E0475C"><path d="M295 340 H520 Q595 340 640 360 Q680 380 760 380 H840 M822 366 L840 380 L822 394"/></g>
+  </g>
+</svg>
