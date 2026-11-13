@@ -12,7 +12,8 @@
       {
         "title": "Assume the Injection Succeeds: Put the Control on the Egress",
         "short": "Put the control on the egress",
-        "date": "2026-12-17"
+        "date": "2026-12-03",
+        "post": "two-doors-out-of-your-agent"
       },
       {
         "title": "One Agent, One Identity: Least Privilege for AI Agents on GKE",
