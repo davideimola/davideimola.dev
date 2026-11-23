@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
   // (double-mount resets initial state before IntersectionObserver re-fires).
   // Has no effect on production builds.
   reactStrictMode: false,
+  experimental: {
+    // Nudge coding agents working on this repo to apply Next.js security
+    // releases when the installed version is affected by an advisory.
+    agentUpgrade: "security",
+  },
   async headers() {
     return [
       {
