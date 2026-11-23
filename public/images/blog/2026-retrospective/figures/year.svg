@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440">
+  <g fill="none" stroke="#1C2233" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" font-size="40">
+    <g data-step="0">
+    <path d="M270 150 H1150" stroke-width="4"/>
+    <text x="60" y="163" fill="#1C2233" stroke="none">posts</text>
+    <path d="M270 280 H1150" stroke-width="4"/>
+    <text x="60" y="293" fill="#1C2233" stroke="none">talks</text>
+    <path d="M270 350 H1150"/>
+    <text x="307" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">J</text>
+    <text x="380" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">F</text>
+    <text x="453" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">M</text>
+    <text x="527" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">A</text>
+    <text x="600" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">M</text>
+    <text x="673" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">J</text>
+    <text x="747" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">J</text>
+    <text x="820" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">A</text>
+    <text x="893" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">S</text>
+    <text x="967" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">O</text>
+    <text x="1040" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">N</text>
+    <text x="1113" y="410" fill="#1C2233" stroke="none" text-anchor="middle" font-size="36">D</text>
+    <path d="M270 340 V360"/>
+    <path d="M343 340 V360"/>
+    <path d="M417 340 V360"/>
+    <path d="M490 340 V360"/>
+    <path d="M563 340 V360"/>
+    <path d="M637 340 V360"/>
+    <path d="M710 340 V360"/>
+    <path d="M783 340 V360"/>
+    <path d="M857 340 V360"/>
+    <path d="M930 340 V360"/>
+    <path d="M1003 340 V360"/>
+    <path d="M1077 340 V360"/>
+    <path d="M1150 340 V360"/>
+    </g>
+    <g data-step="1">
+    <circle cx="475" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="526" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="723" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="776" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="960" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="1029" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="1080" cy="150" r="16" fill="#1C2233" stroke="none"/>
+    </g>
+    <g data-step="2">
+    <circle cx="545" cy="280" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="1003" cy="280" r="16" fill="#1C2233" stroke="none"/>
+    <circle cx="1046" cy="280" r="16" fill="#1C2233" stroke="none"/>
+    </g>
+    <g data-step="3"><circle cx="916" cy="280" r="16" fill="#C91F37" stroke="none"/></g>
+  </g>
+</svg>
