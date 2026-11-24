@@ -56,7 +56,8 @@ export const metadata: Metadata = {
 // Absolute: on links.davideimola.dev a relative "/" would be this page.
 const SITE = "https://davideimola.dev";
 
-// The association COMMUNITY presents, read from projects.json.
+// The association COMMUNITY presents, read from projects.json. It closed at the
+// end of 2026, so its row points at the history on /sharing.
 const ASSOCIATION = "schrodinger-hat";
 
 // The skills pack NOW presents beside the flagship, read from skills.json.
@@ -208,7 +209,7 @@ export default function LinksPage() {
   const securitySkills = getSkillCollectionEntries().find((c) => c.repo === SECURITY_SKILLS);
   // Gone on its own past `until`, or once every role is filled.
   const hiring = openHiring(readContentJson<Hiring>("hiring.json"));
-  // "Open Source Day, meetups": what the association organises, from the archive.
+  // "Open Source Day, meetups": what the association organised, from the archive.
   const organises = organisedByKind(hostedBy(talks, ASSOCIATION))
     .map((kind, i) => {
       const name = kind.kind === "Conference" ? eventName(kind.latest.event) : `${kind.kind}s`;
@@ -375,11 +376,11 @@ export default function LinksPage() {
         />
       </Group>
 
-      {association?.url && (
+      {association && (
         <Group tape="Community" tilt={2}>
           <ThumbRow
-            href={association.url}
-            kicker="The association I run"
+            href={`${SITE}/sharing#organising`}
+            kicker={`The association I co-founded · ${association.period}`}
             title={association.title}
             meta={organises || undefined}
             thumb={

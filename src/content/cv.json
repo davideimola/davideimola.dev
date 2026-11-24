@@ -7,7 +7,7 @@
     "site": "davideimola.dev",
     "github": "davideimola",
     "linkedin": "davideimola",
-    "summary": "Tech Lead at RedCarbon: technical direction across the platform, and the AI agents that run on it. Ten years of DevOps and platform engineering behind that (Go, Kubernetes, GitOps, DDD). I work where AI does real security work, and where the code AI writes has to be secured. Co-founder of Schrodinger Hat, co-organizer of Open Source Day."
+    "summary": "Tech Lead at RedCarbon: technical direction across the platform, and the AI agents that run on it. Ten years of DevOps and platform engineering behind that (Go, Kubernetes, GitOps, DDD). I work where AI does real security work, and where the code AI writes has to be secured. Co-founded Schrodinger Hat and organised Open Source Day, 2022 to 2026."
   },
   "about": {
     "lead": "I'm a Tech Lead at RedCarbon, where I own the technical direction across the platform and build the AI agents that run on it. Before that, ten years of DevOps and platform engineering. What follows is how one turned into the other.",
@@ -150,14 +150,12 @@
       "type": "volunteering",
       "org": "Schrodinger Hat",
       "location": "Remote",
-      "period": "Feb 2022 – Present",
-      "current": true,
+      "period": "Feb 2022 – Dec 2026",
       "roles": [
         {
           "role": "Co-founder",
-          "period": "Feb 2022 – Present",
-          "current": true,
-          "summary": "International open source community, 20k+ people reached across Europe, 100+ speakers hosted."
+          "period": "Feb 2022 – Dec 2026",
+          "summary": "International open source community, 20k+ people reached across Europe, 100+ speakers hosted. Closed at the end of 2026."
         }
       ]
     }

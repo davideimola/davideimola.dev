@@ -125,7 +125,8 @@ export function buildSearchIndex(): SearchItem[] {
     type: "project",
     title: p.title,
     description: p.description,
-    href: p.url ?? p.github ?? "/projects",
+    // /projects lists only what Davide builds; the community lives on /sharing.
+    href: p.url ?? p.github ?? (p.group === "community" ? "/sharing#organising" : "/projects"),
     meta: p.status,
   }));
 

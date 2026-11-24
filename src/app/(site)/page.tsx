@@ -18,6 +18,7 @@ import { describeKind, hostedBy, organisedByKind } from "../../lib/sharing";
 // The association COMMUNITY presents, read from projects.json; its events are
 // the organised talks whose `host` is this slug.
 const ASSOCIATION = "schrodinger-hat";
+const ASSOCIATION_HISTORY = "/sharing#organising";
 
 // How many talk cards ON STAGE shows, always that many.
 const STAGE_CARDS = 3;
@@ -35,12 +36,12 @@ const WEBSITE_SCHEMA = {
   name: "Davide Imola",
   url: "https://davideimola.dev",
   description:
-    "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go. Co-founder of Schrödinger Hat.",
+    "Tech Lead at RedCarbon, building AI agents for cybersecurity. Conference speaker on AI, security, and Go.",
 };
 
 // The home tells one story in order: who I am (HERO), what I build (BUILDING),
 // what I write (WRITING), where I say it out loud (ON STAGE, titled with the
-// Record's creed), the community I run (COMMUNITY), and one way to keep in
+// Record's creed), the community I ran (COMMUNITY), and one way to keep in
 // touch (NEWSLETTER).
 export default function HomePage() {
   const posts = getAllPosts();
@@ -59,14 +60,11 @@ export default function HomePage() {
   const drawing = buildingPost?.heroImage ? loadDrawableCover(buildingPost.heroImage) : null;
   const buildingHref = building?.github ?? building?.url;
 
+  // Closed at the end of 2026: what is left of it is the history on /sharing,
+  // so the block links there rather than to a site that may not outlive it.
   const association = projects.find((p) => p.slug === ASSOCIATION);
-  if (!association?.url) throw new Error(`Home: the association "${ASSOCIATION}" needs a url.`);
-  // The conference links to its own site, the project that is part of the association.
-  const flagshipEvent = projects.find((p) => p.partOf === ASSOCIATION);
-  const events = organisedByKind(hostedBy(talks, ASSOCIATION)).map((kind) => ({
-    ...describeKind(kind),
-    ...(kind.kind === "Conference" && flagshipEvent?.url ? { href: flagshipEvent.url } : {}),
-  }));
+  if (!association) throw new Error(`Home: the association "${ASSOCIATION}" is not a project.`);
+  const events = organisedByKind(hostedBy(talks, ASSOCIATION)).map(describeKind);
 
   return (
     <>
@@ -102,7 +100,7 @@ export default function HomePage() {
         association={{
           title: association.title,
           description: association.description,
-          href: association.url,
+          href: ASSOCIATION_HISTORY,
         }}
         events={events}
       />

@@ -11,8 +11,8 @@ import type { PostInSeries } from "./series";
 export const SITE_URL = "https://davideimola.dev";
 
 const SITE_SUMMARY =
-  "Personal site of Davide Imola: Tech Lead at RedCarbon, co-founder of Schrodinger Hat, " +
-  "co-organizer of Open Source Day. Building AI agents for cybersecurity. Writing and " +
+  "Personal site of Davide Imola: Tech Lead at RedCarbon, co-founder of Schrodinger Hat and " +
+  "organiser of Open Source Day from 2022 to 2026. Building AI agents for cybersecurity. Writing and " +
   "speaking about AI applied to security, AI-assisted development, Go, and open source communities.";
 
 const PAGES: { title: string; path: string; description: string }[] = [
@@ -97,7 +97,10 @@ export function buildLlmsTxt({ posts, talks, projects }: LlmsTxtInput, baseUrl =
   );
   const sessions = talks.map((talk) => talkLine(talk, baseUrl)).filter(Boolean);
   const projectList = projects.map((project) => {
-    const url = project.url ?? project.github ?? `${baseUrl}/projects`;
+    const url =
+      project.url ??
+      project.github ??
+      (project.group === "community" ? `${baseUrl}/sharing#organising` : `${baseUrl}/projects`);
     return `- [${project.title}](${url}): ${project.description}`;
   });
   const pages = PAGES.map(

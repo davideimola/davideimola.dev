@@ -167,11 +167,11 @@ export const Community: Story = {
       association={{
         title: "Schrodinger Hat",
         description:
-          "The non-profit open source association I co-founded and run. 20k+ people reached, 100+ speakers at events across Europe.",
+          "The non-profit open source association I co-founded and ran from 2022 to 2026. 20k+ people reached, 100+ speakers at events across Europe.",
         href: "#",
       }}
       events={[
-        { title: "Open Source Day", line: "4 editions, 2023 to 2026, in Florence.", href: "#" },
+        { title: "Open Source Day", line: "4 editions, 2023 to 2026, in Florence." },
         { title: "Meetups", line: "10 since 2023, in Milan, Florence and Verona." },
       ]}
     />

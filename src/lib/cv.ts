@@ -376,8 +376,8 @@ export interface TrajectoryPhase {
   // did with them, which the prose beside it and /sharing already carry.
   tools?: string[];
   // What the step set going, by engagement slug. Deliberately not `covers`:
-  // covers drives the phase's period, and Schrodinger Hat runs to today while
-  // the step that started it ended in 2022.
+  // covers drives the phase's period, and Schrodinger Hat ran to the end of 2026
+  // while the step that started it ended in 2022.
   started?: string[];
   opened?: OpenQuestion[];
   image?: PhaseImage;

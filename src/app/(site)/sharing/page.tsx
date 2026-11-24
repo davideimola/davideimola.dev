@@ -5,7 +5,7 @@ import { Marker } from "../../../components/ui/Marker";
 import { Photo } from "../../../components/ui/Photo";
 import { Tape } from "../../../components/ui/Tape";
 import { EVENTS, eventAttributes } from "../../../lib/analytics";
-import { getAllProjects, getAllTalks, type Talk } from "../../../lib/content";
+import { getAllTalks, type Talk } from "../../../lib/content";
 import { formatDayMonth, formatMonthYear } from "../../../lib/dates";
 import { OG_SIZE, ogImageUrl } from "../../../lib/og-url";
 import {
@@ -87,10 +87,10 @@ const TOPICS = [
 ];
 
 const SHORT_BIO =
-  "Davide Imola is a Tech Lead at RedCarbon, co-founder of Schrodinger Hat, and co-organizer of Open Source Day. He speaks about AI applied to security, Go, and the human side of open source.";
+  "Davide Imola is a Tech Lead at RedCarbon. He speaks about AI applied to security, Go, and the human side of open source, and from 2022 to 2026 he co-founded and ran Schrodinger Hat and Open Source Day.";
 
 const LONG_BIO =
-  "Davide Imola is a Tech Lead at RedCarbon, where he leads platform engineering. He makes the technical decisions across the whole platform, from frontend to infrastructure, builds the AI agents that run on it, and coordinates with the AI and security teams. His focus is technical direction and architecture, not people management. He is co-founder of Schrodinger Hat, an international open source community that has reached 20k+ people across Europe, and co-organizer of Open Source Day, a yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GoLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on AI applied to security, Go, GitOps, and building open source communities.\n\nHe believes that sharing knowledge in public, through talks, writing, and open source contributions, is one of the highest-leverage activities an engineer can do.";
+  "Davide Imola is a Tech Lead at RedCarbon, where he leads platform engineering. He makes the technical decisions across the whole platform, from frontend to infrastructure, builds the AI agents that run on it, and coordinates with the AI and security teams. His focus is technical direction and architecture, not people management. From 2022 to 2026 he co-founded and ran Schrodinger Hat, an international open source community that reached 20k+ people across Europe, and organised Open Source Day, its yearly conference in Florence dedicated to open source culture.\n\nOver the years, Davide has spoken at conferences including GoLab, KCD Italy, DevSecOps Day, Incontro DevOps Italia, and WeAreDevelopers World Congress. His talks focus on AI applied to security, Go, GitOps, and building open source communities.\n\nHe believes that sharing knowledge in public, through talks, writing, and open source contributions, is one of the highest-leverage activities an engineer can do.";
 
 const inlineLink = "text-fg border-b border-fg no-underline hover:text-accent hover:border-accent";
 
@@ -184,9 +184,6 @@ export default function SharingPage() {
   const chats = interviews(allTalks);
   const organised = organisedByYear(allTalks);
   const kinds = organisedByKind(allTalks);
-  const projects = getAllProjects();
-  const osday = projects.find((p) => p.slug === "os-day");
-  const sh = projects.find((p) => p.slug === "schrodinger-hat");
 
   const talksSchema = {
     "@context": "https://schema.org",
@@ -351,27 +348,12 @@ export default function SharingPage() {
                 Schrodinger Hat
               </h3>
               <p className="m-0 font-sans text-[17px] md:text-[18px] leading-[1.6] text-fg-body">
-                The open source community I co-founded: 20k+ people reached and 100+ speakers across
-                Europe. Every year it runs Open Source Day, a conference in Florence on open source
-                culture, and in between, meetups wherever there is a room and a topic worth it.
+                The open source community I co-founded and ran from 2022 to 2026: 20k+ people
+                reached and 100+ speakers across Europe. Every spring it ran Open Source Day, a
+                conference in Florence on open source culture, and in between, meetups wherever
+                there was a room and a topic worth it. It closed at the end of 2026; this is what it
+                did.
               </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[14px]">
-                {sh?.url && (
-                  <a href={sh.url} target="_blank" rel="noopener noreferrer" className={inlineLink}>
-                    {sh.url.replace(/^https?:\/\//, "")}
-                  </a>
-                )}
-                {osday?.url && (
-                  <a
-                    href={osday.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={inlineLink}
-                  >
-                    {osday.url.replace(/^https?:\/\//, "")}
-                  </a>
-                )}
-              </div>
             </div>
             <figure className="m-0 flex flex-col gap-2.5">
               <div className="relative w-full aspect-[3/2]">

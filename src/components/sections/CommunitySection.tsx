@@ -8,7 +8,7 @@ export interface CommunityEvent {
 }
 
 interface CommunitySectionProps {
-  /** The association Davide runs, from projects.json. */
+  /** The association Davide co-founded and ran until 2026, from projects.json. */
   association: { title: string; description: string; href: string };
   /** What it organises, folded by kind from the talk archive (its `host`). */
   events: CommunityEvent[];
@@ -27,8 +27,9 @@ const eventText = (e: CommunityEvent, hover: boolean) => (
   </>
 );
 
-// COMMUNITY: the association first and what it organises under it, so Open
+// COMMUNITY: the association first and what it organised under it, so Open
 // Source Day reads as one of its events rather than a community of its own.
+// It closed at the end of 2026, so everything here is told in the past tense.
 // The Open Source Day audience sits beside them, cut to end with the text.
 export function CommunitySection({ association, events }: CommunitySectionProps) {
   return (
@@ -58,7 +59,7 @@ export function CommunitySection({ association, events }: CommunitySectionProps)
           {events.length > 0 && (
             <div>
               <p className="m-0 mb-2.5 font-mono text-[12px] tracking-[0.04em] uppercase text-fg-subtle">
-                What we organise
+                What we organised
               </p>
               <ul className="m-0 p-0 list-none border-t border-fg">
                 {events.map((e) => (
